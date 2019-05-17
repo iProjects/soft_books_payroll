@@ -1,0 +1,519 @@
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\SQL.txt
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Data\SBPayrollDB.sql
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\DBScripts\db.sql
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Logs\error.txt
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Logs\Log.txt
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Output\Output.txt
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Reports\Utilities\db.sql
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\background.png
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\sys_auth_mode_dto.xml
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\button_cancel.png
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Add.png
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\CreateDB.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\defaultphoto.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\financial-planning.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\add.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\admin.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\Employer.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\Employees.ICO
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\BDG.ICO
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\BOOK01A.ICO
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\BOOKS01.ICO
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\BOOKS02.ICO
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\BOOKS03.ICO
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\BOOKS04.ICO
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\clear.ICO
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\closed.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\Database.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\Delete.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\delete1.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\deleted.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\DEMO.ICO
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\DIRECTS.ICO
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\Dollar.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\donuts.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\edit.ICO
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\Editt.ICO
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\ENTIRNET.ICO
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\EXPLORER.ICO
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\EYE.ICO
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\facs.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\fine.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\Departments.ICO
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\help 32.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\help-icon16.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\Icon.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\INFO.ICO
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\Departments1.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\KEY04.ICO
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\Lock.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\login.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\Logout.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\next.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\not.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\ok.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\ok1.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\Parent.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\previous.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\reports.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\Save.ico
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\settings.ICO
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Icons\Systems.ICO
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\InstallImg.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Signin.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\softwareproviderslogo.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\SoftwareProvidersLogoImg.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\VikeInsuranceBrokerslogoImg.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\VikeInsuranceBrokerslogo.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Security\Systems.xml
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\TimeStampObserver.xml
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\bluewebmage.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\bluewebmage1.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\christianbgmage.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Clear.png
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\codemage.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\colormage.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\colormager.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Delete.png
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\dreamemage.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Edit.png
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\headermage.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\flyermage.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\greenmage.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\leafmage.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\flowermage.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\fusionmage.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\kra2.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\login.png
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\mountainmage.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\patyplanner.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\powermage.jpg
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\Resources\Cancel.png
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\winSBPayroll.exe.config
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\winSBPayroll.exe.manifest
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\winSBPayroll.application
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\winSBPayroll.exe
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\winSBPayroll.pdb
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.csprojResolveAssemblyReference.cache
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.AboutBox.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.CreateDB.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.SystemDetailsForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.SystemsForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.FormError.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddBank.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddBankBranch.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddBenefit.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddDepartment.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddEmployee.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddEmployeeLoan.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddEmployer.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddEmpTxn.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddNHIFRate.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddPayeeRate.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddPayroll.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddPayrollItem.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddRightsForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddRolesForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.BanksForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.ChangePasswordForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddReportsRightsForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.NewNSSFComputationForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditReportsRightForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.ReportsRightsListForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.CreateDatabaseUserForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.DatabaseControlPanelForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditBank.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditBankBranch.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditBenefit.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditDepartment.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddUser.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Banks.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Benefits.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditEmployer.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Departments.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditEmployee.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditEmpTxn.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditRightForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditRolesForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditUser.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Employer.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.HrlyPay.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.LoginForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.NHIFRates.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.NonCashBenefits.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.PayeeRates.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Payrolls.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.ProcessPayroll.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.RightsListForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.RolesListForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.SearchBanksForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.SearchBanksSimpleForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.SearchEmployeeForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.SearchEmployeeSimpleForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Settings.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.TaxCalculatorForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditPayrollItem.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Employees.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.PackTransaction.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.PayrollItems.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.PayrollItemTypes.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddEmployeeAdvance.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.TaxTracking.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.TransactionDefinition.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Users.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.PDFViewer.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EmployeesBankTransfersForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\Splash.SplashScreen.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.MainForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Properties.Resources.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.csproj.GenerateResource.Cache
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.exe.manifest
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.application
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.exe
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.pdb
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\SQL.txt
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Data\SBPayrollDB.sql
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\DBScripts\db.sql
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Logs\error.txt
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Logs\Log.txt
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Output\Output.txt
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Reports\Utilities\db.sql
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\background.png
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\sys_auth_mode_dto.xml
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\button_cancel.png
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Add.png
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\CreateDB.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\defaultphoto.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\financial-planning.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\add.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\admin.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\Employer.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\Employees.ICO
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\BDG.ICO
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\BOOK01A.ICO
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\BOOKS01.ICO
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\BOOKS02.ICO
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\BOOKS03.ICO
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\BOOKS04.ICO
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\clear.ICO
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\closed.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\Database.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\Delete.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\delete1.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\deleted.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\DEMO.ICO
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\DIRECTS.ICO
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\Dollar.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\donuts.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\edit.ICO
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\Editt.ICO
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\ENTIRNET.ICO
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\EXPLORER.ICO
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\EYE.ICO
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\facs.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\fine.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\Departments.ICO
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\help 32.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\help-icon16.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\Icon.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\INFO.ICO
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\Departments1.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\KEY04.ICO
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\Lock.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\login.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\Logout.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\next.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\not.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\ok.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\ok1.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\Parent.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\previous.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\reports.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\Save.ico
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\settings.ICO
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Icons\Systems.ICO
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\InstallImg.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Signin.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\softwareproviderslogo.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\SoftwareProvidersLogoImg.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\VikeInsuranceBrokerslogoImg.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\VikeInsuranceBrokerslogo.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Security\Systems.xml
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\TimeStampObserver.xml
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\bluewebmage.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\bluewebmage1.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\christianbgmage.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Clear.png
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\codemage.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\colormage.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\colormager.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Delete.png
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\dreamemage.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Edit.png
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\headermage.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\flyermage.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\greenmage.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\leafmage.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\flowermage.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\fusionmage.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\kra2.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\login.png
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\mountainmage.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\patyplanner.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\powermage.jpg
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\Resources\Cancel.png
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\winSBPayroll.exe.config
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\winSBPayroll.exe.manifest
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\winSBPayroll.application
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\winSBPayroll.exe
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\winSBPayroll.pdb
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.csprojResolveAssemblyReference.cache
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.AboutBox.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.CreateDB.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.SystemDetailsForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.SystemsForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.FormError.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddBank.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddBankBranch.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddBenefit.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddDepartment.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddEmployee.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddEmployeeLoan.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddEmployer.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddEmpTxn.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddNHIFRate.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddPayeeRate.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddPayroll.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddPayrollItem.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddRightsForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddRolesForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.BanksForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.ChangePasswordForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddReportsRightsForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.NewNSSFComputationForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditReportsRightForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.ReportsRightsListForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.CreateDatabaseUserForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.DatabaseControlPanelForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditBank.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditBankBranch.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditBenefit.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditDepartment.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddUser.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Banks.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Benefits.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditEmployer.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Departments.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditEmployee.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditEmpTxn.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditRightForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditRolesForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditUser.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Employer.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.HrlyPay.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.LoginForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.NHIFRates.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.NonCashBenefits.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.PayeeRates.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Payrolls.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.ProcessPayroll.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.RightsListForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.RolesListForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.SearchBanksForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.SearchBanksSimpleForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.SearchEmployeeForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.SearchEmployeeSimpleForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Settings.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.TaxCalculatorForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditPayrollItem.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Employees.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.PackTransaction.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.PayrollItems.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.PayrollItemTypes.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddEmployeeAdvance.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.TaxTracking.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.TransactionDefinition.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Users.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.PDFViewer.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EmployeesBankTransfersForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\Splash.SplashScreen.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.MainForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Properties.Resources.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.csproj.GenerateResource.Cache
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.exe.manifest
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.application
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.exe
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.pdb
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\SQL.txt
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Data\SBPayrollDB.sql
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\DBScripts\db.sql
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Logs\error.txt
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Logs\Log.txt
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Output\Output.txt
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Reports\Utilities\db.sql
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\background.png
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\sys_auth_mode_dto.xml
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\button_cancel.png
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Add.png
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\CreateDB.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\defaultphoto.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\financial-planning.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\add.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\admin.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\Employer.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\Employees.ICO
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\BDG.ICO
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\BOOK01A.ICO
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\BOOKS01.ICO
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\BOOKS02.ICO
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\BOOKS03.ICO
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\BOOKS04.ICO
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\clear.ICO
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\closed.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\Database.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\Delete.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\delete1.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\deleted.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\DEMO.ICO
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\DIRECTS.ICO
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\Dollar.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\donuts.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\edit.ICO
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\Editt.ICO
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\ENTIRNET.ICO
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\EXPLORER.ICO
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\EYE.ICO
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\facs.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\fine.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\Departments.ICO
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\help 32.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\help-icon16.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\Icon.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\INFO.ICO
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\Departments1.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\KEY04.ICO
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\Lock.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\login.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\Logout.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\next.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\not.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\ok.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\ok1.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\Parent.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\previous.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\reports.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\Save.ico
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\settings.ICO
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Icons\Systems.ICO
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\InstallImg.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Signin.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\softwareproviderslogo.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\SoftwareProvidersLogoImg.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\VikeInsuranceBrokerslogoImg.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\VikeInsuranceBrokerslogo.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Security\Systems.xml
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\TimeStampObserver.xml
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\bluewebmage.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\bluewebmage1.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\christianbgmage.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Clear.png
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\codemage.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\colormage.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\colormager.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Delete.png
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\dreamemage.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Edit.png
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\headermage.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\flyermage.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\greenmage.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\leafmage.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\flowermage.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\fusionmage.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\kra2.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\login.png
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\mountainmage.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\patyplanner.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\powermage.jpg
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\Resources\Cancel.png
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\winSBPayroll.exe.config
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\winSBPayroll.exe.manifest
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\winSBPayroll.application
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\winSBPayroll.exe
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\winSBPayroll.pdb
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.csprojResolveAssemblyReference.cache
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.AboutBox.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.CreateDB.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.SystemDetailsForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.SystemsForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.FormError.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddBank.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddBankBranch.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddBenefit.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddDepartment.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddEmployee.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddEmployeeLoan.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddEmployer.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddEmpTxn.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddNHIFRate.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddPayeeRate.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddPayroll.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddPayrollItem.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddRightsForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddRolesForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.BanksForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.ChangePasswordForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddReportsRightsForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.NewNSSFComputationForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditReportsRightForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.ReportsRightsListForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.CreateDatabaseUserForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.DatabaseControlPanelForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditBank.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditBankBranch.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditBenefit.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditDepartment.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddUser.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Banks.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Benefits.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditEmployer.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Departments.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditEmployee.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditEmpTxn.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditRightForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditRolesForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditUser.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Employer.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.HrlyPay.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.LoginForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.NHIFRates.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.NonCashBenefits.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.PayeeRates.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Payrolls.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.ProcessPayroll.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.RightsListForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.RolesListForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.SearchBanksForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.SearchBanksSimpleForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.SearchEmployeeForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.SearchEmployeeSimpleForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Settings.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.TaxCalculatorForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EditPayrollItem.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Employees.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.PackTransaction.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.PayrollItems.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.PayrollItemTypes.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.AddEmployeeAdvance.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.TaxTracking.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.TransactionDefinition.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.Users.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.PDFViewer.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Forms.EmployeesBankTransfersForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\Splash.SplashScreen.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.MainForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.Properties.Resources.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.csproj.GenerateResource.Cache
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.exe.manifest
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.application
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.exe
+D:\wakxpx\csharp\visualstudio\SBPayroll\winSBPayroll\obj\x86\Debug\winSBPayroll.pdb

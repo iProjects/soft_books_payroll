@@ -1,0 +1,1597 @@
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[NHIFRates]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[NHIFRates](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[FromAmt] [money] NOT NULL,
+	[ToAmt] [money] NOT NULL,
+	[Rate] [smallmoney] NOT NULL,
+ CONSTRAINT [PK_NHIFRates] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Settings]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Settings](
+	[SSKey] [varchar](20) NOT NULL,
+	[SSValue] [varchar](30) NOT NULL,
+	[SSValueType] [nchar](1) NOT NULL,
+	[SSSystem] [bit] NULL,
+ CONSTRAINT [PK_Settings] PRIMARY KEY CLUSTERED 
+(
+	[SSKey] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Employer]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Employer](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NULL,
+	[Address1] [varchar](30) NULL,
+	[Address2] [varchar](30) NULL,
+	[Telphone] [varchar](10) NULL,
+	[PIN] [varchar](15) NULL,
+	[Email] [varchar](30) NULL,
+	[Logo] [varbinary](max) NULL,
+ CONSTRAINT [PK_Employer] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Banks]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Banks](
+	[BankCode] [nchar](5) NOT NULL,
+	[BankName] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_Banks] PRIMARY KEY CLUSTERED 
+(
+	[BankCode] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Departments]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Departments](
+	[Code] [varchar](10) NOT NULL,
+	[Description] [varchar](50) NULL,
+ CONSTRAINT [PK_Departments] PRIMARY KEY CLUSTERED 
+(
+	[Code] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ReportParams]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[ReportParams](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ReportId] [int] NOT NULL,
+	[ParamName] [varchar](20) NULL,
+	[ParamType] [varchar](1) NULL,
+	[ParamValue] [varchar](50) NULL,
+ CONSTRAINT [PK_ReportParams] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TransactionTypes]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[TransactionTypes](
+	[TxnCode] [varchar](10) NOT NULL,
+	[TxnType] [nchar](1) NOT NULL,
+	[Description] [varchar](50) NOT NULL,
+	[DataEntry] [varchar](10) NOT NULL,
+	[Taxable] [bit] NOT NULL,
+	[TaxDeductible] [bit] NULL,
+	[ItemOrder] [tinyint] NOT NULL,
+	[P9] [nchar](2) NULL,
+ CONSTRAINT [PK_TransactionTypes] PRIMARY KEY CLUSTERED 
+(
+	[TxnCode] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PayrollYr]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[PayrollYr](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[PayrollYr] [int] NULL
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[OpenYr]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[OpenYr](
+	[OpenYr] [int] NOT NULL,
+ CONSTRAINT [PK_OpenYr] PRIMARY KEY CLUSTERED 
+(
+	[OpenYr] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PayeeRates]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[PayeeRates](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[FromAmt] [money] NOT NULL,
+	[ToAmt] [money] NOT NULL,
+	[Rate] [smallmoney] NOT NULL,
+ CONSTRAINT [PK_PayeeRates] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Audit]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Audit](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[PostDate] [datetime] NULL,
+	[EmpNo] [varchar](10) NULL,
+	[TxnCode] [varchar](10) NULL,
+	[Amount] [money] NULL,
+	[Action] [varchar](10) NULL,
+	[UserId] [varchar](10) NULL
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ReportGroups]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[ReportGroups](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ReportGroup] [varchar](30) NULL,
+ CONSTRAINT [PK_ReportGroups] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Reports]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Reports](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ReportName] [varchar](30) NOT NULL,
+	[ReportGroup] [int] NULL CONSTRAINT [DF_Reports_ReportGroup]  DEFAULT ('Ungrouped'),
+	[ResourceFile] [varchar](50) NULL,
+ CONSTRAINT [PK_Reports] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[EmpAccounts]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[EmpAccounts](
+	[Account] [varchar](15) NOT NULL,
+	[Description] [varchar](30) NULL,
+	[EmpNo] [nchar](10) NULL,
+	[Balance] [money] NULL,
+	[AccountType] [varchar](5) NULL,
+ CONSTRAINT [PK_EmpAccounts] PRIMARY KEY CLUSTERED 
+(
+	[Account] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Employee]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Employee](
+	[EmpNo] [nchar](10) NOT NULL,
+	[Surname] [nchar](10) NULL,
+	[OtherNames] [nchar](30) NULL,
+	[DoB] [smalldatetime] NULL,
+	[DoE] [smalldatetime] NULL,
+	[MaritalStatus] [nchar](1) NULL,
+	[Gender] [nchar](1) NULL,
+	[NSSFNo] [nchar](20) NULL,
+	[NHIFNo] [nchar](20) NULL,
+	[PINNo] [nchar](20) NULL,
+	[BankCode] [nchar](5) NULL,
+	[BankAccount] [nchar](20) NULL,
+	[Department] [varchar](10) NULL,
+	[IsActive] [bit] NULL,
+	[DateLeft] [datetime] NULL,
+	[PrevEmployer] [varchar](50) NULL,
+	[BasicPay] [money] NULL,
+	[Employer] [int] NULL,
+ CONSTRAINT [PK_Employee] PRIMARY KEY CLUSTERED 
+(
+	[EmpNo] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Payrolls]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Payrolls](
+	[PayrollId] [int] IDENTITY(1,1) NOT NULL,
+	[Owner] [int] NULL,
+	[PayrollPeriod] [datetime] NULL,
+	[DateRun] [datetime] NULL,
+	[RunBy] [nchar](10) NULL,
+	[Approved] [bit] NULL CONSTRAINT [DF_Payrolls_Approved]  DEFAULT ((0)),
+	[ApprovedBy] [nchar](10) NULL,
+	[IsOpen] [bit] NULL CONSTRAINT [DF_Payrolls_IsOpen]  DEFAULT ((0)),
+	[Processed] [bit] NULL CONSTRAINT [DF_Payrolls_Processed]  DEFAULT ((0)),
+ CONSTRAINT [PK_Payrolls] PRIMARY KEY CLUSTERED 
+(
+	[PayrollId] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PayrollTransactions]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[PayrollTransactions](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[PayrollId] [int] NULL,
+	[EmpNo] [nchar](10) NOT NULL,
+	[TxnCode] [varchar](10) NOT NULL,
+	[Amount] [money] NOT NULL,
+ CONSTRAINT [PK_PayrollTransactions] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[EmployeeTransactions]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[EmployeeTransactions](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[PostDate] [datetime] NOT NULL,
+	[EmpNo] [nchar](10) NOT NULL,
+	[TxnCode] [varchar](10) NOT NULL,
+	[Amount] [money] NOT NULL,
+	[Recurrent] [bit] NOT NULL,
+	[Enabled] [bit] NOT NULL,
+	[Statutory] [bit] NOT NULL,
+	[Account] [varchar](15) NULL,
+ CONSTRAINT [PK_EmployeeTransactions] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Employee_Banks]') AND parent_object_id = OBJECT_ID(N'[dbo].[Employee]'))
+ALTER TABLE [dbo].[Employee]  WITH NOCHECK ADD  CONSTRAINT [FK_Employee_Banks] FOREIGN KEY([BankCode])
+REFERENCES [dbo].[Banks] ([BankCode])
+GO
+ALTER TABLE [dbo].[Employee] NOCHECK CONSTRAINT [FK_Employee_Banks]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Employee_Departments]') AND parent_object_id = OBJECT_ID(N'[dbo].[Employee]'))
+ALTER TABLE [dbo].[Employee]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Departments] FOREIGN KEY([Department])
+REFERENCES [dbo].[Departments] ([Code])
+GO
+ALTER TABLE [dbo].[Employee] CHECK CONSTRAINT [FK_Employee_Departments]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Employee_Employer]') AND parent_object_id = OBJECT_ID(N'[dbo].[Employee]'))
+ALTER TABLE [dbo].[Employee]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Employer] FOREIGN KEY([Employer])
+REFERENCES [dbo].[Employer] ([Id])
+GO
+ALTER TABLE [dbo].[Employee] CHECK CONSTRAINT [FK_Employee_Employer]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Payrolls_Employer]') AND parent_object_id = OBJECT_ID(N'[dbo].[Payrolls]'))
+ALTER TABLE [dbo].[Payrolls]  WITH CHECK ADD  CONSTRAINT [FK_Payrolls_Employer] FOREIGN KEY([Owner])
+REFERENCES [dbo].[Employer] ([Id])
+GO
+ALTER TABLE [dbo].[Payrolls] CHECK CONSTRAINT [FK_Payrolls_Employer]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_PayrollTransactions_Employee]') AND parent_object_id = OBJECT_ID(N'[dbo].[PayrollTransactions]'))
+ALTER TABLE [dbo].[PayrollTransactions]  WITH CHECK ADD  CONSTRAINT [FK_PayrollTransactions_Employee] FOREIGN KEY([EmpNo])
+REFERENCES [dbo].[Employee] ([EmpNo])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[PayrollTransactions] CHECK CONSTRAINT [FK_PayrollTransactions_Employee]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_PayrollTransactions_Payrolls]') AND parent_object_id = OBJECT_ID(N'[dbo].[PayrollTransactions]'))
+ALTER TABLE [dbo].[PayrollTransactions]  WITH CHECK ADD  CONSTRAINT [FK_PayrollTransactions_Payrolls] FOREIGN KEY([PayrollId])
+REFERENCES [dbo].[Payrolls] ([PayrollId])
+GO
+ALTER TABLE [dbo].[PayrollTransactions] CHECK CONSTRAINT [FK_PayrollTransactions_Payrolls]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_PayrollTransactions_TransactionTypes]') AND parent_object_id = OBJECT_ID(N'[dbo].[PayrollTransactions]'))
+ALTER TABLE [dbo].[PayrollTransactions]  WITH CHECK ADD  CONSTRAINT [FK_PayrollTransactions_TransactionTypes] FOREIGN KEY([TxnCode])
+REFERENCES [dbo].[TransactionTypes] ([TxnCode])
+GO
+ALTER TABLE [dbo].[PayrollTransactions] CHECK CONSTRAINT [FK_PayrollTransactions_TransactionTypes]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_EmployeeTransactions_Employee]') AND parent_object_id = OBJECT_ID(N'[dbo].[EmployeeTransactions]'))
+ALTER TABLE [dbo].[EmployeeTransactions]  WITH CHECK ADD  CONSTRAINT [FK_EmployeeTransactions_Employee] FOREIGN KEY([EmpNo])
+REFERENCES [dbo].[Employee] ([EmpNo])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[EmployeeTransactions] CHECK CONSTRAINT [FK_EmployeeTransactions_Employee]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_EmployeeTransactions_TransactionTypes]') AND parent_object_id = OBJECT_ID(N'[dbo].[EmployeeTransactions]'))
+ALTER TABLE [dbo].[EmployeeTransactions]  WITH CHECK ADD  CONSTRAINT [FK_EmployeeTransactions_TransactionTypes] FOREIGN KEY([TxnCode])
+REFERENCES [dbo].[TransactionTypes] ([TxnCode])
+ON UPDATE CASCADE
+GO
+ALTER TABLE [dbo].[EmployeeTransactions] CHECK CONSTRAINT [FK_EmployeeTransactions_TransactionTypes]
+GO
+IF NOT EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[View_P9Data]'))
+EXEC dbo.sp_executesql @statement = N'CREATE VIEW [dbo].[View_P9Data]
+AS
+SELECT     TOP (100) PERCENT YEAR(dbo.Payrolls.PayrollPeriod) AS ForTheYr, dbo.PayrollTransactions.EmpNo, dbo.Payrolls.PayrollPeriod, 
+                      dbo.TransactionTypes.P9, dbo.PayrollTransactions.TxnCode, SUM(dbo.PayrollTransactions.Amount) AS Total
+FROM         dbo.PayrollTransactions INNER JOIN
+                      dbo.TransactionTypes ON dbo.PayrollTransactions.TxnCode = dbo.TransactionTypes.TxnCode INNER JOIN
+                      dbo.Payrolls ON dbo.PayrollTransactions.PayrollId = dbo.Payrolls.PayrollId
+GROUP BY dbo.Payrolls.PayrollPeriod, dbo.PayrollTransactions.TxnCode, dbo.TransactionTypes.P9, dbo.PayrollTransactions.EmpNo
+HAVING      (dbo.TransactionTypes.P9 <> N''N'')
+ORDER BY dbo.TransactionTypes.P9, dbo.Payrolls.PayrollPeriod
+' 
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[View2]'))
+EXEC dbo.sp_executesql @statement = N'CREATE VIEW [dbo].[View2]
+AS
+SELECT     { fn MONTHNAME(PayrollPeriod) } AS PMonth
+FROM         dbo.View_P9Data
+' 
+GO
+IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_DiagramPane1' , N'SCHEMA',N'dbo', N'VIEW',N'View2', NULL,NULL))
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
+Begin DesignProperties = 
+   Begin PaneConfigurations = 
+      Begin PaneConfiguration = 0
+         NumPanes = 4
+         Configuration = "(H (1[43] 4[12] 2[22] 3) )"
+      End
+      Begin PaneConfiguration = 1
+         NumPanes = 3
+         Configuration = "(H (1 [50] 4 [25] 3))"
+      End
+      Begin PaneConfiguration = 2
+         NumPanes = 3
+         Configuration = "(H (1 [50] 2 [25] 3))"
+      End
+      Begin PaneConfiguration = 3
+         NumPanes = 3
+         Configuration = "(H (4 [30] 2 [40] 3))"
+      End
+      Begin PaneConfiguration = 4
+         NumPanes = 2
+         Configuration = "(H (1 [56] 3))"
+      End
+      Begin PaneConfiguration = 5
+         NumPanes = 2
+         Configuration = "(H (2 [66] 3))"
+      End
+      Begin PaneConfiguration = 6
+         NumPanes = 2
+         Configuration = "(H (4 [50] 3))"
+      End
+      Begin PaneConfiguration = 7
+         NumPanes = 1
+         Configuration = "(V (3))"
+      End
+      Begin PaneConfiguration = 8
+         NumPanes = 3
+         Configuration = "(H (1[56] 4[18] 2) )"
+      End
+      Begin PaneConfiguration = 9
+         NumPanes = 2
+         Configuration = "(H (1 [75] 4))"
+      End
+      Begin PaneConfiguration = 10
+         NumPanes = 2
+         Configuration = "(H (1[66] 2) )"
+      End
+      Begin PaneConfiguration = 11
+         NumPanes = 2
+         Configuration = "(H (4 [60] 2))"
+      End
+      Begin PaneConfiguration = 12
+         NumPanes = 1
+         Configuration = "(H (1) )"
+      End
+      Begin PaneConfiguration = 13
+         NumPanes = 1
+         Configuration = "(V (4))"
+      End
+      Begin PaneConfiguration = 14
+         NumPanes = 1
+         Configuration = "(V (2))"
+      End
+      ActivePaneConfig = 0
+   End
+   Begin DiagramPane = 
+      Begin Origin = 
+         Top = 0
+         Left = 0
+      End
+      Begin Tables = 
+         Begin Table = "View_P9Data"
+            Begin Extent = 
+               Top = 6
+               Left = 38
+               Bottom = 121
+               Right = 190
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+      Begin ColumnWidths = 9
+         Width = 284
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+      End
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 11
+         Column = 1440
+         Alias = 900
+         Table = 1170
+         Output = 720
+         Append = 1400
+         NewValue = 1170
+         SortType = 1350
+         SortOrder = 1410
+         GroupBy = 1350
+         Filter = 1350
+         Or = 1350
+         Or = 1350
+         Or = 1350
+      End
+   End
+End
+' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'View2'
+GO
+IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_DiagramPaneCount' , N'SCHEMA',N'dbo', N'VIEW',N'View2', NULL,NULL))
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'View2'
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[EmpPayrollTxns]'))
+EXEC dbo.sp_executesql @statement = N'CREATE VIEW [dbo].[EmpPayrollTxns]
+AS
+SELECT     dbo.PayrollTransactions.PayrollId, dbo.PayrollTransactions.EmpNo, dbo.PayrollTransactions.TxnCode, dbo.PayrollTransactions.Amount, 
+                      dbo.TransactionTypes.Description, dbo.TransactionTypes.ItemOrder, dbo.TransactionTypes.TxnType
+FROM         dbo.PayrollTransactions INNER JOIN
+                      dbo.TransactionTypes ON dbo.PayrollTransactions.TxnCode = dbo.TransactionTypes.TxnCode INNER JOIN
+                      dbo.Payrolls ON dbo.PayrollTransactions.PayrollId = dbo.Payrolls.PayrollId
+WHERE     (dbo.Payrolls.IsOpen = 1)
+' 
+GO
+IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_DiagramPane1' , N'SCHEMA',N'dbo', N'VIEW',N'EmpPayrollTxns', NULL,NULL))
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
+Begin DesignProperties = 
+   Begin PaneConfigurations = 
+      Begin PaneConfiguration = 0
+         NumPanes = 4
+         Configuration = "(H (1[26] 4[28] 2[11] 3) )"
+      End
+      Begin PaneConfiguration = 1
+         NumPanes = 3
+         Configuration = "(H (1 [50] 4 [25] 3))"
+      End
+      Begin PaneConfiguration = 2
+         NumPanes = 3
+         Configuration = "(H (1 [50] 2 [25] 3))"
+      End
+      Begin PaneConfiguration = 3
+         NumPanes = 3
+         Configuration = "(H (4 [30] 2 [40] 3))"
+      End
+      Begin PaneConfiguration = 4
+         NumPanes = 2
+         Configuration = "(H (1 [56] 3))"
+      End
+      Begin PaneConfiguration = 5
+         NumPanes = 2
+         Configuration = "(H (2 [66] 3))"
+      End
+      Begin PaneConfiguration = 6
+         NumPanes = 2
+         Configuration = "(H (4 [50] 3))"
+      End
+      Begin PaneConfiguration = 7
+         NumPanes = 1
+         Configuration = "(V (3))"
+      End
+      Begin PaneConfiguration = 8
+         NumPanes = 3
+         Configuration = "(H (1[56] 4[18] 2) )"
+      End
+      Begin PaneConfiguration = 9
+         NumPanes = 2
+         Configuration = "(H (1 [75] 4))"
+      End
+      Begin PaneConfiguration = 10
+         NumPanes = 2
+         Configuration = "(H (1[66] 2) )"
+      End
+      Begin PaneConfiguration = 11
+         NumPanes = 2
+         Configuration = "(H (4 [60] 2))"
+      End
+      Begin PaneConfiguration = 12
+         NumPanes = 1
+         Configuration = "(H (1) )"
+      End
+      Begin PaneConfiguration = 13
+         NumPanes = 1
+         Configuration = "(V (4))"
+      End
+      Begin PaneConfiguration = 14
+         NumPanes = 1
+         Configuration = "(V (2))"
+      End
+      ActivePaneConfig = 0
+   End
+   Begin DiagramPane = 
+      Begin Origin = 
+         Top = 0
+         Left = 0
+      End
+      Begin Tables = 
+         Begin Table = "PayrollTransactions"
+            Begin Extent = 
+               Top = 6
+               Left = 183
+               Bottom = 141
+               Right = 335
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "TransactionTypes"
+            Begin Extent = 
+               Top = 9
+               Left = 357
+               Bottom = 124
+               Right = 509
+            End
+            DisplayFlags = 280
+            TopColumn = 3
+         End
+         Begin Table = "Payrolls"
+            Begin Extent = 
+               Top = 0
+               Left = 0
+               Bottom = 115
+               Right = 152
+            End
+            DisplayFlags = 280
+            TopColumn = 4
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+      Begin ColumnWidths = 10
+         Width = 284
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 945
+         Width = 1500
+         Width = 1500
+      End
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 11
+         Column = 1440
+         Alias = 900
+         Table = 1170
+         Output = 720
+         Append = 1400
+         NewValue = 1170
+         SortType = 1350
+         SortOrder = 960
+         GroupBy = 1350
+         Filter = 1350
+         Or = 1350
+         Or = 1350
+         Or = 1350
+      End
+   End
+End
+' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'EmpPayrollTxns'
+GO
+IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_DiagramPaneCount' , N'SCHEMA',N'dbo', N'VIEW',N'EmpPayrollTxns', NULL,NULL))
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'EmpPayrollTxns'
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_DiagramPane1' , N'SCHEMA',N'dbo', N'VIEW',N'View_P9Data', NULL,NULL))
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
+Begin DesignProperties = 
+   Begin PaneConfigurations = 
+      Begin PaneConfiguration = 0
+         NumPanes = 4
+         Configuration = "(H (1[15] 4[47] 2[9] 3) )"
+      End
+      Begin PaneConfiguration = 1
+         NumPanes = 3
+         Configuration = "(H (1 [50] 4 [25] 3))"
+      End
+      Begin PaneConfiguration = 2
+         NumPanes = 3
+         Configuration = "(H (1 [50] 2 [25] 3))"
+      End
+      Begin PaneConfiguration = 3
+         NumPanes = 3
+         Configuration = "(H (4 [30] 2 [40] 3))"
+      End
+      Begin PaneConfiguration = 4
+         NumPanes = 2
+         Configuration = "(H (1 [56] 3))"
+      End
+      Begin PaneConfiguration = 5
+         NumPanes = 2
+         Configuration = "(H (2 [66] 3))"
+      End
+      Begin PaneConfiguration = 6
+         NumPanes = 2
+         Configuration = "(H (4 [50] 3))"
+      End
+      Begin PaneConfiguration = 7
+         NumPanes = 1
+         Configuration = "(V (3))"
+      End
+      Begin PaneConfiguration = 8
+         NumPanes = 3
+         Configuration = "(H (1[56] 4[18] 2) )"
+      End
+      Begin PaneConfiguration = 9
+         NumPanes = 2
+         Configuration = "(H (1 [75] 4))"
+      End
+      Begin PaneConfiguration = 10
+         NumPanes = 2
+         Configuration = "(H (1[66] 2) )"
+      End
+      Begin PaneConfiguration = 11
+         NumPanes = 2
+         Configuration = "(H (4 [60] 2))"
+      End
+      Begin PaneConfiguration = 12
+         NumPanes = 1
+         Configuration = "(H (1) )"
+      End
+      Begin PaneConfiguration = 13
+         NumPanes = 1
+         Configuration = "(V (4))"
+      End
+      Begin PaneConfiguration = 14
+         NumPanes = 1
+         Configuration = "(V (2))"
+      End
+      ActivePaneConfig = 0
+   End
+   Begin DiagramPane = 
+      Begin Origin = 
+         Top = 0
+         Left = 0
+      End
+      Begin Tables = 
+         Begin Table = "PayrollTransactions"
+            Begin Extent = 
+               Top = 6
+               Left = 38
+               Bottom = 121
+               Right = 206
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "TransactionTypes"
+            Begin Extent = 
+               Top = 6
+               Left = 244
+               Bottom = 121
+               Right = 412
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "Payrolls"
+            Begin Extent = 
+               Top = 126
+               Left = 38
+               Bottom = 241
+               Right = 206
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+      Begin ColumnWidths = 9
+         Width = 284
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+      End
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 12
+         Column = 1440
+         Alias = 900
+         Table = 1170
+         Output = 720
+         Append = 1400
+         NewValue = 1170
+         SortType = 1350
+         SortOrder = 1410
+         GroupBy = 1350
+         Filter = 1350
+         Or = 1350
+         Or = 1350
+         Or = 1350
+      End
+   End
+End
+' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'View_P9Data'
+GO
+IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_DiagramPaneCount' , N'SCHEMA',N'dbo', N'VIEW',N'View_P9Data', NULL,NULL))
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'View_P9Data'
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[View_P9A]'))
+EXEC dbo.sp_executesql @statement = N'CREATE VIEW [dbo].[View_P9A]
+AS
+SELECT     TOP (100) PERCENT YEAR(dbo.Payrolls.PayrollPeriod) AS ForTheYr, dbo.Payrolls.PayrollPeriod, dbo.PayrollTransactions.TxnCode, 
+                      SUM(dbo.PayrollTransactions.Amount) AS Total, dbo.TransactionTypes.P9, dbo.PayrollTransactions.EmpNo
+FROM         dbo.PayrollTransactions INNER JOIN
+                      dbo.TransactionTypes ON dbo.PayrollTransactions.TxnCode = dbo.TransactionTypes.TxnCode INNER JOIN
+                      dbo.Payrolls ON dbo.PayrollTransactions.PayrollId = dbo.Payrolls.PayrollId
+GROUP BY dbo.Payrolls.PayrollPeriod, dbo.PayrollTransactions.TxnCode, dbo.TransactionTypes.P9, dbo.PayrollTransactions.EmpNo
+HAVING      (dbo.TransactionTypes.P9 <> N''N'')
+ORDER BY dbo.TransactionTypes.P9, dbo.Payrolls.PayrollPeriod
+' 
+GO
+IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_DiagramPane1' , N'SCHEMA',N'dbo', N'VIEW',N'View_P9A', NULL,NULL))
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
+Begin DesignProperties = 
+   Begin PaneConfigurations = 
+      Begin PaneConfiguration = 0
+         NumPanes = 4
+         Configuration = "(H (1[40] 4[10] 2[27] 3) )"
+      End
+      Begin PaneConfiguration = 1
+         NumPanes = 3
+         Configuration = "(H (1 [50] 4 [25] 3))"
+      End
+      Begin PaneConfiguration = 2
+         NumPanes = 3
+         Configuration = "(H (1 [50] 2 [25] 3))"
+      End
+      Begin PaneConfiguration = 3
+         NumPanes = 3
+         Configuration = "(H (4[39] 2[32] 3) )"
+      End
+      Begin PaneConfiguration = 4
+         NumPanes = 2
+         Configuration = "(H (1 [56] 3))"
+      End
+      Begin PaneConfiguration = 5
+         NumPanes = 2
+         Configuration = "(H (2 [66] 3))"
+      End
+      Begin PaneConfiguration = 6
+         NumPanes = 2
+         Configuration = "(H (4 [50] 3))"
+      End
+      Begin PaneConfiguration = 7
+         NumPanes = 1
+         Configuration = "(V (3))"
+      End
+      Begin PaneConfiguration = 8
+         NumPanes = 3
+         Configuration = "(H (1[56] 4[18] 2) )"
+      End
+      Begin PaneConfiguration = 9
+         NumPanes = 2
+         Configuration = "(H (1 [75] 4))"
+      End
+      Begin PaneConfiguration = 10
+         NumPanes = 2
+         Configuration = "(H (1[66] 2) )"
+      End
+      Begin PaneConfiguration = 11
+         NumPanes = 2
+         Configuration = "(H (4 [60] 2))"
+      End
+      Begin PaneConfiguration = 12
+         NumPanes = 1
+         Configuration = "(H (1) )"
+      End
+      Begin PaneConfiguration = 13
+         NumPanes = 1
+         Configuration = "(V (4))"
+      End
+      Begin PaneConfiguration = 14
+         NumPanes = 1
+         Configuration = "(V (2))"
+      End
+      ActivePaneConfig = 0
+   End
+   Begin DiagramPane = 
+      Begin Origin = 
+         Top = 0
+         Left = 0
+      End
+      Begin Tables = 
+         Begin Table = "PayrollTransactions"
+            Begin Extent = 
+               Top = 13
+               Left = 227
+               Bottom = 167
+               Right = 358
+            End
+            DisplayFlags = 280
+            TopColumn = 1
+         End
+         Begin Table = "TransactionTypes"
+            Begin Extent = 
+               Top = 11
+               Left = 423
+               Bottom = 192
+               Right = 574
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "Payrolls"
+            Begin Extent = 
+               Top = 24
+               Left = 21
+               Bottom = 139
+               Right = 171
+            End
+            DisplayFlags = 280
+            TopColumn = 1
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+      Begin ColumnWidths = 9
+         Width = 284
+         Width = 810
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+      End
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 12
+         Column = 1440
+         Alias = 900
+         Table = 1170
+         Output = 720
+         Append = 1400
+         NewValue = 1170
+         SortType = 1350
+         SortOrder = 1410
+         GroupBy = 1350
+         Filter = 1350
+         Or = 1350
+         Or = 1350
+         Or = 1350
+      End
+   End
+End
+' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'View_P9A'
+GO
+IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_DiagramPaneCount' , N'SCHEMA',N'dbo', N'VIEW',N'View_P9A', NULL,NULL))
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'View_P9A'
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[GetEmpTransactions]'))
+EXEC dbo.sp_executesql @statement = N'CREATE VIEW [dbo].[GetEmpTransactions]
+AS
+SELECT     dbo.Employee.EmpNo, dbo.Employee.Surname, dbo.Employee.MaritalStatus, dbo.Employee.IsActive, dbo.EmployeeTransactions.TxnCode, 
+                      dbo.EmployeeTransactions.Amount, dbo.EmployeeTransactions.Recurrent, dbo.EmployeeTransactions.Enabled, dbo.EmployeeTransactions.Statutory, 
+                      dbo.TransactionTypes.TxnType, dbo.TransactionTypes.Description, dbo.TransactionTypes.DataEntry, dbo.TransactionTypes.Taxable, 
+                      dbo.Employee.BasicPay, dbo.TransactionTypes.TaxDeductible, dbo.EmployeeTransactions.Account
+FROM         dbo.Employee INNER JOIN
+                      dbo.EmployeeTransactions ON dbo.Employee.EmpNo = dbo.EmployeeTransactions.EmpNo INNER JOIN
+                      dbo.TransactionTypes ON dbo.EmployeeTransactions.TxnCode = dbo.TransactionTypes.TxnCode
+' 
+GO
+IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_DiagramPane1' , N'SCHEMA',N'dbo', N'VIEW',N'GetEmpTransactions', NULL,NULL))
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
+Begin DesignProperties = 
+   Begin PaneConfigurations = 
+      Begin PaneConfiguration = 0
+         NumPanes = 4
+         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+      End
+      Begin PaneConfiguration = 1
+         NumPanes = 3
+         Configuration = "(H (1 [50] 4 [25] 3))"
+      End
+      Begin PaneConfiguration = 2
+         NumPanes = 3
+         Configuration = "(H (1 [50] 2 [25] 3))"
+      End
+      Begin PaneConfiguration = 3
+         NumPanes = 3
+         Configuration = "(H (4 [30] 2 [40] 3))"
+      End
+      Begin PaneConfiguration = 4
+         NumPanes = 2
+         Configuration = "(H (1 [56] 3))"
+      End
+      Begin PaneConfiguration = 5
+         NumPanes = 2
+         Configuration = "(H (2 [66] 3))"
+      End
+      Begin PaneConfiguration = 6
+         NumPanes = 2
+         Configuration = "(H (4 [50] 3))"
+      End
+      Begin PaneConfiguration = 7
+         NumPanes = 1
+         Configuration = "(V (3))"
+      End
+      Begin PaneConfiguration = 8
+         NumPanes = 3
+         Configuration = "(H (1[56] 4[18] 2) )"
+      End
+      Begin PaneConfiguration = 9
+         NumPanes = 2
+         Configuration = "(H (1 [75] 4))"
+      End
+      Begin PaneConfiguration = 10
+         NumPanes = 2
+         Configuration = "(H (1[66] 2) )"
+      End
+      Begin PaneConfiguration = 11
+         NumPanes = 2
+         Configuration = "(H (4 [60] 2))"
+      End
+      Begin PaneConfiguration = 12
+         NumPanes = 1
+         Configuration = "(H (1) )"
+      End
+      Begin PaneConfiguration = 13
+         NumPanes = 1
+         Configuration = "(V (4))"
+      End
+      Begin PaneConfiguration = 14
+         NumPanes = 1
+         Configuration = "(V (2))"
+      End
+      ActivePaneConfig = 0
+   End
+   Begin DiagramPane = 
+      Begin Origin = 
+         Top = 0
+         Left = 0
+      End
+      Begin Tables = 
+         Begin Table = "Employee"
+            Begin Extent = 
+               Top = 6
+               Left = 38
+               Bottom = 121
+               Right = 190
+            End
+            DisplayFlags = 280
+            TopColumn = 13
+         End
+         Begin Table = "EmployeeTransactions"
+            Begin Extent = 
+               Top = 6
+               Left = 228
+               Bottom = 121
+               Right = 380
+            End
+            DisplayFlags = 280
+            TopColumn = 5
+         End
+         Begin Table = "TransactionTypes"
+            Begin Extent = 
+               Top = 126
+               Left = 38
+               Bottom = 267
+               Right = 190
+            End
+            DisplayFlags = 280
+            TopColumn = 3
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+      Begin ColumnWidths = 9
+         Width = 284
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+      End
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 11
+         Column = 1440
+         Alias = 900
+         Table = 1170
+         Output = 720
+         Append = 1400
+         NewValue = 1170
+         SortType = 1350
+         SortOrder = 1410
+         GroupBy = 1350
+         Filter = 1350
+         Or = 1350
+         Or = 1350
+         Or = 1350
+      End
+   End
+End
+' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'GetEmpTransactions'
+GO
+IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_DiagramPaneCount' , N'SCHEMA',N'dbo', N'VIEW',N'GetEmpTransactions', NULL,NULL))
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'GetEmpTransactions'
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[UpdateAccount]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[UpdateAccount] 
+	/*
+	(
+	@parameter1 int = 5,
+	@parameter2 datatype OUTPUT
+	)
+	*/
+	(
+	@EmpNo nchar(10),
+	@Account varchar(15),
+	@Amount money
+	)
+AS
+	/* SET NOCOUNT ON */ 
+	UPDATE EmpAccounts
+	SET    Balance = Balance + @Amount 
+	     WHERE Account = @Account AND EmpNo = @EmpNo
+	RETURN
+' 
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[GetEmployees]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[GetEmployees] 
+	/*
+	(
+	@parameter1 int = 5,
+	@parameter2 datatype OUTPUT
+	)
+	*/
+AS
+	/* SET NOCOUNT ON */ 
+	SELECT     Departments.Code, Departments.Description, Banks.BankCode, Banks.BankName, Employee.EmpNo, Employee.Surname, 
+	                      Employee.OtherNames
+	FROM         Employee INNER JOIN
+	                      Banks ON Employee.BankCode = Banks.BankCode INNER JOIN
+	                      Departments ON Employee.Department = Departments.Code
+	RETURN
+' 
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[GetP9A]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[GetP9A] 
+	/*
+	(
+	@parameter1 int = 5,
+	@parameter2 datatype OUTPUT
+	)
+	*/
+	(
+	@Yr int
+	)
+AS
+	/* SET NOCOUNT ON */ 
+	SELECT     TOP (100) PERCENT YEAR(Payrolls.PayrollPeriod) AS ForTheYr, Payrolls.PayrollPeriod, PayrollTransactions.TxnCode, 
+	                      SUM(PayrollTransactions.Amount) AS Total, TransactionTypes.P9, PayrollTransactions.EmpNo
+	FROM         PayrollTransactions INNER JOIN
+	                      TransactionTypes ON PayrollTransactions.TxnCode = TransactionTypes.TxnCode INNER JOIN
+	                      Payrolls ON PayrollTransactions.PayrollId = Payrolls.PayrollId
+	GROUP BY Payrolls.PayrollPeriod, PayrollTransactions.TxnCode, TransactionTypes.P9, PayrollTransactions.EmpNo
+	HAVING      (TransactionTypes.P9 <> N''N'') AND (YEAR(Payrolls.PayrollPeriod) = @Yr)
+	ORDER BY TransactionTypes.P9, Payrolls.PayrollPeriod
+	RETURN
+' 
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[InsertAudit]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[InsertAudit] 
+	/*
+	(
+	@parameter1 int = 5,
+	@parameter2 datatype OUTPUT
+	)
+	*/
+	(@PostDate datetime,
+	@EmpNo varchar(10),
+	@TxnCode varchar(10),
+	@Action varchar(10),
+	@Amount money,
+	@UserId varchar(10))
+AS
+	/* SET NOCOUNT ON */ 
+INSERT INTO Audit
+                      (PostDate, EmpNo, TxnCode, Action, Amount, UserId)
+VALUES     (@PostDate,@EmpNo,@TxnCode,@Action,@Amount,@UserId)' 
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[GetEmpTxnCodeStatement]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[GetEmpTxnCodeStatement] 
+	/*
+	(
+	@parameter1 int = 5,
+	@parameter2 datatype OUTPUT
+	)
+	*/
+	@EmpNo varchar(10),
+	@TxnCode varchar(10)
+AS
+	/* SET NOCOUNT ON */ 
+	SELECT     Payrolls.PayrollPeriod, PayrollTransactions.EmpNo, PayrollTransactions.TxnCode, PayrollTransactions.Amount
+	FROM         PayrollTransactions INNER JOIN
+	                      Payrolls ON PayrollTransactions.PayrollId = Payrolls.PayrollId
+	WHERE     (PayrollTransactions.EmpNo = @EmpNo) AND (PayrollTransactions.TxnCode = PayrollTransactions.TxnCode)
+	ORDER BY Payrolls.PayrollPeriod
+	RETURN
+' 
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[OpenAccount]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[OpenAccount] 
+	/*
+	(
+	@parameter1 int = 5,
+	@parameter2 datatype OUTPUT
+	)
+	*/
+	(
+	@Account varchar(15), 
+    @Description varchar(30), 
+    @EmpNo nchar(10), 
+    @AccountType varchar(5)
+	)
+AS
+	/* SET NOCOUNT ON */ 
+	
+	INSERT INTO EmpAccounts
+	                      (Account, Description, EmpNo, Balance, AccountType)
+	VALUES     (@Account,@Description,@EmpNo, 0,@AccountType)
+	RETURN
+' 
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[InsertAllEmployeeTransactions]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[InsertAllEmployeeTransactions] 
+	/*
+	(
+	@parameter1 int = 5,
+	@parameter2 datatype OUTPUT
+	)
+	*/
+		(@PostDate datetime,
+	@TxnCode varchar(10),
+	@Amount money,
+	@Recurrent bit,
+	@Enabled bit,
+	@Statutory bit,
+	@Account varchar(15),
+	@UserId varchar(10))
+AS
+	/* SET NOCOUNT ON */ 
+	INSERT INTO EmployeeTransactions
+	                      (PostDate, EmpNo, TxnCode, Amount, Recurrent, Enabled, Statutory, Account)
+	SELECT     @PostDate AS PostDate, EmpNo, @TxnCode AS TxnCode, @Amount AS Amount, @Recurrent AS Recurrent, @Enabled AS Enabled, 
+	                      @Statutory AS Statutory, @Account as Account
+	FROM         Employee
+	
+	EXEC dbo.InsertAudit @PostDate, "ALL",@TxnCode,''I'',@Amount,@UserId
+	RETURN
+' 
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[UpdateAllEmployeeTransactions]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[UpdateAllEmployeeTransactions] 
+	/*
+	(
+	@parameter1 int = 5,
+	@parameter2 datatype OUTPUT
+	)
+	*/
+		(@PostDate datetime,
+	@TxnCode varchar(10),
+	@Amount money,
+	@Recurrent bit,
+	@Enabled bit,
+	@Statutory bit,
+	@Account varchar(15),
+	@UserId varchar(10))
+AS
+	/* SET NOCOUNT ON */ 
+	UPDATE EmployeeTransactions
+	SET  PostDate = @PostDate,  Amount = Amount + @Amount, Recurrent = @Recurrent, Enabled = @Enabled, 
+	     Statutory = @Statutory,Account = @Account
+	     WHERE TxnCode = @TxnCode
+	
+	EXEC dbo.InsertAudit @PostDate, "ALL",@TxnCode,''U'',@Amount,@UserId
+	RETURN
+' 
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[InsertEmployeeTransactions]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[InsertEmployeeTransactions] 
+	/*
+	(
+	@parameter1 int = 5,
+	@parameter2 datatype OUTPUT
+	)
+	*/
+	(@PostDate datetime,
+	@EmpNo varchar(10),
+	@TxnCode varchar(10),
+	@Amount money,
+	@Recurrent bit,
+	@Enabled bit,
+	@Statutory bit,
+	@Account varchar(15),
+	@UserId varchar(10))
+
+AS
+	/* SET NOCOUNT ON */ 
+	INSERT INTO EmployeeTransactions
+	                                           (PostDate, EmpNo, TxnCode, Amount, Recurrent, Enabled, Statutory, Account)
+	                     VALUES     (@PostDate,@EmpNo,@TxnCode,@Amount,@Recurrent,@Enabled,@Statutory, @Account)
+	                     
+
+	
+	EXEC dbo.InsertAudit @PostDate, @EmpNo,@TxnCode,''I'',@Amount,@UserId                   
+RETURN
+' 
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[UpdateEmployeeTransactions]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[UpdateEmployeeTransactions] 
+	/*
+	(
+	@parameter1 int = 5,
+	@parameter2 datatype OUTPUT
+	)
+	*/
+	(
+	 @PostDate datetime, 
+	 @EmpNo varchar(10), 
+	 @TxnCode varchar(10), 
+	 @Amount money, 
+	 @Recurrent bit, 
+	 @Enabled bit, 
+	 @Statutory bit,
+	 @Account varchar(15),
+	@UserId varchar(10))
+AS
+	/* SET NOCOUNT ON */ 
+	UPDATE    EmployeeTransactions
+	SET              PostDate = @PostDate,  Amount = Amount + @Amount, Recurrent = @Recurrent, Enabled = @Enabled, 
+	                      Statutory = @Statutory, Account = @Account
+	WHERE EmpNo = @EmpNo  AND TxnCode = @TxnCode   
+	
+	
+	EXEC dbo.InsertAudit @PostDate, @EmpNo,@TxnCode,''U'',@Amount,@UserId                   
+	                      
+	RETURN
+' 
+END
+GO
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('BASIC','P','BASIC PAY','BASIC',1,0,0,'A');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('BENEFITS','T','BENEFITS','BENEFITS',0,0,4,'G');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('GROSSPAY','T','GROSS PAY','GROSSPAY',0,0,3,'D');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('GROSSTAX','T','GROSS TAX','GROSSTAX',0,0,20,'J');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('NETPAY','S','NET PAY','NETPAY',0,0,10,'N');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('NHIF','D','NHIF','NHIF',0,0,8,'N');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('NSSF','D','NSSF','NSSF',0,0,7,'E');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('PAYE','D','PAYE','PAYE',0,0,6,'L');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('PEN1E','D','PENSION','PEN1E',0,1,9,'N');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('PEN1R','D','PENSION','PEN1R',0,0,1,'N');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('RELIEF','T','RELIEF','RELIEF',0,0,3,'K');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('ADV','D','ADVANCE','User',0,0,1,'N');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('ALLOW','P','ALLOWANCE','User',1,0,1,'B');
+
+INSERT INTO [dbo].[PayeeRates]([FromAmt] ,[ToAmt],[Rate])
+VALUES (0.00  ,10164.00  ,10.00);
+INSERT INTO [dbo].[PayeeRates]([FromAmt] ,[ToAmt],[Rate])
+VALUES (10165.00  ,19741.00  ,15.00);
+INSERT INTO [dbo].[PayeeRates]([FromAmt] ,[ToAmt],[Rate])
+VALUES (19741.00  ,29317.00  ,20.00);
+INSERT INTO [dbo].[PayeeRates]([FromAmt] ,[ToAmt],[Rate])
+VALUES (29317.00  ,38893.00  ,25.00);
+INSERT INTO [dbo].[PayeeRates]([FromAmt] ,[ToAmt],[Rate])
+VALUES (38893.00  ,999999999.00  ,30.00);
+        
+INSERT INTO [dbo].[ReportGroups]([ReportGroup])
+VALUES ('Payslips');
+INSERT INTO [dbo].[ReportGroups]([ReportGroup])
+VALUES ('Statutory');
+INSERT INTO [dbo].[ReportGroups]([ReportGroup])
+VALUES ('Company');
+INSERT INTO [dbo].[ReportGroups]([ReportGroup])
+VALUES ('Payroll');
+
+INSERT INTO [dbo].[Reports]([ReportName],[ReportGroup],[ResourceFile])
+VALUES ('Payslip',1  ,'EmpPayslip.rpt');
+INSERT INTO [dbo].[Reports]([ReportName],[ReportGroup],[ResourceFile])
+VALUES ('P10',2  ,'P10.rpt');
+INSERT INTO [dbo].[Reports]([ReportName],[ReportGroup],[ResourceFile])
+VALUES ('P9A',2  ,'P9A.rpt');
+INSERT INTO [dbo].[Reports]([ReportName],[ReportGroup],[ResourceFile])
+VALUES ('P10A',2  ,'P10A.rpt');
+INSERT INTO [dbo].[Reports]([ReportName],[ReportGroup],[ResourceFile])
+VALUES ('All Payslips',1  ,'PayslipAll.rpt');
+INSERT INTO [dbo].[Reports]([ReportName],[ReportGroup],[ResourceFile])
+VALUES ('Dept Payslip',1  ,'PayslipDept.rpt');
+INSERT INTO [dbo].[Reports]([ReportName],[ReportGroup],[ResourceFile])
+VALUES ('Payroll',4  ,'Payroll.rpt');
+INSERT INTO [dbo].[Reports]([ReportName],[ReportGroup],[ResourceFile])
+VALUES ('Paymaster',4  ,'PayMasterAll.rpt');
+INSERT INTO [dbo].[Reports]([ReportName],[ReportGroup],[ResourceFile])
+VALUES ('Employee List',3  ,'EmployeeList.rpt');
+INSERT INTO [dbo].[Reports]([ReportName],[ReportGroup],[ResourceFile])
+VALUES ('Payslip2',1  ,'EmpPayslip2.rpt');
+
+INSERT INTO [dbo].[Settings]([SSKey],[SSValue],[SSValueType] ,[SSSystem])
+VALUES ('NSSFMAX'  ,'200' ,'N'  ,1);
+INSERT INTO [dbo].[Settings]([SSKey],[SSValue],[SSValueType] ,[SSSystem])
+VALUES ('NSSFVAL'  ,'5' ,'N'  ,1);
+INSERT INTO [dbo].[Settings]([SSKey],[SSValue],[SSValueType] ,[SSSystem])
+VALUES ('PAYEEMIN'  ,'11136' ,'N'  ,1);
+INSERT INTO [dbo].[Settings]([SSKey],[SSValue],[SSValueType] ,[SSSystem])
+VALUES ('PEN1E'  ,'2.5' ,'N'  ,0);
+INSERT INTO [dbo].[Settings]([SSKey],[SSValue],[SSValueType] ,[SSSystem])
+VALUES ('PEN1R'  ,'7.5' ,'N'  ,0);
+INSERT INTO [dbo].[Settings]([SSKey],[SSValue],[SSValueType] ,[SSSystem])
+VALUES ('RELIEF'  ,'1162' ,'N'  ,0);
+
+INSERT INTO [dbo].[Employer] ([Name])
+VALUES ('Default');
+
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (1.00 ,1499.00 ,30.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (1500.00 ,1999.00 ,40.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (2000.00 ,2999.00 ,60.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (3000.00 ,3999.00 ,80.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (4000.00 ,4999.00 ,100.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (5000.00 ,5999.00 ,120.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (6000.00 ,6999.00 ,140.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (7000.00 ,7999.00 ,160.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (8000.00 ,8999.00 ,180.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (9000.00 ,9999.00 ,200.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (10000.00 ,10999.00 ,220.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (11000.00 ,11999.00 ,240.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (12000.00 ,12999.00 ,260.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (13000.00 ,13999.00 ,280.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (14000.00 ,14999.00 ,300.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (15000.00 ,9999999999.00 ,320.00)

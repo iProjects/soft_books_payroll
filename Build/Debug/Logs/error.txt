@@ -1,0 +1,11 @@
+==================================================================
+ERROR OCCOURED AT :05/16/2019 10:55:26 PM
+SOURCE:System
+MESSAGE:The remote name could not be resolved: 'www.google.com'
+Whole Exception:System.Net.WebException: The remote name could not be resolved: 'www.google.com'
+   at System.Net.WebClient.DownloadDataInternal(Uri address, WebRequest& request)
+   at System.Net.WebClient.DownloadString(Uri address)
+   at System.Net.WebClient.DownloadString(String address)
+   at CommonLib.Utils.IsConnectedToInternet() in d:\wakxpx\csharp\visualstudio\SBPayroll\CommonLib\Utils.cs:line 259
+==================================================================
+

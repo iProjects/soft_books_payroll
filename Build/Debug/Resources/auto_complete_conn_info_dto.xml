@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Systems>
+  <System Name="KMK\SQLEXPRESS" Application="sa" Database="123456789" SName="True" UName="True" PName="True" />
+</Systems>

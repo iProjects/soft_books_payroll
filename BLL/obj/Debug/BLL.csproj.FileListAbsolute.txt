@@ -1,0 +1,16 @@
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\BLL.dll
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\BLL.pdb
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\BLL\obj\Debug\BLL.dll
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\BLL\obj\Debug\BLL.pdb
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\BLL.dll
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\BLL.pdb
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\BLL\obj\Debug\BLL.dll
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\BLL\obj\Debug\BLL.pdb
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\BLL.dll
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\BLL.pdb
+D:\wakxpx\csharp\visualstudio\SBPayroll\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+D:\wakxpx\csharp\visualstudio\SBPayroll\BLL\obj\Debug\BLL.dll
+D:\wakxpx\csharp\visualstudio\SBPayroll\BLL\obj\Debug\BLL.pdb
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\BLL.dll.config

@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Systems>
+
+  <System Name="On kmk"
+          Application ="SBPayroll"
+          Database ="SBPayrollDB"
+          AttachDB=""
+          Server =".\SQLEXPRESS"
+          Metadata="SBPayrollDBEntities"
+          Version ="1.0.0.0"
+          Default="true"/>
+
+  <System Name="On sapserver"
+          Application ="SBPayroll"
+          Database ="SBPayrollDB"
+          AttachDB=""
+          Server ="SAPSERVER"
+          Metadata="SBPayrollDBEntities"
+          Version ="1.0.0.0"
+          Default="false"/>
+
+  <System Name="On sapserver\SQLEXPRESS"
+		      Application ="SBPayroll"
+          Database ="SBPayrollDB"
+          AttachDB=""
+          Server ="SaPSERVER\SQLEXPRESS"
+          Metadata="SBPayrollDBEntities"
+          Version ="1.0.0.0"
+          Default="false"/>
+
+  <System Name="On spserver"
+		      Application ="SBPayroll"
+		      Database ="SBPayrollDB"
+		      AttachDB=""
+		      Server ="SPSERVER"
+		      Metadata="SBPayrollDBEntities"
+          Version ="1.0.0.0"
+          Default="false"/>
+
+  <System Name="On gracecomp\SQLEXPRESS"
+       Application ="SBPayroll"
+       Database ="SBPayrollDB"
+       AttachDB=""
+       Server ="GRACECOMP\SQLEXPRESS"
+       Metadata="SBPayrollDBEntities"
+       Version ="1.0.0.0"
+       Default="false"/>
+
+  <System Name="On SPSERVER-PC\SQLEXPRESS"
+       Application ="SBPayroll"
+       Database ="SBPayrollDB"
+       AttachDB=""
+       Server ="SPSERVER-PC\SQLEXPRESS"
+       Metadata="SBPayrollDBEntities"
+       Version ="1.0.0.0"
+       Default="true"/>
+
+  <System Name="On Sugut"
+          Application ="SBPayroll"
+          Database ="SBPayrollDB"
+          AttachDB=""
+          Server ="SUGUT-PC\SQLEXPRESS"
+          Metadata="SBPayrollDBEntities"
+          Version ="1.0.0.0"
+          Default="false"/>
+
+  <System Name="On Lucy"
+         Application ="SBPayroll"
+         Database ="SBPayrollDB"
+         AttachDB=""
+         Server ="-ADMIN-PC\SQLEXPRESS"
+         Metadata="SBPayrollDBEntities"
+         Version ="1.0.0.0"
+         Default="false"/>
+
+</Systems>

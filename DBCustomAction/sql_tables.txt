@@ -1,0 +1,401 @@
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[NHIFRates]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[NHIFRates](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[FromAmt] [money] NOT NULL,
+	[ToAmt] [money] NOT NULL,
+	[Rate] [smallmoney] NOT NULL,
+ CONSTRAINT [PK_NHIFRates] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Settings]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Settings](
+	[SSKey] [varchar](20) NOT NULL,
+	[SSValue] [varchar](30) NOT NULL,
+	[SSValueType] [nchar](1) NOT NULL,
+	[SSSystem] [bit] NULL,
+ CONSTRAINT [PK_Settings] PRIMARY KEY CLUSTERED 
+(
+	[SSKey] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Employer]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Employer](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NULL,
+	[Address1] [varchar](30) NULL,
+	[Address2] [varchar](30) NULL,
+	[Telphone] [varchar](10) NULL,
+	[PIN] [varchar](15) NULL,
+	[Email] [varchar](30) NULL,
+	[Logo] [varbinary](max) NULL,
+ CONSTRAINT [PK_Employer] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Banks]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Banks](
+	[BankCode] [nchar](5) NOT NULL,
+	[BankName] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_Banks] PRIMARY KEY CLUSTERED 
+(
+	[BankCode] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Departments]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Departments](
+	[Code] [varchar](10) NOT NULL,
+	[Description] [varchar](50) NULL,
+ CONSTRAINT [PK_Departments] PRIMARY KEY CLUSTERED 
+(
+	[Code] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ReportParams]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[ReportParams](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ReportId] [int] NOT NULL,
+	[ParamName] [varchar](20) NULL,
+	[ParamType] [varchar](1) NULL,
+	[ParamValue] [varchar](50) NULL,
+ CONSTRAINT [PK_ReportParams] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[TransactionTypes]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[TransactionTypes](
+	[TxnCode] [varchar](10) NOT NULL,
+	[TxnType] [nchar](1) NOT NULL,
+	[Description] [varchar](50) NOT NULL,
+	[DataEntry] [varchar](10) NOT NULL,
+	[Taxable] [bit] NOT NULL,
+	[TaxDeductible] [bit] NULL,
+	[ItemOrder] [tinyint] NOT NULL,
+	[P9] [nchar](2) NULL,
+ CONSTRAINT [PK_TransactionTypes] PRIMARY KEY CLUSTERED 
+(
+	[TxnCode] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PayrollYr]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[PayrollYr](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[PayrollYr] [int] NULL
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[OpenYr]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[OpenYr](
+	[OpenYr] [int] NOT NULL,
+ CONSTRAINT [PK_OpenYr] PRIMARY KEY CLUSTERED 
+(
+	[OpenYr] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PayeeRates]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[PayeeRates](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[FromAmt] [money] NOT NULL,
+	[ToAmt] [money] NOT NULL,
+	[Rate] [smallmoney] NOT NULL,
+ CONSTRAINT [PK_PayeeRates] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Audit]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Audit](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[PostDate] [datetime] NULL,
+	[EmpNo] [varchar](10) NULL,
+	[TxnCode] [varchar](10) NULL,
+	[Amount] [money] NULL,
+	[Action] [varchar](10) NULL,
+	[UserId] [varchar](10) NULL
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ReportGroups]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[ReportGroups](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ReportGroup] [varchar](30) NULL,
+ CONSTRAINT [PK_ReportGroups] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Reports]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Reports](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ReportName] [varchar](30) NOT NULL,
+	[ReportGroup] [int] NULL CONSTRAINT [DF_Reports_ReportGroup]  DEFAULT ('Ungrouped'),
+	[ResourceFile] [varchar](50) NULL,
+ CONSTRAINT [PK_Reports] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[EmpAccounts]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[EmpAccounts](
+	[Account] [varchar](15) NOT NULL,
+	[Description] [varchar](30) NULL,
+	[EmpNo] [nchar](10) NULL,
+	[Balance] [money] NULL,
+	[AccountType] [varchar](5) NULL,
+ CONSTRAINT [PK_EmpAccounts] PRIMARY KEY CLUSTERED 
+(
+	[Account] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Employee]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Employee](
+	[EmpNo] [nchar](10) NOT NULL,
+	[Surname] [nchar](10) NULL,
+	[OtherNames] [nchar](30) NULL,
+	[DoB] [smalldatetime] NULL,
+	[DoE] [smalldatetime] NULL,
+	[MaritalStatus] [nchar](1) NULL,
+	[Gender] [nchar](1) NULL,
+	[NSSFNo] [nchar](20) NULL,
+	[NHIFNo] [nchar](20) NULL,
+	[PINNo] [nchar](20) NULL,
+	[BankCode] [nchar](5) NULL,
+	[BankAccount] [nchar](20) NULL,
+	[Department] [varchar](10) NULL,
+	[IsActive] [bit] NULL,
+	[DateLeft] [datetime] NULL,
+	[PrevEmployer] [varchar](50) NULL,
+	[BasicPay] [money] NULL,
+	[Employer] [int] NULL,
+ CONSTRAINT [PK_Employee] PRIMARY KEY CLUSTERED 
+(
+	[EmpNo] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Payrolls]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Payrolls](
+	[PayrollId] [int] IDENTITY(1,1) NOT NULL,
+	[Owner] [int] NULL,
+	[PayrollPeriod] [datetime] NULL,
+	[DateRun] [datetime] NULL,
+	[RunBy] [nchar](10) NULL,
+	[Approved] [bit] NULL CONSTRAINT [DF_Payrolls_Approved]  DEFAULT ((0)),
+	[ApprovedBy] [nchar](10) NULL,
+	[IsOpen] [bit] NULL CONSTRAINT [DF_Payrolls_IsOpen]  DEFAULT ((0)),
+	[Processed] [bit] NULL CONSTRAINT [DF_Payrolls_Processed]  DEFAULT ((0)),
+ CONSTRAINT [PK_Payrolls] PRIMARY KEY CLUSTERED 
+(
+	[PayrollId] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[PayrollTransactions]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[PayrollTransactions](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[PayrollId] [int] NULL,
+	[EmpNo] [nchar](10) NOT NULL,
+	[TxnCode] [varchar](10) NOT NULL,
+	[Amount] [money] NOT NULL,
+ CONSTRAINT [PK_PayrollTransactions] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[EmployeeTransactions]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[EmployeeTransactions](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[PostDate] [datetime] NOT NULL,
+	[EmpNo] [nchar](10) NOT NULL,
+	[TxnCode] [varchar](10) NOT NULL,
+	[Amount] [money] NOT NULL,
+	[Recurrent] [bit] NOT NULL,
+	[Enabled] [bit] NOT NULL,
+	[Statutory] [bit] NOT NULL,
+	[Account] [varchar](15) NULL,
+ CONSTRAINT [PK_EmployeeTransactions] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+END
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Employee_Banks]') AND parent_object_id = OBJECT_ID(N'[dbo].[Employee]'))
+ALTER TABLE [dbo].[Employee]  WITH NOCHECK ADD  CONSTRAINT [FK_Employee_Banks] FOREIGN KEY([BankCode])
+REFERENCES [dbo].[Banks] ([BankCode])
+GO
+ALTER TABLE [dbo].[Employee] NOCHECK CONSTRAINT [FK_Employee_Banks]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Employee_Departments]') AND parent_object_id = OBJECT_ID(N'[dbo].[Employee]'))
+ALTER TABLE [dbo].[Employee]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Departments] FOREIGN KEY([Department])
+REFERENCES [dbo].[Departments] ([Code])
+GO
+ALTER TABLE [dbo].[Employee] CHECK CONSTRAINT [FK_Employee_Departments]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Employee_Employer]') AND parent_object_id = OBJECT_ID(N'[dbo].[Employee]'))
+ALTER TABLE [dbo].[Employee]  WITH CHECK ADD  CONSTRAINT [FK_Employee_Employer] FOREIGN KEY([Employer])
+REFERENCES [dbo].[Employer] ([Id])
+GO
+ALTER TABLE [dbo].[Employee] CHECK CONSTRAINT [FK_Employee_Employer]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Payrolls_Employer]') AND parent_object_id = OBJECT_ID(N'[dbo].[Payrolls]'))
+ALTER TABLE [dbo].[Payrolls]  WITH CHECK ADD  CONSTRAINT [FK_Payrolls_Employer] FOREIGN KEY([Owner])
+REFERENCES [dbo].[Employer] ([Id])
+GO
+ALTER TABLE [dbo].[Payrolls] CHECK CONSTRAINT [FK_Payrolls_Employer]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_PayrollTransactions_Employee]') AND parent_object_id = OBJECT_ID(N'[dbo].[PayrollTransactions]'))
+ALTER TABLE [dbo].[PayrollTransactions]  WITH CHECK ADD  CONSTRAINT [FK_PayrollTransactions_Employee] FOREIGN KEY([EmpNo])
+REFERENCES [dbo].[Employee] ([EmpNo])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[PayrollTransactions] CHECK CONSTRAINT [FK_PayrollTransactions_Employee]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_PayrollTransactions_Payrolls]') AND parent_object_id = OBJECT_ID(N'[dbo].[PayrollTransactions]'))
+ALTER TABLE [dbo].[PayrollTransactions]  WITH CHECK ADD  CONSTRAINT [FK_PayrollTransactions_Payrolls] FOREIGN KEY([PayrollId])
+REFERENCES [dbo].[Payrolls] ([PayrollId])
+GO
+ALTER TABLE [dbo].[PayrollTransactions] CHECK CONSTRAINT [FK_PayrollTransactions_Payrolls]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_PayrollTransactions_TransactionTypes]') AND parent_object_id = OBJECT_ID(N'[dbo].[PayrollTransactions]'))
+ALTER TABLE [dbo].[PayrollTransactions]  WITH CHECK ADD  CONSTRAINT [FK_PayrollTransactions_TransactionTypes] FOREIGN KEY([TxnCode])
+REFERENCES [dbo].[TransactionTypes] ([TxnCode])
+GO
+ALTER TABLE [dbo].[PayrollTransactions] CHECK CONSTRAINT [FK_PayrollTransactions_TransactionTypes]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_EmployeeTransactions_Employee]') AND parent_object_id = OBJECT_ID(N'[dbo].[EmployeeTransactions]'))
+ALTER TABLE [dbo].[EmployeeTransactions]  WITH CHECK ADD  CONSTRAINT [FK_EmployeeTransactions_Employee] FOREIGN KEY([EmpNo])
+REFERENCES [dbo].[Employee] ([EmpNo])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[EmployeeTransactions] CHECK CONSTRAINT [FK_EmployeeTransactions_Employee]
+GO
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_EmployeeTransactions_TransactionTypes]') AND parent_object_id = OBJECT_ID(N'[dbo].[EmployeeTransactions]'))
+ALTER TABLE [dbo].[EmployeeTransactions]  WITH CHECK ADD  CONSTRAINT [FK_EmployeeTransactions_TransactionTypes] FOREIGN KEY([TxnCode])
+REFERENCES [dbo].[TransactionTypes] ([TxnCode])
+ON UPDATE CASCADE
+GO
+ALTER TABLE [dbo].[EmployeeTransactions] CHECK CONSTRAINT [FK_EmployeeTransactions_TransactionTypes]

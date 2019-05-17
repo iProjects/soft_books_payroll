@@ -1,0 +1,539 @@
+
+-- --------------------------------------------------
+-- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
+-- --------------------------------------------------
+-- Date Created: 06/18/2012 14:52:36
+-- Generated from EDMX file: C:\New Folder\SPPayroll\DAL\PayrollModel.edmx
+-- --------------------------------------------------
+
+SET QUOTED_IDENTIFIER OFF;
+GO
+USE [SBPayroll];
+GO
+IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
+GO
+
+-- --------------------------------------------------
+-- Dropping existing FOREIGN KEY constraints
+-- --------------------------------------------------
+
+
+-- --------------------------------------------------
+-- Dropping existing tables
+-- --------------------------------------------------
+
+IF OBJECT_ID(N'[dbo].[BankBranch]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[BankBranch];
+GO
+IF OBJECT_ID(N'[dbo].[Banks]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Banks];
+GO
+IF OBJECT_ID(N'[dbo].[Benefits]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Benefits];
+GO
+IF OBJECT_ID(N'[dbo].[Departments]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Departments];
+GO
+IF OBJECT_ID(N'[dbo].[Employee]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Employee];
+GO
+IF OBJECT_ID(N'[dbo].[EmployeeTransactions]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[EmployeeTransactions];
+GO
+IF OBJECT_ID(N'[dbo].[Employer]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Employer];
+GO
+IF OBJECT_ID(N'[dbo].[EmpNonCashBenefits]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[EmpNonCashBenefits];
+GO
+IF OBJECT_ID(N'[dbo].[NHIFRates]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[NHIFRates];
+GO
+IF OBJECT_ID(N'[dbo].[PackedTransactions]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PackedTransactions];
+GO
+IF OBJECT_ID(N'[dbo].[PayeeRates]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PayeeRates];
+GO
+IF OBJECT_ID(N'[dbo].[PayrollItems]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PayrollItems];
+GO
+IF OBJECT_ID(N'[dbo].[PayrollItemType]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PayrollItemType];
+GO
+IF OBJECT_ID(N'[dbo].[Payrolls]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Payrolls];
+GO
+IF OBJECT_ID(N'[dbo].[PayslipDet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PayslipDet];
+GO
+IF OBJECT_ID(N'[dbo].[PayslipMaster]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PayslipMaster];
+GO
+IF OBJECT_ID(N'[dbo].[Settings]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Settings];
+GO
+IF OBJECT_ID(N'[dbo].[spUsers]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[spUsers];
+GO
+IF OBJECT_ID(N'[SBPayrollModelStoreContainer].[sysdiagrams]', 'U') IS NOT NULL
+    DROP TABLE [SBPayrollModelStoreContainer].[sysdiagrams];
+GO
+IF OBJECT_ID(N'[dbo].[TaxTracking]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[TaxTracking];
+GO
+IF OBJECT_ID(N'[dbo].[TransactionDef]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[TransactionDef];
+GO
+IF OBJECT_ID(N'[SBPayrollModelStoreContainer].[GetEmpTransactions]', 'U') IS NOT NULL
+    DROP TABLE [SBPayrollModelStoreContainer].[GetEmpTransactions];
+GO
+IF OBJECT_ID(N'[SBPayrollModelStoreContainer].[vwEmpNonCashBenefits]', 'U') IS NOT NULL
+    DROP TABLE [SBPayrollModelStoreContainer].[vwEmpNonCashBenefits];
+GO
+
+-- --------------------------------------------------
+-- Creating all tables
+-- --------------------------------------------------
+
+-- Creating table 'BankBranches'
+CREATE TABLE [dbo].[BankBranches] (
+    [BankBranch1] varchar(5)  NOT NULL,
+    [Bank] varchar(5)  NOT NULL,
+    [BranchName] varchar(50)  NOT NULL
+);
+GO
+
+-- Creating table 'Banks'
+CREATE TABLE [dbo].[Banks] (
+    [BankCode] nchar(5)  NOT NULL,
+    [BankName] varchar(50)  NOT NULL
+);
+GO
+
+-- Creating table 'Benefits'
+CREATE TABLE [dbo].[Benefits] (
+    [BenefitId] int IDENTITY(1,1) NOT NULL,
+    [Name] varchar(50)  NULL,
+    [Rate] decimal(18,0)  NULL
+);
+GO
+
+-- Creating table 'Departments'
+CREATE TABLE [dbo].[Departments] (
+    [Code] varchar(10)  NOT NULL,
+    [Description] varchar(50)  NULL
+);
+GO
+
+-- Creating table 'EmployeeTransactions'
+CREATE TABLE [dbo].[EmployeeTransactions] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [PostDate] datetime  NOT NULL,
+    [EmpNo] nchar(10)  NOT NULL,
+    [ItemId] nchar(15)  NOT NULL,
+    [Amount] decimal(19,4)  NOT NULL,
+    [Recurrent] bit  NOT NULL,
+    [Processed] bit  NULL,
+    [Enabled] bit  NOT NULL,
+    [TrackYTD] bit  NULL,
+    [ShowYTDInPayslip] bit  NULL,
+    [YTDAmount] decimal(19,4)  NULL,
+    [CreatedBy] nchar(10)  NULL,
+    [LastChangedBy] nchar(10)  NULL,
+    [LastChangeDate] datetime  NULL,
+    [AuthorizedBy] nchar(10)  NULL,
+    [AuthorizeDate] datetime  NULL
+);
+GO
+
+-- Creating table 'Employers'
+CREATE TABLE [dbo].[Employers] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] varchar(50)  NULL,
+    [Address1] varchar(30)  NULL,
+    [Address2] varchar(30)  NULL,
+    [Telphone] varchar(10)  NULL,
+    [PIN] varchar(15)  NULL,
+    [Email] varchar(30)  NULL,
+    [Logo] varchar(250)  NULL,
+    [NHIF] varchar(50)  NULL,
+    [NSSF] varchar(50)  NULL
+);
+GO
+
+-- Creating table 'EmpNonCashBenefits'
+CREATE TABLE [dbo].[EmpNonCashBenefits] (
+    [EmpNo] nchar(10)  NOT NULL,
+    [BenefitId] int  NOT NULL,
+    [Quantity] int  NOT NULL
+);
+GO
+
+-- Creating table 'NHIFRates'
+CREATE TABLE [dbo].[NHIFRates] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [FromAmt] decimal(19,4)  NOT NULL,
+    [ToAmt] decimal(19,4)  NOT NULL,
+    [Rate] decimal(10,4)  NOT NULL
+);
+GO
+
+-- Creating table 'PackedTransactions'
+CREATE TABLE [dbo].[PackedTransactions] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [PackDate] datetime  NOT NULL,
+    [EmpNo] nchar(10)  NOT NULL,
+    [TxnCode] nchar(10)  NOT NULL,
+    [Amount] decimal(10,4)  NOT NULL,
+    [CreatedBy] nchar(10)  NULL,
+    [Authorized] bit  NULL
+);
+GO
+
+-- Creating table 'PayeeRates'
+CREATE TABLE [dbo].[PayeeRates] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [FromAmt] decimal(19,4)  NOT NULL,
+    [ToAmt] decimal(19,4)  NOT NULL,
+    [Rate] decimal(10,4)  NOT NULL
+);
+GO
+
+-- Creating table 'PayrollItems'
+CREATE TABLE [dbo].[PayrollItems] (
+    [ItemId] nchar(15)  NOT NULL,
+    [ItemType] nchar(10)  NULL,
+    [TaxTracking] nchar(10)  NULL,
+    [PayableTo] nchar(10)  NULL,
+    [GLAccount] nchar(10)  NULL,
+    [Active] bit  NULL,
+    [AddToPension] bit  NULL,
+    [DefaultItem] bit  NULL
+);
+GO
+
+-- Creating table 'PayrollItemTypes'
+CREATE TABLE [dbo].[PayrollItemTypes] (
+    [PayrollItemTypeId] nchar(10)  NOT NULL,
+    [Description] varchar(50)  NULL
+);
+GO
+
+-- Creating table 'Payrolls'
+CREATE TABLE [dbo].[Payrolls] (
+    [Period] int  NOT NULL,
+    [Year] int  NOT NULL,
+    [Employer] int  NULL,
+    [DateRun] datetime  NULL,
+    [RunBy] nchar(10)  NULL,
+    [Approved] bit  NULL,
+    [ApprovedBy] nchar(10)  NULL,
+    [IsOpen] bit  NOT NULL,
+    [Processed] bit  NOT NULL
+);
+GO
+
+-- Creating table 'PayslipDets'
+CREATE TABLE [dbo].[PayslipDets] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [EmpNo] nchar(10)  NOT NULL,
+    [EmpTxnId] int  NOT NULL,
+    [Period] int  NOT NULL,
+    [Year] int  NULL,
+    [Description] nchar(20)  NOT NULL,
+    [TaxTracking] nchar(10)  NOT NULL,
+    [Amount] decimal(18,0)  NOT NULL,
+    [DEType] nvarchar(1)  NOT NULL,
+    [IsStatutory] bit  NOT NULL,
+    [ShowInPayslip] bit  NULL,
+    [YTD] decimal(18,0)  NULL
+);
+GO
+
+-- Creating table 'Settings'
+CREATE TABLE [dbo].[Settings] (
+    [SSKey] varchar(20)  NOT NULL,
+    [SSValue] varchar(30)  NOT NULL,
+    [SSValueType] nchar(1)  NOT NULL,
+    [SSSystem] bit  NULL
+);
+GO
+
+-- Creating table 'spUsers'
+CREATE TABLE [dbo].[spUsers] (
+    [UserId] varchar(10)  NOT NULL,
+    [Password] varchar(6)  NOT NULL,
+    [Role] nchar(10)  NOT NULL,
+    [Locked] bit  NULL
+);
+GO
+
+
+-- Creating table 'TaxTrackings'
+CREATE TABLE [dbo].[TaxTrackings] (
+    [TaxTrackingId] nchar(10)  NOT NULL,
+    [Description] varchar(50)  NULL
+);
+GO
+
+-- Creating table 'TransactionDefs'
+CREATE TABLE [dbo].[TransactionDefs] (
+    [TxnCode] nchar(10)  NOT NULL,
+    [DataEntry] nchar(1)  NOT NULL,
+    [PayrollItem] nchar(15)  NOT NULL,
+    [DefaultAmount] decimal(10,4)  NULL,
+    [Enabled] bit  NULL,
+    [Recurrent] bit  NULL,
+    [TrackYTD] bit  NULL
+);
+GO
+
+-- Creating table 'GetEmpTransactions'
+CREATE TABLE [dbo].[GetEmpTransactions] (
+    [EmpNo] nchar(10)  NOT NULL,
+    [Surname] nchar(10)  NULL,
+    [MaritalStatus] nchar(1)  NULL,
+    [IsActive] bit  NULL,
+    [ItemId] nchar(15)  NOT NULL,
+    [Amount] decimal(19,4)  NOT NULL,
+    [Recurrent] bit  NOT NULL,
+    [Enabled] bit  NOT NULL,
+    [BasicPay] decimal(19,4)  NULL,
+    [Department] varchar(50)  NULL,
+    [DeptCode] varchar(10)  NOT NULL,
+    [EmpTrack] bit  NULL,
+    [YTDAmount] decimal(19,4)  NULL,
+    [ItemType] nchar(10)  NULL,
+    [TaxTracking] nchar(10)  NULL,
+    [Active] bit  NULL,
+    [AddToPension] bit  NULL,
+    [ShowYTDInPayslip] bit  NULL,
+    [EmpTxnId] int  NOT NULL
+);
+GO
+
+-- Creating table 'vwEmpNonCashBenefits'
+CREATE TABLE [dbo].[vwEmpNonCashBenefits] (
+    [EmpNo] nchar(10)  NOT NULL,
+    [BenefitId] int  NOT NULL,
+    [Quantity] int  NOT NULL,
+    [Name] varchar(50)  NULL,
+    [Rate] decimal(18,0)  NULL
+);
+GO
+
+-- Creating table 'Employees'
+CREATE TABLE [dbo].[Employees] (
+    [EmpNo] nchar(10)  NOT NULL,
+    [Surname] nchar(10)  NULL,
+    [OtherNames] nchar(30)  NULL,
+    [DoB] datetime  NULL,
+    [DoE] datetime  NOT NULL,
+    [MaritalStatus] nchar(1)  NULL,
+    [Gender] nchar(1)  NULL,
+    [NSSFNo] nchar(20)  NULL,
+    [NHIFNo] nchar(20)  NULL,
+    [PINNo] nchar(20)  NULL,
+    [BankCode] nchar(5)  NULL,
+    [IDNo] varchar(20)  NULL,
+    [BankAccount] nchar(20)  NULL,
+    [Department] varchar(10)  NULL,
+    [IsActive] bit  NULL,
+    [DateLeft] datetime  NULL,
+    [PrevEmployer] varchar(50)  NULL,
+    [BasicPay] decimal(19,4)  NULL,
+    [PersonalRelief] decimal(19,4)  NULL,
+    [MortgageRelief] decimal(19,4)  NULL,
+    [Employer] int  NOT NULL,
+    [PayPoint] nchar(10)  NULL,
+    [EmpGroup] nchar(10)  NULL,
+    [EmpPayroll] nchar(10)  NULL,
+    [CreatedOn] datetime  NULL,
+    [CreatedBy] nchar(10)  NULL
+);
+GO
+
+-- Creating table 'PayslipMasters'
+CREATE TABLE [dbo].[PayslipMasters] (
+    [Period] int  NOT NULL,
+    [Year] int  NOT NULL,
+    [EmpNo] nchar(10)  NOT NULL,
+    [PaymentDate] datetime  NOT NULL,
+    [PrintedBy] nchar(10)  NOT NULL,
+    [PrintedOn] datetime  NOT NULL,
+    [EmpName] varchar(50)  NOT NULL,
+    [PayPoint] nchar(10)  NOT NULL,
+    [PIN] nchar(20)  NULL,
+    [EmpGroup] nchar(10)  NOT NULL,
+    [EmpPayroll] nchar(10)  NOT NULL,
+    [CompName] varchar(50)  NOT NULL,
+    [CompAddr] varchar(50)  NULL,
+    [CompTel] varchar(10)  NULL,
+    [PayeTax] decimal(18,0)  NOT NULL,
+    [BasicPay] decimal(18,0)  NOT NULL,
+    [Benefits] decimal(18,0)  NOT NULL,
+    [Variables] decimal(18,0)  NOT NULL,
+    [OtherDeductions] decimal(18,0)  NOT NULL,
+    [GrossTaxableEarnings] decimal(18,0)  NOT NULL,
+    [NetTaxableEarnings] decimal(18,0)  NOT NULL,
+    [MortgageRelief] decimal(18,0)  NOT NULL,
+    [GrossTax] decimal(18,0)  NOT NULL,
+    [PersonalRelief] decimal(18,0)  NOT NULL,
+    [PensionEmployer] decimal(18,0)  NOT NULL,
+    [EmployerNSSF] decimal(18,0)  NOT NULL,
+    [PensionEmployee] decimal(18,0)  NOT NULL,
+    [BankBranch] nchar(5)  NOT NULL,
+    [Account] nchar(20)  NOT NULL
+);
+GO
+
+-- --------------------------------------------------
+-- Creating all PRIMARY KEY constraints
+-- --------------------------------------------------
+
+-- Creating primary key on [BankBranch1], [Bank] in table 'BankBranches'
+ALTER TABLE [dbo].[BankBranches]
+ADD CONSTRAINT [PK_BankBranches]
+    PRIMARY KEY CLUSTERED ([BankBranch1], [Bank] ASC);
+GO
+
+-- Creating primary key on [BankCode] in table 'Banks'
+ALTER TABLE [dbo].[Banks]
+ADD CONSTRAINT [PK_Banks]
+    PRIMARY KEY CLUSTERED ([BankCode] ASC);
+GO
+
+-- Creating primary key on [BenefitId] in table 'Benefits'
+ALTER TABLE [dbo].[Benefits]
+ADD CONSTRAINT [PK_Benefits]
+    PRIMARY KEY CLUSTERED ([BenefitId] ASC);
+GO
+
+-- Creating primary key on [Code] in table 'Departments'
+ALTER TABLE [dbo].[Departments]
+ADD CONSTRAINT [PK_Departments]
+    PRIMARY KEY CLUSTERED ([Code] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'EmployeeTransactions'
+ALTER TABLE [dbo].[EmployeeTransactions]
+ADD CONSTRAINT [PK_EmployeeTransactions]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Employers'
+ALTER TABLE [dbo].[Employers]
+ADD CONSTRAINT [PK_Employers]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [EmpNo], [BenefitId] in table 'EmpNonCashBenefits'
+ALTER TABLE [dbo].[EmpNonCashBenefits]
+ADD CONSTRAINT [PK_EmpNonCashBenefits]
+    PRIMARY KEY CLUSTERED ([EmpNo], [BenefitId] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'NHIFRates'
+ALTER TABLE [dbo].[NHIFRates]
+ADD CONSTRAINT [PK_NHIFRates]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'PackedTransactions'
+ALTER TABLE [dbo].[PackedTransactions]
+ADD CONSTRAINT [PK_PackedTransactions]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'PayeeRates'
+ALTER TABLE [dbo].[PayeeRates]
+ADD CONSTRAINT [PK_PayeeRates]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [ItemId] in table 'PayrollItems'
+ALTER TABLE [dbo].[PayrollItems]
+ADD CONSTRAINT [PK_PayrollItems]
+    PRIMARY KEY CLUSTERED ([ItemId] ASC);
+GO
+
+-- Creating primary key on [PayrollItemTypeId] in table 'PayrollItemTypes'
+ALTER TABLE [dbo].[PayrollItemTypes]
+ADD CONSTRAINT [PK_PayrollItemTypes]
+    PRIMARY KEY CLUSTERED ([PayrollItemTypeId] ASC);
+GO
+
+-- Creating primary key on [Period], [Year] in table 'Payrolls'
+ALTER TABLE [dbo].[Payrolls]
+ADD CONSTRAINT [PK_Payrolls]
+    PRIMARY KEY CLUSTERED ([Period], [Year] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'PayslipDets'
+ALTER TABLE [dbo].[PayslipDets]
+ADD CONSTRAINT [PK_PayslipDets]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [SSKey] in table 'Settings'
+ALTER TABLE [dbo].[Settings]
+ADD CONSTRAINT [PK_Settings]
+    PRIMARY KEY CLUSTERED ([SSKey] ASC);
+GO
+
+-- Creating primary key on [UserId] in table 'spUsers'
+ALTER TABLE [dbo].[spUsers]
+ADD CONSTRAINT [PK_spUsers]
+    PRIMARY KEY CLUSTERED ([UserId] ASC);
+GO
+
+-- Creating primary key on [name], [principal_id], [diagram_id] in table 'sysdiagrams'
+ALTER TABLE [dbo].[sysdiagrams]
+ADD CONSTRAINT [PK_sysdiagrams]
+    PRIMARY KEY CLUSTERED ([name], [principal_id], [diagram_id] ASC);
+GO
+
+-- Creating primary key on [TaxTrackingId] in table 'TaxTrackings'
+ALTER TABLE [dbo].[TaxTrackings]
+ADD CONSTRAINT [PK_TaxTrackings]
+    PRIMARY KEY CLUSTERED ([TaxTrackingId] ASC);
+GO
+
+-- Creating primary key on [TxnCode] in table 'TransactionDefs'
+ALTER TABLE [dbo].[TransactionDefs]
+ADD CONSTRAINT [PK_TransactionDefs]
+    PRIMARY KEY CLUSTERED ([TxnCode] ASC);
+GO
+
+-- Creating primary key on [EmpNo], [ItemId], [Amount], [Recurrent], [Enabled], [DeptCode], [EmpTxnId] in table 'GetEmpTransactions'
+ALTER TABLE [dbo].[GetEmpTransactions]
+ADD CONSTRAINT [PK_GetEmpTransactions]
+    PRIMARY KEY CLUSTERED ([EmpNo], [ItemId], [Amount], [Recurrent], [Enabled], [DeptCode], [EmpTxnId] ASC);
+GO
+
+-- Creating primary key on [EmpNo], [BenefitId], [Quantity] in table 'vwEmpNonCashBenefits'
+ALTER TABLE [dbo].[vwEmpNonCashBenefits]
+ADD CONSTRAINT [PK_vwEmpNonCashBenefits]
+    PRIMARY KEY CLUSTERED ([EmpNo], [BenefitId], [Quantity] ASC);
+GO
+
+-- Creating primary key on [EmpNo] in table 'Employees'
+ALTER TABLE [dbo].[Employees]
+ADD CONSTRAINT [PK_Employees]
+    PRIMARY KEY CLUSTERED ([EmpNo] ASC);
+GO
+
+-- Creating primary key on [Period], [Year], [EmpNo] in table 'PayslipMasters'
+ALTER TABLE [dbo].[PayslipMasters]
+ADD CONSTRAINT [PK_PayslipMasters]
+    PRIMARY KEY CLUSTERED ([Period], [Year], [EmpNo] ASC);
+GO
+
+-- --------------------------------------------------
+-- Creating all FOREIGN KEY constraints
+-- --------------------------------------------------
+
+-- --------------------------------------------------
+-- Script has ended
+-- --------------------------------------------------

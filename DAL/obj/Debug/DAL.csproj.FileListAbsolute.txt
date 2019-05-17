@@ -1,0 +1,18 @@
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\DAL.dll.config
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\DAL.dll
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\DAL.pdb
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\DAL\obj\Debug\DAL.dll
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\DAL\obj\Debug\DAL.pdb
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\DAL.dll.config
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\DAL.dll
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\DAL.pdb
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\DAL\obj\Debug\DAL.dll
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\DAL\obj\Debug\DAL.pdb
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\DAL.dll.config
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\DAL.dll
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\DAL.pdb
+D:\wakxpx\csharp\visualstudio\SBPayroll\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+D:\wakxpx\csharp\visualstudio\SBPayroll\DAL\obj\Debug\DAL.dll
+D:\wakxpx\csharp\visualstudio\SBPayroll\DAL\obj\Debug\DAL.pdb

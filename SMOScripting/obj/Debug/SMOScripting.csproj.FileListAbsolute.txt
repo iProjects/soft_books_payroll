@@ -1,0 +1,30 @@
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\SQL.txt
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\SMOScripting.exe.config
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\SMOScripting.exe
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\Build\Debug\SMOScripting.pdb
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\SMOScripting\obj\Debug\SMOScripting.csprojResolveAssemblyReference.cache
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\SMOScripting\obj\Debug\SMOScripting.ScriptForm.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\SMOScripting\obj\Debug\SMOScripting.Properties.Resources.resources
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\SMOScripting\obj\Debug\SMOScripting.csproj.GenerateResource.Cache
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\SMOScripting\obj\Debug\SMOScripting.exe
+C:\Users\USER\Downloads\SBPayroll (1)\SBPayroll\SMOScripting\obj\Debug\SMOScripting.pdb
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\SQL.txt
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\SMOScripting.exe.config
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\SMOScripting.exe
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\Build\Debug\SMOScripting.pdb
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\SMOScripting\obj\Debug\SMOScripting.csprojResolveAssemblyReference.cache
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\SMOScripting\obj\Debug\SMOScripting.ScriptForm.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\SMOScripting\obj\Debug\SMOScripting.Properties.Resources.resources
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\SMOScripting\obj\Debug\SMOScripting.csproj.GenerateResource.Cache
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\SMOScripting\obj\Debug\SMOScripting.exe
+D:\wakxpx\csharp\sharpdevelop\SBPayroll\SMOScripting\obj\Debug\SMOScripting.pdb
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\SQL.txt
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\SMOScripting.exe.config
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\SMOScripting.exe
+D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\SMOScripting.pdb
+D:\wakxpx\csharp\visualstudio\SBPayroll\SMOScripting\obj\Debug\SMOScripting.csprojResolveAssemblyReference.cache
+D:\wakxpx\csharp\visualstudio\SBPayroll\SMOScripting\obj\Debug\SMOScripting.ScriptForm.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\SMOScripting\obj\Debug\SMOScripting.Properties.Resources.resources
+D:\wakxpx\csharp\visualstudio\SBPayroll\SMOScripting\obj\Debug\SMOScripting.csproj.GenerateResource.Cache
+D:\wakxpx\csharp\visualstudio\SBPayroll\SMOScripting\obj\Debug\SMOScripting.exe
+D:\wakxpx\csharp\visualstudio\SBPayroll\SMOScripting\obj\Debug\SMOScripting.pdb

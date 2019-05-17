@@ -1,0 +1,116 @@
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('BASIC','P','BASIC PAY','BASIC',1,0,0,'A');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('BENEFITS','T','BENEFITS','BENEFITS',0,0,4,'G');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('GROSSPAY','T','GROSS PAY','GROSSPAY',0,0,3,'D');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('GROSSTAX','T','GROSS TAX','GROSSTAX',0,0,20,'J');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('NETPAY','S','NET PAY','NETPAY',0,0,10,'N');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('NHIF','D','NHIF','NHIF',0,0,8,'N');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('NSSF','D','NSSF','NSSF',0,0,7,'E');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('PAYE','D','PAYE','PAYE',0,0,6,'L');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('PEN1E','D','PENSION','PEN1E',0,1,9,'N');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('PEN1R','D','PENSION','PEN1R',0,0,1,'N');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('RELIEF','T','RELIEF','RELIEF',0,0,3,'K');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('ADV','D','ADVANCE','User',0,0,1,'N');
+INSERT INTO [dbo].[TransactionTypes] ([TxnCode],[TxnType],[Description],[DataEntry],[Taxable],[TaxDeductible],[ItemOrder],[P9])
+VALUES ('ALLOW','P','ALLOWANCE','User',1,0,1,'B');
+
+INSERT INTO [dbo].[PayeeRates]([FromAmt] ,[ToAmt],[Rate])
+VALUES (0.00  ,10164.00  ,10.00);
+INSERT INTO [dbo].[PayeeRates]([FromAmt] ,[ToAmt],[Rate])
+VALUES (10165.00  ,19741.00  ,15.00);
+INSERT INTO [dbo].[PayeeRates]([FromAmt] ,[ToAmt],[Rate])
+VALUES (19741.00  ,29317.00  ,20.00);
+INSERT INTO [dbo].[PayeeRates]([FromAmt] ,[ToAmt],[Rate])
+VALUES (29317.00  ,38893.00  ,25.00);
+INSERT INTO [dbo].[PayeeRates]([FromAmt] ,[ToAmt],[Rate])
+VALUES (38893.00  ,999999999.00  ,30.00);
+        
+INSERT INTO [dbo].[ReportGroups]([ReportGroup])
+VALUES ('Payslips');
+INSERT INTO [dbo].[ReportGroups]([ReportGroup])
+VALUES ('Statutory');
+INSERT INTO [dbo].[ReportGroups]([ReportGroup])
+VALUES ('Company');
+INSERT INTO [dbo].[ReportGroups]([ReportGroup])
+VALUES ('Payroll');
+
+INSERT INTO [dbo].[Reports]([ReportName],[ReportGroup],[ResourceFile])
+VALUES ('Payslip',1  ,'EmpPayslip.rpt');
+INSERT INTO [dbo].[Reports]([ReportName],[ReportGroup],[ResourceFile])
+VALUES ('P10',2  ,'P10.rpt');
+INSERT INTO [dbo].[Reports]([ReportName],[ReportGroup],[ResourceFile])
+VALUES ('P9A',2  ,'P9A.rpt');
+INSERT INTO [dbo].[Reports]([ReportName],[ReportGroup],[ResourceFile])
+VALUES ('P10A',2  ,'P10A.rpt');
+INSERT INTO [dbo].[Reports]([ReportName],[ReportGroup],[ResourceFile])
+VALUES ('All Payslips',1  ,'PayslipAll.rpt');
+INSERT INTO [dbo].[Reports]([ReportName],[ReportGroup],[ResourceFile])
+VALUES ('Dept Payslip',1  ,'PayslipDept.rpt');
+INSERT INTO [dbo].[Reports]([ReportName],[ReportGroup],[ResourceFile])
+VALUES ('Payroll',4  ,'Payroll.rpt');
+INSERT INTO [dbo].[Reports]([ReportName],[ReportGroup],[ResourceFile])
+VALUES ('Paymaster',4  ,'PayMasterAll.rpt');
+INSERT INTO [dbo].[Reports]([ReportName],[ReportGroup],[ResourceFile])
+VALUES ('Employee List',3  ,'EmployeeList.rpt');
+INSERT INTO [dbo].[Reports]([ReportName],[ReportGroup],[ResourceFile])
+VALUES ('Payslip2',1  ,'EmpPayslip2.rpt');
+
+INSERT INTO [dbo].[Settings]([SSKey],[SSValue],[SSValueType] ,[SSSystem])
+VALUES ('NSSFMAX'  ,'200' ,'N'  ,1);
+INSERT INTO [dbo].[Settings]([SSKey],[SSValue],[SSValueType] ,[SSSystem])
+VALUES ('NSSFVAL'  ,'5' ,'N'  ,1);
+INSERT INTO [dbo].[Settings]([SSKey],[SSValue],[SSValueType] ,[SSSystem])
+VALUES ('PAYEEMIN'  ,'11136' ,'N'  ,1);
+INSERT INTO [dbo].[Settings]([SSKey],[SSValue],[SSValueType] ,[SSSystem])
+VALUES ('PEN1E'  ,'2.5' ,'N'  ,0);
+INSERT INTO [dbo].[Settings]([SSKey],[SSValue],[SSValueType] ,[SSSystem])
+VALUES ('PEN1R'  ,'7.5' ,'N'  ,0);
+INSERT INTO [dbo].[Settings]([SSKey],[SSValue],[SSValueType] ,[SSSystem])
+VALUES ('RELIEF'  ,'1162' ,'N'  ,0);
+
+INSERT INTO [dbo].[Employer] ([Name])
+VALUES ('Default');
+
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (1.00 ,1499.00 ,30.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (1500.00 ,1999.00 ,40.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (2000.00 ,2999.00 ,60.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (3000.00 ,3999.00 ,80.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (4000.00 ,4999.00 ,100.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (5000.00 ,5999.00 ,120.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (6000.00 ,6999.00 ,140.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (7000.00 ,7999.00 ,160.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (8000.00 ,8999.00 ,180.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (9000.00 ,9999.00 ,200.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (10000.00 ,10999.00 ,220.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (11000.00 ,11999.00 ,240.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (12000.00 ,12999.00 ,260.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (13000.00 ,13999.00 ,280.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (14000.00 ,14999.00 ,300.00);
+INSERT INTO [dbo].[NHIFRates] ([FromAmt] ,[ToAmt] ,[Rate])
+VALUES (15000.00 ,9999999999.00 ,320.00)
