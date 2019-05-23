@@ -65,6 +65,7 @@ namespace DAL
         public string EmpNo { get; set; }
 
         public int EmployeeId { get; set; }
+        public int EmployerId { get; set; }
 
         public string Department { get; set; }
 

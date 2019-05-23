@@ -41,13 +41,14 @@
             this.pbStatus = new System.Windows.Forms.ToolStripProgressBar();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridViewPayrolls = new System.Windows.Forms.DataGridView();
-            this.ColumnYear = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnPeriod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel4 = new System.Windows.Forms.Panel();
             this.listBoxResults = new System.Windows.Forms.ListBox();
             this.bindingSourcePayrolls = new System.Windows.Forms.BindingSource(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.appNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.ColumnYear = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnProcessed = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ColumnPeriod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -131,7 +132,7 @@
             // 
             this.txtStatus.BackColor = System.Drawing.Color.PaleGreen;
             this.txtStatus.Name = "txtStatus";
-            this.txtStatus.Size = new System.Drawing.Size(38, 17);
+            this.txtStatus.Size = new System.Drawing.Size(39, 17);
             this.txtStatus.Text = "Ready";
             // 
             // pbStatus
@@ -160,6 +161,7 @@
             this.dataGridViewPayrolls.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewPayrolls.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnYear,
+            this.ColumnProcessed,
             this.ColumnPeriod});
             this.dataGridViewPayrolls.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewPayrolls.Location = new System.Drawing.Point(0, 0);
@@ -168,22 +170,6 @@
             this.dataGridViewPayrolls.ReadOnly = true;
             this.dataGridViewPayrolls.Size = new System.Drawing.Size(235, 282);
             this.dataGridViewPayrolls.TabIndex = 3;
-            // 
-            // ColumnYear
-            // 
-            this.ColumnYear.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ColumnYear.DataPropertyName = "Year";
-            this.ColumnYear.HeaderText = "Year";
-            this.ColumnYear.Name = "ColumnYear";
-            this.ColumnYear.ReadOnly = true;
-            // 
-            // ColumnPeriod
-            // 
-            this.ColumnPeriod.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ColumnPeriod.DataPropertyName = "Period";
-            this.ColumnPeriod.HeaderText = "Period";
-            this.ColumnPeriod.Name = "ColumnPeriod";
-            this.ColumnPeriod.ReadOnly = true;
             // 
             // panel4
             // 
@@ -209,6 +195,35 @@
             // 
             this.appNotifyIcon.Text = "notifyIcon1";
             this.appNotifyIcon.Visible = true;
+            // 
+            // ColumnYear
+            // 
+            this.ColumnYear.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ColumnYear.DataPropertyName = "Year";
+            this.ColumnYear.HeaderText = "Year";
+            this.ColumnYear.Name = "ColumnYear";
+            this.ColumnYear.ReadOnly = true;
+            this.ColumnYear.Width = 80;
+            // 
+            // ColumnProcessed
+            // 
+            this.ColumnProcessed.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ColumnProcessed.DataPropertyName = "Processed";
+            this.ColumnProcessed.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ColumnProcessed.HeaderText = "Processed";
+            this.ColumnProcessed.Name = "ColumnProcessed";
+            this.ColumnProcessed.ReadOnly = true;
+            this.ColumnProcessed.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColumnProcessed.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.ColumnProcessed.Width = 55;
+            // 
+            // ColumnPeriod
+            // 
+            this.ColumnPeriod.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ColumnPeriod.DataPropertyName = "Period";
+            this.ColumnPeriod.HeaderText = "Period";
+            this.ColumnPeriod.Name = "ColumnPeriod";
+            this.ColumnPeriod.ReadOnly = true;
             // 
             // ProcessPayroll
             // 
@@ -255,9 +270,10 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.ListBox listBoxResults;
         private System.Windows.Forms.Button btnClosePayroll;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnYear;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnPeriod;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.NotifyIcon appNotifyIcon;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnYear;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnProcessed;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnPeriod;
     }
 }

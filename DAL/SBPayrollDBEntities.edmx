@@ -612,6 +612,7 @@
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="EmpNo" Type="nvarchar" Nullable="false" MaxLength="250" />
           <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="EmployerId" Type="int" Nullable="true" />
           <Property Name="EmpTxnId" Type="int" Nullable="false" />
           <Property Name="Period" Type="int" Nullable="false" />
           <Property Name="Year" Type="int" />
@@ -677,6 +678,7 @@
           <Property Name="Year" Type="int" Nullable="false" />
           <Property Name="EmpNo" Type="nvarchar" Nullable="false" MaxLength="250" />
           <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="EmployerId" Type="int" Nullable="true" />
           <Property Name="PaymentDate" Type="date" Nullable="false" />
           <Property Name="PrintedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="PrintedOn" Type="datetime" Nullable="false" />
@@ -1728,6 +1730,7 @@
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="EmpNo" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="EmployeeId" Nullable="false" />
+          <Property Type="Int32" Name="EmployerId" Nullable="true" />
           <Property Type="Int32" Name="EmpTxnId" Nullable="false" />
           <Property Type="Int32" Name="Period" Nullable="false" />
           <Property Type="Int32" Name="Year" />
@@ -1793,6 +1796,7 @@
           <Property Type="Int32" Name="Year" Nullable="false" />
           <Property Type="String" Name="EmpNo" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="EmployeeId" Nullable="false" />
+          <Property Type="Int32" Name="EmployerId" Nullable="true" />
           <Property Type="DateTime" Name="PaymentDate" Nullable="false" />
           <Property Type="String" Name="PrintedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="DateTime" Name="PrintedOn" Nullable="false" />
@@ -2775,6 +2779,7 @@
                 <ScalarProperty Name="Period" ColumnName="Period" />
                 <ScalarProperty Name="EmpTxnId" ColumnName="EmpTxnId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmployerId" ColumnName="EmployerId" />
                 <ScalarProperty Name="EmpNo" ColumnName="EmpNo" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -2860,6 +2865,7 @@
                 <ScalarProperty Name="PrintedBy" ColumnName="PrintedBy" />
                 <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmployerId" ColumnName="EmployerId" />
                 <ScalarProperty Name="EmpNo" ColumnName="EmpNo" />
                 <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="Period" ColumnName="Period" />

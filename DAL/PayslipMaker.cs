@@ -221,6 +221,8 @@ namespace DAL
                 payslip.EmployerAddress = employer.Address1 + ", " + employer.Address2;
                 payslip.EmployerTelephone = employer.Telephone;
                 payslip.EmployerEmail = employer.Email;
+                //added employer id value to payslip
+                payslip.EmployerId = employee.EmployerId;
 
                 //Payment
                 payslip.BankBranch = employee.BankCode;

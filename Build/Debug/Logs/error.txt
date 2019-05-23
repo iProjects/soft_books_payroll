@@ -1,11 +1,989 @@
 ==================================================================
-ERROR OCCOURED AT :05/16/2019 10:55:26 PM
-SOURCE:System
-MESSAGE:The remote name could not be resolved: 'www.google.com'
-Whole Exception:System.Net.WebException: The remote name could not be resolved: 'www.google.com'
-   at System.Net.WebClient.DownloadDataInternal(Uri address, WebRequest& request)
-   at System.Net.WebClient.DownloadString(Uri address)
-   at System.Net.WebClient.DownloadString(String address)
-   at CommonLib.Utils.IsConnectedToInternet() in d:\wakxpx\csharp\visualstudio\SBPayroll\CommonLib\Utils.cs:line 259
+ERROR OCCOURED AT :05/23/2019 10:55:59 AM
+SOURCE:System.Data.Entity
+MESSAGE:The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+Whole Exception:System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.WorkingCopyNotClosed(Int32& period, Int32& year) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 4064
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:56:07 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK01]
+Whole Exception:System.Exception: Error in payslip [TDYK01] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:56:11 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK02]
+Whole Exception:System.Exception: Error in payslip [TDYK02] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:56:13 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK03]
+Whole Exception:System.Exception: Error in payslip [TDYK03] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:56:17 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK04]
+Whole Exception:System.Exception: Error in payslip [TDYK04] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:56:20 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK06]
+Whole Exception:System.Exception: Error in payslip [TDYK06] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:56:22 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK07]
+Whole Exception:System.Exception: Error in payslip [TDYK07] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:56:26 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK08]
+Whole Exception:System.Exception: Error in payslip [TDYK08] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:56:29 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK09]
+Whole Exception:System.Exception: Error in payslip [TDYK09] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:56:32 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK10]
+Whole Exception:System.Exception: Error in payslip [TDYK10] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:56:39 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK11]
+Whole Exception:System.Exception: Error in payslip [TDYK11] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:56:41 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK12]
+Whole Exception:System.Exception: Error in payslip [TDYK12] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:56:44 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK13]
+Whole Exception:System.Exception: Error in payslip [TDYK13] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:56:46 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK15]
+Whole Exception:System.Exception: Error in payslip [TDYK15] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:56:49 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK17]
+Whole Exception:System.Exception: Error in payslip [TDYK17] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:56:51 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK19]
+Whole Exception:System.Exception: Error in payslip [TDYK19] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:56:53 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK20]
+Whole Exception:System.Exception: Error in payslip [TDYK20] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:56:57 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK21]
+Whole Exception:System.Exception: Error in payslip [TDYK21] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:56:59 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK22]
+Whole Exception:System.Exception: Error in payslip [TDYK22] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:57:01 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK23]
+Whole Exception:System.Exception: Error in payslip [TDYK23] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:57:03 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK24]
+Whole Exception:System.Exception: Error in payslip [TDYK24] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:57:09 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK26]
+Whole Exception:System.Exception: Error in payslip [TDYK26] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:57:12 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK25]
+Whole Exception:System.Exception: Error in payslip [TDYK25] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:57:15 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK27]
+Whole Exception:System.Exception: Error in payslip [TDYK27] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:57:17 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK28]
+Whole Exception:System.Exception: Error in payslip [TDYK28] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:57:20 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK29]
+Whole Exception:System.Exception: Error in payslip [TDYK29] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:57:23 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK31]
+Whole Exception:System.Exception: Error in payslip [TDYK31] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:57:25 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK30]
+Whole Exception:System.Exception: Error in payslip [TDYK30] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:57:28 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK33]
+Whole Exception:System.Exception: Error in payslip [TDYK33] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:57:31 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK34]
+Whole Exception:System.Exception: Error in payslip [TDYK34] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:57:34 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK35]
+Whole Exception:System.Exception: Error in payslip [TDYK35] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:57:37 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK36]
+Whole Exception:System.Exception: Error in payslip [TDYK36] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:57:40 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK37]
+Whole Exception:System.Exception: Error in payslip [TDYK37] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:57:48 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK38]
+Whole Exception:System.Exception: Error in payslip [TDYK38] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:57:52 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK39]
+Whole Exception:System.Exception: Error in payslip [TDYK39] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:57:55 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK40]
+Whole Exception:System.Exception: Error in payslip [TDYK40] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:57:58 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK42]
+Whole Exception:System.Exception: Error in payslip [TDYK42] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:58:01 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK43]
+Whole Exception:System.Exception: Error in payslip [TDYK43] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:58:03 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK45]
+Whole Exception:System.Exception: Error in payslip [TDYK45] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:58:06 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK46]
+Whole Exception:System.Exception: Error in payslip [TDYK46] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:58:08 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK48]
+Whole Exception:System.Exception: Error in payslip [TDYK48] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:58:12 AM
+SOURCE:
+MESSAGE:Error in payslip [SP1001]
+Whole Exception:System.Exception: Error in payslip [SP1001] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:58:18 AM
+SOURCE:
+MESSAGE:Error in payslip [SP1002]
+Whole Exception:System.Exception: Error in payslip [SP1002] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:58:20 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK50]
+Whole Exception:System.Exception: Error in payslip [TDYK50] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
+==================================================================
+
+==================================================================
+ERROR OCCOURED AT :05/23/2019 10:58:22 AM
+SOURCE:
+MESSAGE:Error in payslip [TDYK51]
+Whole Exception:System.Exception: Error in payslip [TDYK51] ---> System.Data.MappingException: The number of members in the conceptual type 'SBPayrollDBModel.PayslipMaster_Temp' does not match with the number of members on the object side type 'DAL.PayslipMaster_Temp'. Make sure the number of members are the same.
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.ValidateAllMembersAreMapped(StructuralType cdmStructuralType, StructuralType objectStructuralType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadEntityTypeOrComplexTypeMapping(ObjectTypeMapping objectMapping, EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType edmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection, Dictionary`2 typeMappings)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.LoadObjectMapping(EdmType cdmType, EdmType objectType, DefaultObjectMappingItemCollection ocItemCollection)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.GetDefaultMapping(EdmType cdmType, EdmType clrType)
+   at System.Data.Mapping.DefaultObjectMappingItemCollection.TryGetMap(String identity, DataSpace typeSpace, Boolean ignoreCase, Map& map)
+   at System.Data.Metadata.Edm.MetadataWorkspace.TryGetMap(String typeIdentity, DataSpace typeSpace, Boolean ignoreCase, DataSpace mappingSpace, Map& map)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetTypeByName(String fullName, Boolean ignoreCase, TypeUsage& typeUsage)
+   at System.Data.Metadata.Edm.ClrPerspective.TryGetType(Type clrType, TypeUsage& outTypeUsage)
+   at System.Data.Objects.ObjectContext.GetTypeUsage(Type entityCLRType)
+   at System.Data.Objects.ObjectContext.GetEntitySetForNameAndType(String entitySetName, Type entityCLRType, String exceptionParameterName)
+   at System.Data.Objects.ObjectContext.CreateObjectSet[TEntity](String entitySetName)
+   at DAL.SBPayrollDBEntities.get_PayslipMaster_Temp() in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\SBPayrollDBEntities.Designer.cs:line 488
+   at DAL.Repository.SavePayslip(Boolean Simulate, Payslip payslip) in d:\wakxpx\csharp\visualstudio\SBPayroll\DAL\Repository.cs:line 3947
+   --- End of inner exception stack trace ---
 ==================================================================
 

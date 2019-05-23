@@ -398,6 +398,7 @@
     <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Type="String" Name="EmpNo" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
     <Property Type="Int32" Name="EmployeeId" Nullable="false" />
+    <Property Type="Int32" Name="EmployerId" Nullable="true" />
     <Property Type="Int32" Name="EmpTxnId" Nullable="false" />
     <Property Type="Int32" Name="Period" Nullable="false" />
     <Property Type="Int32" Name="Year" />
@@ -463,6 +464,7 @@
     <Property Type="Int32" Name="Year" Nullable="false" />
     <Property Type="String" Name="EmpNo" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
     <Property Type="Int32" Name="EmployeeId" Nullable="false" />
+    <Property Type="Int32" Name="EmployerId" Nullable="true" />
     <Property Type="DateTime" Name="PaymentDate" Nullable="false" />
     <Property Type="String" Name="PrintedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Type="DateTime" Name="PrintedOn" Nullable="false" />

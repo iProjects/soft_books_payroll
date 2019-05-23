@@ -7697,12 +7697,13 @@ namespace DAL
         /// <param name="amount">Initial value of the Amount property.</param>
         /// <param name="dEType">Initial value of the DEType property.</param>
         /// <param name="isStatutory">Initial value of the IsStatutory property.</param>
-        public static PayslipDet_Temp CreatePayslipDet_Temp(global::System.Int32 id, global::System.String empNo, global::System.Int32 employeeId, global::System.Int32 empTxnId, global::System.Int32 period, global::System.String description, global::System.String taxTracking, global::System.Decimal amount, global::System.String dEType, global::System.Boolean isStatutory)
+        public static PayslipDet_Temp CreatePayslipDet_Temp(global::System.Int32 id, global::System.String empNo, global::System.Int32 employeeId, global::System.Int32 employerId, global::System.Int32 empTxnId, global::System.Int32 period, global::System.String description, global::System.String taxTracking, global::System.Decimal amount, global::System.String dEType, global::System.Boolean isStatutory)
         {
             PayslipDet_Temp payslipDet_Temp = new PayslipDet_Temp();
             payslipDet_Temp.Id = id;
             payslipDet_Temp.EmpNo = empNo;
             payslipDet_Temp.EmployeeId = employeeId;
+            payslipDet_Temp.EmployerId = employerId;
             payslipDet_Temp.EmpTxnId = empTxnId;
             payslipDet_Temp.Period = period;
             payslipDet_Temp.Description = description;
@@ -7791,7 +7792,34 @@ namespace DAL
         private global::System.Int32 _EmployeeId;
         partial void OnEmployeeIdChanging(global::System.Int32 value);
         partial void OnEmployeeIdChanged();
+
+
+
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EmployerId
+        {
+            get
+            {
+                return _EmployerId;
+            }
+            set
+            {
+                OnEmployeeIdChanging(value);
+                ReportPropertyChanging("EmployerId");
+                _EmployerId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EmployerId");
+                OnEmployeeIdChanged();
+            }
+        }
+        private global::System.Int32 _EmployerId;
+        partial void OnEmployerIdChanging(global::System.Int32 value);
+        partial void OnEmployerIdChanged();
     
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -8075,13 +8103,14 @@ namespace DAL
         /// <param name="nSSF">Initial value of the NSSF property.</param>
         /// <param name="nHIF">Initial value of the NHIF property.</param>
         /// <param name="netPay">Initial value of the NetPay property.</param>
-        public static PayslipMaster CreatePayslipMaster(global::System.Int32 period, global::System.Int32 year, global::System.String empNo, global::System.Int32 employeeId, global::System.DateTime paymentDate, global::System.String printedBy, global::System.DateTime printedOn, global::System.String empName, global::System.Decimal payeTax, global::System.Decimal basicPay, global::System.Decimal benefits, global::System.Decimal variables, global::System.Decimal otherDeductions, global::System.Decimal grossTaxableEarnings, global::System.Decimal netTaxableEarnings, global::System.Decimal mortgageRelief, global::System.Decimal insuranceRelief, global::System.Decimal grossTax, global::System.Decimal personalRelief, global::System.Decimal pensionEmployer, global::System.Decimal employerNSSF, global::System.Decimal pensionEmployee, global::System.Decimal nSSF, global::System.Decimal nHIF, global::System.Decimal netPay)
+        public static PayslipMaster CreatePayslipMaster(global::System.Int32 period, global::System.Int32 year, global::System.String empNo, global::System.Int32 employeeId, global::System.Int32 employerId, global::System.DateTime paymentDate, global::System.String printedBy, global::System.DateTime printedOn, global::System.String empName, global::System.Decimal payeTax, global::System.Decimal basicPay, global::System.Decimal benefits, global::System.Decimal variables, global::System.Decimal otherDeductions, global::System.Decimal grossTaxableEarnings, global::System.Decimal netTaxableEarnings, global::System.Decimal mortgageRelief, global::System.Decimal insuranceRelief, global::System.Decimal grossTax, global::System.Decimal personalRelief, global::System.Decimal pensionEmployer, global::System.Decimal employerNSSF, global::System.Decimal pensionEmployee, global::System.Decimal nSSF, global::System.Decimal nHIF, global::System.Decimal netPay)
         {
             PayslipMaster payslipMaster = new PayslipMaster();
             payslipMaster.Period = period;
             payslipMaster.Year = year;
             payslipMaster.EmpNo = empNo;
             payslipMaster.EmployeeId = employeeId;
+            payslipMaster.EmployerId = employerId;
             payslipMaster.PaymentDate = paymentDate;
             payslipMaster.PrintedBy = printedBy;
             payslipMaster.PrintedOn = printedOn;
@@ -8214,7 +8243,35 @@ namespace DAL
         private global::System.Int32 _EmployeeId;
         partial void OnEmployeeIdChanging(global::System.Int32 value);
         partial void OnEmployeeIdChanged();
+
+
+
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EmployerId
+        {
+            get
+            {
+                return _EmployerId;
+            }
+            set
+            {
+                OnEmployerIdChanging(value);
+                ReportPropertyChanging("EmployerId");
+                _EmployerId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EmployerId");
+                OnEmployeeIdChanged();
+            }
+        }
+        private global::System.Int32 _EmployerId;
+        partial void OnEmployerIdChanging(global::System.Int32 value);
+        partial void OnEmployerIdChanged();
     
+
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -9050,13 +9107,14 @@ namespace DAL
         /// <param name="nSSF">Initial value of the NSSF property.</param>
         /// <param name="nHIF">Initial value of the NHIF property.</param>
         /// <param name="netPay">Initial value of the NetPay property.</param>
-        public static PayslipMaster_Temp CreatePayslipMaster_Temp(global::System.Int32 period, global::System.Int32 year, global::System.String empNo, global::System.Int32 employeeId, global::System.DateTime paymentDate, global::System.String printedBy, global::System.DateTime printedOn, global::System.String empName, global::System.Decimal payeTax, global::System.Decimal basicPay, global::System.Decimal benefits, global::System.Decimal variables, global::System.Decimal otherDeductions, global::System.Decimal grossTaxableEarnings, global::System.Decimal netTaxableEarnings, global::System.Decimal mortgageRelief, global::System.Decimal insuranceRelief, global::System.Decimal grossTax, global::System.Decimal personalRelief, global::System.Decimal pensionEmployer, global::System.Decimal employerNSSF, global::System.Decimal pensionEmployee, global::System.Decimal nSSF, global::System.Decimal nHIF, global::System.Decimal netPay)
+        public static PayslipMaster_Temp CreatePayslipMaster_Temp(global::System.Int32 period, global::System.Int32 year, global::System.String empNo, global::System.Int32 employeeId, global::System.Int32 employerId, global::System.DateTime paymentDate, global::System.String printedBy, global::System.DateTime printedOn, global::System.String empName, global::System.Decimal payeTax, global::System.Decimal basicPay, global::System.Decimal benefits, global::System.Decimal variables, global::System.Decimal otherDeductions, global::System.Decimal grossTaxableEarnings, global::System.Decimal netTaxableEarnings, global::System.Decimal mortgageRelief, global::System.Decimal insuranceRelief, global::System.Decimal grossTax, global::System.Decimal personalRelief, global::System.Decimal pensionEmployer, global::System.Decimal employerNSSF, global::System.Decimal pensionEmployee, global::System.Decimal nSSF, global::System.Decimal nHIF, global::System.Decimal netPay)
         {
             PayslipMaster_Temp payslipMaster_Temp = new PayslipMaster_Temp();
             payslipMaster_Temp.Period = period;
             payslipMaster_Temp.Year = year;
             payslipMaster_Temp.EmpNo = empNo;
             payslipMaster_Temp.EmployeeId = employeeId;
+            payslipMaster_Temp.EmployerId = employerId;
             payslipMaster_Temp.PaymentDate = paymentDate;
             payslipMaster_Temp.PrintedBy = printedBy;
             payslipMaster_Temp.PrintedOn = printedOn;
@@ -9984,7 +10042,9 @@ namespace DAL
 
         #endregion
 
-    
+
+
+        public int EmployerId { get; set; }
     }
     
     /// <summary>

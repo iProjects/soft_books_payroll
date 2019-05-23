@@ -607,6 +607,7 @@
     <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="EmpNo" Type="nvarchar" Nullable="false" MaxLength="250" />
     <Property Name="EmployeeId" Type="int" Nullable="false" />
+    <Property Name="EmployerId" Type="int" Nullable="true" />
     <Property Name="EmpTxnId" Type="int" Nullable="false" />
     <Property Name="Period" Type="int" Nullable="false" />
     <Property Name="Year" Type="int" />
@@ -672,6 +673,7 @@
     <Property Name="Year" Type="int" Nullable="false" />
     <Property Name="EmpNo" Type="nvarchar" Nullable="false" MaxLength="250" />
     <Property Name="EmployeeId" Type="int" Nullable="false" />
+    <Property Name="EmployerId" Type="int" Nullable="true" />
     <Property Name="PaymentDate" Type="date" Nullable="false" />
     <Property Name="PrintedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="PrintedOn" Type="datetime" Nullable="false" />

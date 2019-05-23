@@ -341,6 +341,7 @@
           <ScalarProperty Name="Period" ColumnName="Period" />
           <ScalarProperty Name="EmpTxnId" ColumnName="EmpTxnId" />
           <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="EmployerId" ColumnName="EmployerId" />
           <ScalarProperty Name="EmpNo" ColumnName="EmpNo" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
@@ -426,6 +427,7 @@
           <ScalarProperty Name="PrintedBy" ColumnName="PrintedBy" />
           <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
           <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="EmployerId" ColumnName="EmployerId" />
           <ScalarProperty Name="EmpNo" ColumnName="EmpNo" />
           <ScalarProperty Name="Year" ColumnName="Year" />
           <ScalarProperty Name="Period" ColumnName="Period" />

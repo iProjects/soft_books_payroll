@@ -3942,6 +3942,7 @@ namespace DAL
                     pm.NetPay = payslip.NetSalary;
                     pm.NHIF = payslip.AllDeductions.Where(e => e.Description.Trim().ToUpper().Equals("NHIF")).Single().Amount;
                     pm.NSSF = nssf;
+                    pm.EmployerId = payslip.EmployerId;
 
                     db.PayslipMaster_Temp.AddObject(pm);
                     db.SaveChanges();
@@ -3960,6 +3961,7 @@ namespace DAL
                     PayslipDet_Temp pd = new PayslipDet_Temp();
                     pd.EmpNo = payslip.EmpNo;
                     pd.EmployeeId = payslip.EmployeeId;
+                    pd.EmployerId = payslip.EmployerId;
                     pd.Period = payslip.Period;
                     pd.Year = payslip.Year;
                     pd.Description = d.Description;
@@ -3970,7 +3972,7 @@ namespace DAL
                     pd.ShowInPayslip = d.ShowInPayslip;
                     pd.YTD = d.YTD;
                     pd.EmpTxnId = d.EmpTxnId;
-
+                     
                     //update YTD if we are not in simulation mode
                     if (!Simulate)
                     {
@@ -3987,6 +3989,7 @@ namespace DAL
                     PayslipDet_Temp pd = new PayslipDet_Temp();
                     pd.EmpNo = payslip.EmpNo;
                     pd.EmployeeId = payslip.EmployeeId;
+                    pd.EmployerId = payslip.EmployerId;
                     pd.Period = payslip.Period;
                     pd.Year = payslip.Year;
                     pd.Description = d.Description;
