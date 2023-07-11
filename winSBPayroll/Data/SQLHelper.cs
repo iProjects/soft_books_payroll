@@ -323,7 +323,7 @@ namespace winSBPayroll.Forms
             try
             {
                 System.IO.File.WriteAllText(txtExportToFile, builder.ToString());
-                System.Windows.Forms.MessageBox.Show("DB exported to script at: " + txtExportToFile, "SB Payroll", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
+                System.Windows.Forms.MessageBox.Show("DB exported to script at: " + txtExportToFile, Utils.APP_NAME, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {  
@@ -338,7 +338,7 @@ namespace winSBPayroll.Forms
             msg += ex.Message;
             if (ex.InnerException != null)
                 msg += "\n" + ex.InnerException.Message;
-            System.Windows.Forms.MessageBox.Show(msg, "SB Payroll", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
+            System.Windows.Forms.MessageBox.Show(msg, Utils.APP_NAME, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
         }
         #endregion "public methods"
     }

@@ -376,7 +376,7 @@ namespace winSBPayroll.Forms
             }
             if (dataGridViewEmployerBank.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Must have atleast one Bank!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Must have atleast one Bank!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
             return no_error;
@@ -597,7 +597,7 @@ namespace winSBPayroll.Forms
 
                     if (_employerbanks.Any(i => i.EmployerId == _bank.EmployerId && i.BankSortCode == _bank.BankSortCode))
                     {
-                        MessageBox.Show("Bank Exist!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Bank Exist!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     if (!_employerbanks.Any(i => i.EmployerId == _bank.EmployerId && i.BankSortCode == _bank.BankSortCode))
                     {
@@ -767,7 +767,7 @@ namespace winSBPayroll.Forms
                 {
                     if (!ValidFeesStructure())
                     {
-                        MessageBox.Show("No default Bank is set!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("No default Bank is set!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         e.Cancel = true;
                     }
                 }

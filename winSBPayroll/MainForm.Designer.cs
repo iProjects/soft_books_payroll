@@ -42,7 +42,7 @@
             this.dataEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.employeesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnBankBranches = new System.Windows.Forms.ToolStripMenuItem();
+            this.bankBranchesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
             this.benefitsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator18 = new System.Windows.Forms.ToolStripSeparator();
@@ -56,9 +56,9 @@
             this.toolStripSeparator27 = new System.Windows.Forms.ToolStripSeparator();
             this.newNSSFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pdfReportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.allReportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.taxCalcuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.taxCalculatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.administrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rolesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator28 = new System.Windows.Forms.ToolStripSeparator();
@@ -73,11 +73,18 @@
             this.databaseControlPanelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator26 = new System.Windows.Forms.ToolStripSeparator();
             this.uploadDownloadWizardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator31 = new System.Windows.Forms.ToolStripSeparator();
+            this.transactionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator19 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.toolStripSeparator32 = new System.Windows.Forms.ToolStripSeparator();
+            this.contactUsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator33 = new System.Windows.Forms.ToolStripSeparator();
+            this.licenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator34 = new System.Windows.Forms.ToolStripSeparator();
+            this.homeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsbPDFReports = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -104,18 +111,6 @@
             this.tsbExit = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.helpProvider1 = new System.Windows.Forms.HelpProvider();
-            this.statusStripMain = new System.Windows.Forms.StatusStrip();
-            this.lblLoggedInUser = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblselecteddatabase = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblversion = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblDate = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblLoggedInTime = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblStatusUpdates = new System.Windows.Forms.ToolStripStatusLabel();
             this.updateStatusTimer = new System.Windows.Forms.Timer(this.components);
             this.loggedInTimer = new System.Windows.Forms.Timer(this.components);
             this.appNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
@@ -123,10 +118,26 @@
             this.toolStripMenuItemHome = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator30 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusStripMain = new System.Windows.Forms.StatusStrip();
+            this.lblLoggedInUser = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblselecteddatabase = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblversion = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblrunningtime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lbltimelapsed = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblStatusUpdates = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel6 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lbl_info = new System.Windows.Forms.ToolStripStatusLabel();
+            this.webBrowser = new System.Windows.Forms.WebBrowser();
+            this.txtlog = new System.Windows.Forms.RichTextBox();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            this.statusStripMain.SuspendLayout();
             this.contextMenuStripSystemNotification.SuspendLayout();
+            this.statusStripMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -141,7 +152,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1028, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1256, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -152,27 +163,27 @@
             this.toolStripSeparator11,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
             // changePasswordToolStripMenuItem
             // 
             this.changePasswordToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.greenmage;
             this.changePasswordToolStripMenuItem.Name = "changePasswordToolStripMenuItem";
-            this.changePasswordToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.changePasswordToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.changePasswordToolStripMenuItem.Text = "&Change Password";
             this.changePasswordToolStripMenuItem.Click += new System.EventHandler(this.changePasswordToolStripMenuItem_Click);
             // 
             // toolStripSeparator11
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(157, 6);
+            this.toolStripSeparator11.Size = new System.Drawing.Size(165, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.bluewebmage;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -183,27 +194,27 @@
             this.toolStripSeparator12,
             this.processPayrollToolStripMenuItem});
             this.payrollToolStripMenuItem.Name = "payrollToolStripMenuItem";
-            this.payrollToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
+            this.payrollToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
             this.payrollToolStripMenuItem.Text = "&Payroll";
             // 
             // openPayrollToolStripMenuItem
             // 
             this.openPayrollToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.patyplanner;
             this.openPayrollToolStripMenuItem.Name = "openPayrollToolStripMenuItem";
-            this.openPayrollToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.openPayrollToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.openPayrollToolStripMenuItem.Text = "&Open Payroll";
             this.openPayrollToolStripMenuItem.Click += new System.EventHandler(this.openPayrollToolStripMenuItem_Click);
             // 
             // toolStripSeparator12
             // 
             this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator12.Size = new System.Drawing.Size(150, 6);
             // 
             // processPayrollToolStripMenuItem
             // 
             this.processPayrollToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.powermage;
             this.processPayrollToolStripMenuItem.Name = "processPayrollToolStripMenuItem";
-            this.processPayrollToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.processPayrollToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.processPayrollToolStripMenuItem.Text = "Process Payroll";
             this.processPayrollToolStripMenuItem.Click += new System.EventHandler(this.processPayrollToolStripMenuItem_Click);
             // 
@@ -212,7 +223,7 @@
             this.dataEntryToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.employeesToolStripMenuItem,
             this.toolStripSeparator4,
-            this.btnBankBranches,
+            this.bankBranchesToolStripMenuItem,
             this.toolStripSeparator14,
             this.benefitsToolStripMenuItem,
             this.toolStripSeparator18,
@@ -226,138 +237,138 @@
             this.toolStripSeparator27,
             this.newNSSFToolStripMenuItem});
             this.dataEntryToolStripMenuItem.Name = "dataEntryToolStripMenuItem";
-            this.dataEntryToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.dataEntryToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
             this.dataEntryToolStripMenuItem.Text = "&Data Entry";
             // 
             // employeesToolStripMenuItem
             // 
             this.employeesToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.colormage;
             this.employeesToolStripMenuItem.Name = "employeesToolStripMenuItem";
-            this.employeesToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.employeesToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.employeesToolStripMenuItem.Text = "&Employees";
             this.employeesToolStripMenuItem.Click += new System.EventHandler(this.employeesToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(184, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(199, 6);
             // 
-            // btnBankBranches
+            // bankBranchesToolStripMenuItem
             // 
-            this.btnBankBranches.Image = global::winSBPayroll.Properties.Resources.flowermage;
-            this.btnBankBranches.Name = "btnBankBranches";
-            this.btnBankBranches.Size = new System.Drawing.Size(187, 22);
-            this.btnBankBranches.Text = "&Banks";
-            this.btnBankBranches.Click += new System.EventHandler(this.btnBankBranches_Click);
+            this.bankBranchesToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.flowermage;
+            this.bankBranchesToolStripMenuItem.Name = "bankBranchesToolStripMenuItem";
+            this.bankBranchesToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.bankBranchesToolStripMenuItem.Text = "&Banks";
+            this.bankBranchesToolStripMenuItem.Click += new System.EventHandler(this.btnBankBranches_Click);
             // 
             // toolStripSeparator14
             // 
             this.toolStripSeparator14.Name = "toolStripSeparator14";
-            this.toolStripSeparator14.Size = new System.Drawing.Size(184, 6);
+            this.toolStripSeparator14.Size = new System.Drawing.Size(199, 6);
             // 
             // benefitsToolStripMenuItem
             // 
             this.benefitsToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.bluewebmage;
             this.benefitsToolStripMenuItem.Name = "benefitsToolStripMenuItem";
-            this.benefitsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.benefitsToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.benefitsToolStripMenuItem.Text = "Benefits";
             this.benefitsToolStripMenuItem.Click += new System.EventHandler(this.benefitsToolStripMenuItem_Click);
             // 
             // toolStripSeparator18
             // 
             this.toolStripSeparator18.Name = "toolStripSeparator18";
-            this.toolStripSeparator18.Size = new System.Drawing.Size(184, 6);
+            this.toolStripSeparator18.Size = new System.Drawing.Size(199, 6);
             // 
             // departmentsToolStripMenuItem
             // 
             this.departmentsToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.headermage;
             this.departmentsToolStripMenuItem.Name = "departmentsToolStripMenuItem";
-            this.departmentsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.departmentsToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.departmentsToolStripMenuItem.Text = "Departments";
             this.departmentsToolStripMenuItem.Click += new System.EventHandler(this.departmentsToolStripMenuItem_Click);
             // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(184, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(199, 6);
             // 
             // payeeRatesToolStripMenuItem
             // 
             this.payeeRatesToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.powermage;
             this.payeeRatesToolStripMenuItem.Name = "payeeRatesToolStripMenuItem";
-            this.payeeRatesToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.payeeRatesToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.payeeRatesToolStripMenuItem.Text = "Payee Rates";
             this.payeeRatesToolStripMenuItem.Click += new System.EventHandler(this.payeeRatesToolStripMenuItem_Click);
             // 
             // toolStripSeparator15
             // 
             this.toolStripSeparator15.Name = "toolStripSeparator15";
-            this.toolStripSeparator15.Size = new System.Drawing.Size(184, 6);
+            this.toolStripSeparator15.Size = new System.Drawing.Size(199, 6);
             // 
             // nHIFRatesToolStripMenuItem
             // 
             this.nHIFRatesToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.patyplanner;
             this.nHIFRatesToolStripMenuItem.Name = "nHIFRatesToolStripMenuItem";
-            this.nHIFRatesToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.nHIFRatesToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.nHIFRatesToolStripMenuItem.Text = "&NHIF Rates";
             this.nHIFRatesToolStripMenuItem.Click += new System.EventHandler(this.nHIFRatesToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(184, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(199, 6);
             // 
             // payrollItemsToolStripMenuItem
             // 
             this.payrollItemsToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.greenmage;
             this.payrollItemsToolStripMenuItem.Name = "payrollItemsToolStripMenuItem";
-            this.payrollItemsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.payrollItemsToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.payrollItemsToolStripMenuItem.Text = "Payroll Items";
             this.payrollItemsToolStripMenuItem.Click += new System.EventHandler(this.payrollItemsToolStripMenuItem_Click);
             // 
             // toolStripSeparator27
             // 
             this.toolStripSeparator27.Name = "toolStripSeparator27";
-            this.toolStripSeparator27.Size = new System.Drawing.Size(184, 6);
+            this.toolStripSeparator27.Size = new System.Drawing.Size(199, 6);
             // 
             // newNSSFToolStripMenuItem
             // 
             this.newNSSFToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.mountainmage;
             this.newNSSFToolStripMenuItem.Name = "newNSSFToolStripMenuItem";
-            this.newNSSFToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.newNSSFToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.newNSSFToolStripMenuItem.Text = "New NSSF Computation";
             this.newNSSFToolStripMenuItem.Click += new System.EventHandler(this.newNSSFToolStripMenuItem_Click);
             // 
             // reportsToolStripMenuItem
             // 
             this.reportsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.pdfReportsToolStripMenuItem,
+            this.allReportsToolStripMenuItem,
             this.toolStripSeparator6,
-            this.taxCalcuToolStripMenuItem});
+            this.taxCalculatorToolStripMenuItem});
             this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
-            this.reportsToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.reportsToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.reportsToolStripMenuItem.Text = "&Reports";
             // 
-            // pdfReportsToolStripMenuItem
+            // allReportsToolStripMenuItem
             // 
-            this.pdfReportsToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.mountainmage;
-            this.pdfReportsToolStripMenuItem.Name = "pdfReportsToolStripMenuItem";
-            this.pdfReportsToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
-            this.pdfReportsToolStripMenuItem.Text = "Reports";
-            this.pdfReportsToolStripMenuItem.Click += new System.EventHandler(this.pdfReportsToolStripMenuItem_Click);
+            this.allReportsToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.mountainmage;
+            this.allReportsToolStripMenuItem.Name = "allReportsToolStripMenuItem";
+            this.allReportsToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.allReportsToolStripMenuItem.Text = "Reports";
+            this.allReportsToolStripMenuItem.Click += new System.EventHandler(this.pdfReportsToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(140, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(145, 6);
             // 
-            // taxCalcuToolStripMenuItem
+            // taxCalculatorToolStripMenuItem
             // 
-            this.taxCalcuToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.christianbgmage;
-            this.taxCalcuToolStripMenuItem.Name = "taxCalcuToolStripMenuItem";
-            this.taxCalcuToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
-            this.taxCalcuToolStripMenuItem.Text = "&Tax Calculator";
-            this.taxCalcuToolStripMenuItem.Click += new System.EventHandler(this.taxCalcuToolStripMenuItem_Click);
+            this.taxCalculatorToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.christianbgmage;
+            this.taxCalculatorToolStripMenuItem.Name = "taxCalculatorToolStripMenuItem";
+            this.taxCalculatorToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.taxCalculatorToolStripMenuItem.Text = "&Tax Calculator";
+            this.taxCalculatorToolStripMenuItem.Click += new System.EventHandler(this.taxCalcuToolStripMenuItem_Click);
             // 
             // administrationToolStripMenuItem
             // 
@@ -374,137 +385,187 @@
             this.toolStripSeparator10,
             this.databaseControlPanelToolStripMenuItem,
             this.toolStripSeparator26,
-            this.uploadDownloadWizardToolStripMenuItem});
+            this.uploadDownloadWizardToolStripMenuItem,
+            this.toolStripSeparator31,
+            this.transactionToolStripMenuItem});
             this.administrationToolStripMenuItem.Name = "administrationToolStripMenuItem";
-            this.administrationToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
+            this.administrationToolStripMenuItem.Size = new System.Drawing.Size(98, 20);
             this.administrationToolStripMenuItem.Text = "&Administration";
             // 
             // rolesToolStripMenuItem
             // 
             this.rolesToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.bluewebmage1;
             this.rolesToolStripMenuItem.Name = "rolesToolStripMenuItem";
-            this.rolesToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.rolesToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.rolesToolStripMenuItem.Text = "Roles";
             this.rolesToolStripMenuItem.Click += new System.EventHandler(this.rolesToolStripMenuItem_Click);
             // 
             // toolStripSeparator28
             // 
             this.toolStripSeparator28.Name = "toolStripSeparator28";
-            this.toolStripSeparator28.Size = new System.Drawing.Size(190, 6);
+            this.toolStripSeparator28.Size = new System.Drawing.Size(205, 6);
             // 
             // usersToolStripMenuItem
             // 
             this.usersToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.codemage;
             this.usersToolStripMenuItem.Name = "usersToolStripMenuItem";
-            this.usersToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.usersToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.usersToolStripMenuItem.Text = "Users";
             this.usersToolStripMenuItem.Click += new System.EventHandler(this.usersToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(190, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(205, 6);
             // 
             // rightsToolStripMenuItem
             // 
             this.rightsToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.patyplanner;
             this.rightsToolStripMenuItem.Name = "rightsToolStripMenuItem";
-            this.rightsToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.rightsToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.rightsToolStripMenuItem.Text = "Rights";
             this.rightsToolStripMenuItem.Click += new System.EventHandler(this.rightsToolStripMenuItem_Click);
             // 
             // toolStripSeparator29
             // 
             this.toolStripSeparator29.Name = "toolStripSeparator29";
-            this.toolStripSeparator29.Size = new System.Drawing.Size(190, 6);
+            this.toolStripSeparator29.Size = new System.Drawing.Size(205, 6);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.colormage;
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.settingsToolStripMenuItem.Text = "&Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator13
             // 
             this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(190, 6);
+            this.toolStripSeparator13.Size = new System.Drawing.Size(205, 6);
             // 
             // employerToolStripMenuItem
             // 
             this.employerToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.fusionmage;
             this.employerToolStripMenuItem.Name = "employerToolStripMenuItem";
-            this.employerToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.employerToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.employerToolStripMenuItem.Text = "Employer";
             this.employerToolStripMenuItem.Click += new System.EventHandler(this.employerToolStripMenuItem_Click);
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(190, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(205, 6);
             // 
             // databaseControlPanelToolStripMenuItem
             // 
             this.databaseControlPanelToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.headermage;
             this.databaseControlPanelToolStripMenuItem.Name = "databaseControlPanelToolStripMenuItem";
-            this.databaseControlPanelToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.databaseControlPanelToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.databaseControlPanelToolStripMenuItem.Text = "&Database Control Panel";
             this.databaseControlPanelToolStripMenuItem.Click += new System.EventHandler(this.databaseControlPanelToolStripMenuItem_Click);
             // 
             // toolStripSeparator26
             // 
             this.toolStripSeparator26.Name = "toolStripSeparator26";
-            this.toolStripSeparator26.Size = new System.Drawing.Size(190, 6);
+            this.toolStripSeparator26.Size = new System.Drawing.Size(205, 6);
             // 
             // uploadDownloadWizardToolStripMenuItem
             // 
             this.uploadDownloadWizardToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.greenmage;
             this.uploadDownloadWizardToolStripMenuItem.Name = "uploadDownloadWizardToolStripMenuItem";
-            this.uploadDownloadWizardToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.uploadDownloadWizardToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.uploadDownloadWizardToolStripMenuItem.Text = "&Upload Download Wizard";
             this.uploadDownloadWizardToolStripMenuItem.Click += new System.EventHandler(this.uploadDownloadWizardToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator31
+            // 
+            this.toolStripSeparator31.Name = "toolStripSeparator31";
+            this.toolStripSeparator31.Size = new System.Drawing.Size(205, 6);
+            // 
+            // transactionToolStripMenuItem
+            // 
+            this.transactionToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.powermage;
+            this.transactionToolStripMenuItem.Name = "transactionToolStripMenuItem";
+            this.transactionToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.transactionToolStripMenuItem.Text = "Transaction";
+            this.transactionToolStripMenuItem.Click += new System.EventHandler(this.transactionToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.viewHelpToolStripMenuItem,
             this.toolStripSeparator19,
-            this.aboutToolStripMenuItem});
+            this.aboutToolStripMenuItem,
+            this.toolStripSeparator32,
+            this.contactUsToolStripMenuItem,
+            this.toolStripSeparator33,
+            this.licenseToolStripMenuItem,
+            this.toolStripSeparator34,
+            this.homeToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "&Help";
             // 
             // viewHelpToolStripMenuItem
             // 
-            this.viewHelpToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.greenmage;
+            this.viewHelpToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("viewHelpToolStripMenuItem.Image")));
             this.viewHelpToolStripMenuItem.Name = "viewHelpToolStripMenuItem";
-            this.viewHelpToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.viewHelpToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.viewHelpToolStripMenuItem.Text = "Help";
             this.viewHelpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
             // toolStripSeparator19
             // 
             this.toolStripSeparator19.Name = "toolStripSeparator19";
-            this.toolStripSeparator19.Size = new System.Drawing.Size(100, 6);
+            this.toolStripSeparator19.Size = new System.Drawing.Size(128, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.bluewebmage;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
-            // webBrowser1
+            // toolStripSeparator32
             // 
-            this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser1.Location = new System.Drawing.Point(0, 24);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(1028, 382);
-            this.webBrowser1.TabIndex = 6;
-            this.webBrowser1.Url = new System.Uri("", System.UriKind.Relative);
+            this.toolStripSeparator32.Name = "toolStripSeparator32";
+            this.toolStripSeparator32.Size = new System.Drawing.Size(128, 6);
+            // 
+            // contactUsToolStripMenuItem
+            // 
+            this.contactUsToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("contactUsToolStripMenuItem.Image")));
+            this.contactUsToolStripMenuItem.Name = "contactUsToolStripMenuItem";
+            this.contactUsToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.contactUsToolStripMenuItem.Text = "Contact us";
+            this.contactUsToolStripMenuItem.Click += new System.EventHandler(this.contactUsToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator33
+            // 
+            this.toolStripSeparator33.Name = "toolStripSeparator33";
+            this.toolStripSeparator33.Size = new System.Drawing.Size(128, 6);
+            // 
+            // licenseToolStripMenuItem
+            // 
+            this.licenseToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("licenseToolStripMenuItem.Image")));
+            this.licenseToolStripMenuItem.Name = "licenseToolStripMenuItem";
+            this.licenseToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.licenseToolStripMenuItem.Text = "License";
+            this.licenseToolStripMenuItem.Click += new System.EventHandler(this.licenseToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator34
+            // 
+            this.toolStripSeparator34.Name = "toolStripSeparator34";
+            this.toolStripSeparator34.Size = new System.Drawing.Size(128, 6);
+            // 
+            // homeToolStripMenuItem
+            // 
+            this.homeToolStripMenuItem.Image = global::winSBPayroll.Properties.Resources.colormage;
+            this.homeToolStripMenuItem.Name = "homeToolStripMenuItem";
+            this.homeToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.homeToolStripMenuItem.Text = "Home";
+            this.homeToolStripMenuItem.Click += new System.EventHandler(this.homeToolStripMenuItem_Click);
             // 
             // toolStrip1
             // 
@@ -536,7 +597,7 @@
             this.toolStripSeparator7});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1028, 36);
+            this.toolStrip1.Size = new System.Drawing.Size(1256, 38);
             this.toolStrip1.TabIndex = 7;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -546,7 +607,7 @@
             this.tsbPDFReports.Image = ((System.Drawing.Image)(resources.GetObject("tsbPDFReports.Image")));
             this.tsbPDFReports.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbPDFReports.Name = "tsbPDFReports";
-            this.tsbPDFReports.Size = new System.Drawing.Size(49, 33);
+            this.tsbPDFReports.Size = new System.Drawing.Size(51, 35);
             this.tsbPDFReports.Text = "Reports";
             this.tsbPDFReports.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbPDFReports.Click += new System.EventHandler(this.tsbPDFReports_Click);
@@ -554,7 +615,7 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 36);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 38);
             // 
             // tsbOpenPayroll
             // 
@@ -562,7 +623,7 @@
             this.tsbOpenPayroll.Image = ((System.Drawing.Image)(resources.GetObject("tsbOpenPayroll.Image")));
             this.tsbOpenPayroll.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbOpenPayroll.Name = "tsbOpenPayroll";
-            this.tsbOpenPayroll.Size = new System.Drawing.Size(72, 33);
+            this.tsbOpenPayroll.Size = new System.Drawing.Size(79, 35);
             this.tsbOpenPayroll.Text = "Open Payroll";
             this.tsbOpenPayroll.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.tsbOpenPayroll.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -571,7 +632,7 @@
             // toolStripSeparator20
             // 
             this.toolStripSeparator20.Name = "toolStripSeparator20";
-            this.toolStripSeparator20.Size = new System.Drawing.Size(6, 36);
+            this.toolStripSeparator20.Size = new System.Drawing.Size(6, 38);
             // 
             // tsbProcessPayroll
             // 
@@ -579,7 +640,7 @@
             this.tsbProcessPayroll.Image = ((System.Drawing.Image)(resources.GetObject("tsbProcessPayroll.Image")));
             this.tsbProcessPayroll.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbProcessPayroll.Name = "tsbProcessPayroll";
-            this.tsbProcessPayroll.Size = new System.Drawing.Size(83, 33);
+            this.tsbProcessPayroll.Size = new System.Drawing.Size(90, 35);
             this.tsbProcessPayroll.Text = "Process Payroll";
             this.tsbProcessPayroll.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbProcessPayroll.Click += new System.EventHandler(this.tsbProcessPayroll_Click);
@@ -587,7 +648,7 @@
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 36);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 38);
             // 
             // tspEmployees
             // 
@@ -595,7 +656,7 @@
             this.tspEmployees.Image = ((System.Drawing.Image)(resources.GetObject("tspEmployees.Image")));
             this.tspEmployees.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tspEmployees.Name = "tspEmployees";
-            this.tspEmployees.Size = new System.Drawing.Size(62, 33);
+            this.tspEmployees.Size = new System.Drawing.Size(68, 35);
             this.tspEmployees.Text = "Employees";
             this.tspEmployees.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tspEmployees.Click += new System.EventHandler(this.tspEmployees_Click);
@@ -603,7 +664,7 @@
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 36);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 38);
             // 
             // tsbPayrollItems
             // 
@@ -611,7 +672,7 @@
             this.tsbPayrollItems.Image = ((System.Drawing.Image)(resources.GetObject("tsbPayrollItems.Image")));
             this.tsbPayrollItems.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbPayrollItems.Name = "tsbPayrollItems";
-            this.tsbPayrollItems.Size = new System.Drawing.Size(73, 33);
+            this.tsbPayrollItems.Size = new System.Drawing.Size(79, 35);
             this.tsbPayrollItems.Text = "Payroll Items";
             this.tsbPayrollItems.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbPayrollItems.Click += new System.EventHandler(this.tsbPayrollItems_Click);
@@ -619,7 +680,7 @@
             // toolStripSeparator21
             // 
             this.toolStripSeparator21.Name = "toolStripSeparator21";
-            this.toolStripSeparator21.Size = new System.Drawing.Size(6, 36);
+            this.toolStripSeparator21.Size = new System.Drawing.Size(6, 38);
             // 
             // tsbBanks
             // 
@@ -627,7 +688,7 @@
             this.tsbBanks.Image = ((System.Drawing.Image)(resources.GetObject("tsbBanks.Image")));
             this.tsbBanks.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbBanks.Name = "tsbBanks";
-            this.tsbBanks.Size = new System.Drawing.Size(39, 33);
+            this.tsbBanks.Size = new System.Drawing.Size(42, 35);
             this.tsbBanks.Text = "Banks";
             this.tsbBanks.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbBanks.Click += new System.EventHandler(this.tsbBanks_Click);
@@ -635,14 +696,14 @@
             // toolStripSeparator22
             // 
             this.toolStripSeparator22.Name = "toolStripSeparator22";
-            this.toolStripSeparator22.Size = new System.Drawing.Size(6, 36);
+            this.toolStripSeparator22.Size = new System.Drawing.Size(6, 38);
             // 
             // tsbBenefits
             // 
             this.tsbBenefits.Image = global::winSBPayroll.Properties.Resources.headermage;
             this.tsbBenefits.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbBenefits.Name = "tsbBenefits";
-            this.tsbBenefits.Size = new System.Drawing.Size(50, 33);
+            this.tsbBenefits.Size = new System.Drawing.Size(53, 35);
             this.tsbBenefits.Text = "Benefits";
             this.tsbBenefits.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbBenefits.Click += new System.EventHandler(this.toolbtnBenefits_Click);
@@ -650,14 +711,14 @@
             // toolStripSeparator23
             // 
             this.toolStripSeparator23.Name = "toolStripSeparator23";
-            this.toolStripSeparator23.Size = new System.Drawing.Size(6, 36);
+            this.toolStripSeparator23.Size = new System.Drawing.Size(6, 38);
             // 
             // tsbDepartments
             // 
             this.tsbDepartments.Image = ((System.Drawing.Image)(resources.GetObject("tsbDepartments.Image")));
             this.tsbDepartments.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbDepartments.Name = "tsbDepartments";
-            this.tsbDepartments.Size = new System.Drawing.Size(73, 33);
+            this.tsbDepartments.Size = new System.Drawing.Size(79, 35);
             this.tsbDepartments.Text = "Departments";
             this.tsbDepartments.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbDepartments.Click += new System.EventHandler(this.tsbDepartments_Click);
@@ -665,7 +726,7 @@
             // toolStripSeparator16
             // 
             this.toolStripSeparator16.Name = "toolStripSeparator16";
-            this.toolStripSeparator16.Size = new System.Drawing.Size(6, 36);
+            this.toolStripSeparator16.Size = new System.Drawing.Size(6, 38);
             // 
             // tsbPayeeRates
             // 
@@ -673,7 +734,7 @@
             this.tsbPayeeRates.Image = global::winSBPayroll.Properties.Resources.patyplanner;
             this.tsbPayeeRates.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbPayeeRates.Name = "tsbPayeeRates";
-            this.tsbPayeeRates.Size = new System.Drawing.Size(72, 33);
+            this.tsbPayeeRates.Size = new System.Drawing.Size(73, 35);
             this.tsbPayeeRates.Text = "Payee Rates";
             this.tsbPayeeRates.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbPayeeRates.Click += new System.EventHandler(this.btnPayeeRates_Click_1);
@@ -681,7 +742,7 @@
             // toolStripSeparator24
             // 
             this.toolStripSeparator24.Name = "toolStripSeparator24";
-            this.toolStripSeparator24.Size = new System.Drawing.Size(6, 36);
+            this.toolStripSeparator24.Size = new System.Drawing.Size(6, 38);
             // 
             // tsbtnNHIFRates
             // 
@@ -689,7 +750,7 @@
             this.tsbtnNHIFRates.Image = global::winSBPayroll.Properties.Resources.fusionmage;
             this.tsbtnNHIFRates.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnNHIFRates.Name = "tsbtnNHIFRates";
-            this.tsbtnNHIFRates.Size = new System.Drawing.Size(69, 33);
+            this.tsbtnNHIFRates.Size = new System.Drawing.Size(72, 35);
             this.tsbtnNHIFRates.Text = "NHIF  Rates";
             this.tsbtnNHIFRates.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbtnNHIFRates.Click += new System.EventHandler(this.tsbtnNHIFRates_Click);
@@ -697,14 +758,14 @@
             // toolStripSeparator25
             // 
             this.toolStripSeparator25.Name = "toolStripSeparator25";
-            this.toolStripSeparator25.Size = new System.Drawing.Size(6, 36);
+            this.toolStripSeparator25.Size = new System.Drawing.Size(6, 38);
             // 
             // tsbTaxCalculator
             // 
             this.tsbTaxCalculator.Image = global::winSBPayroll.Properties.Resources.leafmage;
             this.tsbTaxCalculator.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbTaxCalculator.Name = "tsbTaxCalculator";
-            this.tsbTaxCalculator.Size = new System.Drawing.Size(80, 33);
+            this.tsbTaxCalculator.Size = new System.Drawing.Size(85, 35);
             this.tsbTaxCalculator.Text = "Tax Calculator";
             this.tsbTaxCalculator.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbTaxCalculator.Click += new System.EventHandler(this.btnTaxCalculator_Click);
@@ -712,7 +773,7 @@
             // toolStripSeparator17
             // 
             this.toolStripSeparator17.Name = "toolStripSeparator17";
-            this.toolStripSeparator17.Size = new System.Drawing.Size(6, 36);
+            this.toolStripSeparator17.Size = new System.Drawing.Size(6, 38);
             // 
             // tsbExit
             // 
@@ -720,7 +781,7 @@
             this.tsbExit.Image = ((System.Drawing.Image)(resources.GetObject("tsbExit.Image")));
             this.tsbExit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbExit.Name = "tsbExit";
-            this.tsbExit.Size = new System.Drawing.Size(29, 33);
+            this.tsbExit.Size = new System.Drawing.Size(30, 35);
             this.tsbExit.Text = "Exit";
             this.tsbExit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbExit.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
@@ -728,97 +789,8 @@
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 36);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 38);
             this.toolStripSeparator7.Visible = false;
-            // 
-            // statusStripMain
-            // 
-            this.statusStripMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.statusStripMain.BackgroundImage = global::winSBPayroll.Properties.Resources.powermage;
-            this.statusStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblLoggedInUser,
-            this.toolStripStatusLabel1,
-            this.lblselecteddatabase,
-            this.toolStripStatusLabel2,
-            this.lblversion,
-            this.toolStripStatusLabel4,
-            this.lblDate,
-            this.toolStripStatusLabel5,
-            this.lblLoggedInTime,
-            this.toolStripStatusLabel3,
-            this.lblStatusUpdates});
-            this.statusStripMain.Location = new System.Drawing.Point(0, 406);
-            this.statusStripMain.Name = "statusStripMain";
-            this.statusStripMain.Size = new System.Drawing.Size(1028, 22);
-            this.statusStripMain.TabIndex = 1;
-            this.statusStripMain.Text = "statusStrip1";
-            // 
-            // lblLoggedInUser
-            // 
-            this.lblLoggedInUser.Name = "lblLoggedInUser";
-            this.lblLoggedInUser.Size = new System.Drawing.Size(68, 17);
-            this.lblLoggedInUser.Text = "loggedinuser";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(97, 17);
-            this.toolStripStatusLabel1.Text = "                              ";
-            // 
-            // lblselecteddatabase
-            // 
-            this.lblselecteddatabase.Name = "lblselecteddatabase";
-            this.lblselecteddatabase.Size = new System.Drawing.Size(92, 17);
-            this.lblselecteddatabase.Text = "selecteddatabase";
-            this.lblselecteddatabase.Click += new System.EventHandler(this.lblSelectedDatabase_Click);
-            // 
-            // toolStripStatusLabel2
-            // 
-            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(97, 17);
-            this.toolStripStatusLabel2.Text = "                              ";
-            // 
-            // lblversion
-            // 
-            this.lblversion.Name = "lblversion";
-            this.lblversion.Size = new System.Drawing.Size(42, 17);
-            this.lblversion.Text = "version";
-            // 
-            // toolStripStatusLabel4
-            // 
-            this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
-            this.toolStripStatusLabel4.Size = new System.Drawing.Size(97, 17);
-            this.toolStripStatusLabel4.Text = "                              ";
-            // 
-            // lblDate
-            // 
-            this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(29, 17);
-            this.lblDate.Text = "date";
-            // 
-            // toolStripStatusLabel5
-            // 
-            this.toolStripStatusLabel5.Name = "toolStripStatusLabel5";
-            this.toolStripStatusLabel5.Size = new System.Drawing.Size(97, 17);
-            this.toolStripStatusLabel5.Text = "                              ";
-            // 
-            // lblLoggedInTime
-            // 
-            this.lblLoggedInTime.Name = "lblLoggedInTime";
-            this.lblLoggedInTime.Size = new System.Drawing.Size(67, 17);
-            this.lblLoggedInTime.Text = "loggedintime";
-            // 
-            // toolStripStatusLabel3
-            // 
-            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(97, 17);
-            this.toolStripStatusLabel3.Text = "                              ";
-            // 
-            // lblStatusUpdates
-            // 
-            this.lblStatusUpdates.Name = "lblStatusUpdates";
-            this.lblStatusUpdates.Size = new System.Drawing.Size(37, 17);
-            this.lblStatusUpdates.Text = "status";
             // 
             // appNotifyIcon
             // 
@@ -833,35 +805,163 @@
             this.toolStripSeparator30,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemNotification.Name = "contextMenuStripSystemNotification";
-            this.contextMenuStripSystemNotification.Size = new System.Drawing.Size(102, 54);
+            this.contextMenuStripSystemNotification.Size = new System.Drawing.Size(108, 54);
             // 
             // toolStripMenuItemHome
             // 
             this.toolStripMenuItemHome.Name = "toolStripMenuItemHome";
-            this.toolStripMenuItemHome.Size = new System.Drawing.Size(101, 22);
+            this.toolStripMenuItemHome.Size = new System.Drawing.Size(107, 22);
             this.toolStripMenuItemHome.Text = "Home";
             this.toolStripMenuItemHome.Click += new System.EventHandler(this.homeToolStripMenuItemNotify_Click);
             // 
             // toolStripSeparator30
             // 
             this.toolStripSeparator30.Name = "toolStripSeparator30";
-            this.toolStripSeparator30.Size = new System.Drawing.Size(98, 6);
+            this.toolStripSeparator30.Size = new System.Drawing.Size(104, 6);
             // 
             // toolStripMenuItemExit
             // 
             this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
-            this.toolStripMenuItemExit.Size = new System.Drawing.Size(101, 22);
+            this.toolStripMenuItemExit.Size = new System.Drawing.Size(107, 22);
             this.toolStripMenuItemExit.Text = "Exit";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // statusStripMain
+            // 
+            this.statusStripMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.statusStripMain.BackgroundImage = global::winSBPayroll.Properties.Resources.powermage;
+            this.statusStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblLoggedInUser,
+            this.toolStripStatusLabel1,
+            this.lblselecteddatabase,
+            this.toolStripStatusLabel2,
+            this.lblversion,
+            this.toolStripStatusLabel4,
+            this.lblrunningtime,
+            this.toolStripStatusLabel5,
+            this.lbltimelapsed,
+            this.toolStripStatusLabel3,
+            this.lblStatusUpdates,
+            this.toolStripStatusLabel6,
+            this.lbl_info});
+            this.statusStripMain.Location = new System.Drawing.Point(0, 718);
+            this.statusStripMain.Name = "statusStripMain";
+            this.statusStripMain.Size = new System.Drawing.Size(1256, 22);
+            this.statusStripMain.TabIndex = 1;
+            this.statusStripMain.Text = "statusStrip1";
+            // 
+            // lblLoggedInUser
+            // 
+            this.lblLoggedInUser.Name = "lblLoggedInUser";
+            this.lblLoggedInUser.Size = new System.Drawing.Size(76, 17);
+            this.lblLoggedInUser.Text = "loggedinuser";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(97, 17);
+            this.toolStripStatusLabel1.Text = "                              ";
+            // 
+            // lblselecteddatabase
+            // 
+            this.lblselecteddatabase.Name = "lblselecteddatabase";
+            this.lblselecteddatabase.Size = new System.Drawing.Size(97, 17);
+            this.lblselecteddatabase.Text = "selecteddatabase";
+            this.lblselecteddatabase.Click += new System.EventHandler(this.lblSelectedDatabase_Click);
+            // 
+            // toolStripStatusLabel2
+            // 
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(97, 17);
+            this.toolStripStatusLabel2.Text = "                              ";
+            // 
+            // lblversion
+            // 
+            this.lblversion.Name = "lblversion";
+            this.lblversion.Size = new System.Drawing.Size(45, 17);
+            this.lblversion.Text = "version";
+            // 
+            // toolStripStatusLabel4
+            // 
+            this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
+            this.toolStripStatusLabel4.Size = new System.Drawing.Size(97, 17);
+            this.toolStripStatusLabel4.Text = "                              ";
+            // 
+            // lblrunningtime
+            // 
+            this.lblrunningtime.Name = "lblrunningtime";
+            this.lblrunningtime.Size = new System.Drawing.Size(73, 17);
+            this.lblrunningtime.Text = "runningtime";
+            // 
+            // toolStripStatusLabel5
+            // 
+            this.toolStripStatusLabel5.Name = "toolStripStatusLabel5";
+            this.toolStripStatusLabel5.Size = new System.Drawing.Size(97, 17);
+            this.toolStripStatusLabel5.Text = "                              ";
+            // 
+            // lbltimelapsed
+            // 
+            this.lbltimelapsed.Name = "lbltimelapsed";
+            this.lbltimelapsed.Size = new System.Drawing.Size(65, 17);
+            this.lbltimelapsed.Text = "timelapsed";
+            // 
+            // toolStripStatusLabel3
+            // 
+            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(97, 17);
+            this.toolStripStatusLabel3.Text = "                              ";
+            // 
+            // lblStatusUpdates
+            // 
+            this.lblStatusUpdates.Name = "lblStatusUpdates";
+            this.lblStatusUpdates.Size = new System.Drawing.Size(38, 17);
+            this.lblStatusUpdates.Text = "status";
+            // 
+            // toolStripStatusLabel6
+            // 
+            this.toolStripStatusLabel6.Name = "toolStripStatusLabel6";
+            this.toolStripStatusLabel6.Size = new System.Drawing.Size(97, 17);
+            this.toolStripStatusLabel6.Text = "                              ";
+            // 
+            // lbl_info
+            // 
+            this.lbl_info.Name = "lbl_info";
+            this.lbl_info.Size = new System.Drawing.Size(28, 17);
+            this.lbl_info.Text = "info";
+            // 
+            // webBrowser
+            // 
+            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowser.Location = new System.Drawing.Point(0, 62);
+            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser.Name = "webBrowser";
+            this.webBrowser.ScriptErrorsSuppressed = true;
+            this.webBrowser.Size = new System.Drawing.Size(815, 656);
+            this.webBrowser.TabIndex = 1;
+            // 
+            // txtlog
+            // 
+            this.txtlog.BackColor = System.Drawing.Color.Black;
+            this.txtlog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtlog.Dock = System.Windows.Forms.DockStyle.Right;
+            this.txtlog.ForeColor = System.Drawing.Color.Lime;
+            this.txtlog.Location = new System.Drawing.Point(815, 62);
+            this.txtlog.Name = "txtlog";
+            this.txtlog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.txtlog.Size = new System.Drawing.Size(441, 656);
+            this.txtlog.TabIndex = 0;
+            this.txtlog.Text = "";
+            this.txtlog.Visible = false;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(1028, 428);
+            this.ClientSize = new System.Drawing.Size(1256, 740);
+            this.Controls.Add(this.webBrowser);
+            this.Controls.Add(this.txtlog);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.webBrowser1);
             this.Controls.Add(this.statusStripMain);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -875,9 +975,9 @@
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.contextMenuStripSystemNotification.ResumeLayout(false);
             this.statusStripMain.ResumeLayout(false);
             this.statusStripMain.PerformLayout();
-            this.contextMenuStripSystemNotification.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -893,8 +993,7 @@
         private System.Windows.Forms.ToolStripMenuItem employeesToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStripMain;
         private System.Windows.Forms.ToolStripMenuItem reportsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem pdfReportsToolStripMenuItem;
-        private System.Windows.Forms.WebBrowser webBrowser1;
+        private System.Windows.Forms.ToolStripMenuItem allReportsToolStripMenuItem;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton tsbOpenPayroll;
         private System.Windows.Forms.ToolStripStatusLabel lblLoggedInUser;
@@ -909,7 +1008,7 @@
         private System.Windows.Forms.ToolStripButton tsbPDFReports;        
         private System.Windows.Forms.ToolStripButton tsbPayeeRates;
         private System.Windows.Forms.ToolStripButton tsbExit;
-        private System.Windows.Forms.ToolStripMenuItem taxCalcuToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem taxCalculatorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem payeeRatesToolStripMenuItem;
@@ -938,7 +1037,7 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changePasswordToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem btnBankBranches;
+        private System.Windows.Forms.ToolStripMenuItem bankBranchesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewHelpToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripMenuItem databaseControlPanelToolStripMenuItem;
@@ -959,7 +1058,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator26;
         private System.Windows.Forms.ToolStripMenuItem uploadDownloadWizardToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
-        private System.Windows.Forms.ToolStripStatusLabel lblDate;
+        private System.Windows.Forms.ToolStripStatusLabel lblrunningtime;
         private System.Windows.Forms.ToolStripStatusLabel lblversion;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
         private System.Windows.Forms.ToolStripMenuItem rightsToolStripMenuItem;
@@ -971,7 +1070,7 @@
         private System.Windows.Forms.Timer updateStatusTimer;
         private System.Windows.Forms.Timer loggedInTimer;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel5;
-        private System.Windows.Forms.ToolStripStatusLabel lblLoggedInTime;
+        private System.Windows.Forms.ToolStripStatusLabel lbltimelapsed;
         private System.Windows.Forms.NotifyIcon appNotifyIcon;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripSystemNotification;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemHome;
@@ -979,6 +1078,18 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExit;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator27;
         private System.Windows.Forms.ToolStripMenuItem newNSSFToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator31;
+        private System.Windows.Forms.ToolStripMenuItem transactionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem licenseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator32;
+        private System.Windows.Forms.ToolStripMenuItem contactUsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator33;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel6;
+        private System.Windows.Forms.ToolStripStatusLabel lbl_info;
+        private System.Windows.Forms.WebBrowser webBrowser;
+        private System.Windows.Forms.RichTextBox txtlog;
+        private System.Windows.Forms.ToolStripMenuItem homeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator34;
     }
 }
 

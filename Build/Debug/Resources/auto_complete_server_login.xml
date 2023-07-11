@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Systems>
+  <System system="Soft Books Payroll" serverName="LAPTOP-26CGCGN6" databaseName="" userName="sa" password="ScYAjoYJskhPKm9aKt5/fQ==" IntegratedSecurity="True" remember_username="True" remember_password="True" remember_servername="True" />
+  <System system="Soft Books Payroll" serverName="KMK\SQLEXPRESS" databaseName="" userName="sa" password="ScYAjoYJskhPKm9aKt5/fQ==" IntegratedSecurity="True" remember_username="True" remember_password="True" remember_servername="True" />
+  <System system="Soft Books Payroll" serverName="KMK" databaseName="" userName="sa" password="ScYAjoYJskhPKm9aKt5/fQ==" IntegratedSecurity="True" remember_username="True" remember_password="True" remember_servername="True" />
+</Systems>

@@ -50,41 +50,89 @@ namespace winSBPayroll.Forms
         }
         public void RefreshGrid()
         {
-            try
+            bindingSourceEmployees.DataSource = null;
+            if (cboEmployer.SelectedIndex != -1)
             {
-                //set the datasource to null
-                bindingSourceEmployees.DataSource = null;
-                if (chkInActive.Checked)
+                try
                 {
-                    //set the datasource to a method
-                    bindingSourceEmployees.DataSource = rep.GetAllEmployees();
-                    groupBox2.Text = bindingSourceEmployees.Count.ToString();
-                    foreach (DataGridViewRow row in dataGridViewEmployees.Rows)
+                    DAL.Employer _employer = (DAL.Employer)cboEmployer.SelectedItem;
+
+                    if (chkInActive.Checked)
                     {
-                        dataGridViewEmployees.Rows[dataGridViewEmployees.Rows.Count - 1].Selected = true;
-                        int nRowIndex = dataGridViewEmployees.Rows.Count - 1;
-                        bindingSourceEmployees.Position = nRowIndex;
+                        ApplyFilter();
+                        //var _employees = from em in rep.GetAllEmployees()
+                        //                 where em.EmployerId == _employer.Id
+                        //                 where em.IsDeleted == false
+                        //                 select em;
+                        //bindingSourceEmployees.DataSource = _employees;
+                        //groupBox2.Text = bindingSourceEmployees.Count.ToString();
+                        //foreach (DataGridViewRow row in dataGridViewEmployees.Rows)
+                        //{
+                        //    dataGridViewEmployees.Rows[dataGridViewEmployees.Rows.Count - 1].Selected = true;
+                        //    int nRowIndex = dataGridViewEmployees.Rows.Count - 1;
+                        //    bindingSourceEmployees.Position = nRowIndex;
+                        //}
+                    }
+                    else
+                    {
+                        ApplyFilter();
+                        //var _employees = from em in rep.GetAllEmployees()
+                        //                 where em.EmployerId == _employer.Id
+                        //                 where em.IsActive == true
+                        //                 where em.IsDeleted == false
+                        //                 select em;
+                        //bindingSourceEmployees.DataSource = _employees;
+                        //groupBox2.Text = bindingSourceEmployees.Count.ToString();
+                        //foreach (DataGridViewRow row in dataGridViewEmployees.Rows)
+                        //{
+                        //    dataGridViewEmployees.Rows[dataGridViewEmployees.Rows.Count - 1].Selected = true;
+                        //    int nRowIndex = dataGridViewEmployees.Rows.Count - 1;
+                        //    bindingSourceEmployees.Position = nRowIndex;
+                        //}
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    //set the datasource to null
-                    bindingSourceEmployees.DataSource = null;
-                    //set the datasource to a method
-                    bindingSourceEmployees.DataSource = rep.GetAllActiveEmployees();
-                    groupBox2.Text = bindingSourceEmployees.Count.ToString();
-                    foreach (DataGridViewRow row in dataGridViewEmployees.Rows)
-                    {
-                        dataGridViewEmployees.Rows[dataGridViewEmployees.Rows.Count - 1].Selected = true;
-                        int nRowIndex = dataGridViewEmployees.Rows.Count - 1;
-                        bindingSourceEmployees.Position = nRowIndex;
-                    }
+                    Utils.ShowError(ex);
                 }
             }
-            catch (Exception ex)
-            {
-                Utils.ShowError(ex);
-            }
+
+
+            //try
+            //{
+            //    //set the datasource to null
+            //    bindingSourceEmployees.DataSource = null;
+            //    if (chkInActive.Checked)
+            //    {
+            //        //set the datasource to a method
+            //        bindingSourceEmployees.DataSource = rep.GetAllEmployees();
+            //        groupBox2.Text = bindingSourceEmployees.Count.ToString();
+            //        foreach (DataGridViewRow row in dataGridViewEmployees.Rows)
+            //        {
+            //            dataGridViewEmployees.Rows[dataGridViewEmployees.Rows.Count - 1].Selected = true;
+            //            int nRowIndex = dataGridViewEmployees.Rows.Count - 1;
+            //            bindingSourceEmployees.Position = nRowIndex;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        //set the datasource to null
+            //        bindingSourceEmployees.DataSource = null;
+            //        //set the datasource to a method
+            //        bindingSourceEmployees.DataSource = rep.GetAllActiveEmployees();
+            //        groupBox2.Text = bindingSourceEmployees.Count.ToString();
+            //        foreach (DataGridViewRow row in dataGridViewEmployees.Rows)
+            //        {
+            //            dataGridViewEmployees.Rows[dataGridViewEmployees.Rows.Count - 1].Selected = true;
+            //            int nRowIndex = dataGridViewEmployees.Rows.Count - 1;
+            //            bindingSourceEmployees.Position = nRowIndex;
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    Utils.ShowError(ex);
+            //}
         }
         private void Employees_Load(object sender, EventArgs e)
         {
@@ -655,19 +703,19 @@ namespace winSBPayroll.Forms
 
                     if (_EmployeesWithPayslipDet.Count > 0)
                     {
-                        MessageBox.Show("There is a Processed Payroll Associated with this Employee!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("There is a Processed Payroll Associated with this Employee!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else if (_EmployeesWithPayslipDet_Temp.Count > 0)
                     {
-                        MessageBox.Show("There is a Processed Payroll Associated with this Employee!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("There is a Processed Payroll Associated with this Employee!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else if (_EmployeesWithPayslipMaster.Count > 0)
                     {
-                        MessageBox.Show("There is a Processed Payroll Associated with this Employee!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("There is a Processed Payroll Associated with this Employee!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else if (_EmployeesWithPayslipMaster_Temp.Count > 0)
                     {
-                        MessageBox.Show("There is a Processed Payroll Associated with this Employee!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("There is a Processed Payroll Associated with this Employee!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                         if (DialogResult.Yes == MessageBox.Show("Are you sure you want to delete employee\n" + emp.Surname.ToString().Trim().ToUpper() + "  " + emp.OtherNames.ToString().Trim().ToUpper(), "Confirm Delete", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
@@ -797,7 +845,7 @@ namespace winSBPayroll.Forms
                 }
             }
         }
-
+         
 
 
 

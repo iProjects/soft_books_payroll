@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Systems>
+  <System system="On kmk" serverName=".\SQLEXPRESS" databaseName="sbpayrolldb_november" userName="sys" password="FzFGn3pfew/iiG9tfEoBwg==" IntegratedSecurity="True" remember="True" />
+  <System system="On kmk" serverName=".\SQLEXPRESS" databaseName="SBPayrollDB_february_2023" userName="sys" password="FzFGn3pfew/iiG9tfEoBwg==" IntegratedSecurity="True" remember="True" />
+</Systems>

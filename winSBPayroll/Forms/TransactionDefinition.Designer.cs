@@ -119,7 +119,7 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 16);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(931, 292);
+            this.tabControl1.Size = new System.Drawing.Size(974, 378);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPageList
@@ -129,11 +129,11 @@
             this.tabPageList.Location = new System.Drawing.Point(4, 22);
             this.tabPageList.Name = "tabPageList";
             this.tabPageList.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageList.Size = new System.Drawing.Size(923, 266);
+            this.tabPageList.Size = new System.Drawing.Size(966, 352);
             this.tabPageList.TabIndex = 0;
             this.tabPageList.Text = "Defined Transactions";
             // 
-            // dataGridViewTaxCalculator
+            // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
@@ -150,12 +150,12 @@
             this.TransDefEnabled,
             this.Recurrent,
             this.TrackYTD});
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(3, 3);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(917, 339);
+            this.dataGridView1.Size = new System.Drawing.Size(960, 346);
             this.dataGridView1.TabIndex = 0;
             // 
             // TxnCode
@@ -228,7 +228,7 @@
             this.tabPageEntry.Location = new System.Drawing.Point(4, 22);
             this.tabPageEntry.Name = "tabPageEntry";
             this.tabPageEntry.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageEntry.Size = new System.Drawing.Size(923, 347);
+            this.tabPageEntry.Size = new System.Drawing.Size(966, 352);
             this.tabPageEntry.TabIndex = 1;
             this.tabPageEntry.Text = "Edit Transaction";
             // 
@@ -394,9 +394,9 @@
             this.groupBox1.Controls.Add(this.btnClose);
             this.groupBox1.Controls.Add(this.btnApply);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox1.Location = new System.Drawing.Point(0, 311);
+            this.groupBox1.Location = new System.Drawing.Point(0, 397);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(937, 62);
+            this.groupBox1.Size = new System.Drawing.Size(980, 62);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
@@ -406,7 +406,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(937, 311);
+            this.groupBox2.Size = new System.Drawing.Size(980, 397);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             // 
@@ -452,7 +452,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LimeGreen;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(937, 373);
+            this.ClientSize = new System.Drawing.Size(980, 459);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

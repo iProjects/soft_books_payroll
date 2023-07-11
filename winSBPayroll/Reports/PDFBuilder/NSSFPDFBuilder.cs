@@ -1,16 +1,16 @@
-﻿using System; 
+﻿using System;
 using System.Collections.Generic;
-using System.Globalization; 
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using BLL.DataEntry;
 //Payroll
-using BLL.KRA; 
+using BLL.KRA;
 using CommonLib;
-using DAL;  
+using DAL;
 //--- Add the following to make itext work
-using iTextSharp.text; 
+using iTextSharp.text;
 using iTextSharp.text.pdf;
 using VVX;
 using winSBPayroll.ViewModel;
@@ -30,19 +30,47 @@ namespace winSBPayroll.Reports.PDF
 
         //DEFINED fONTS
         Font hFont1 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
+        Font hfont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
         Font hFont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
-        Font bFont1 = new Font(Font.TIMES_ROMAN, 10, Font.NORMAL);//body 
+        Font bfont1 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);//body
+        Font bFont2 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);//body
+        Font bFont3 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);//body
         Font tHFont = new Font(Font.TIMES_ROMAN, 9, Font.BOLD); //table Header
-        Font tHfont1 = new Font(Font.TIMES_ROMAN, 9, Font.BOLD);//TABLE HEADER
-        Font helv8Font = new Font(Font.HELVETICA, 8, Font.NORMAL);//table cell
-        Font rms6Normal = new Font(Font.TIMES_ROMAN, 6, Font.NORMAL);
-        Font rms8Normal = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL);
-        Font rms6Bold = new Font(Font.TIMES_ROMAN, 6, Font.BOLD);
-        Font rms8Bold = new Font(Font.TIMES_ROMAN, 9, Font.BOLD);
+        Font tHfont1 = new Font(Font.TIMES_ROMAN, 11, Font.BOLD); //table Header
+        Font tcFont = new Font(Font.HELVETICA, 8, Font.NORMAL);//table cell
+        Font helv8Font = new Font(Font.HELVETICA, 8, Font.NORMAL);//table cell 
+        Font rms6Normal = new Font(Font.TIMES_ROMAN, 9, Font.NORMAL);
+        Font rms10Bold = new Font(Font.HELVETICA, 10, Font.BOLD);
+        Font rms6Bold = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font rms8Bold = new Font(Font.HELVETICA, 8, Font.BOLD);
+        Font rms9Bold = new Font(Font.HELVETICA, 9, Font.BOLD);
         Font rms10Normal = new Font(Font.HELVETICA, 10, Font.NORMAL);
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
         //constructor
-        public NSSFPDFBuilder(Employer employer, NSSFReportModel nssfreportmodel, string FileName, string Conn)
+        public NSSFPDFBuilder(Employer employer, NSSFReportModel nssfreportmodel, string FileName, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
+        {
+            if (nssfreportmodel == null)
+                throw new ArgumentNullException("NSSFReportModel is null");
+            _ViewModel = nssfreportmodel;
+
+            if (string.IsNullOrEmpty(Conn))
+                throw new ArgumentNullException("connection");
+            connection = Conn;
+
+            db = new SBPayrollDBEntities(connection);
+            rep = new Repository(connection);
+
+            _notificationmessageEventname = notificationmessageEventname;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed NSSFPDFBuilder", TAG));
+
+            sFilePDF = FileName;
+
+            _employer = employer;
+        }
+        public NSSFPDFBuilder(NSSFReportModel nssfreportmodel, string FileName, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (nssfreportmodel == null)
                 throw new ArgumentNullException("NSSFReportModel is null");
@@ -56,23 +84,6 @@ namespace winSBPayroll.Reports.PDF
             rep = new Repository(connection);
 
             sFilePDF = FileName;
-
-            _employer = employer;
-        }
-        public NSSFPDFBuilder( NSSFReportModel nssfreportmodel, string FileName, string Conn)
-        {
-            if (nssfreportmodel == null)
-                throw new ArgumentNullException("NSSFReportModel is null");
-            _ViewModel = nssfreportmodel;
-
-            if (string.IsNullOrEmpty(Conn))
-                throw new ArgumentNullException("connection");
-            connection = Conn;
-
-            db = new SBPayrollDBEntities(connection);
-            rep = new Repository(connection);
-
-            sFilePDF = FileName; 
         }
 
         public string GetPDF()
@@ -116,7 +127,7 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
         }
         //document header
@@ -165,7 +176,7 @@ namespace winSBPayroll.Reports.PDF
             nssfTable.AddCell(PrintedonCell);
 
             //create the logo
-            PDFGen pdfgen = new PDFGen();
+            PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
             Image img0 = pdfgen.DoGetImageFile(_ViewModel.CompanyLogo);
             img0.Alignment = Image.ALIGN_MIDDLE;
             Cell logoCell = new Cell(img0);

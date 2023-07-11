@@ -225,6 +225,10 @@ namespace BLL.DataEntry
             return rep.GetAllEmployers();
 
         }
+        public List<Employer> GetAllActiveEmployers()
+        {
+            return rep.GetAllActiveEmployers();
+        }
 
         public Employer GetEmployer(int empl)
         {
@@ -527,6 +531,11 @@ namespace BLL.DataEntry
             return rep.WorkingCopyNotClosed(ref period, ref year);
         }
 
+        public bool Working_Copy_Not_Closed_for_employer(ref int period, ref int year, ref int employerid)
+        {
+            return rep.Working_Copy_Not_Closed_for_employer(ref period, ref year, ref employerid);
+        }
+
         public List<int> GetPayrollYears()
         {
             return rep.GetPayrollYears();
@@ -555,7 +564,6 @@ namespace BLL.DataEntry
             {
                 return rep.GetPayrolls(false, true);
             }
-
             else if (pstate == PayrollState.Open)
             {
                 return rep.GetOpenPayrolls(true);
@@ -593,10 +601,10 @@ namespace BLL.DataEntry
             rep.MarkPayrollAsProcessed(period, year);
         }
 
-        public void ClearPayroll(int payPeriod, int Year)
+        public void ClearPayroll(int payPeriod, int Year, int EmployerId)
         {
-            rep.ClearPayslipDet(payPeriod, Year);
-            rep.ClearPayslipMaster(payPeriod, Year);
+            rep.ClearPayslipDet(payPeriod, Year, EmployerId);
+            rep.ClearPayslipMaster(payPeriod, Year, EmployerId);
         }
 
         public void AddPayroll(int period, int year, int owner, DateTime daterun, string runby,

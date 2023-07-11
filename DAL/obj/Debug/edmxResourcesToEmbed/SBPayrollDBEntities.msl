@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="SBPayrollDBModelStoreContainer" CdmEntityContainer="SBPayrollDBEntities">
-    <FunctionImportMapping FunctionImportName="CopyPayMaster" FunctionName="SBPayrollDBModel.Store.CopyPayMaster" />
-    <FunctionImportMapping FunctionImportName="CopyPayslipDet" FunctionName="SBPayrollDBModel.Store.CopyPayslipDet" />
     <EntitySetMapping Name="Accounts">
       <EntityTypeMapping TypeName="SBPayrollDBModel.Account">
         <MappingFragment StoreEntitySet="Accounts">
@@ -41,6 +39,25 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="DeductionsTrackers">
+      <EntityTypeMapping TypeName="SBPayrollDBModel.DeductionsTracker">
+        <MappingFragment StoreEntitySet="DeductionsTracker">
+          <ScalarProperty Name="IsClosed" ColumnName="IsClosed" />
+          <ScalarProperty Name="IsProcessed" ColumnName="IsProcessed" />
+          <ScalarProperty Name="Term" ColumnName="Term" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="EmployeeTransactionId" ColumnName="EmployeeTransactionId" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="SaccoYTD" ColumnName="SaccoYTD" />
+          <ScalarProperty Name="LoanYTD" ColumnName="LoanYTD" />
+          <ScalarProperty Name="ItemTypeDescription" ColumnName="ItemTypeDescription" />
+          <ScalarProperty Name="PayrollItemId" ColumnName="PayrollItemId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Departments">
       <EntityTypeMapping TypeName="SBPayrollDBModel.Department">
         <MappingFragment StoreEntitySet="Departments">
@@ -54,6 +71,7 @@
     <EntitySetMapping Name="Employee_Ext">
       <EntityTypeMapping TypeName="SBPayrollDBModel.Employee_Ext">
         <MappingFragment StoreEntitySet="Employee_Ext">
+          <ScalarProperty Name="EmployerId" ColumnName="EmployerId" />
           <ScalarProperty Name="ExFieldDecimal" ColumnName="ExFieldDecimal" />
           <ScalarProperty Name="ExFieldDate" ColumnName="ExFieldDate" />
           <ScalarProperty Name="ExFieldInt" ColumnName="ExFieldInt" />
@@ -75,6 +93,8 @@
     <EntitySetMapping Name="Employees">
       <EntityTypeMapping TypeName="SBPayrollDBModel.Employee">
         <MappingFragment StoreEntitySet="Employees">
+          <ScalarProperty Name="MpesaReferenceNo" ColumnName="MpesaReferenceNo" />
+          <ScalarProperty Name="IsDisabled" ColumnName="IsDisabled" />
           <ScalarProperty Name="SystemId" ColumnName="SystemId" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
@@ -130,6 +150,12 @@
     <EntitySetMapping Name="EmployeeTransactions">
       <EntityTypeMapping TypeName="SBPayrollDBModel.EmployeeTransaction">
         <MappingFragment StoreEntitySet="EmployeeTransactions">
+          <ScalarProperty Name="IsSharesRepaymentInCash" ColumnName="IsSharesRepaymentInCash" />
+          <ScalarProperty Name="IsLoanRepaymentInCash" ColumnName="IsLoanRepaymentInCash" />
+          <ScalarProperty Name="SaccoBeingRepayedId" ColumnName="SaccoBeingRepayedId" />
+          <ScalarProperty Name="LoanBeingRepayedId" ColumnName="LoanBeingRepayedId" />
+          <ScalarProperty Name="IsLoanRepaymentInFull" ColumnName="IsLoanRepaymentInFull" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="AccumulativePayment" ColumnName="AccumulativePayment" />
           <ScalarProperty Name="LoanType" ColumnName="LoanType" />
           <ScalarProperty Name="AuthorizeDate" ColumnName="AuthorizeDate" />
@@ -278,6 +304,8 @@
     <EntitySetMapping Name="PayrollItemTypes">
       <EntityTypeMapping TypeName="SBPayrollDBModel.PayrollItemType">
         <MappingFragment StoreEntitySet="PayrollItemType">
+          <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Parent" ColumnName="Parent" />
           <ScalarProperty Name="Id" ColumnName="Id" />
@@ -311,6 +339,8 @@
     <EntitySetMapping Name="PayslipDets">
       <EntityTypeMapping TypeName="SBPayrollDBModel.PayslipDet">
         <MappingFragment StoreEntitySet="PayslipDet">
+          <ScalarProperty Name="IsSharesRepaymentInCash" ColumnName="IsSharesRepaymentInCash" />
+          <ScalarProperty Name="IsLoanRepaymentInCash" ColumnName="IsLoanRepaymentInCash" />
           <ScalarProperty Name="YTD" ColumnName="YTD" />
           <ScalarProperty Name="ShowInPayslip" ColumnName="ShowInPayslip" />
           <ScalarProperty Name="IsStatutory" ColumnName="IsStatutory" />
@@ -321,6 +351,7 @@
           <ScalarProperty Name="Year" ColumnName="Year" />
           <ScalarProperty Name="Period" ColumnName="Period" />
           <ScalarProperty Name="EmpTxnId" ColumnName="EmpTxnId" />
+          <ScalarProperty Name="EmployerId" ColumnName="EmployerId" />
           <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
           <ScalarProperty Name="EmpNo" ColumnName="EmpNo" />
           <ScalarProperty Name="Id" ColumnName="Id" />
@@ -330,6 +361,8 @@
     <EntitySetMapping Name="PayslipDet_Temp">
       <EntityTypeMapping TypeName="SBPayrollDBModel.PayslipDet_Temp">
         <MappingFragment StoreEntitySet="PayslipDet_Temp">
+          <ScalarProperty Name="IsSharesRepaymentInCash" ColumnName="IsSharesRepaymentInCash" />
+          <ScalarProperty Name="IsLoanRepaymentInCash" ColumnName="IsLoanRepaymentInCash" />
           <ScalarProperty Name="YTD" ColumnName="YTD" />
           <ScalarProperty Name="ShowInPayslip" ColumnName="ShowInPayslip" />
           <ScalarProperty Name="IsStatutory" ColumnName="IsStatutory" />
@@ -340,8 +373,8 @@
           <ScalarProperty Name="Year" ColumnName="Year" />
           <ScalarProperty Name="Period" ColumnName="Period" />
           <ScalarProperty Name="EmpTxnId" ColumnName="EmpTxnId" />
-          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
           <ScalarProperty Name="EmployerId" ColumnName="EmployerId" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
           <ScalarProperty Name="EmpNo" ColumnName="EmpNo" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
@@ -383,6 +416,7 @@
           <ScalarProperty Name="PrintedOn" ColumnName="PrintedOn" />
           <ScalarProperty Name="PrintedBy" ColumnName="PrintedBy" />
           <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+          <ScalarProperty Name="EmployerId" ColumnName="EmployerId" />
           <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
           <ScalarProperty Name="EmpNo" ColumnName="EmpNo" />
           <ScalarProperty Name="Year" ColumnName="Year" />
@@ -426,8 +460,8 @@
           <ScalarProperty Name="PrintedOn" ColumnName="PrintedOn" />
           <ScalarProperty Name="PrintedBy" ColumnName="PrintedBy" />
           <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
-          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
           <ScalarProperty Name="EmployerId" ColumnName="EmployerId" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
           <ScalarProperty Name="EmpNo" ColumnName="EmpNo" />
           <ScalarProperty Name="Year" ColumnName="Year" />
           <ScalarProperty Name="Period" ColumnName="Period" />
@@ -525,6 +559,8 @@
     <EntitySetMapping Name="spUsers">
       <EntityTypeMapping TypeName="SBPayrollDBModel.spUser">
         <MappingFragment StoreEntitySet="spUsers">
+          <ScalarProperty Name="password_salt" ColumnName="password_salt" />
+          <ScalarProperty Name="password_hash" ColumnName="password_hash" />
           <ScalarProperty Name="Photo" ColumnName="Photo" />
           <ScalarProperty Name="InformBy" ColumnName="InformBy" />
           <ScalarProperty Name="DateJoined" ColumnName="DateJoined" />
@@ -554,11 +590,37 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="SBPayrollDBModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="definition" ColumnName="definition" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="TaxTrackings">
       <EntityTypeMapping TypeName="SBPayrollDBModel.TaxTracking">
         <MappingFragment StoreEntitySet="TaxTracking">
+          <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_LAS">
+      <EntityTypeMapping TypeName="SBPayrollDBModel.tbl_LAS">
+        <MappingFragment StoreEntitySet="tbl_LAS">
+          <ScalarProperty Name="days_for_expiry" ColumnName="days_for_expiry" />
+          <ScalarProperty Name="next_expiry_date" ColumnName="next_expiry_date" />
+          <ScalarProperty Name="date_activated" ColumnName="date_activated" />
+          <ScalarProperty Name="activation_key" ColumnName="activation_key" />
+          <ScalarProperty Name="computer_name" ColumnName="computer_name" />
+          <ScalarProperty Name="mac_address" ColumnName="mac_address" />
+          <ScalarProperty Name="las_id" ColumnName="las_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -657,6 +719,11 @@
     <EntitySetMapping Name="GetEmpTransactions">
       <EntityTypeMapping TypeName="SBPayrollDBModel.GetEmpTransaction">
         <MappingFragment StoreEntitySet="GetEmpTransactions">
+          <ScalarProperty Name="IsSharesRepaymentInCash" ColumnName="IsSharesRepaymentInCash" />
+          <ScalarProperty Name="IsLoanRepaymentInCash" ColumnName="IsLoanRepaymentInCash" />
+          <ScalarProperty Name="SaccoBeingRepayedId" ColumnName="SaccoBeingRepayedId" />
+          <ScalarProperty Name="LoanBeingRepayedId" ColumnName="LoanBeingRepayedId" />
+          <ScalarProperty Name="IsLoanRepaymentInFull" ColumnName="IsLoanRepaymentInFull" />
           <ScalarProperty Name="SystemId" ColumnName="SystemId" />
           <ScalarProperty Name="Enable" ColumnName="Enable" />
           <ScalarProperty Name="PostDate" ColumnName="PostDate" />
@@ -816,6 +883,10 @@
     <EntitySetMapping Name="vwPayslipDets">
       <EntityTypeMapping TypeName="SBPayrollDBModel.vwPayslipDet">
         <MappingFragment StoreEntitySet="vwPayslipDet">
+          <ScalarProperty Name="IsLoanRepaymentInCash" ColumnName="IsLoanRepaymentInCash" />
+          <ScalarProperty Name="IsSharesRepaymentInCash" ColumnName="IsSharesRepaymentInCash" />
+          <ScalarProperty Name="IsLoanRepaymentInFull" ColumnName="IsLoanRepaymentInFull" />
+          <ScalarProperty Name="AccumulativePayment" ColumnName="AccumulativePayment" />
           <ScalarProperty Name="SystemId" ColumnName="SystemId" />
           <ScalarProperty Name="EmployerId" ColumnName="EmployerId" />
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
@@ -854,6 +925,10 @@
     <EntitySetMapping Name="vwPayslipDet_Temp">
       <EntityTypeMapping TypeName="SBPayrollDBModel.vwPayslipDet_Temp">
         <MappingFragment StoreEntitySet="vwPayslipDet_Temp">
+          <ScalarProperty Name="IsLoanRepaymentInCash" ColumnName="IsLoanRepaymentInCash" />
+          <ScalarProperty Name="IsSharesRepaymentInCash" ColumnName="IsSharesRepaymentInCash" />
+          <ScalarProperty Name="IsLoanRepaymentInFull" ColumnName="IsLoanRepaymentInFull" />
+          <ScalarProperty Name="AccumulativePayment" ColumnName="AccumulativePayment" />
           <ScalarProperty Name="SystemId" ColumnName="SystemId" />
           <ScalarProperty Name="EmployerId" ColumnName="EmployerId" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />

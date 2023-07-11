@@ -159,13 +159,21 @@ namespace winSBPayroll.Forms
                                               select em;
                     List<EmployerBank> _EmployerBanks = _EmployerBanksquery.ToList();
 
+                    var _payrolls_query = db.Payrolls.Where(p => p.EmployerId == emp.Id).ToList();
+          
+                    List<DAL.Payroll> openPayrolls = _payrolls_query.ToList();
+
                     if (_Employees.Count > 0)
                     {
-                        MessageBox.Show("There is an Employee Associated with this Employer.\n Delete the Employee First!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("There is an Employee Associated with this Employer.\n Delete the Employee First!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else if (_EmployerBanks.Count > 0)
                     {
-                        MessageBox.Show("There is an Employer Bank Associated with this Employer.\n Delete the Employer Bank First!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("There is an Employer Bank Associated with this Employer.\n Delete the Employer Bank First!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (openPayrolls.Count > 0)
+                    {
+                        MessageBox.Show("There is a Payroll Associated with this Employer.\n Delete the Payroll First!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {

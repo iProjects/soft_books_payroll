@@ -11,18 +11,19 @@ namespace winSBPayroll.Reports.ExcelBuilder
 {
     public class EmployeeExcelBuilder
     {
-
-
         //private attributes 
         EmployeesModelReport _emreportmodel;
         CreateExcelDoc document;
         string Message;
         string sFileExcel;
-
+        public event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
         //constructor
-        public EmployeeExcelBuilder(EmployeesModelReport emreportmodel, string FileName)
+        public EmployeeExcelBuilder(EmployeesModelReport emreportmodel, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
+            _notificationmessageEventname = notificationmessageEventname;
+
             _emreportmodel = emreportmodel;
             sFileExcel = FileName;
         }
@@ -60,7 +61,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
 
         }
@@ -90,7 +91,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
             document.createHeaders(row, col, "Printed on: " + _emreportmodel.PrintedOn.ToString("dd-dddd-MMMM-yyyy"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
 
-          
+
         }
 
 
@@ -100,13 +101,13 @@ namespace winSBPayroll.Reports.ExcelBuilder
             AddBodytableHeaders(ref  row, ref  col);
 
             //Add table detail
-            foreach (var d in _emreportmodel.pae)
-           {
-               AddBodyTableDetail(d, ref  row, ref  col);
-           }
+            foreach (var d in _emreportmodel.pe)
+            {
+                AddBodyTableDetail(d, ref  row, ref  col);
+            }
 
             //Add table footer
-            AddDocBodyTableTotals(ref  row, ref  col);
+            //AddDocBodyTableTotals(ref  row, ref  col);
 
         }
 
@@ -143,18 +144,24 @@ namespace winSBPayroll.Reports.ExcelBuilder
 
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
-            document.createHeaders(row, col, "BASIC SALARY", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
-            col++;
-            cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, "PAYMENT MODE", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
+            col++;
+            cellrangeaddr1 = document.IntAlpha(col) + row;
+            document.createHeaders(row, col, "NSSF NO", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
-            
+            col++;
+            cellrangeaddr1 = document.IntAlpha(col) + row;
+            document.createHeaders(row, col, "NHIF NO", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
+
+            col++;
+            cellrangeaddr1 = document.IntAlpha(col) + row;
+            document.createHeaders(row, col, "PHONE NO", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
         }
 
         //table details
-        private void AddBodyTableDetail(printallemployees paemp, ref int row, ref int col)
+        private void AddBodyTableDetail(print_employees paemp, ref int row, ref int col)
         {
 
             row++; col = 1;
@@ -187,13 +194,19 @@ namespace winSBPayroll.Reports.ExcelBuilder
 
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
-            document.createHeaders(row, col, paemp.basicpay.ToString("#,##0"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
+            document.createHeaders(row, col, paemp.paymentmode, cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
-            document.createHeaders(row, col, paemp.paymentmode, cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
+            document.createHeaders(row, col, paemp.nssf_no, cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
-        
+            col++;
+            cellrangeaddr1 = document.IntAlpha(col) + row;
+            document.createHeaders(row, col, paemp.nhif_no, cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
+
+            col++;
+            cellrangeaddr1 = document.IntAlpha(col) + row;
+            document.createHeaders(row, col, paemp.telephone_no, cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
         }
 
@@ -227,14 +240,14 @@ namespace winSBPayroll.Reports.ExcelBuilder
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, "", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
-            
+
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, _emreportmodel.totalbasic.ToString("#,##0"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
-            
+
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
-            document.createHeaders(row, col,"", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
+            document.createHeaders(row, col, "", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
         }
 
@@ -242,7 +255,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
         private void AddDocFooter(ref int row, ref int col)
         {
 
-            
+
         }
 
     }

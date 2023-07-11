@@ -14,12 +14,10 @@ namespace winSBPayroll.Reports.PDF
 {
     public class Payslip1PDFBuilder
     {
-         
         Payslip _ViewModel;
         Document document;
         string sFilePDF;
         string Message;
-
 
         Font hFont1 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
         Font hFont2 = new Font(Font.TIMES_ROMAN, 9, Font.BOLD);
@@ -30,13 +28,16 @@ namespace winSBPayroll.Reports.PDF
         Font tcFont3 = new Font(Font.HELVETICA, 8, Font.BOLD);//table cell
         Font tcFont4 = new Font(Font.TIMES_ROMAN, 7, Font.NORMAL);//table cell
         Font rms10Normal = new Font(Font.HELVETICA, 10, Font.NORMAL);
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
-
-        public Payslip1PDFBuilder(Payslip PayslipModel, string FileName)
+        public Payslip1PDFBuilder(Payslip PayslipModel, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (PayslipModel == null)
                 throw new ArgumentNullException("Payslip is null");
             _ViewModel = PayslipModel;
+
+            _notificationmessageEventname = notificationmessageEventname;
 
             sFilePDF = FileName;
         }
@@ -96,8 +97,8 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
-            } 
+                Log.WriteToErrorLogFile(ex);
+            }
         }
 
 
@@ -162,9 +163,9 @@ namespace winSBPayroll.Reports.PDF
 
         private void AddSummary()
         {
-            
+
             Table aTable;
-            aTable = new Table(5, 2);  
+            aTable = new Table(5, 2);
             aTable.Padding = 2;
             aTable.Spacing = 0;
             aTable.AutoFillEmptyCells = true;
@@ -210,7 +211,7 @@ namespace winSBPayroll.Reports.PDF
         {
             Table hTable = new Table(2);
             hTable.WidthPercentage = 100;
-            hTable.Padding = 1;  
+            hTable.Padding = 1;
 
             Cell aCell = new Cell(new Phrase("BENEFITS\n", hFont2));
             aCell.HorizontalAlignment = Cell.ALIGN_CENTER;
@@ -218,16 +219,16 @@ namespace winSBPayroll.Reports.PDF
             aCell.BorderWidthLeft = 1;
             hTable.AddCell(aCell);
 
-             
-            document.Add(hTable); 
+
+            document.Add(hTable);
         }
 
         private void AddEarningsAndDeductions()
         {
-           
+
 
             //Add earnings
-            Table earningsTable = new Table(3); 
+            Table earningsTable = new Table(3);
             earningsTable.Padding = 1;
             earningsTable.Spacing = 0;
 
@@ -332,7 +333,7 @@ namespace winSBPayroll.Reports.PDF
 
         private void AddTaxComputationInfo()
         {
-           
+
 
             Table taxDetails = new Table(2);
             taxDetails.AutoFillEmptyCells = true;

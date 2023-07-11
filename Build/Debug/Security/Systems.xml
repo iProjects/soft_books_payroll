@@ -3,74 +3,20 @@
 
   <System Name="On kmk"
           Application ="SBPayroll"
-          Database ="SBPayrollDB"
+          Database ="SBPayrollDB_february_2023"
           AttachDB=""
           Server =".\SQLEXPRESS"
           Metadata="SBPayrollDBEntities"
           Version ="1.0.0.0"
           Default="true"/>
 
-  <System Name="On sapserver"
+  <System Name="On muraya"
           Application ="SBPayroll"
-          Database ="SBPayrollDB"
+          Database ="sbpayrolldb_2022"
           AttachDB=""
-          Server ="SAPSERVER"
+          Server ="muraya"
           Metadata="SBPayrollDBEntities"
           Version ="1.0.0.0"
           Default="false"/>
-
-  <System Name="On sapserver\SQLEXPRESS"
-		      Application ="SBPayroll"
-          Database ="SBPayrollDB"
-          AttachDB=""
-          Server ="SaPSERVER\SQLEXPRESS"
-          Metadata="SBPayrollDBEntities"
-          Version ="1.0.0.0"
-          Default="false"/>
-
-  <System Name="On spserver"
-		      Application ="SBPayroll"
-		      Database ="SBPayrollDB"
-		      AttachDB=""
-		      Server ="SPSERVER"
-		      Metadata="SBPayrollDBEntities"
-          Version ="1.0.0.0"
-          Default="false"/>
-
-  <System Name="On gracecomp\SQLEXPRESS"
-       Application ="SBPayroll"
-       Database ="SBPayrollDB"
-       AttachDB=""
-       Server ="GRACECOMP\SQLEXPRESS"
-       Metadata="SBPayrollDBEntities"
-       Version ="1.0.0.0"
-       Default="false"/>
-
-  <System Name="On SPSERVER-PC\SQLEXPRESS"
-       Application ="SBPayroll"
-       Database ="SBPayrollDB"
-       AttachDB=""
-       Server ="SPSERVER-PC\SQLEXPRESS"
-       Metadata="SBPayrollDBEntities"
-       Version ="1.0.0.0"
-       Default="true"/>
-
-  <System Name="On Sugut"
-          Application ="SBPayroll"
-          Database ="SBPayrollDB"
-          AttachDB=""
-          Server ="SUGUT-PC\SQLEXPRESS"
-          Metadata="SBPayrollDBEntities"
-          Version ="1.0.0.0"
-          Default="false"/>
-
-  <System Name="On Lucy"
-         Application ="SBPayroll"
-         Database ="SBPayrollDB"
-         AttachDB=""
-         Server ="-ADMIN-PC\SQLEXPRESS"
-         Metadata="SBPayrollDBEntities"
-         Version ="1.0.0.0"
-         Default="false"/>
 
 </Systems>

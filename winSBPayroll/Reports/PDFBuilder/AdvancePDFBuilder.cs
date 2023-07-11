@@ -32,14 +32,19 @@ namespace winSBPayroll.Reports.PDFBuilder
         Font rms6Bold = new Font(Font.TIMES_ROMAN, 6, Font.BOLD);
         Font rms8Bold = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);
         Font rms10Normal = new Font(Font.HELVETICA, 10, Font.NORMAL);
-
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
         //constructor
-        public AdvancePDFBuilder(AdvanceReportModel advancereport, string FileName)
+        public AdvancePDFBuilder(AdvanceReportModel advancereport, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (advancereport == null)
                 throw new ArgumentNullException("AdvanceReportModel is null");
             _ViewModel = advancereport;
+
+            _notificationmessageEventname = notificationmessageEventname;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed AdvancePDFBuilder", TAG));
 
             sFilePDF = FileName;
         }
@@ -86,8 +91,8 @@ namespace winSBPayroll.Reports.PDFBuilder
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
-            } 
+                Log.WriteToErrorLogFile(ex);
+            }
         }
 
 
@@ -132,7 +137,7 @@ namespace winSBPayroll.Reports.PDFBuilder
             advanceTable.AddCell(PrintedonCell);
 
             //create the logo
-            PDFGen pdfgen = new PDFGen();
+            PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
             Image img0 = pdfgen.DoGetImageFile(_ViewModel.CompanyLogo);
             img0.Alignment = Image.ALIGN_MIDDLE;
             Cell logoCell = new Cell(img0);
@@ -239,7 +244,7 @@ namespace winSBPayroll.Reports.PDFBuilder
 
             Table advanceTable = new Table(1);
             advanceTable.WidthPercentage = 100;
-            advanceTable.Border = Table.NO_BORDER; 
+            advanceTable.Border = Table.NO_BORDER;
 
             Cell sgCell = new Cell(new Phrase("Signature.....................................................................................................", rms10Normal));
             sgCell.HorizontalAlignment = Cell.ALIGN_LEFT;

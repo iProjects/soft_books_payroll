@@ -8,14 +8,13 @@ using BLL.DataEntry;
 using DAL;
 //--- Add the following to make itext work
 using iTextSharp.text;
-using iTextSharp.text.pdf; 
+using iTextSharp.text.pdf;
 using winSBPayroll.ViewModel;
 
 namespace winSBPayroll.Reports.PDF
 {
     public class MakePayslipPDF3
     {
-
         Payslip _ViewModel1;
         Payslip _ViewModel2;
         Document document;
@@ -35,8 +34,10 @@ namespace winSBPayroll.Reports.PDF
         Font tableDataCellFont;
         Font signatureFont;
         #endregion "fonts"
-         
-        public MakePayslipPDF3(Payslip PayslipModel1, Payslip PayslipModel2, Document doc, string Conn)
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
+
+        public MakePayslipPDF3(Payslip PayslipModel1, Payslip PayslipModel2, Document doc, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             //if (PayslipModel1 == null)
             //    throw new ArgumentNullException("PayslipViewModel is null");
@@ -55,6 +56,10 @@ namespace winSBPayroll.Reports.PDF
             rep = new Repository(connection);
 
             document = doc;
+
+            _notificationmessageEventname = notificationmessageEventname;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed MakePayslipPDF3", TAG));
 
             InitializeFonts();
         }
@@ -150,7 +155,7 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
         }
 
@@ -171,7 +176,7 @@ namespace winSBPayroll.Reports.PDF
                 if (_ViewModel1 != null)
                 {
                     Table payslipTable11 = new Table(2);
-                    payslipTable11.WidthPercentage = 100; 
+                    payslipTable11.WidthPercentage = 100;
                     payslipTable11.Padding = 1;
                     payslipTable11.Border = Rectangle.BOX;
 
@@ -293,7 +298,7 @@ namespace winSBPayroll.Reports.PDF
                 {
 
                     Table payslipTable2 = new Table(2);
-                    payslipTable2.WidthPercentage = 100; 
+                    payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
                     payslipTable2.Padding = 1;
 
@@ -419,7 +424,7 @@ namespace winSBPayroll.Reports.PDF
                 {
 
                     Table payslipTable1 = new Table(2);
-                    payslipTable1.WidthPercentage = 100; 
+                    payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
                     payslipTable1.Padding = 1;
 
@@ -474,7 +479,7 @@ namespace winSBPayroll.Reports.PDF
                 {
 
                     Table payslipTable2 = new Table(2);
-                    payslipTable2.WidthPercentage = 100; 
+                    payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
                     payslipTable2.Padding = 1;
                     payslipTable2.HasBorders();
@@ -488,7 +493,7 @@ namespace winSBPayroll.Reports.PDF
                     int rows = 1 + _ViewModel1.ExcludeOtherPayments.Count + 2;
 
                     Table payslipTable2 = new Table(2);
-                    payslipTable2.WidthPercentage = 100; 
+                    payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
                     payslipTable2.Padding = 1;
                     payslipTable2.HasBorders();
@@ -558,7 +563,7 @@ namespace winSBPayroll.Reports.PDF
                 {
 
                     Table payslipTable1 = new Table(2);
-                    payslipTable1.WidthPercentage = 100; 
+                    payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
                     payslipTable1.Padding = 1;
 
@@ -617,7 +622,7 @@ namespace winSBPayroll.Reports.PDF
                 if (_ViewModel2 == null)
                 {
                     Table payslipTable2 = new Table(2);
-                    payslipTable2.WidthPercentage = 100; 
+                    payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
                     payslipTable2.Padding = 1;
 
@@ -627,7 +632,7 @@ namespace winSBPayroll.Reports.PDF
                 {
 
                     Table payslipTable2 = new Table(2);
-                    payslipTable2.WidthPercentage = 100; 
+                    payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
                     payslipTable2.Padding = 1;
 
@@ -699,7 +704,7 @@ namespace winSBPayroll.Reports.PDF
                 {
 
                     Table payslipTable1 = new Table(2);
-                    payslipTable1.WidthPercentage = 100; 
+                    payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
                     payslipTable1.Padding = 1;
 
@@ -769,7 +774,7 @@ namespace winSBPayroll.Reports.PDF
                 if (_ViewModel2 == null)
                 {
                     Table payslipTable2 = new Table(2);
-                    payslipTable2.WidthPercentage = 100; 
+                    payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
                     payslipTable2.Padding = 1;
 
@@ -779,7 +784,7 @@ namespace winSBPayroll.Reports.PDF
                 {
 
                     Table payslipTable2 = new Table(2);
-                    payslipTable2.WidthPercentage = 100; 
+                    payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
                     payslipTable2.Padding = 1;
 
@@ -862,7 +867,7 @@ namespace winSBPayroll.Reports.PDF
                 {
 
                     Table payslipTable1 = new Table(2);
-                    payslipTable1.WidthPercentage = 100; 
+                    payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
                     payslipTable1.Padding = 1;
 
@@ -891,7 +896,7 @@ namespace winSBPayroll.Reports.PDF
                 if (_ViewModel2 == null)
                 {
                     Table payslipTable2 = new Table(2);
-                    payslipTable2.WidthPercentage = 100; 
+                    payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
                     payslipTable2.Padding = 1;
 
@@ -901,7 +906,7 @@ namespace winSBPayroll.Reports.PDF
                 {
 
                     Table payslipTable2 = new Table(2);
-                    payslipTable2.WidthPercentage = 100; 
+                    payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
                     payslipTable2.Padding = 1;
 
@@ -964,7 +969,7 @@ namespace winSBPayroll.Reports.PDF
                 {
 
                     Table payslipTable1 = new Table(2);
-                    payslipTable1.WidthPercentage = 100; 
+                    payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
                     payslipTable1.Padding = 1;
 
@@ -1012,7 +1017,7 @@ namespace winSBPayroll.Reports.PDF
                 if (_ViewModel2 == null)
                 {
                     Table payslipTable2 = new Table(2);
-                    payslipTable2.WidthPercentage = 100; 
+                    payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
                     payslipTable2.Padding = 1;
 
@@ -1022,7 +1027,7 @@ namespace winSBPayroll.Reports.PDF
                 {
 
                     Table payslipTable2 = new Table(2);
-                    payslipTable2.WidthPercentage = 100; 
+                    payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
                     payslipTable2.Padding = 1;
 
@@ -1082,7 +1087,7 @@ namespace winSBPayroll.Reports.PDF
                 {
 
                     Table payslipTable1 = new Table(2);
-                    payslipTable1.WidthPercentage = 100; 
+                    payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
                     payslipTable1.Padding = 1;
 
@@ -1130,7 +1135,7 @@ namespace winSBPayroll.Reports.PDF
                 if (_ViewModel2 == null)
                 {
                     Table payslipTable2 = new Table(2);
-                    payslipTable2.WidthPercentage = 100; 
+                    payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
                     payslipTable2.Padding = 1;
 
@@ -1140,7 +1145,7 @@ namespace winSBPayroll.Reports.PDF
                 {
 
                     Table payslipTable2 = new Table(2);
-                    payslipTable2.WidthPercentage = 100; 
+                    payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
                     payslipTable2.Padding = 1;
 
@@ -1200,7 +1205,7 @@ namespace winSBPayroll.Reports.PDF
                 {
 
                     Table payslipTable1 = new Table(2);
-                    payslipTable1.WidthPercentage = 100; 
+                    payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
                     payslipTable1.Padding = 1;
 
@@ -1248,7 +1253,7 @@ namespace winSBPayroll.Reports.PDF
                 if (_ViewModel2 == null)
                 {
                     Table payslipTable2 = new Table(2);
-                    payslipTable2.WidthPercentage = 100; 
+                    payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
                     payslipTable2.Padding = 1;
 
@@ -1258,7 +1263,7 @@ namespace winSBPayroll.Reports.PDF
                 {
 
                     Table payslipTable2 = new Table(2);
-                    payslipTable2.WidthPercentage = 100; 
+                    payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
                     payslipTable2.Padding = 1;
 
@@ -1361,7 +1366,7 @@ namespace winSBPayroll.Reports.PDF
                 {
 
                     Table payslipTable1 = new Table(3);
-                    payslipTable1.WidthPercentage = 100; 
+                    payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
                     payslipTable1.Padding = 1;
 
@@ -1428,7 +1433,7 @@ namespace winSBPayroll.Reports.PDF
                 if (_ViewModel2 == null)
                 {
                     Table payslipTable2 = new Table(2);
-                    payslipTable2.WidthPercentage = 100; 
+                    payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
                     payslipTable2.Padding = 1;
 
@@ -1438,7 +1443,7 @@ namespace winSBPayroll.Reports.PDF
                 {
 
                     Table payslipTable2 = new Table(3);
-                    payslipTable2.WidthPercentage = 100; 
+                    payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
                     payslipTable2.Padding = 1;
 
@@ -1517,7 +1522,7 @@ namespace winSBPayroll.Reports.PDF
                 {
 
                     Table payslipTable1 = new Table(3);
-                    payslipTable1.WidthPercentage = 100; 
+                    payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
                     payslipTable1.Padding = 1;
 
@@ -1573,7 +1578,7 @@ namespace winSBPayroll.Reports.PDF
                 if (_ViewModel2 == null)
                 {
                     Table payslipTable2 = new Table(2);
-                    payslipTable2.WidthPercentage = 100; 
+                    payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
                     payslipTable2.Padding = 1;
 
@@ -1583,7 +1588,7 @@ namespace winSBPayroll.Reports.PDF
                 {
 
                     Table payslipTable2 = new Table(3);
-                    payslipTable2.WidthPercentage = 100; 
+                    payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
                     payslipTable2.Padding = 1;
 

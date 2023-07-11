@@ -5,7 +5,7 @@ using BLL;
 using BLL.DataEntry;
 using CommonLib;
 //Payroll
-using DAL; 
+using DAL;
 //--- Add the following to make itext work
 using iTextSharp.text;
 using iTextSharp.text.pdf;
@@ -29,8 +29,10 @@ namespace winSBPayroll.Reports.PDF
         Font bFont1 = new Font(Font.TIMES_ROMAN, 12, Font.NORMAL);//body 
         Font tHFont = new Font(Font.TIMES_ROMAN, 12, Font.BOLD); //table Header
         Font tcFont = new Font(Font.HELVETICA, 10, Font.NORMAL);//table cell
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
-        public PayslipMakerAll(List<Payslip> PayslipList, string FileName, string Conn)
+        public PayslipMakerAll(List<Payslip> PayslipList, string FileName, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (string.IsNullOrEmpty(Conn))
                 throw new ArgumentNullException("connection");
@@ -43,6 +45,8 @@ namespace winSBPayroll.Reports.PDF
             if (PayslipList == null)
                 throw new ArgumentNullException("Payslip List is null");
             payslipList = PayslipList;
+
+            _notificationmessageEventname = notificationmessageEventname;
 
             sFilePDF = FileName;
         }
@@ -71,7 +75,7 @@ namespace winSBPayroll.Reports.PDF
 
                 foreach (var payslip in payslipList)
                 {
-                    MakePayslipPDF pm = new MakePayslipPDF(payslip, document, connection);
+                    MakePayslipPDF pm = new MakePayslipPDF(payslip, document, connection, _notificationmessageEventname);
                     pm.BuildPDF();
                     document.NewPage();
 
@@ -90,8 +94,8 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
-            }  
+                Log.WriteToErrorLogFile(ex);
+            }
         }
 
 

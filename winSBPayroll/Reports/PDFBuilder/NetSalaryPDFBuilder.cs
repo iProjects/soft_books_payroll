@@ -11,7 +11,7 @@ using VVX;
 namespace winSBPayroll.Reports.PDF
 {
     public class NetSalaryPDFBuilder
-    { 
+    {
         public NetSalaryReportModel _ViewModel;
         Document document;
         string sFilePDF;
@@ -21,22 +21,33 @@ namespace winSBPayroll.Reports.PDF
 
         //DEFINED FONTS
         Font hFont1 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
-        Font hFont2 = new Font(Font.HELVETICA, 10, Font.BOLD);
-        Font bFont1 = new Font(Font.HELVETICA, 10, Font.BOLD);//body 
-        Font bFont2 = new Font(Font.HELVETICA, 9, Font.NORMAL);//body 
-        Font tHFont = new Font(Font.TIMES_ROMAN, 10, Font.BOLD); //table Header
-        Font tcFont = new Font(Font.TIMES_ROMAN, 9, Font.NORMAL);//table cell
-        Font rms6Normal = new Font(Font.TIMES_ROMAN, 6, Font.NORMAL);
+        Font hfont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font hFont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font bfont1 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);//body
+        Font bFont2 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);//body
+        Font bFont3 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);//body
+        Font tHFont = new Font(Font.TIMES_ROMAN, 9, Font.BOLD); //table Header
+        Font tHfont1 = new Font(Font.TIMES_ROMAN, 11, Font.BOLD); //table Header
+        Font tcFont = new Font(Font.HELVETICA, 8, Font.NORMAL);//table cell
+        Font rms6Normal = new Font(Font.TIMES_ROMAN, 9, Font.NORMAL);
+        Font rms10Bold = new Font(Font.HELVETICA, 10, Font.BOLD);
+        Font rms6Bold = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font rms8Bold = new Font(Font.HELVETICA, 8, Font.BOLD);
+        Font rms9Bold = new Font(Font.HELVETICA, 9, Font.BOLD);
         Font rms10Normal = new Font(Font.HELVETICA, 10, Font.NORMAL);
-        Font rms6Bold = new Font(Font.TIMES_ROMAN, 9, Font.BOLD);
-        Font rms11Bold = new Font(Font.HELVETICA, 11, Font.BOLD);
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
         //constructor
-        public NetSalaryPDFBuilder(NetSalaryReportModel netsalarymodel, string filename)
+        public NetSalaryPDFBuilder(NetSalaryReportModel netsalarymodel, string filename, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (netsalarymodel == null)
                 throw new ArgumentNullException("NetSalaryReportModel is null");
             _ViewModel = netsalarymodel;
+
+            _notificationmessageEventname = notificationmessageEventname;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed NetSalaryPDFBuilder", TAG));
 
             sFilePDF = filename;
         }
@@ -51,7 +62,7 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Utils.ShowError(ex); 
+                Utils.ShowError(ex);
                 return null;
             }
         }
@@ -66,7 +77,7 @@ namespace winSBPayroll.Reports.PDF
 
                 // step 2: create a writer that listens to the document
                 PdfWriter.GetInstance(document, new FileStream(sFilePDF, FileMode.Create));
-                
+
                 //open document
                 document.Open();
 
@@ -94,8 +105,8 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
-            } 
+                Log.WriteToErrorLogFile(ex);
+            }
         }
 
         //document header
@@ -118,7 +129,7 @@ namespace winSBPayroll.Reports.PDF
             employeraddressCell.Colspan = 5;
             employeraddressCell.Border = Cell.NO_BORDER;
             netSalaryTable.AddCell(employeraddressCell);
- 
+
 
             Cell bCell = new Cell(new Phrase("NET SALARIES", hFont1));
             bCell.HorizontalAlignment = Cell.ALIGN_CENTER;
@@ -139,7 +150,7 @@ namespace winSBPayroll.Reports.PDF
             netSalaryTable.AddCell(PrintedonCell);
 
             //create the logo
-            PDFGen pdfgen = new PDFGen();
+            PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
             Image img0 = pdfgen.DoGetImageFile(_ViewModel.CompanyLogo);
             img0.Alignment = Image.ALIGN_MIDDLE;
             Cell logoCell = new Cell(img0);
@@ -148,7 +159,7 @@ namespace winSBPayroll.Reports.PDF
             logoCell.Add(new Phrase(_ViewModel.CompanySlogan, new Font(Font.HELVETICA, 8, Font.ITALIC, Color.BLACK)));
             netSalaryTable.AddCell(logoCell);
 
-            document.Add(netSalaryTable); 
+            document.Add(netSalaryTable);
 
         }
 
@@ -207,11 +218,11 @@ namespace winSBPayroll.Reports.PDF
             netSalaryTable.AddCell(netsalaryamount, new System.Drawing.Point(0, 3));
 
             document.Add(netSalaryTable);
-           
+
         }
 
         //table details 
-        private void AddTableDetails(SalaryList  pay)
+        private void AddTableDetails(SalaryList pay)
         {
             Table netSalaryTable = new Table(4);
             netSalaryTable.WidthPercentage = 100;
@@ -222,7 +233,7 @@ namespace winSBPayroll.Reports.PDF
             empno.HorizontalAlignment = Cell.ALIGN_LEFT;
             netSalaryTable.AddCell(empno, new System.Drawing.Point(0, 0));
 
-            Cell surname = new Cell(new Phrase(pay.employeename.Trim() , tcFont));
+            Cell surname = new Cell(new Phrase(pay.employeename.Trim(), tcFont));
             surname.HorizontalAlignment = Cell.ALIGN_LEFT;
             netSalaryTable.AddCell(surname, new System.Drawing.Point(0, 1));
 
@@ -235,7 +246,7 @@ namespace winSBPayroll.Reports.PDF
             netSalaryTable.AddCell(netpay, new System.Drawing.Point(0, 3));
 
             document.Add(netSalaryTable);
-            
+
         }
 
         //table totals
@@ -244,7 +255,7 @@ namespace winSBPayroll.Reports.PDF
             Table netSalaryTable = new Table(4);
             netSalaryTable.WidthPercentage = 100;
             netSalaryTable.Spacing = 1;
-            netSalaryTable.Padding = 1; 
+            netSalaryTable.Padding = 1;
 
             Cell total = new Cell(new Phrase("TOTAL", rms6Bold));
             total.HorizontalAlignment = Cell.ALIGN_LEFT;
@@ -253,8 +264,8 @@ namespace winSBPayroll.Reports.PDF
 
             Cell totalamount = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.totalamount), rms6Bold));
             totalamount.HorizontalAlignment = Cell.ALIGN_RIGHT;
-            netSalaryTable.AddCell(totalamount, new System.Drawing.Point(0, 3)); 
-            
+            netSalaryTable.AddCell(totalamount, new System.Drawing.Point(0, 3));
+
             document.Add(netSalaryTable);
         }
 
@@ -264,13 +275,13 @@ namespace winSBPayroll.Reports.PDF
 
             Table netSalaryTable = new Table(1);
             netSalaryTable.WidthPercentage = 100;
-            netSalaryTable.Border = Table.NO_BORDER;  
+            netSalaryTable.Border = Table.NO_BORDER;
 
             Cell sgCell = new Cell(new Phrase("Signature.....................................................................................................", rms10Normal));
             sgCell.HorizontalAlignment = Cell.ALIGN_LEFT;
             sgCell.Border = Cell.NO_BORDER;
-            netSalaryTable.AddCell(sgCell); 
-            
+            netSalaryTable.AddCell(sgCell);
+
             document.Add(netSalaryTable);
 
         }

@@ -16,11 +16,14 @@ namespace winSBPayroll.Reports.ExcelBuilder
         CreateExcelDoc document;
         string Message;
         string sFileExcel;
-
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
         //constructor
-        public LoanRepaymentScheduleExcelBuilder(LoanRepaymentScheduleModel loanrepaymentshedulemodel, string FileName)
+        public LoanRepaymentScheduleExcelBuilder(LoanRepaymentScheduleModel loanrepaymentshedulemodel, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
+            _notificationmessageEventname = notificationmessageEventname;
+
             _loanrepaymentshedulemodel = loanrepaymentshedulemodel;
             sFileExcel = FileName;
         }
@@ -57,7 +60,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
 
         }

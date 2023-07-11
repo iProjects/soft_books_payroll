@@ -84,13 +84,13 @@ namespace winSBPayroll.Forms
             {
                 //clear or backup the destination
                 UploadBank(true, strFileName, _User);
-                MessageBox.Show("Upload completed successfully", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Upload completed successfully", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("There was an error during upload. Error details are  " + ex.Message, "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("There was an error during upload. Error details are  " + ex.Message, Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                MessageBox.Show("Upload incomplete", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Upload incomplete", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -155,7 +155,7 @@ namespace winSBPayroll.Forms
                     }
                     catch (Exception e)
                     {
-                        MessageBox.Show("Error: " + e.Message, "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Error: " + e.Message, Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     finally
                     {

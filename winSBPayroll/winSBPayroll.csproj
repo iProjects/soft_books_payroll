@@ -31,10 +31,14 @@
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <GenerateResourceNeverLockTypeAssemblies>true</GenerateResourceNeverLockTypeAssemblies>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -74,8 +78,7 @@
     <ApplicationIcon>Resources\Icons\Dollar.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
+    <StartupObject>winSBPayroll.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup />
   <ItemGroup>
@@ -107,140 +110,189 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.Office.Tools.Excel.v9.0, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.ConnectionInfoExtended, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.ConnectionInfoExtended.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.ConnectionInfoExtended.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SqlServer.Dmf, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.SqlServer.CustomControls, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Dmf.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.CustomControls.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.DataStorage, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Microsoft.SqlServer.DataStorage.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Diagnostics.STrace, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Microsoft.SqlServer.Diagnostics.STrace.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.DlgGrid, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Microsoft.SqlServer.DlgGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Dmf, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Microsoft.SqlServer.Dmf.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Dmf.Adapters, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Dmf.Adapters.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.Dmf.Adapters.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.DmfSqlClrWrapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.DmfSqlClrWrapper.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.DmfSqlClrWrapper.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SqlServer.Dts.Design, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.SqlServer.Dts.Design, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Dts.Design.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.Dts.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.DtsMsg, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Microsoft.SqlServer.DtsMsg.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.DTSPipelineWrap, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.DTSPipelineWrap.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.DTSPipelineWrap.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SQLServer.DTSRuntimeWrap, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=x86">
+    <Reference Include="Microsoft.SqlServer.DTSRuntimeWrap, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SQLServer.DTSRuntimeWrap.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.DTSRuntimeWrap.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SQLServer.ManagedDTS, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.SqlServer.GridControl, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SQLServer.ManagedDTS.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.GridControl.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SQLServer.ManagedDTS, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Microsoft.SQLServer.ManagedDTS.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Management.Collector, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Management.Collector.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.Management.Collector.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Management.CollectorEnum, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Management.CollectorEnum.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.Management.CollectorEnum.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Management.Dac, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Management.Dac.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.Management.Dac.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.SqlServer.Management.DacSerialization, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.Management.DacSerialization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.MultiServerConnection, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Microsoft.SqlServer.Management.MultiServerConnection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.SmoMetadataProvider, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Microsoft.SqlServer.Management.SmoMetadataProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.SqlParser, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Microsoft.SqlServer.Management.SqlParser.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Management.Utility, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Management.Utility.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.Management.Utility.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Management.UtilityEnum, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Management.UtilityEnum.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.Management.UtilityEnum.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SqlServer.OlapEnum, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.SqlServer.Msxml6_interop, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.OlapEnum.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>libs\Microsoft.SqlServer.Msxml6_interop.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SqlServer.PipelineHost, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.SqlServer.OlapEnum, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.PipelineHost.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.OlapEnum.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.PipelineHost, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Microsoft.SqlServer.PipelineHost.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.PolicyEnum, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.PolicyEnum.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.PolicyEnum.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.RegSvrEnum, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.RegSvrEnum.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.RegSvrEnum.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SqlServer.Replication, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=x86">
+    <Reference Include="Microsoft.SqlServer.Replication, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Replication.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.Replication.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SqlServer.Rmo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.SqlServer.Rmo, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Rmo.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.Rmo.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.ScriptTask, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.ScriptTask.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.ScriptTask.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SqlServer.ServiceBrokerEnum, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.SqlServer.ServiceBrokerEnum, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.ServiceBrokerEnum.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.ServiceBrokerEnum.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SqlServer.Smo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.SqlServer.Smo, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Smo.dll</HintPath>
+      <HintPath>C:\Program Files\Microsoft SQL Server\110\SDK\Assemblies\Microsoft.SqlServer.Smo.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.SmoExtended, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.SmoExtended.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.SmoExtended.dll</HintPath>
+      <Aliases>extendend</Aliases>
     </Reference>
-    <Reference Include="Microsoft.SqlServer.SqlEnum, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.SqlServer.SqlClrProvider, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.SqlEnum.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.SqlClrProvider.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SqlServer.SQLTaskConnectionsWrap, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.SqlServer.SqlEnum, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.SQLTaskConnectionsWrap.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.SqlEnum.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.SqlTDiagM, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Microsoft.SqlServer.SqlTDiagM.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.SqlWmiManagement, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.SqlWmiManagement.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.SqlWmiManagement.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.SString, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.SString.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.SString.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.TxScript, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.TxScript.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.TxScript.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SqlServer.Types, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.SqlServer.Types, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Types.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.VSTAScriptingLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.VSTAScriptingLib.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.VSTAScriptingLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.WmiEnum, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.WmiEnum.dll</HintPath>
+      <HintPath>libs\Microsoft.SqlServer.WmiEnum.dll</HintPath>
     </Reference>
     <Reference Include="PDUConverter">
       <HintPath>..\Library\PDUConverter.dll</HintPath>
@@ -270,6 +322,13 @@
     <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="app_assembly_info.cs" />
+    <Compile Include="contact_us_form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="contact_us_form.Designer.cs">
+      <DependentUpon>contact_us_form.cs</DependentUpon>
+    </Compile>
     <Compile Include="Data\AuthenticationService.cs" />
     <Compile Include="Data\CreateDB.cs">
       <SubType>Form</SubType>
@@ -278,7 +337,6 @@
       <DependentUpon>CreateDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Data\LoginService.cs" />
-    <Compile Include="Data\SBSystem.cs" />
     <Compile Include="Data\SQLHelper.cs" />
     <Compile Include="Data\SystemDetailsForm.cs">
       <SubType>Form</SubType>
@@ -289,11 +347,11 @@
     <Compile Include="Data\SystemsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormError.cs">
+    <Compile Include="licenseform.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormError.Designer.cs">
-      <DependentUpon>FormError.cs</DependentUpon>
+    <Compile Include="licenseform.Designer.cs">
+      <DependentUpon>licenseform.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\AddBank.cs">
       <SubType>Form</SubType>
@@ -400,6 +458,30 @@
     <Compile Include="Forms\AddReportsRightsForm.designer.cs">
       <DependentUpon>AddReportsRightsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\EmployeeTransactionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EmployeeTransactionsForm.Designer.cs">
+      <DependentUpon>EmployeeTransactionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\emptxndetailsform.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\emptxndetailsform.Designer.cs">
+      <DependentUpon>emptxndetailsform.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\load_log_file_form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\load_log_file_form.Designer.cs">
+      <DependentUpon>load_log_file_form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\login_form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\login_form.Designer.cs">
+      <DependentUpon>login_form.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\NewNSSFComputationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -411,6 +493,18 @@
     </Compile>
     <Compile Include="Forms\EditReportsRightForm.designer.cs">
       <DependentUpon>EditReportsRightForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\payslip_details_form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\payslip_details_form.Designer.cs">
+      <DependentUpon>payslip_details_form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\payslip_master_form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\payslip_master_form.Designer.cs">
+      <DependentUpon>payslip_master_form.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ReportsRightsListForm.cs">
       <SubType>Form</SubType>
@@ -454,11 +548,11 @@
     <Compile Include="Forms\EditDepartment.Designer.cs">
       <DependentUpon>EditDepartment.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\AddUser.cs">
+    <Compile Include="Forms\AddUserForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\AddUser.Designer.cs">
-      <DependentUpon>AddUser.cs</DependentUpon>
+    <Compile Include="Forms\AddUserForm.Designer.cs">
+      <DependentUpon>AddUserForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Banks.cs">
       <SubType>Form</SubType>
@@ -508,11 +602,11 @@
     <Compile Include="Forms\EditRolesForm.designer.cs">
       <DependentUpon>EditRolesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\EditUser.cs">
+    <Compile Include="Forms\EditUserForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\EditUser.Designer.cs">
-      <DependentUpon>EditUser.cs</DependentUpon>
+    <Compile Include="Forms\EditUserForm.Designer.cs">
+      <DependentUpon>EditUserForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Employer.cs">
       <SubType>Form</SubType>
@@ -610,6 +704,12 @@
     <Compile Include="Forms\TaxCalculatorForm.Designer.cs">
       <DependentUpon>TaxCalculatorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\transactions_form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\transactions_form.Designer.cs">
+      <DependentUpon>transactions_form.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\TreeBuilder.cs" />
     <Compile Include="Forms\EditPayrollItem.cs">
       <SubType>Form</SubType>
@@ -659,19 +759,22 @@
     <Compile Include="Forms\TransactionDefinition.Designer.cs">
       <DependentUpon>TransactionDefinition.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Users.cs">
+    <Compile Include="Forms\UsersForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Users.Designer.cs">
-      <DependentUpon>Users.cs</DependentUpon>
+    <Compile Include="Forms\UsersForm.Designer.cs">
+      <DependentUpon>UsersForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Help\HuaweiModem.cs" />
+    <Compile Include="Reports\Utilities\HuaweiModem.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Reports\ExcelBuilder\AdvanceExcelBuilder.cs" />
     <Compile Include="Reports\ExcelBuilder\BankBranchExcelBuilder.cs" />
     <Compile Include="Reports\ExcelBuilder\BankTransferExcelBuilder.cs" />
-    <Compile Include="Reports\ExcelBuilder\PayrollMasterExcelBuilder2.cs" />
-    <Compile Include="Reports\ExcelBuilder\DepartmentsExcelBuilder.cs" />
     <Compile Include="Reports\ExcelBuilder\EmployeeExcelBuilder.cs" />
+    <Compile Include="Reports\ExcelBuilder\MpesaEmployeeExcelBuilder.cs" />
+    <Compile Include="Reports\ExcelBuilder\CashEmployeeExcelBuilder.cs" />
+    <Compile Include="Reports\ExcelBuilder\PayrollMasterExcelBuilder2.cs" />
+    <Compile Include="Reports\ExcelBuilder\BankEmployeeExcelBuilder.cs" />
     <Compile Include="Reports\ExcelBuilder\LoanRepaymentScheduleExcelBuilder.cs" />
     <Compile Include="Reports\ExcelBuilder\NetSalaryExcelBuilder.cs" />
     <Compile Include="Reports\ExcelBuilder\PAYEExcelBuilder.cs" />
@@ -688,15 +791,17 @@
     <Compile Include="Reports\PDFBuilder\BankTransferPDFBuilder3.cs" />
     <Compile Include="Reports\PDFBuilder\BankTransferPDFBuilder2.cs" />
     <Compile Include="Reports\ExcelBuilder\CreateExcelDoc.cs" />
-    <Compile Include="Reports\ExcelBuilder\ExcelDoc.cs" />
     <Compile Include="Reports\ExcelBuilder\NHIFExcelBuilder.cs" />
     <Compile Include="Reports\PDFBuilder\BankTransfersBuilderAll.cs" />
+    <Compile Include="Reports\PDFBuilder\EmployeesPDFBuilder.cs" />
+    <Compile Include="Reports\PDFBuilder\MpesaEmployeesPDFBuilder.cs" />
+    <Compile Include="Reports\PDFBuilder\CashEmployeesPDFBuilder.cs" />
     <Compile Include="Reports\PDFBuilder\MakePayslipPDF3.cs" />
     <Compile Include="Reports\PDFBuilder\P10PDFMaker.cs" />
     <Compile Include="Reports\PDFBuilder\PayrollMasterPDFBuilder2.cs" />
     <Compile Include="Reports\PDFBuilder\PayslipMakerAll2.cs" />
     <Compile Include="Reports\PDFBuilder\DepartmentsPDFBuilder.cs" />
-    <Compile Include="Reports\PDFBuilder\EmployeesPDFBuilder.cs" />
+    <Compile Include="Reports\PDFBuilder\BankEmployeesPDFBuilder.cs" />
     <Compile Include="Reports\PDFBuilder\LoanRepaymentSchedulePDFBuilder.cs" />
     <Compile Include="Reports\PDFBuilder\MakePayslipPDF.cs" />
     <Compile Include="Reports\PDFBuilder\NHIFPDFBuilder.cs" />
@@ -755,6 +860,9 @@
       <DependentUpon>AboutBox.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="contact_us_form.resx">
+      <DependentUpon>contact_us_form.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Data\CreateDB.resx">
       <DependentUpon>CreateDB.cs</DependentUpon>
     </EmbeddedResource>
@@ -764,8 +872,8 @@
     <EmbeddedResource Include="Data\SystemsForm.resx">
       <DependentUpon>SystemsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormError.resx">
-      <DependentUpon>FormError.cs</DependentUpon>
+    <EmbeddedResource Include="licenseform.resx">
+      <DependentUpon>licenseform.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AddBank.resx">
       <DependentUpon>AddBank.cs</DependentUpon>
@@ -818,11 +926,29 @@
     <EmbeddedResource Include="Forms\AddReportsRightsForm.resx">
       <DependentUpon>AddReportsRightsForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EmployeeTransactionsForm.resx">
+      <DependentUpon>EmployeeTransactionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\emptxndetailsform.resx">
+      <DependentUpon>emptxndetailsform.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\load_log_file_form.resx">
+      <DependentUpon>load_log_file_form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\login_form.resx">
+      <DependentUpon>login_form.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\NewNSSFComputationForm.resx">
       <DependentUpon>NewNSSFComputationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EditReportsRightForm.resx">
       <DependentUpon>EditReportsRightForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\payslip_details_form.resx">
+      <DependentUpon>payslip_details_form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\payslip_master_form.resx">
+      <DependentUpon>payslip_master_form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ReportsRightsListForm.resx">
       <DependentUpon>ReportsRightsListForm.cs</DependentUpon>
@@ -845,8 +971,8 @@
     <EmbeddedResource Include="Forms\EditDepartment.resx">
       <DependentUpon>EditDepartment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\AddUser.resx">
-      <DependentUpon>AddUser.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\AddUserForm.resx">
+      <DependentUpon>AddUserForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Banks.resx">
       <DependentUpon>Banks.cs</DependentUpon>
@@ -872,8 +998,8 @@
     <EmbeddedResource Include="Forms\EditRolesForm.resx">
       <DependentUpon>EditRolesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\EditUser.resx">
-      <DependentUpon>EditUser.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\EditUserForm.resx">
+      <DependentUpon>EditUserForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Employer.resx">
       <DependentUpon>Employer.cs</DependentUpon>
@@ -947,8 +1073,11 @@
     <EmbeddedResource Include="Forms\TransactionDefinition.resx">
       <DependentUpon>TransactionDefinition.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Users.resx">
-      <DependentUpon>Users.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\transactions_form.resx">
+      <DependentUpon>transactions_form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UsersForm.resx">
+      <DependentUpon>UsersForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Viewer\PDFViewer.resx">
       <DependentUpon>PDFViewer.cs</DependentUpon>
@@ -994,9 +1123,185 @@
     <Content Include="Data\SBPayrollDB.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Data\sbpayrolldb_november_22112022.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="DBScripts\db.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Help\help.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\how_it_works.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\css\bootstrap-3.3.7.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\css\bootstrap-5.0.2.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\css\jquery-ui-1.12.1.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\css\style.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\favicon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\orderedList0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\orderedList1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\orderedList2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\orderedList3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\orderedList4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\orderedList5.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\orderedList6.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\orderedList7.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\orderedList8.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\orderedList9.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\payroll.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\index.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\images\logo_9.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\js\bootstrap-3.3.7.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\js\jquery-3.2.1.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\js\jquery-ui-1.12.1.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Help\js\utilz.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libs\EFWinforms.dll" />
+    <Content Include="libs\EnvDTE.dll" />
+    <Content Include="libs\EnvDTE80.dll" />
+    <Content Include="libs\GSMCommServer.dll" />
+    <Content Include="libs\GSMCommShared.dll" />
+    <Content Include="libs\GSMCommunication.dll" />
+    <Content Include="libs\itextsharp.dll" />
+    <Content Include="libs\itextsharp.pdfa.dll" />
+    <Content Include="libs\iTextSharp.xml" />
+    <Content Include="libs\itextsharp.xtra.dll" />
+    <Content Include="libs\itextsharp_v5.dll" />
+    <Content Include="libs\Microsoft.AnalysisServices.dll" />
+    <Content Include="libs\Microsoft.AnalysisServices.SPClient.Interfaces.dll" />
+    <Content Include="libs\Microsoft.AnalysisServices.Xmla.dll" />
+    <Content Include="libs\Microsoft.DataTransformationServices.Controls.dll" />
+    <Content Include="libs\Microsoft.DataWarehouse.Interfaces.dll" />
+    <Content Include="libs\Microsoft.ExceptionMessageBox.dll" />
+    <Content Include="libs\Microsoft.MSXML.dll" />
+    <Content Include="libs\Microsoft.NetEnterpriseServers.ExceptionMessageBox.dll" />
+    <Content Include="libs\Microsoft.Office.Interop.Excel.dll" />
+    <Content Include="libs\Microsoft.Office.Interop.SmartTag.dll" />
+    <Content Include="libs\Microsoft.Office.Tools.Common.v9.0.dll" />
+    <Content Include="libs\Microsoft.Office.Tools.Excel.v9.0.dll" />
+    <Content Include="libs\Microsoft.Office.Tools.v9.0.dll" />
+    <Content Include="libs\Microsoft.SqlServer.ConnectionInfo.dll" />
+    <Content Include="libs\Microsoft.SqlServer.ConnectionInfoExtended.dll" />
+    <Content Include="libs\Microsoft.SqlServer.CustomControls.dll" />
+    <Content Include="libs\Microsoft.SqlServer.DataStorage.dll" />
+    <Content Include="libs\Microsoft.SqlServer.Diagnostics.STrace.dll" />
+    <Content Include="libs\Microsoft.SqlServer.DlgGrid.dll" />
+    <Content Include="libs\Microsoft.SqlServer.Dmf.Adapters.dll" />
+    <Content Include="libs\Microsoft.SqlServer.Dmf.dll" />
+    <Content Include="libs\Microsoft.SqlServer.DmfSqlClrWrapper.dll" />
+    <Content Include="libs\Microsoft.SqlServer.Dts.Design.dll" />
+    <Content Include="libs\Microsoft.SqlServer.DtsMsg.dll" />
+    <Content Include="libs\Microsoft.SqlServer.DTSPipelineWrap.dll" />
+    <Content Include="libs\Microsoft.SqlServer.DTSRuntimeWrap.dll" />
+    <Content Include="libs\Microsoft.SqlServer.GridControl.dll" />
+    <Content Include="libs\Microsoft.SQLServer.ManagedDTS.dll" />
+    <Content Include="libs\Microsoft.SqlServer.Management.Collector.dll" />
+    <Content Include="libs\Microsoft.SqlServer.Management.CollectorEnum.dll" />
+    <Content Include="libs\Microsoft.SqlServer.Management.Dac.dll" />
+    <Content Include="libs\Microsoft.SqlServer.Management.DacSerialization.dll" />
+    <Content Include="libs\Microsoft.SqlServer.Management.MultiServerConnection.dll" />
+    <Content Include="libs\Microsoft.SqlServer.Management.Sdk.Sfc.dll" />
+    <Content Include="libs\Microsoft.SqlServer.Management.SmoMetadataProvider.dll" />
+    <Content Include="libs\Microsoft.SqlServer.Management.SqlParser.dll" />
+    <Content Include="libs\Microsoft.SqlServer.Management.Utility.dll" />
+    <Content Include="libs\Microsoft.SqlServer.Management.UtilityEnum.dll" />
+    <Content Include="libs\Microsoft.SqlServer.Msxml6_interop.dll" />
+    <Content Include="libs\Microsoft.SqlServer.OlapEnum.dll" />
+    <Content Include="libs\Microsoft.SqlServer.PipelineHost.dll" />
+    <Content Include="libs\Microsoft.SqlServer.PolicyEnum.dll" />
+    <Content Include="libs\Microsoft.SqlServer.RegSvrEnum.dll" />
+    <Content Include="libs\Microsoft.SqlServer.Replication.dll" />
+    <Content Include="libs\Microsoft.SqlServer.Rmo.dll" />
+    <Content Include="libs\Microsoft.SqlServer.ScriptTask.dll" />
+    <Content Include="libs\Microsoft.SqlServer.ServiceBrokerEnum.dll" />
+    <Content Include="libs\Microsoft.SqlServer.Smo.dll" />
+    <Content Include="libs\Microsoft.SqlServer.SmoExtended.dll" />
+    <Content Include="libs\Microsoft.SqlServer.SqlClrProvider.dll" />
+    <Content Include="libs\Microsoft.SqlServer.SqlEnum.dll" />
+    <Content Include="libs\Microsoft.SqlServer.SqlTDiagM.dll" />
+    <Content Include="libs\Microsoft.SqlServer.SqlWmiManagement.dll" />
+    <Content Include="libs\Microsoft.SqlServer.SString.dll" />
+    <Content Include="libs\Microsoft.SqlServer.TxScript.dll" />
+    <Content Include="libs\Microsoft.SqlServer.Types.dll" />
+    <Content Include="libs\Microsoft.SqlServer.VSTAScriptingLib.dll" />
+    <Content Include="libs\Microsoft.SqlServer.WmiEnum.dll" />
+    <Content Include="libs\Microsoft.Vbe.Interop.dll" />
+    <Content Include="libs\Microsoft.VisualStudio.Designer.Interfaces.dll" />
+    <Content Include="libs\Microsoft.VisualStudio.OLE.Interop.dll" />
+    <Content Include="libs\Microsoft.VisualStudio.ProjectAggregator.dll" />
+    <Content Include="libs\Microsoft.VisualStudio.Shell.9.0.dll" />
+    <Content Include="libs\Microsoft.VisualStudio.Shell.Design.dll" />
+    <Content Include="libs\Microsoft.VisualStudio.Shell.dll" />
+    <Content Include="libs\Microsoft.VisualStudio.Shell.Interop.8.0.dll" />
+    <Content Include="libs\Microsoft.VisualStudio.Shell.Interop.9.0.dll" />
+    <Content Include="libs\Microsoft.VisualStudio.Shell.Interop.dll" />
+    <Content Include="libs\Microsoft.VisualStudio.TextManager.Interop.8.0.dll" />
+    <Content Include="libs\Microsoft.VisualStudio.TextManager.Interop.dll" />
+    <Content Include="libs\Microsoft.VisualStudio.Tools.Applications.DesignTime.v9.0.dll" />
+    <Content Include="libs\Microsoft.VisualStudio.Tools.Applications.Hosting.v9.0.dll" />
+    <Content Include="libs\Microsoft.VisualStudio.Tools.Applications.ProgrammingModel.dll" />
+    <Content Include="libs\Microsoft.VisualStudio.Tools.Applications.Runtime.v9.0.dll" />
+    <Content Include="libs\Microsoft.VisualStudio.Tools.Applications.ServerDocument.v9.0.dll" />
+    <Content Include="libs\Microsoft.VisualStudio.VSHelp.dll" />
+    <Content Include="libs\Microsoft.VisualStudio.VSHelp80.dll" />
+    <Content Include="libs\office.dll" />
+    <Content Include="libs\PDUConverter.dll" />
+    <Content Include="libs\stdole.dll" />
+    <Content Include="libs\System.Windows.Forms.Calendar.dll" />
+    <Content Include="libs\TSWizards.dll" />
+    <Content Include="libs\VSLangProj.dll" />
+    <Content Include="libs\VSTADTEProvider.Interop.dll" />
     <Content Include="Logs\error.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

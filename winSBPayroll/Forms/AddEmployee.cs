@@ -780,13 +780,13 @@ namespace winSBPayroll.Forms
             try
             {
                 UploadEmployeePhoto(strFileName, _User);
-                MessageBox.Show("Upload completed successfully", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Upload completed successfully", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("There was an error during upload. Error details are  " + ex.Message, "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("There was an error during upload. Error details are  " + ex.Message, Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                MessageBox.Show("Upload incomplete", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Upload incomplete", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
         }

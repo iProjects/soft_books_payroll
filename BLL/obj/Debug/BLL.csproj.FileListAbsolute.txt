@@ -14,3 +14,9 @@ D:\wakxpx\csharp\visualstudio\SBPayroll\BLL\obj\Debug\BLL.csprojResolveAssemblyR
 D:\wakxpx\csharp\visualstudio\SBPayroll\BLL\obj\Debug\BLL.dll
 D:\wakxpx\csharp\visualstudio\SBPayroll\BLL\obj\Debug\BLL.pdb
 D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\BLL.dll.config
+D:\wakxpx\csharp\visualstudio\2010\SBPayroll\Build\Debug\BLL.dll.config
+D:\wakxpx\csharp\visualstudio\2010\SBPayroll\Build\Debug\BLL.dll
+D:\wakxpx\csharp\visualstudio\2010\SBPayroll\Build\Debug\BLL.pdb
+D:\wakxpx\csharp\visualstudio\2010\SBPayroll\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+D:\wakxpx\csharp\visualstudio\2010\SBPayroll\BLL\obj\Debug\BLL.dll
+D:\wakxpx\csharp\visualstudio\2010\SBPayroll\BLL\obj\Debug\BLL.pdb

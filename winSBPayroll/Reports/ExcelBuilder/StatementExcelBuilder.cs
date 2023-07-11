@@ -11,8 +11,6 @@ namespace winSBPayroll.Reports.ExcelBuilder
 {
     public class StatementExcelBuilder
     {
-
-
         //private attributes 
         StatementModel _ViewModel;
         CreateExcelDoc document;
@@ -23,10 +21,11 @@ namespace winSBPayroll.Reports.ExcelBuilder
         SBPayrollDBEntities db;
         Repository rep;
         string connection;
-
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
         //constructor
-        public StatementExcelBuilder(string Itemid, StatementModel statementmodel, string FileName, string Conn)
+        public StatementExcelBuilder(string Itemid, StatementModel statementmodel, string FileName, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (statementmodel == null)
                 throw new ArgumentNullException("StatementModel is null");
@@ -40,9 +39,12 @@ namespace winSBPayroll.Reports.ExcelBuilder
             db = new SBPayrollDBEntities(connection);
             rep = new Repository(connection);
 
+            _notificationmessageEventname = notificationmessageEventname;
+
             if (Itemid == null)
                 throw new ArgumentNullException("Itemid is null");
-            _Itemid = Itemid; 
+            _Itemid = Itemid;
+
             sFileExcel = FileName;
         }
 
@@ -78,7 +80,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
 
         }
@@ -117,8 +119,6 @@ namespace winSBPayroll.Reports.ExcelBuilder
             row++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, "Printed on: " + _ViewModel.PrintedOn.ToString("dd-dddd-MMMM-yyyy"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
-
-
 
         }
 
@@ -166,7 +166,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, "AMOUNT\nKshs", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
-             
+
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, "BALANCE\nKshs", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
@@ -191,7 +191,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, "AMOUNT\nKshs", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
-             
+
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, "BALANCE\nKshs", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
@@ -283,7 +283,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
             row++; col = 1;
             string cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, "TOTAL", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
-             
+
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, _ViewModel.totalamountin.ToString("#,##0"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");

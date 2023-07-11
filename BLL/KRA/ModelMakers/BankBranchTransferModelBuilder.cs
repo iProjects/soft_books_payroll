@@ -38,9 +38,9 @@ namespace BLL.KRA.ModelMakers
                 _current = current;
                 _period = period;
                 employer = _employer;
-
-                fileLogo = rep.SettingLookup("COMPANYLOGO");
-                slogan = rep.SettingLookup("COMPANYSLOGAN");
+                
+                fileLogo = _employer.Logo;
+                slogan = _employer.Slogan;
             }
             catch (Exception ex)
             {
@@ -86,11 +86,14 @@ namespace BLL.KRA.ModelMakers
             var _empnosforEmployer = from em in rep.GetAllActiveEmployees()
                                      where em.EmployerId == employer.Id
                                      select em.EmpNo;
+
             List<string> Empnos = _empnosforEmployer.ToList();
 
             var payrollmasterquery = from p in rep.GetPayrollMaster(_current, _period, _year)
                                      where Empnos.Contains(p.EmpNo)
+                                     where p.PaymentMode.Equals("B")
                                      select p;
+
             List<DAL.psuedovwPayrollMaster> payroll = payrollmasterquery.ToList();
 
             foreach (DAL.Bank bank in rep.GetBanks())

@@ -28,6 +28,7 @@ namespace DAL
         public string EmployerName { get; set; }
         public decimal PayeTax { get; set; }
         public decimal PensionEmployee { get; set; }
+        public string PaymentMode { get; set; }
         public int Period { get; set; }
         public int Year { get; set; }
         public string IDNo { get; set; }

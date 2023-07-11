@@ -10,20 +10,22 @@ using DAL;
 namespace winSBPayroll.Reports.ExcelBuilder
 {
     public class ScheduleExcelBuilder
-    { 
+    {
         //private attributes 
         SheduleReportModel _ViewModel;
         CreateExcelDoc document;
         string Message;
-        string sFileExcel;    
+        string sFileExcel;
         DataEntry de;
         string _Itemid;
         SBPayrollDBEntities db;
         Repository rep;
         string connection;
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
         //constructor
-        public ScheduleExcelBuilder(string Itemid, SheduleReportModel shedulemodel, string FileName, string Conn)
+        public ScheduleExcelBuilder(string Itemid, SheduleReportModel shedulemodel, string FileName, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (shedulemodel == null)
                 throw new ArgumentNullException("SheduleReportModel is null");
@@ -37,9 +39,11 @@ namespace winSBPayroll.Reports.ExcelBuilder
             db = new SBPayrollDBEntities(connection);
             rep = new Repository(connection);
 
+            _notificationmessageEventname = notificationmessageEventname;
+
             if (Itemid == null)
                 throw new ArgumentNullException("Itemid is null");
-            _Itemid = Itemid;  
+            _Itemid = Itemid;
             sFileExcel = FileName;
         }
 
@@ -75,7 +79,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
 
         }
@@ -113,7 +117,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
             document.createHeaders(row, col, "Printed on: " + _ViewModel.PrintedOn.ToString("dd-dddd-MMMM-yyyy"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
 
-            
+
         }
 
         //document body
@@ -131,7 +135,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
         }
         private void AddNSSFTableBody(ref int row, ref int col)
         {
-             //Add table headers
+            //Add table headers
             AddNSSFTableHeaders(ref  row, ref  col);
 
             AddNSSFTableDetails(ref  row, ref  col);
@@ -195,12 +199,12 @@ namespace winSBPayroll.Reports.ExcelBuilder
         //Nssf table details
         private void AddNSSFTableDetails(ref int row, ref int col)
         {
-            
+
             foreach (var item in _ViewModel._Schedulelist)
             {
                 AddNSSFTableBodyDetails(item, ref  row, ref  col);
             }
- 
+
         }
         //table details
         private void AddTableDetails(ref int row, ref int col)
@@ -246,7 +250,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
 
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
-            document.createHeaders(row, col, det.Amount.ToString("#,##0"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n"); 
+            document.createHeaders(row, col, det.Amount.ToString("#,##0"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
         }
         //Nssf table totals
         private void AddNSSFTableTotals(ref int row, ref int col)
@@ -265,7 +269,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
 
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
-            document.createHeaders(row, col, "", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n"); 
+            document.createHeaders(row, col, "", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
@@ -295,7 +299,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
             string cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, "Signature.....................................................................................................", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
-        } 
+        }
 
     }
 }

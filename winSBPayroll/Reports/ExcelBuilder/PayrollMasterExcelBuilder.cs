@@ -11,7 +11,6 @@ namespace winSBPayroll.Reports.Excel
 {
     public class PayrollMasterExcelBuilder
     {
-
         //private attributes 
         PayrollMasterModel _ViewModel;
         CreateExcelDoc document;
@@ -23,9 +22,11 @@ namespace winSBPayroll.Reports.Excel
         string connection;
         System.Collections.Generic.List<string> _earnings;
         System.Collections.Generic.List<string> _deductions;
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
         //constructor
-        public PayrollMasterExcelBuilder(System.Collections.Generic.List<string> earnings, System.Collections.Generic.List<string> deductions, PayrollMasterModel payrollMasterModel, string FileName, string Conn)
+        public PayrollMasterExcelBuilder(System.Collections.Generic.List<string> earnings, System.Collections.Generic.List<string> deductions, PayrollMasterModel payrollMasterModel, string FileName, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (payrollMasterModel == null)
                 throw new ArgumentNullException("PayrollMasterModel is null");
@@ -38,6 +39,8 @@ namespace winSBPayroll.Reports.Excel
             de = new DataEntry(connection);
             db = new SBPayrollDBEntities(connection);
             rep = new Repository(connection);
+
+            _notificationmessageEventname = notificationmessageEventname;
 
             _ViewModel = payrollMasterModel;
             sFileExcel = FileName;
@@ -77,7 +80,7 @@ namespace winSBPayroll.Reports.Excel
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
 
         }
@@ -138,19 +141,19 @@ namespace winSBPayroll.Reports.Excel
 
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
-            document.createHeaders(row, col, "Name", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n"); 
+            document.createHeaders(row, col, "Name", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
             foreach (var sub in _earnings)
             {
                 col++;
                 cellrangeaddr1 = document.IntAlpha(col) + row;
                 document.createHeaders(row, col, sub, cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
-            } 
-             
+            }
+
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, "Gross Pay\nKshs", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
-             
+
             foreach (var sub in _deductions)
             {
                 col++;
@@ -188,19 +191,19 @@ namespace winSBPayroll.Reports.Excel
 
                     col++;
                     cellrangeaddr1 = document.IntAlpha(col) + row;
-                    document.createHeaders(row, col, item.ToString("#,##0") , cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
+                    document.createHeaders(row, col, item.ToString("#,##0"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
                 }
                 else
                 {
                     col++;
                     cellrangeaddr1 = document.IntAlpha(col) + row;
-                    document.createHeaders(row, col, "0"  , cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
+                    document.createHeaders(row, col, "0", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
                 }
-            } 
-             
+            }
+
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
-            document.createHeaders(row, col, rec.GrossTaxableEarnings.ToString("#,##0"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n"); 
+            document.createHeaders(row, col, rec.GrossTaxableEarnings.ToString("#,##0"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
             foreach (var sub in this._deductions)
             {
@@ -211,13 +214,13 @@ namespace winSBPayroll.Reports.Excel
 
                     col++;
                     cellrangeaddr1 = document.IntAlpha(col) + row;
-                    document.createHeaders(row, col, item.ToString("#,##0") , cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
+                    document.createHeaders(row, col, item.ToString("#,##0"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
                 }
                 else
                 {
                     col++;
                     cellrangeaddr1 = document.IntAlpha(col) + row;
-                    document.createHeaders(row, col, "0" , cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
+                    document.createHeaders(row, col, "0", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
                 }
             }
 
@@ -261,15 +264,15 @@ namespace winSBPayroll.Reports.Excel
                     cellrangeaddr1 = document.IntAlpha(col) + row;
                     document.createHeaders(row, col, "0", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
                 }
-            } 
+            }
 
-             
+
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
             decimal gp = _ViewModel.paymaster.Sum(a => a.GrossTaxableEarnings);
             document.createHeaders(row, col, gp.ToString("#,##0"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
-            
+
             foreach (var sub in this._deductions)
             {
                 var totalOtherDeductions = _ViewModel.paymaster.Sum(rec => rec.GetOtherDeductions.Where(i => i.Description == sub).Sum(i => i.Amount));

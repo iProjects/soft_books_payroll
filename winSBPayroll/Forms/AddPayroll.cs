@@ -51,13 +51,13 @@ namespace winSBPayroll.Forms
                     payroll.IsOpen = true;
                     payroll.Processed = false;
 
-                    if (rep.GetPayrolls().Any(i => i.Period == payroll.Period && i.Year == payroll.Year))
+                    if (rep.GetPayrolls().Any(i => i.Period == payroll.Period && i.Year == payroll.Year && i.EmployerId == payroll.EmployerId))
                     {
-                        MessageBox.Show("Payroll Exists!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Payroll for year [ " + payroll.Year + " ] period [ " + payroll.Period + " ] employer [ " + cbEmployer.Text + " ]  Exists!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    if (!rep.GetPayrolls().Any(i => i.Period == payroll.Period && i.Year == payroll.Year))
+                    if (!rep.GetPayrolls().Any(i => i.Period == payroll.Period && i.Year == payroll.Year && i.EmployerId == payroll.EmployerId))
                     {
-                        rep.AddPayroll(payroll);
+                        rep.AddPayroll_for_employer(payroll);
 
                         Payrolls f = (Payrolls)this.Owner;
                         f.RefreshGrid();

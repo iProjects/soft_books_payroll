@@ -11,17 +11,19 @@ namespace winSBPayroll.Reports.ExcelBuilder
 {
     public class NetSalaryExcelBuilder
     {
-
         //private attributes 
         NetSalaryReportModel _netsalaryreportmodel;
         CreateExcelDoc document;
         string Message;
         string sFileExcel;
-
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
         //constructor
-        public NetSalaryExcelBuilder(NetSalaryReportModel netsalaryreportmodel, string FileName)
+        public NetSalaryExcelBuilder(NetSalaryReportModel netsalaryreportmodel, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
+            _notificationmessageEventname = notificationmessageEventname;
+
             _netsalaryreportmodel = netsalaryreportmodel;
             sFileExcel = FileName;
         }
@@ -59,7 +61,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
 
         }
@@ -91,7 +93,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, "Printed on: " + _netsalaryreportmodel.PrintedOn.ToString("dd-dddd-MMMM-yyyy"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
-        
+
         }
 
 
@@ -102,9 +104,9 @@ namespace winSBPayroll.Reports.ExcelBuilder
 
             //Add table detail
             foreach (var d in _netsalaryreportmodel.paymaster)
-           {
-               AddBodyTableDetail(d, ref  row, ref  col);
-           }
+            {
+                AddBodyTableDetail(d, ref  row, ref  col);
+            }
 
             //Add table footer
             AddDocBodyTableTotals(ref  row, ref  col);
@@ -131,7 +133,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, "NET SALARY", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
-            
+
 
         }
 
@@ -155,7 +157,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, pay.NetPay.ToString("#,##0"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
-        
+
 
         }
 
@@ -182,7 +184,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
         //document footer
         private void AddDocFooter(ref int row, ref int col)
         {
-            
+
         }
 
     }

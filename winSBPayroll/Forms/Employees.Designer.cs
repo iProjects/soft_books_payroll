@@ -33,49 +33,49 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Employees));
             this.btnClose = new System.Windows.Forms.Button();
             this.btnViewDetails = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.btnEdit = new System.Windows.Forms.Button();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.bindingSourceEmployees = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.chkInActive = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cboEmployer = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtDepartment = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtSurName = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtOtherNames = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtEmpNo = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dataGridViewEmployees = new System.Windows.Forms.DataGridView();
-            this.EmpNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Surname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OtherNames = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BasicPay = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnIsActive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EmpNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Surname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OtherNames = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BasicPay = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label5 = new System.Windows.Forms.Label();
-            this.cboEmployer = new System.Windows.Forms.ComboBox();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnEdit = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.bindingSourceEmployees = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEmployees)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEmployees)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEmployees)).BeginInit();
             this.SuspendLayout();
             // 
             // btnClose
@@ -106,45 +106,6 @@
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDelete.Image = global::winSBPayroll.Properties.Resources.Delete;
-            this.btnDelete.Location = new System.Drawing.Point(700, 12);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(59, 23);
-            this.btnDelete.TabIndex = 2;
-            this.btnDelete.Text = "Delete";
-            this.btnDelete.UseVisualStyleBackColor = false;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEdit.Image = global::winSBPayroll.Properties.Resources.Edit;
-            this.btnEdit.Location = new System.Drawing.Point(630, 12);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(59, 23);
-            this.btnEdit.TabIndex = 1;
-            this.btnEdit.Text = "&Edit";
-            this.btnEdit.UseVisualStyleBackColor = false;
-            this.btnEdit.Click += new System.EventHandler(this.btnUpdate_Click);
-            // 
-            // btnAdd
-            // 
-            this.btnAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAdd.Image = global::winSBPayroll.Properties.Resources.Add;
-            this.btnAdd.Location = new System.Drawing.Point(560, 12);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(59, 23);
-            this.btnAdd.TabIndex = 0;
-            this.btnAdd.Text = "&Add";
-            this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // groupBox1
             // 
@@ -192,6 +153,19 @@
             this.groupBox3.Size = new System.Drawing.Size(911, 54);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
+            // 
+            // cboEmployer
+            // 
+            this.cboEmployer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboEmployer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cboEmployer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboEmployer.ForeColor = System.Drawing.Color.Black;
+            this.cboEmployer.FormattingEnabled = true;
+            this.cboEmployer.Location = new System.Drawing.Point(64, 19);
+            this.cboEmployer.Name = "cboEmployer";
+            this.cboEmployer.Size = new System.Drawing.Size(224, 21);
+            this.cboEmployer.TabIndex = 0;
+            this.cboEmployer.SelectedIndexChanged += new System.EventHandler(this.cboEmployer_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -249,6 +223,15 @@
             this.txtOtherNames.TabIndex = 3;
             this.txtOtherNames.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtOtherNames_KeyPress);
             this.txtOtherNames.Validated += new System.EventHandler(this.txtOtherNames_Validated);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(11, 23);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(50, 13);
+            this.label5.TabIndex = 31;
+            this.label5.Text = "Employer";
             // 
             // label2
             // 
@@ -328,41 +311,6 @@
             this.dataGridViewEmployees.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewEmployees_CellContentDoubleClick);
             this.dataGridViewEmployees.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewEmployees_DataError);
             // 
-            // EmpNo
-            // 
-            this.EmpNo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.EmpNo.DataPropertyName = "EmpNo";
-            this.EmpNo.HeaderText = "EmpNo";
-            this.EmpNo.Name = "EmpNo";
-            this.EmpNo.ReadOnly = true;
-            // 
-            // Surname
-            // 
-            this.Surname.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Surname.DataPropertyName = "Surname";
-            this.Surname.HeaderText = "Surname";
-            this.Surname.Name = "Surname";
-            this.Surname.ReadOnly = true;
-            // 
-            // OtherNames
-            // 
-            this.OtherNames.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.OtherNames.DataPropertyName = "OtherNames";
-            this.OtherNames.HeaderText = "OtherNames";
-            this.OtherNames.Name = "OtherNames";
-            this.OtherNames.ReadOnly = true;
-            this.OtherNames.Width = 200;
-            // 
-            // BasicPay
-            // 
-            this.BasicPay.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.BasicPay.DataPropertyName = "BasicPay";
-            dataGridViewCellStyle3.Format = "C2";
-            this.BasicPay.DefaultCellStyle = dataGridViewCellStyle3;
-            this.BasicPay.HeaderText = "BasicPay";
-            this.BasicPay.Name = "BasicPay";
-            this.BasicPay.ReadOnly = true;
-            // 
             // ColumnIsActive
             // 
             this.ColumnIsActive.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
@@ -413,6 +361,41 @@
             this.dataGridViewTextBoxColumn4.ReadOnly = true;
             this.dataGridViewTextBoxColumn4.Width = 145;
             // 
+            // EmpNo
+            // 
+            this.EmpNo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.EmpNo.DataPropertyName = "EmpNo";
+            this.EmpNo.HeaderText = "EmpNo";
+            this.EmpNo.Name = "EmpNo";
+            this.EmpNo.ReadOnly = true;
+            // 
+            // Surname
+            // 
+            this.Surname.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Surname.DataPropertyName = "Surname";
+            this.Surname.HeaderText = "Surname";
+            this.Surname.Name = "Surname";
+            this.Surname.ReadOnly = true;
+            // 
+            // OtherNames
+            // 
+            this.OtherNames.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.OtherNames.DataPropertyName = "OtherNames";
+            this.OtherNames.HeaderText = "OtherNames";
+            this.OtherNames.Name = "OtherNames";
+            this.OtherNames.ReadOnly = true;
+            this.OtherNames.Width = 200;
+            // 
+            // BasicPay
+            // 
+            this.BasicPay.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.BasicPay.DataPropertyName = "BasicPay";
+            dataGridViewCellStyle3.Format = "C2";
+            this.BasicPay.DefaultCellStyle = dataGridViewCellStyle3;
+            this.BasicPay.HeaderText = "BasicPay";
+            this.BasicPay.Name = "BasicPay";
+            this.BasicPay.ReadOnly = true;
+            // 
             // dataGridViewTextBoxColumn5
             // 
             this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
@@ -432,27 +415,44 @@
             this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             this.dataGridViewTextBoxColumn6.ReadOnly = true;
             // 
-            // label5
+            // btnAdd
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(11, 23);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(50, 13);
-            this.label5.TabIndex = 31;
-            this.label5.Text = "Employer";
+            this.btnAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAdd.Image = global::winSBPayroll.Properties.Resources.Add;
+            this.btnAdd.Location = new System.Drawing.Point(560, 12);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(59, 23);
+            this.btnAdd.TabIndex = 0;
+            this.btnAdd.Text = "&Add";
+            this.btnAdd.UseVisualStyleBackColor = false;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // cboEmployer
+            // btnEdit
             // 
-            this.cboEmployer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboEmployer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cboEmployer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboEmployer.ForeColor = System.Drawing.Color.Black;
-            this.cboEmployer.FormattingEnabled = true;
-            this.cboEmployer.Location = new System.Drawing.Point(64, 19);
-            this.cboEmployer.Name = "cboEmployer";
-            this.cboEmployer.Size = new System.Drawing.Size(224, 21);
-            this.cboEmployer.TabIndex = 0;
-            this.cboEmployer.SelectedIndexChanged += new System.EventHandler(this.cboEmployer_SelectedIndexChanged);
+            this.btnEdit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEdit.Image = global::winSBPayroll.Properties.Resources.Edit;
+            this.btnEdit.Location = new System.Drawing.Point(630, 12);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(59, 23);
+            this.btnEdit.TabIndex = 1;
+            this.btnEdit.Text = "&Edit";
+            this.btnEdit.UseVisualStyleBackColor = false;
+            this.btnEdit.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDelete.Image = global::winSBPayroll.Properties.Resources.Delete;
+            this.btnDelete.Location = new System.Drawing.Point(700, 12);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(59, 23);
+            this.btnDelete.TabIndex = 2;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // Employees
             // 
@@ -471,13 +471,13 @@
             this.Text = "Employees";
             this.Load += new System.EventHandler(this.Employees_Load);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEmployees)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEmployees)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEmployees)).EndInit();
             this.ResumeLayout(false);
 
         }

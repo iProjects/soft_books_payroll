@@ -134,7 +134,7 @@ namespace DAL
             payslip.PrintedBy = "System";
             payslip.PrintedOn = DateTime.Today;
 
-            //emp info
+            //employee info
             payslip.EmpName = "System";
             payslip.EmpNo = "System";
             payslip.EmployeeId = -1;
@@ -146,11 +146,11 @@ namespace DAL
             payslip.Period = DateTime.Today.Month;
             payslip.Year = DateTime.Today.Year;
 
-            //employerbank info    
+            //employer info    
+            payslip.EmployerId = -1;
             payslip.EmployerName = "System";
             payslip.EmployerAddress = "System";
             payslip.EmployerTelephone = "System";
-
 
             //Payslip
             payslip.BasicPay = 0;
@@ -216,13 +216,12 @@ namespace DAL
                 payslip.Period = _PaymentPeriod;
                 payslip.Year = _Year;
 
-                //employerbank info    
+                //employer info    
                 payslip.EmployerName = employer.Name;
+                payslip.EmployerId = employer.Id;
                 payslip.EmployerAddress = employer.Address1 + ", " + employer.Address2;
                 payslip.EmployerTelephone = employer.Telephone;
                 payslip.EmployerEmail = employer.Email;
-                //added employer id value to payslip
-                payslip.EmployerId = employee.EmployerId;
 
                 //Payment
                 payslip.BankBranch = employee.BankCode;
@@ -439,15 +438,18 @@ namespace DAL
                 if (!anonymous)
                 {
                     employee = rep.GetEmployee(_EmployeeId);
+
                     _MaritalStatus = employee.MaritalStatus;
 
                     decimal _HourlyPay = rep.GetHourlyPay(_EmployeeId);
+
                     if (this.employee.BasicComputation.Equals("H"))
                     {
                         _Basic = _HourlyPay;
                     }
                     else if (this.employee.BasicComputation.Equals("X"))
                     {
+                        _Basic = employee.BasicPay ?? 0;
                         _Basic += _HourlyPay;
                     }
                     else
@@ -661,13 +663,59 @@ namespace DAL
             {
                 if ("NSSF".Equals(d.Description.Trim()))
                 {
-                    d.Amount = this.NSSF();
-                    d.IsStatutory = true;
+                    decimal nssf_from_txn = (from etxn in rep.get_all_employee_transactions()
+                                             where etxn.EmployeeId.Equals(_EmployeeId)
+                                             where etxn.ItemId.Equals("NSSF")
+                                             select etxn.Amount).FirstOrDefault();
+
+                    if (employee.BasicComputation.Equals("H") && nssf_from_txn == 0.0M)
+                    {
+                        d.Amount = 0.0M;
+                        d.IsStatutory = true;
+                    }
+                    else if (employee.BasicComputation.Equals("X") && nssf_from_txn == 0.0M)
+                    {
+                        d.Amount = 0.0M;
+                        d.IsStatutory = true;
+                    }
+                    else if (employee.BasicComputation.Equals("B") && nssf_from_txn == 0.0M)
+                    {
+                        d.Amount = 0.0M;
+                        d.IsStatutory = true;
+                    }
+                    else
+                    {
+                        d.Amount = this.NSSF();
+                        d.IsStatutory = true;
+                    }
                 }
                 else if ("NHIF".Equals(d.Description.Trim()))
                 {
-                    d.Amount = this.NHIF();
-                    d.IsStatutory = true;
+                    decimal nhif_from_txn = (from etxn in rep.get_all_employee_transactions()
+                                             where etxn.EmployeeId.Equals(_EmployeeId)
+                                             where etxn.ItemId.Equals("NHIF")
+                                             select etxn.Amount).FirstOrDefault();
+
+                    if (employee.BasicComputation.Equals("H") && nhif_from_txn == 0.0M)
+                    {
+                        d.Amount = 0.0M;
+                        d.IsStatutory = true;
+                    }
+                    else if (employee.BasicComputation.Equals("X") && nhif_from_txn == 0.0M)
+                    {
+                        d.Amount = 0.0M;
+                        d.IsStatutory = true;
+                    }
+                    else if (employee.BasicComputation.Equals("B") && nhif_from_txn == 0.0M)
+                    {
+                        d.Amount = 0.0M;
+                        d.IsStatutory = true;
+                    }
+                    else
+                    {
+                        d.Amount = this.NHIF();
+                        d.IsStatutory = true;
+                    }
                 }
 
             }

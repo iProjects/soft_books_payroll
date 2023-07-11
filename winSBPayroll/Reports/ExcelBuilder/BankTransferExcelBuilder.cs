@@ -10,17 +10,20 @@ namespace winSBPayroll.Reports.Excel
 {
     public class BankTransferExcelBuilder
     {
-      
         #region "private attributes"
         BankTransferReportModel _bbtreportmodel;
         CreateExcelDoc document;
         string Message;
         string sFileExcel;
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
         #endregion "private attributes"
 
         #region "Constructor"
-        public BankTransferExcelBuilder(BankTransferReportModel bbtreportmodel, string FileName)
+        public BankTransferExcelBuilder(BankTransferReportModel bbtreportmodel, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
+            _notificationmessageEventname = notificationmessageEventname;
+
             _bbtreportmodel = bbtreportmodel;
             sFileExcel = FileName;
         }
@@ -58,7 +61,7 @@ namespace winSBPayroll.Reports.Excel
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
 
         }
@@ -85,8 +88,8 @@ namespace winSBPayroll.Reports.Excel
             document.createHeaders(row, col, "Printed On: " + _bbtreportmodel.PrintedOn.ToString("dd-dddd-MMMM-yyyy"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
             //Bank address
-            
-            row = row + 2;col = 1;
+
+            row = row + 2; col = 1;
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, "THE  MANAGER", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
@@ -98,7 +101,7 @@ namespace winSBPayroll.Reports.Excel
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, _bbtreportmodel.BankBranch, cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
-          
+
             //Salutation
             row = row + 2; col = 1;
             cellrangeaddr1 = document.IntAlpha(col) + row;

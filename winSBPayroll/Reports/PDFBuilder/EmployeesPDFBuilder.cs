@@ -12,7 +12,6 @@ namespace winSBPayroll.Reports.PDFBuilder
 {
     public class EmployeesPDFBuilder
     {
-        
         Document document;
         string Message;
         string sFilePDF;
@@ -33,13 +32,18 @@ namespace winSBPayroll.Reports.PDFBuilder
         Font rms8Bold = new Font(Font.HELVETICA, 8, Font.BOLD);
         Font rms9Bold = new Font(Font.HELVETICA, 9, Font.BOLD);
         Font rms10Normal = new Font(Font.HELVETICA, 10, Font.NORMAL);
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
-
-        public EmployeesPDFBuilder(EmployeesModelReport employeesModel, string FileName)
+        public EmployeesPDFBuilder(EmployeesModelReport employeesModel, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (employeesModel == null)
                 throw new ArgumentNullException("EmployeesModelReport is null");
-            _ViewModel = employeesModel; 
+            _ViewModel = employeesModel;
+
+            _notificationmessageEventname = notificationmessageEventname;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed EmployeesPDFBuilder", TAG));
 
             sFilePDF = FileName;
 
@@ -54,7 +58,7 @@ namespace winSBPayroll.Reports.PDFBuilder
             }
             catch (Exception ex)
             {
-               Utils.ShowError(ex); 
+                Utils.ShowError(ex);
                 return null;
             }
         }
@@ -94,8 +98,8 @@ namespace winSBPayroll.Reports.PDFBuilder
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
-            } 
+                Log.WriteToErrorLogFile(ex);
+            }
 
         }
 
@@ -118,7 +122,7 @@ namespace winSBPayroll.Reports.PDFBuilder
             employeraddressCell.HorizontalAlignment = Cell.ALIGN_CENTER;
             employeraddressCell.Colspan = 5;
             employeraddressCell.Border = Cell.NO_BORDER;
-            employeesTable.AddCell(employeraddressCell);  
+            employeesTable.AddCell(employeraddressCell);
 
             Cell bCell = new Cell(new Phrase("EMPLOYEES REPORT", hFont1));
             bCell.HorizontalAlignment = Cell.ALIGN_CENTER;
@@ -139,7 +143,7 @@ namespace winSBPayroll.Reports.PDFBuilder
             employeesTable.AddCell(PrintedonCell);
 
             //create the logo
-            PDFGen pdfgen = new PDFGen();
+            PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
             Image img0 = pdfgen.DoGetImageFile(_ViewModel.CompanyLogo);
             img0.Alignment = Image.ALIGN_MIDDLE;
             Cell logoCell = new Cell(img0);
@@ -148,7 +152,7 @@ namespace winSBPayroll.Reports.PDFBuilder
             logoCell.Add(new Phrase(_ViewModel.CompanySlogan, new Font(Font.HELVETICA, 8, Font.ITALIC, Color.BLACK)));
             employeesTable.AddCell(logoCell);
 
-            document.Add(employeesTable); 
+            document.Add(employeesTable);
         }
 
         private void AddDocBody()
@@ -158,20 +162,20 @@ namespace winSBPayroll.Reports.PDFBuilder
             AddTableHeaders();
 
             //Add table details  
-            foreach (var d in _ViewModel.pae)
+            foreach (var d in _ViewModel.pe)
             {
                 AddTableDetails(d);
             }
 
             //Add table totals
-            AddTableTotals();
+            //AddTableTotals();
 
         }
 
         //table headers
         private void AddTableHeaders()
         {
-            Table employeesTable = new Table(9);
+            Table employeesTable = new Table(11);
             employeesTable.WidthPercentage = 100;
             employeesTable.Padding = 1;
             employeesTable.Spacing = 1;
@@ -211,71 +215,91 @@ namespace winSBPayroll.Reports.PDFBuilder
             telephone.HorizontalAlignment = Cell.ALIGN_CENTER;
             employeesTable.AddCell(telephone);
 
-            Cell basic = new Cell(new Phrase("Basic Salary\nKshs", tHFont));
+            Cell basic = new Cell(new Phrase("payment Mode", tHFont));
             basic.Border = Cell.RECTANGLE;
             basic.HorizontalAlignment = Cell.ALIGN_CENTER;
             employeesTable.AddCell(basic);
 
-            Cell paymentmode = new Cell(new Phrase("Payment Mode", tHFont));
+            Cell paymentmode = new Cell(new Phrase("NSSF No", tHFont));
             paymentmode.Border = Cell.RECTANGLE;
             paymentmode.HorizontalAlignment = Cell.ALIGN_CENTER;
             employeesTable.AddCell(paymentmode);
+
+            Cell accountno = new Cell(new Phrase("NHIF No", tHFont));
+            accountno.Border = Cell.RECTANGLE;
+            accountno.HorizontalAlignment = Cell.ALIGN_CENTER;
+            employeesTable.AddCell(accountno);
+
+            Cell telephoneno = new Cell(new Phrase("Phone No", tHFont));
+            telephoneno.Border = Cell.RECTANGLE;
+            telephoneno.HorizontalAlignment = Cell.ALIGN_CENTER;
+            employeesTable.AddCell(telephoneno);
 
             document.Add(employeesTable);
         }
 
         //table details 
-        private void AddTableDetails(printallemployees paemp)
+        private void AddTableDetails(print_employees paemp)
         {
-            Table employeesTable = new Table(9);
+            Table employeesTable = new Table(11);
             employeesTable.WidthPercentage = 100;
             employeesTable.Padding = 1;
             employeesTable.Spacing = 1;
 
             Cell empno = new Cell(new Phrase(paemp.employeenumber.ToString(), rms8Bold));
             empno.Border = Cell.RECTANGLE;
-            empno.HorizontalAlignment = Cell.ALIGN_LEFT;
+            empno.HorizontalAlignment = Cell.ALIGN_CENTER;
             employeesTable.AddCell(empno);
 
             Cell empname = new Cell(new Phrase(paemp.employeename.ToString(), rms8Bold));
             empname.Border = Cell.RECTANGLE;
-            empname.HorizontalAlignment = Cell.ALIGN_LEFT;
+            empname.HorizontalAlignment = Cell.ALIGN_CENTER;
             employeesTable.AddCell(empname);
 
             Cell empgender = new Cell(new Phrase(paemp.gender, rms8Bold));
             empgender.Border = Cell.RECTANGLE;
-            empgender.HorizontalAlignment = Cell.ALIGN_LEFT;
+            empgender.HorizontalAlignment = Cell.ALIGN_CENTER;
             employeesTable.AddCell(empgender);
 
             Cell pinnumber = new Cell(new Phrase(paemp.pinnumber, rms8Bold));
             pinnumber.Border = Cell.RECTANGLE;
-            pinnumber.HorizontalAlignment = Cell.ALIGN_LEFT;
+            pinnumber.HorizontalAlignment = Cell.ALIGN_CENTER;
             employeesTable.AddCell(pinnumber);
 
             Cell idnumber = new Cell(new Phrase(paemp.idnumber, rms8Bold));
             idnumber.Border = Cell.RECTANGLE;
-            idnumber.HorizontalAlignment = Cell.ALIGN_LEFT;
+            idnumber.HorizontalAlignment = Cell.ALIGN_CENTER;
             employeesTable.AddCell(idnumber);
 
             Cell department = new Cell(new Phrase(paemp.department, rms8Bold));
             department.Border = Cell.RECTANGLE;
-            department.HorizontalAlignment = Cell.ALIGN_LEFT;
+            department.HorizontalAlignment = Cell.ALIGN_CENTER;
             employeesTable.AddCell(department);
 
             Cell telephone = new Cell(new Phrase(paemp.dateofemployment.ToString("dd-MMM-yyyy"), rms8Bold));
             telephone.Border = Cell.RECTANGLE;
-            telephone.HorizontalAlignment = Cell.ALIGN_LEFT;
+            telephone.HorizontalAlignment = Cell.ALIGN_CENTER;
             employeesTable.AddCell(telephone);
 
-            Cell basic = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", paemp.basicpay), rms8Bold));
+            Cell basic = new Cell(new Phrase(paemp.paymentmode, rms8Bold));
             basic.Border = Cell.RECTANGLE;
-            basic.HorizontalAlignment = Cell.ALIGN_RIGHT;
+            basic.HorizontalAlignment = Cell.ALIGN_CENTER;
             employeesTable.AddCell(basic);
 
-            Cell paymentmode = new Cell(new Phrase(paemp.paymentmode, rms8Bold));
+            Cell paymentmode = new Cell(new Phrase(paemp.nssf_no, rms8Bold));
             paymentmode.Border = Cell.RECTANGLE;
             paymentmode.HorizontalAlignment = Cell.ALIGN_CENTER;
             employeesTable.AddCell(paymentmode);
+
+            Cell accountno = new Cell(new Phrase(paemp.nhif_no, rms8Bold));
+            accountno.Border = Cell.RECTANGLE;
+            accountno.HorizontalAlignment = Cell.ALIGN_CENTER;
+            employeesTable.AddCell(accountno);
+
+            Cell phoneno = new Cell(new Phrase(paemp.telephone_no, rms8Bold));
+            phoneno.Border = Cell.RECTANGLE;
+            phoneno.HorizontalAlignment = Cell.ALIGN_CENTER;
+            employeesTable.AddCell(phoneno);
 
             document.Add(employeesTable);
 
@@ -284,20 +308,20 @@ namespace winSBPayroll.Reports.PDFBuilder
         //table totals
         private void AddTableTotals()
         {
-            Table employeesTable = new Table(9);
+            Table employeesTable = new Table(11);
             employeesTable.WidthPercentage = 100;
             employeesTable.Padding = 1;
             employeesTable.Spacing = 1;
 
             Cell total = new Cell(new Phrase("TOTAL", tHfont1));
             total.Border = Cell.RECTANGLE;
-            total.HorizontalAlignment = Cell.ALIGN_LEFT;
+            total.HorizontalAlignment = Cell.ALIGN_CENTER;
             total.Colspan = 7;
             employeesTable.AddCell(total);
 
             Cell totalbasic = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.totalbasic), tHfont1));
             totalbasic.Border = Cell.RECTANGLE;
-            totalbasic.HorizontalAlignment = Cell.ALIGN_RIGHT;
+            totalbasic.HorizontalAlignment = Cell.ALIGN_CENTER;
             employeesTable.AddCell(totalbasic);
 
             document.Add(employeesTable);
@@ -311,12 +335,12 @@ namespace winSBPayroll.Reports.PDFBuilder
 
             Table employeesTable = new Table(1);
             employeesTable.WidthPercentage = 100;
-            employeesTable.Border = Table.NO_BORDER; 
+            employeesTable.Border = Table.NO_BORDER;
 
             Cell sgCell = new Cell(new Phrase("Signature.....................................................................................................", rms10Normal));
             sgCell.HorizontalAlignment = Cell.ALIGN_LEFT;
             sgCell.Border = Cell.NO_BORDER;
-            employeesTable.AddCell(sgCell); 
+            employeesTable.AddCell(sgCell);
 
             document.Add(employeesTable);
 

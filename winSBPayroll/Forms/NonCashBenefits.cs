@@ -104,7 +104,7 @@ namespace winSBPayroll.Forms
             {
                 //save to the database
                 db.SaveChanges();
-                MessageBox.Show("Save Successfull!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Save Successfull!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 CalculateTotalNonCashBenefitAmount();
 

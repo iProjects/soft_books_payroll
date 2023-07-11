@@ -52,7 +52,7 @@ namespace winSBPayroll.Forms
 
                     if (db.Departments.Any(c => c.Code == _Department.Code && c.IsDeleted == false))
                     {
-                        MessageBox.Show("Code Exist!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Code Exist!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     if (!db.Departments.Any(c => c.Code == _Department.Code && c.IsDeleted == false))
                     {

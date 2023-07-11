@@ -15,7 +15,6 @@ namespace winSBPayroll.Reports.PDF
 {
     public class P10APDFBuilder
     {
-
         P10AReportModel _ViewModel;
         Document document;
         string Message;
@@ -29,12 +28,18 @@ namespace winSBPayroll.Reports.PDF
         Font tHFont = new Font(Font.TIMES_ROMAN, 8, Font.BOLD); //table Header
         Font tcFont = new Font(Font.HELVETICA, 8, Font.NORMAL);//table cell
         Font tHFont1 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD); //table Header
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
-        public P10APDFBuilder(string ResourcePath, P10AReportModel p10AModel, string FileName)
+        public P10APDFBuilder(string ResourcePath, P10AReportModel p10AModel, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (p10AModel == null)
                 throw new ArgumentNullException("P10AReportModel is null");
             _ViewModel = p10AModel;
+
+            _notificationmessageEventname = notificationmessageEventname;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed P10APDFBuilder", TAG));
 
             sFilePDF = FileName;
             _resourcePath = ResourcePath;
@@ -57,9 +62,9 @@ namespace winSBPayroll.Reports.PDF
 
                 document.Open();
 
-                PDFGen pdfgen = new PDFGen();
+                PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
 
-                Image img0 = pdfgen.DoGetImageFile(_resourcePath + "kra2.jpg");
+                Image img0 = pdfgen.DoGetImageFile(Path.Combine(_resourcePath, "kra2.jpg"));
                 img0.Alignment = Image.ALIGN_LEFT;
 
                 Table empInfoTable = new Table(1);
@@ -132,7 +137,7 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
         }
         private void AddTableHeaders(Table aTable)

@@ -10,29 +10,39 @@ using VVX;
 
 namespace winSBPayroll.Reports.PDF
 {
-  public  class PayeePDFBuilder
+    public class PayeePDFBuilder
     {
-        
         public PAYEModel _ViewModel;
         Document document;
         string sFilePDF;
         string Message;
 
         Font hFont1 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
+        Font hfont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
         Font hFont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
-        Font bFont1 = new Font(Font.TIMES_ROMAN, 10, Font.NORMAL);//body
-        Font bFont2 = new Font(Font.TIMES_ROMAN, 10, Font.NORMAL);//body
+        Font bfont1 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);//body
+        Font bFont2 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);//body
+        Font bFont3 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);//body
         Font tHFont = new Font(Font.TIMES_ROMAN, 9, Font.BOLD); //table Header
+        Font tHfont1 = new Font(Font.TIMES_ROMAN, 11, Font.BOLD); //table Header
         Font tcFont = new Font(Font.HELVETICA, 8, Font.NORMAL);//table cell
         Font tcFont1 = new Font(Font.HELVETICA, 9, Font.BOLD);//table cell
+        Font rms6Normal = new Font(Font.TIMES_ROMAN, 9, Font.NORMAL);
+        Font rms10Bold = new Font(Font.HELVETICA, 10, Font.BOLD);
+        Font rms6Bold = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font rms8Bold = new Font(Font.HELVETICA, 8, Font.BOLD);
+        Font rms9Bold = new Font(Font.HELVETICA, 9, Font.BOLD);
         Font rms10Normal = new Font(Font.HELVETICA, 10, Font.NORMAL);
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
-
-        public PayeePDFBuilder(PAYEModel payeeModel, string filename)
+        public PayeePDFBuilder(PAYEModel payeeModel, string filename, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (payeeModel == null)
                 throw new ArgumentNullException("PAYEModel is null");
             _ViewModel = payeeModel;
+
+            _notificationmessageEventname = notificationmessageEventname;
 
             sFilePDF = filename;
         }
@@ -45,7 +55,7 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-                Utils.ShowError(ex); 
+                Utils.ShowError(ex);
                 return null;
             }
         }
@@ -77,8 +87,8 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
-            }  
+                Log.WriteToErrorLogFile(ex);
+            }
         }
 
         private void AddHeader()
@@ -120,7 +130,7 @@ namespace winSBPayroll.Reports.PDF
             payeeTable.AddCell(PrintedonCell);
 
             //create the logo
-            PDFGen pdfgen = new PDFGen();
+            PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
             Image img0 = pdfgen.DoGetImageFile(_ViewModel.CompanyLogo);
             img0.Alignment = Image.ALIGN_MIDDLE;
             Cell logoCell = new Cell(img0);
@@ -138,17 +148,17 @@ namespace winSBPayroll.Reports.PDF
             Table payeeTable = new Table(4);
             payeeTable.WidthPercentage = 100;
             payeeTable.Padding = 2;
-            payeeTable.Spacing = 1; 
+            payeeTable.Spacing = 1;
 
             //Add table headers
             Cell cell = new Cell(new Phrase("No", tHFont));
             cell.HorizontalAlignment = Cell.ALIGN_CENTER;
-            payeeTable.AddCell(cell); 
+            payeeTable.AddCell(cell);
 
             Cell nameTCell = new Cell(new Phrase("Name", tHFont));
             nameTCell.HorizontalAlignment = Cell.ALIGN_CENTER;
             payeeTable.AddCell(nameTCell);
-            
+
             Cell idTCell = new Cell(new Phrase("Pin No", tHFont));
             idTCell.HorizontalAlignment = Cell.ALIGN_CENTER;
             payeeTable.AddCell(idTCell);
@@ -162,17 +172,17 @@ namespace winSBPayroll.Reports.PDF
             {
                 Cell empnocell = new Cell(new Phrase(pay.EmpNo, tcFont));
                 empnocell.HorizontalAlignment = Cell.ALIGN_LEFT;
-                payeeTable.AddCell(empnocell); 
+                payeeTable.AddCell(empnocell);
 
                 Cell nameCell = new Cell(new Phrase(pay.Surname.Trim() + ",  " + pay.OtherNames.Trim(), tcFont));
                 nameCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                 payeeTable.AddCell(nameCell);
-                
+
                 Cell pinCell = new Cell(new Phrase(pay.PINNo, tcFont));
                 pinCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                 payeeTable.AddCell(pinCell);
 
-                Cell taxCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}",pay.PayeTax) , tcFont));
+                Cell taxCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", pay.PayeTax), tcFont));
                 taxCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 payeeTable.AddCell(taxCell);
 
@@ -185,7 +195,7 @@ namespace winSBPayroll.Reports.PDF
 
             Cell totalvalueCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.TotalPAYE), tcFont1));
             totalvalueCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
-            payeeTable.AddCell(totalvalueCell); 
+            payeeTable.AddCell(totalvalueCell);
 
             Cell totalItemsCell = new Cell(new Phrase("TOTAL ITEMS", tcFont1));
             totalItemsCell.HorizontalAlignment = Cell.ALIGN_LEFT;
@@ -197,7 +207,7 @@ namespace winSBPayroll.Reports.PDF
             payeeTable.AddCell(countCell);
 
             document.Add(payeeTable);
-        } 
+        }
 
 
         //document footer
@@ -206,18 +216,18 @@ namespace winSBPayroll.Reports.PDF
 
             Table payeeTable = new Table(1);
             payeeTable.WidthPercentage = 100;
-            payeeTable.Border = Table.NO_BORDER;  
+            payeeTable.Border = Table.NO_BORDER;
 
             Cell sgCell = new Cell(new Phrase("Signature.....................................................................................................", rms10Normal));
             sgCell.HorizontalAlignment = Cell.ALIGN_LEFT;
             sgCell.Border = Cell.NO_BORDER;
-            payeeTable.AddCell(sgCell); 
+            payeeTable.AddCell(sgCell);
 
-            document.Add(payeeTable);  
+            document.Add(payeeTable);
         }
 
 
-       
+
 
     }
 }

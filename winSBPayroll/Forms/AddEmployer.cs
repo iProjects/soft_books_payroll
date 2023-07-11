@@ -108,7 +108,7 @@ namespace winSBPayroll.Forms
 
                     if (db.Employers.Any(c => c.Name == _employer.Name))
                     {
-                        MessageBox.Show("Employer with name " + _employer.Name + " Exists !", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Employer with name " + _employer.Name + " Exists !", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     if (!db.Employers.Any(c => c.Name == _employer.Name))
                     {
@@ -190,7 +190,7 @@ namespace winSBPayroll.Forms
             }
             if (dataGridViewEmployerBank.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Must have atleast one Bank!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Must have atleast one Bank!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 tabControl1.SelectedTab = tabControl1.TabPages[tabControl1.TabPages.IndexOf(tabPageBankingDetails)];
                 errorProvider1.Clear();  
                 return false;
@@ -545,7 +545,7 @@ namespace winSBPayroll.Forms
 
                     if (_employerbanks.Any(i => i.BankSortCode == _bank.BankSortCode))
                     {
-                        MessageBox.Show("Bank Exist!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Bank Exist!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     if (!_employerbanks.Any(i => i.BankSortCode == _bank.BankSortCode))
                     {
@@ -669,7 +669,7 @@ namespace winSBPayroll.Forms
                 {
                     if (!ValidFeesStructure())
                     {
-                        MessageBox.Show("No default Bank is set!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("No default Bank is set!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         e.Cancel = true;
                     }
                 }

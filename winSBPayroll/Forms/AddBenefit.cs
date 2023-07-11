@@ -54,7 +54,7 @@ namespace winSBPayroll.Forms
 
                     if (db.Benefits.Any(c => c.Description == _Benefit.Description && c.IsDeleted==false))
                     {
-                        MessageBox.Show("Description Exist!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Description Exist!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     if (!db.Benefits.Any(c => c.Description == _Benefit.Description && c.IsDeleted==false))
                     {

@@ -12,15 +12,18 @@ namespace winSBPayroll.Reports.Excel
     class PAYEExcelBuilder
     {
         //private attributes 
-       PAYEModel payeModel;
+        PAYEModel payeModel;
         CreateExcelDoc document;
         string Message;
         string sFileExcel;
-        
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
         //constructor
-        public PAYEExcelBuilder(PAYEModel reportmodel, string FileName)
+        public PAYEExcelBuilder(PAYEModel reportmodel, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
+            _notificationmessageEventname = notificationmessageEventname;
+
             payeModel = reportmodel;
             sFileExcel = FileName;
         }
@@ -57,7 +60,7 @@ namespace winSBPayroll.Reports.Excel
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
 
         }
@@ -69,7 +72,7 @@ namespace winSBPayroll.Reports.Excel
             //createHeaders(int row, int col, string htext, string cell1, string cell2, int mergeColumns, string b, bool font, int size, string fcolor)
 
             col = 2; row = 1;
-            string cellrangeaddr1 = document.IntAlpha(col) + row;           
+            string cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, payeModel.employername, cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
             row++;
@@ -88,7 +91,7 @@ namespace winSBPayroll.Reports.Excel
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, "Printed on: " + payeModel.PrintedOn.ToString("dd-dddd-MMMM-yyyy"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
-         
+
 
         }
 

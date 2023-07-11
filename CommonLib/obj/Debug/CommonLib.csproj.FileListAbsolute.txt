@@ -10,6 +10,11 @@ D:\wakxpx\csharp\sharpdevelop\SBPayroll\CommonLib\obj\Debug\CommonLib.dll
 D:\wakxpx\csharp\sharpdevelop\SBPayroll\CommonLib\obj\Debug\CommonLib.pdb
 D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\CommonLib.dll
 D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\CommonLib.pdb
-D:\wakxpx\csharp\visualstudio\SBPayroll\CommonLib\obj\Debug\CommonLib.csprojResolveAssemblyReference.cache
 D:\wakxpx\csharp\visualstudio\SBPayroll\CommonLib\obj\Debug\CommonLib.dll
 D:\wakxpx\csharp\visualstudio\SBPayroll\CommonLib\obj\Debug\CommonLib.pdb
+D:\wakxpx\csharp\visualstudio\SBPayroll\CommonLib\obj\Debug\CommonLib.csprojResolveAssemblyReference.cache
+D:\wakxpx\csharp\visualstudio\2010\SBPayroll\Build\Debug\CommonLib.dll
+D:\wakxpx\csharp\visualstudio\2010\SBPayroll\Build\Debug\CommonLib.pdb
+D:\wakxpx\csharp\visualstudio\2010\SBPayroll\CommonLib\obj\Debug\CommonLib.dll
+D:\wakxpx\csharp\visualstudio\2010\SBPayroll\CommonLib\obj\Debug\CommonLib.pdb
+D:\wakxpx\csharp\visualstudio\2010\SBPayroll\CommonLib\obj\Debug\CommonLib.csprojResolveAssemblyReference.cache
