@@ -1,19 +1,19 @@
-﻿using System; 
+﻿using System;
 using System.Collections.Generic;
-using System.Drawing; 
+using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using BLL; 
+using BLL;
 using BLL.DataEntry;
 //Payroll
-using BLL.KRA.Models; 
+using BLL.KRA.Models;
 using CommonLib;
 //Payroll
-using DAL; 
+using DAL;
 //--- Add the following to make itext work
 using iTextSharp.text;
-using iTextSharp.text.pdf; 
+using iTextSharp.text.pdf;
 using VVX;
 
 namespace winSBPayroll.Reports.PDF
@@ -28,8 +28,10 @@ namespace winSBPayroll.Reports.PDF
         SBPayrollDBEntities db;
         Repository rep;
         string connection;
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
-        public BankTransfersBuilderAll(BankTransferReportModel bankTransfers, string FileName, string Conn)
+        public BankTransfersBuilderAll(BankTransferReportModel bankTransfers, string FileName, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (string.IsNullOrEmpty(Conn))
                 throw new ArgumentNullException("connection");
@@ -42,6 +44,10 @@ namespace winSBPayroll.Reports.PDF
             if (bankTransfers == null)
                 throw new ArgumentNullException("BankTransferReportModel  is null");
             _bankTransfers = bankTransfers;
+
+            _notificationmessageEventname = notificationmessageEventname;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed BankTransfersBuilderAll", TAG));
 
             sFilePDF = FileName;
         }
@@ -90,7 +96,7 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
         }
 

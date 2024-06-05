@@ -89,7 +89,7 @@ namespace winSBPayroll.Forms
 
                     if (db.EmployeeTransactions.Any(i => i.EmpNo == et.EmpNo && i.ItemId == et.ItemId))
                     {
-                        MessageBox.Show("Employee Transaction for item \n" + et.ItemId + "Exists!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Employee Transaction for item \n" + et.ItemId + "Exists!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     if (!db.EmployeeTransactions.Any(i => i.EmpNo == et.EmpNo && i.ItemId == et.ItemId))
                     {

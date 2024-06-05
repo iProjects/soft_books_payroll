@@ -16,3 +16,9 @@ D:\wakxpx\csharp\visualstudio\SBPayroll\Build\Debug\DAL.pdb
 D:\wakxpx\csharp\visualstudio\SBPayroll\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
 D:\wakxpx\csharp\visualstudio\SBPayroll\DAL\obj\Debug\DAL.dll
 D:\wakxpx\csharp\visualstudio\SBPayroll\DAL\obj\Debug\DAL.pdb
+D:\wakxpx\csharp\visualstudio\2010\SBPayroll\Build\Debug\DAL.dll.config
+D:\wakxpx\csharp\visualstudio\2010\SBPayroll\Build\Debug\DAL.dll
+D:\wakxpx\csharp\visualstudio\2010\SBPayroll\Build\Debug\DAL.pdb
+D:\wakxpx\csharp\visualstudio\2010\SBPayroll\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+D:\wakxpx\csharp\visualstudio\2010\SBPayroll\DAL\obj\Debug\DAL.dll
+D:\wakxpx\csharp\visualstudio\2010\SBPayroll\DAL\obj\Debug\DAL.pdb

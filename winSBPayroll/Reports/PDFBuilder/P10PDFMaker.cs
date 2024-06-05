@@ -11,17 +11,16 @@ using VVX;
 
 namespace winSBPayroll.Reports.PDF
 {
-     public class P10PDFMaker
+    public class P10PDFMaker
     {
-       
-         public P10ReportModel _ViewModel;
-         Document document;    
-         string sFilePDF;
-         public Employee emp;
-         string _resourcePath;
-         string Message;
+        public P10ReportModel _ViewModel;
+        Document document;
+        string sFilePDF;
+        public Employee emp;
+        string _resourcePath;
+        string Message;
 
-         Font pfont = new Font(Font.TIMES_ROMAN, 14, Font.BOLD);
+        Font pfont = new Font(Font.TIMES_ROMAN, 14, Font.BOLD);
         Font hFont1 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
         Font hFont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
         Font bFont1 = new Font(Font.TIMES_ROMAN, 10, Font.NORMAL);//body 
@@ -31,17 +30,22 @@ namespace winSBPayroll.Reports.PDF
         Font rms8Normal = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL);
         Font rms6Bold = new Font(Font.TIMES_ROMAN, 6, Font.BOLD);
         Font rms8Bold = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
-       
-        public P10PDFMaker(string ResourcePath, P10ReportModel p10Model, string filename)
+        public P10PDFMaker(string ResourcePath, P10ReportModel p10Model, string filename, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (p10Model == null)
                 throw new ArgumentNullException("P10ReportModel is null");
             _ViewModel = p10Model;
 
+            _notificationmessageEventname = notificationmessageEventname;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed P10PDFMaker", TAG));
+
             sFilePDF = filename;
             _resourcePath = ResourcePath;
-        } 
+        }
         private void BuildP10PDF()
         {
             try
@@ -50,8 +54,8 @@ namespace winSBPayroll.Reports.PDF
                 PdfWriter.GetInstance(document, new FileStream(sFilePDF, FileMode.Create));
                 document.Open();
 
-                PDFGen pdfgen = new PDFGen(); 
-                Image img0 = pdfgen.DoGetImageFile(_resourcePath + "kra2.jpg");
+                PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
+                Image img0 = pdfgen.DoGetImageFile(Path.Combine(_resourcePath, "kra2.jpg"));
                 img0.Alignment = Image.ALIGN_CENTER;
 
 
@@ -146,8 +150,8 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
-            }  
+                Log.WriteToErrorLogFile(ex);
+            }
         }
 
         private void AddTableHeaders(Table aTable)
@@ -186,7 +190,7 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Utils.ShowError(ex);
+                Utils.ShowError(ex);
                 Utils.ShowError(ex);
             }
 
@@ -218,7 +222,7 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Utils.ShowError(ex); 
+                Utils.ShowError(ex);
             }
         }
 
@@ -248,10 +252,10 @@ namespace winSBPayroll.Reports.PDF
             document.Add(aTable);
 
             document.Add(new Phrase("\nNAME OF EMPLOYER ............" + _ViewModel.EmployerName.ToUpper(), tcFont));
-            document.Add(new Phrase("\nADDRESS ................" +_ViewModel.EmployerAddress, tcFont));
+            document.Add(new Phrase("\nADDRESS ................" + _ViewModel.EmployerAddress, tcFont));
             document.Add(new Phrase("\nDATE.................." + DateTime.Today.ToString("ddd-dd-MMM-yyyy"), tcFont));
             document.Add(new Phrase("\nSIGNATURE ......................................................................", tcFont));
-          
+
 
 
         }
@@ -266,7 +270,7 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Utils.ShowError(ex);
+                Utils.ShowError(ex);
                 return null;
             }
         }

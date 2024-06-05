@@ -70,7 +70,7 @@ namespace winSBPayroll.Forms
 
                     if (db.PayrollItems.Any(i => i.Id == pi.Id && i.IsDeleted==false))
                     {
-                        MessageBox.Show("Item Description Exist!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Item Description Exist!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     if (!db.PayrollItems.Any(i => i.Id == pi.Id && i.IsDeleted==false))
                     {

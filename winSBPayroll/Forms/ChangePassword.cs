@@ -1,14 +1,14 @@
-﻿using System; 
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text; 
+using System.Text;
 using System.Windows.Forms;
 using BLL.DataEntry;
 using CommonLib;
-using DAL; 
+using DAL;
 
 namespace winSBPayroll.Forms
 {
@@ -50,8 +50,8 @@ namespace winSBPayroll.Forms
             {
                 if (_user != null)
                 {
-                    txtUserId.Text = _user.UserName;
-                    txtUserId.Enabled = false;
+                    txtusername.Text = _user.UserName;
+                    txtusername.Enabled = false;
                 }
                 txtNewPassword.Text = string.Empty;
                 txtConfirmPassword.Text = string.Empty;
@@ -75,14 +75,20 @@ namespace winSBPayroll.Forms
             {
                 try
                 {
-                    if (!string.IsNullOrEmpty(txtNewPassword.Text))
-                    {
-                        _user.Password = txtNewPassword.Text.Trim();
-                    }
+                    _user.Password = txtNewPassword.Text.Trim();
+
+                    string salt = Utils.create_random_salt();
+                    string salted_password = salt + _user.Password;
+                    string password_salt_hash = Utils.get_SHA512_hash(salted_password);
+
+                    _user.password_hash = password_salt_hash;
+                    _user.password_salt = salt;
+
+                    _user.Password = Utils.encrypt_string(_user.Password);
 
                     rep.ChangePassword(_user);
 
-                    MessageBox.Show("Password Changed Successfully!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Password Changed Successfully!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     OnuserDTOSelected(this, new userDTOEventArgs(_user));
 
@@ -99,57 +105,86 @@ namespace winSBPayroll.Forms
         private bool is_Validate()
         {
             bool no_error = true;
+            if (string.IsNullOrEmpty(txtusername.Text))
+            {
+                errorProvider1.SetError(txtusername, "User Name cannot be null!");
+                no_error = false;
+            }
             if (string.IsNullOrEmpty(txtOldPassword.Text))
             {
-                errorProvider1.Clear();
                 errorProvider1.SetError(txtOldPassword, "Old Password cannot be null!");
-                return false;
+                no_error = false;
             }
             if (!string.IsNullOrEmpty(txtOldPassword.Text))
             {
-                //check if we are dealing with an authentic guy.
-                string mesage = string.Empty;
-                string errCode = string.Empty;
-                bool auth = rep.Authenticate(txtUserId.Text.Trim(), txtOldPassword.Text.Trim(), 1, 1, ref mesage, ref errCode);
-                if (!auth)
+                //check if we are dealing with an authentic user.
+
+                string username = txtusername.Text;
+                string password = txtOldPassword.Text;
+
+                var user_that_exists = rep.GetUserbyUserName(username);
+                if (user_that_exists != null)
                 {
-                    MessageBox.Show("Incorrect Password!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    errorProvider1.Clear();
-                    errorProvider1.SetError(txtOldPassword, "Incorrect Password!");
+                    if (user_that_exists.Locked)
+                    {
+                        Utils.ShowError(new Exception("User is locked. \nplease contact the administrator."));
+                        no_error = false;
+                        return false;
+                    }
+
+                    string salt = user_that_exists.password_salt;
+                    string salted_password = salt + password;
+                    string password_salt_hash = Utils.get_SHA512_hash(salted_password);
+
+                    string hash_from_db = user_that_exists.password_hash;
+
+                    bool is_hash_equal = hash_from_db.Equals(password_salt_hash);
+
+                    if (is_hash_equal)
+                    {
+
+                    }
+                    else
+                    {
+                        Utils.ShowError(new Exception("incorrect password. \nif you forgot your password please contact the administrator."));
+                        no_error = false;
+                        return false;
+                    }
+                }
+                else
+                {
+                    Utils.ShowError(new Exception("user [ " + username + " ] does not exist."));
+                    no_error = false;
                     return false;
                 }
             }
             if (string.IsNullOrEmpty(txtNewPassword.Text))
             {
-                errorProvider1.Clear();
                 errorProvider1.SetError(txtNewPassword, "New Password cannot be null!");
-                return false;
+                no_error = false;
             }
             decimal passwordsize;
             if (!decimal.TryParse(rep.SettingLookup("PWDSIZE"), out passwordsize))
             {
-                MessageBox.Show("Cannot retrieve Password Size from Settings . See your Administrator!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return false;
+                MessageBox.Show("Cannot retrieve Password Size from Settings . See your Administrator!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                no_error = false;
             }
             if (txtNewPassword.Text.Trim().Length < passwordsize)
             {
-                MessageBox.Show("Password length must be more than [ " + passwordsize + " ] characters!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtNewPassword, "Password length must be more than [ " + passwordsize + " ] characters!");
-                return false;
+                MessageBox.Show("New Password length must be more than [ " + passwordsize + " ] characters!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                errorProvider1.SetError(txtNewPassword, "New Password length must be more than [ " + passwordsize + " ] characters!");
+                no_error = false;
             }
             if (string.IsNullOrEmpty(txtConfirmPassword.Text))
             {
-                errorProvider1.Clear();
                 errorProvider1.SetError(txtConfirmPassword, "Confirm Passsword cannnot be null!");
-                return false;
+                no_error = false;
             }
             if (txtNewPassword.Text != txtConfirmPassword.Text)
             {
-                MessageBox.Show("Password must Match!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                errorProvider1.Clear();
+                MessageBox.Show("Password must Match!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 errorProvider1.SetError(txtConfirmPassword, "Password must Match!");
-                return false;
+                no_error = false;
             }
             return no_error;
         }
@@ -174,4 +209,4 @@ namespace winSBPayroll.Forms
     }
 }
 
-    
+

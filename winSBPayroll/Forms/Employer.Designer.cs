@@ -39,8 +39,19 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.dataGridViewEmployer = new System.Windows.Forms.DataGridView();
+            this.ColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EmpName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EmpAddress1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EmpAddress2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EmpTelephone = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EmpPIN = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EmpEmail = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EmpNHIF = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EmpNSSF = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnIsActive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.bindingSourceEmployer = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkInActive = new System.Windows.Forms.CheckBox();
             this.btnDelete = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,17 +63,6 @@
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EmpName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EmpAddress1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EmpAddress2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EmpTelephone = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EmpPIN = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EmpEmail = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EmpNHIF = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EmpNSSF = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnIsActive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.chkInActive = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEmployer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEmployer)).BeginInit();
@@ -162,6 +162,94 @@
             this.dataGridViewEmployer.TabIndex = 0;
             this.dataGridViewEmployer.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewEmployer_CellContentDoubleClick);
             // 
+            // ColumnId
+            // 
+            this.ColumnId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ColumnId.DataPropertyName = "Id";
+            this.ColumnId.HeaderText = "Id";
+            this.ColumnId.Name = "ColumnId";
+            this.ColumnId.ReadOnly = true;
+            this.ColumnId.Width = 30;
+            // 
+            // EmpName
+            // 
+            this.EmpName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.EmpName.DataPropertyName = "Name";
+            this.EmpName.HeaderText = "Name";
+            this.EmpName.Name = "EmpName";
+            this.EmpName.ReadOnly = true;
+            this.EmpName.Width = 200;
+            // 
+            // EmpAddress1
+            // 
+            this.EmpAddress1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.EmpAddress1.DataPropertyName = "Address1";
+            this.EmpAddress1.HeaderText = "Address1";
+            this.EmpAddress1.Name = "EmpAddress1";
+            this.EmpAddress1.ReadOnly = true;
+            // 
+            // EmpAddress2
+            // 
+            this.EmpAddress2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.EmpAddress2.DataPropertyName = "Address2";
+            this.EmpAddress2.HeaderText = "Address2";
+            this.EmpAddress2.Name = "EmpAddress2";
+            this.EmpAddress2.ReadOnly = true;
+            // 
+            // EmpTelephone
+            // 
+            this.EmpTelephone.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.EmpTelephone.DataPropertyName = "Telephone";
+            this.EmpTelephone.HeaderText = "Telephone";
+            this.EmpTelephone.Name = "EmpTelephone";
+            this.EmpTelephone.ReadOnly = true;
+            // 
+            // EmpPIN
+            // 
+            this.EmpPIN.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.EmpPIN.DataPropertyName = "PIN";
+            this.EmpPIN.HeaderText = "PIN";
+            this.EmpPIN.Name = "EmpPIN";
+            this.EmpPIN.ReadOnly = true;
+            this.EmpPIN.Width = 60;
+            // 
+            // EmpEmail
+            // 
+            this.EmpEmail.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.EmpEmail.DataPropertyName = "Email";
+            this.EmpEmail.HeaderText = "Email";
+            this.EmpEmail.Name = "EmpEmail";
+            this.EmpEmail.ReadOnly = true;
+            // 
+            // EmpNHIF
+            // 
+            this.EmpNHIF.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.EmpNHIF.DataPropertyName = "NHIF";
+            this.EmpNHIF.HeaderText = "NHIF";
+            this.EmpNHIF.Name = "EmpNHIF";
+            this.EmpNHIF.ReadOnly = true;
+            this.EmpNHIF.Width = 70;
+            // 
+            // EmpNSSF
+            // 
+            this.EmpNSSF.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.EmpNSSF.DataPropertyName = "NSSF";
+            this.EmpNSSF.HeaderText = "NSSF";
+            this.EmpNSSF.Name = "EmpNSSF";
+            this.EmpNSSF.ReadOnly = true;
+            this.EmpNSSF.Width = 70;
+            // 
+            // ColumnIsActive
+            // 
+            this.ColumnIsActive.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ColumnIsActive.DataPropertyName = "IsActive";
+            this.ColumnIsActive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ColumnIsActive.HeaderText = "IsActive";
+            this.ColumnIsActive.Name = "ColumnIsActive";
+            this.ColumnIsActive.ReadOnly = true;
+            this.ColumnIsActive.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColumnIsActive.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.chkInActive);
@@ -175,6 +263,18 @@
             this.groupBox1.Size = new System.Drawing.Size(933, 42);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
+            // 
+            // chkInActive
+            // 
+            this.chkInActive.AutoSize = true;
+            this.chkInActive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkInActive.Location = new System.Drawing.Point(12, 14);
+            this.chkInActive.Name = "chkInActive";
+            this.chkInActive.Size = new System.Drawing.Size(65, 17);
+            this.chkInActive.TabIndex = 8;
+            this.chkInActive.Text = "In Active";
+            this.chkInActive.UseVisualStyleBackColor = true;
+            this.chkInActive.CheckedChanged += new System.EventHandler(this.chkInActive_CheckedChanged);
             // 
             // btnDelete
             // 
@@ -277,106 +377,6 @@
             this.dataGridViewTextBoxColumn9.HeaderText = "NSSF";
             this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
             this.dataGridViewTextBoxColumn9.ReadOnly = true;
-            // 
-            // ColumnId
-            // 
-            this.ColumnId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ColumnId.DataPropertyName = "Id";
-            this.ColumnId.HeaderText = "Id";
-            this.ColumnId.Name = "ColumnId";
-            this.ColumnId.ReadOnly = true;
-            this.ColumnId.Width = 30;
-            // 
-            // EmpName
-            // 
-            this.EmpName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.EmpName.DataPropertyName = "Name";
-            this.EmpName.HeaderText = "Name";
-            this.EmpName.Name = "EmpName";
-            this.EmpName.ReadOnly = true;
-            this.EmpName.Width = 200;
-            // 
-            // EmpAddress1
-            // 
-            this.EmpAddress1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.EmpAddress1.DataPropertyName = "Address1";
-            this.EmpAddress1.HeaderText = "Address1";
-            this.EmpAddress1.Name = "EmpAddress1";
-            this.EmpAddress1.ReadOnly = true;
-            // 
-            // EmpAddress2
-            // 
-            this.EmpAddress2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.EmpAddress2.DataPropertyName = "Address2";
-            this.EmpAddress2.HeaderText = "Address2";
-            this.EmpAddress2.Name = "EmpAddress2";
-            this.EmpAddress2.ReadOnly = true;
-            // 
-            // EmpTelephone
-            // 
-            this.EmpTelephone.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.EmpTelephone.DataPropertyName = "Telephone";
-            this.EmpTelephone.HeaderText = "Telephone";
-            this.EmpTelephone.Name = "EmpTelephone";
-            this.EmpTelephone.ReadOnly = true;
-            // 
-            // EmpPIN
-            // 
-            this.EmpPIN.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.EmpPIN.DataPropertyName = "PIN";
-            this.EmpPIN.HeaderText = "PIN";
-            this.EmpPIN.Name = "EmpPIN";
-            this.EmpPIN.ReadOnly = true;
-            this.EmpPIN.Width = 60;
-            // 
-            // EmpEmail
-            // 
-            this.EmpEmail.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.EmpEmail.DataPropertyName = "Email";
-            this.EmpEmail.HeaderText = "Email";
-            this.EmpEmail.Name = "EmpEmail";
-            this.EmpEmail.ReadOnly = true;
-            // 
-            // EmpNHIF
-            // 
-            this.EmpNHIF.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.EmpNHIF.DataPropertyName = "NHIF";
-            this.EmpNHIF.HeaderText = "NHIF";
-            this.EmpNHIF.Name = "EmpNHIF";
-            this.EmpNHIF.ReadOnly = true;
-            this.EmpNHIF.Width = 70;
-            // 
-            // EmpNSSF
-            // 
-            this.EmpNSSF.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.EmpNSSF.DataPropertyName = "NSSF";
-            this.EmpNSSF.HeaderText = "NSSF";
-            this.EmpNSSF.Name = "EmpNSSF";
-            this.EmpNSSF.ReadOnly = true;
-            this.EmpNSSF.Width = 70;
-            // 
-            // ColumnIsActive
-            // 
-            this.ColumnIsActive.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ColumnIsActive.DataPropertyName = "IsActive";
-            this.ColumnIsActive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ColumnIsActive.HeaderText = "IsActive";
-            this.ColumnIsActive.Name = "ColumnIsActive";
-            this.ColumnIsActive.ReadOnly = true;
-            this.ColumnIsActive.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColumnIsActive.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // chkInActive
-            // 
-            this.chkInActive.AutoSize = true;
-            this.chkInActive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.chkInActive.Location = new System.Drawing.Point(12, 14);
-            this.chkInActive.Name = "chkInActive";
-            this.chkInActive.Size = new System.Drawing.Size(65, 17);
-            this.chkInActive.TabIndex = 8;
-            this.chkInActive.Text = "In Active";
-            this.chkInActive.UseVisualStyleBackColor = true;
-            this.chkInActive.CheckedChanged += new System.EventHandler(this.chkInActive_CheckedChanged);
             // 
             // Employer
             // 

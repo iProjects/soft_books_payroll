@@ -79,14 +79,14 @@ namespace winSBPayroll.Forms
         }
         private void btnImport_Click(object sender, EventArgs e)
         {
-            openFileDialog1.Title = "select an excel file";
+            openFileDialog.Title = "select an excel file";
             //openFileDialog1.FileName = "";
             //"Text files (*.txt)|*.txt|All files (*.*)|*.*"
-            openFileDialog1.Filter = "Excel Files|*.xls|Excel Files |*.xlsx";
+            openFileDialog.Filter = "Excel Files|*.xlsx | Excel Files|*.xls";
 
-            openFileDialog1.ShowDialog();
+            openFileDialog.ShowDialog();
 
-            string strFileName = openFileDialog1.FileName;
+            string strFileName = openFileDialog.FileName;
 
             // use bulkcopy method of upload
             try
@@ -201,30 +201,36 @@ namespace winSBPayroll.Forms
         }
         private void btnDownload_Click(object sender, EventArgs e)
         {
-            saveFileDialog1.Title = "Select an excel file";
+            saveFileDialog.Title = "Select an excel file";
             //openFileDialog1.FileName = "";
             //"Text files (*.txt)|*.txt|All files (*.*)|*.*"
-            saveFileDialog1.Filter = "Excel Files|*.xls|Excel Files |*.xlsx";
+            saveFileDialog.Filter = "Excel Files|*.xlsx | Excel Files|*.xls";
+            
+            DialogResult result = saveFileDialog.ShowDialog();
 
-
-            saveFileDialog1.ShowDialog();
-
-            string strFileName = saveFileDialog1.FileName;
-
-            // use bulkcopy method of upload
-            try
+            if (result == System.Windows.Forms.DialogResult.OK)
             {
-                //clear or backup the destination
-                Download(strFileName, _User);
-                MessageBox.Show("Download completed successfully");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("There was an error during download. Error details are  " + ex.Message);
+                string strFileName = saveFileDialog.FileName;
 
-                MessageBox.Show("Download incomplete");
-                return;
+                // use bulkcopy method of upload
+                try
+                {
+                    //clear or backup the destination
+                    Download(strFileName, _User);
+                    MessageBox.Show("Download completed successfully");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("There was an error during download. Error details are  " + ex.Message);
+                    MessageBox.Show("Download incomplete");
+                    return;
+                }
             }
+        }
+
+        void saveFileDialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            
         }
         private void Download(string strFileName, string User)
         {
@@ -264,6 +270,7 @@ namespace winSBPayroll.Forms
 
                 row++;
             }
+            excell_app.Save(strFileName);
         }
 
 

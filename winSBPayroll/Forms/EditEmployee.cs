@@ -182,7 +182,7 @@ namespace winSBPayroll.Forms
                         employee.EmpNo = txtEmpNo.Text.Trim();
                     }
                     if (!string.IsNullOrEmpty(txtEmail.Text))
-                    { 
+                    {
                         employee.Email = txtEmail.Text.Trim();
                     }
                     if (!string.IsNullOrEmpty(txtSurname.Text))
@@ -321,7 +321,7 @@ namespace winSBPayroll.Forms
                 }
             }
         }
-        private void UpdateBasicPay( )
+        private void UpdateBasicPay()
         {
             try
             {
@@ -980,7 +980,7 @@ namespace winSBPayroll.Forms
                             List<HourlyPayment> listemphrly = db.HourlyPayments.Where(ben => ben.Empno == employee.EmpNo).ToList();
                             if (listemphrly.Count > 0)
                             {
-                                MessageBox.Show("There is a Transaction  Associated with this HOURLY_PAY.\n Delete the Transaction First!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show("There are Transactions Associated with this HOURLY_PAY.\n Delete the Transactions First!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
 
                             //foreach (HourlyPayment emphrly in listemphrly)
@@ -990,7 +990,7 @@ namespace winSBPayroll.Forms
                             //db.SaveChanges();
                             //de.DeleteEmpTxn(_empTxn.Id);
                             //GridRefresh();
-                            //MessageBox.Show("Teacher with ID No Exists!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            //MessageBox.Show("Teacher with ID No Exists!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else if ("NON_CASH_BENEFIT".Equals(_empTxn.ItemId.Trim()))
                         {
@@ -998,7 +998,7 @@ namespace winSBPayroll.Forms
                             List<EmpNonCashBenefit> listempncben = db.EmpNonCashBenefits.Where(ben => ben.EmpNo == employee.EmpNo).ToList();
                             if (listempncben.Count > 0)
                             {
-                                MessageBox.Show("There is a Transaction  Associated with this NON_CASH_BENEFIT.\n Delete the Transaction First!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                                MessageBox.Show("There are Transactions Associated with this NON_CASH_BENEFIT.\n Delete the Transactions First!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                             }
 
                             //foreach (EmpNonCashBenefit empben in listempncben)
@@ -1008,7 +1008,7 @@ namespace winSBPayroll.Forms
                             //db.SaveChanges();
                             //de.DeleteEmpTxn(_empTxn.Id);
                             //GridRefresh();
-                            //MessageBox.Show("Teacher with ID No Exists!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            //MessageBox.Show("Teacher with ID No Exists!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else
                         {
@@ -1021,7 +1021,21 @@ namespace winSBPayroll.Forms
                     }
                     else
                     {
-                        MessageBox.Show("Cannot Delete default item\n" + _empTxn.ItemId.ToString().Trim().ToUpper(), "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //if (employee.BasicComputation.Equals("H"))
+                        //{
+                        //    if (DialogResult.Yes == MessageBox.Show("Are you sure you want to delete?\n" + _empTxn.ItemId.ToString().Trim().ToUpper(), "Confirm Delete", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
+                        //    {
+                        //        de.DeleteEmpTxn(_empTxn.Id);
+                        //        GridRefresh();
+                        //    }
+                        //}
+                        //else
+                        //{
+                            //MessageBox.Show("Cannot Delete default item\n" + _empTxn.ItemId.ToString().Trim().ToUpper() + "\nif payment mode is monthly.", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //}
+
+                        MessageBox.Show("Cannot Delete default item\n" + _empTxn.ItemId.ToString().Trim().ToUpper() + ".", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                     }
                 }
             }
@@ -1066,7 +1080,81 @@ namespace winSBPayroll.Forms
                     }
                     else
                     {
-                        MessageBox.Show("Cannot Edit default item\n" + _empTxn.ItemId.ToString().Trim().ToUpper(), "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                        //if (employee.BasicComputation.Equals("H"))
+                        //{
+                        //    EditEmpTxn f = new EditEmpTxn(_empTxn, _User, connection) { Owner = this };
+                        //    f.Text = _empTxn.ItemId.ToString().Trim().ToUpper();
+                        //    f.ShowDialog();
+                        //}
+                        //else
+                        //{
+                        //    MessageBox.Show("Cannot Edit default item\n" + _empTxn.ItemId.ToString().Trim().ToUpper() + "\nif payment mode is monthly.", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //}
+
+                        EditEmpTxn f = new EditEmpTxn(_empTxn, _User, connection) { Owner = this };
+                        f.Text = _empTxn.ItemId.ToString().Trim().ToUpper();
+                        f.ShowDialog();
+
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Utils.ShowError(ex);
+            }
+        }
+        private void dataGridViewEmpTxn_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (dataGridViewEmpTxn.SelectedRows.Count != 0)
+                {
+                    DAL.EmployeeTransaction _empTxn = (DAL.EmployeeTransaction)bindingSourceEmpTxns.Current;
+                    List<string> defaultItems = new List<string>() { "BASIC", "PAYE", "NSSF", "NHIF" };
+                    if (!defaultItems.Contains(_empTxn.ItemId.Trim()))
+                    {
+                        if ("HOURLY_PAY".Equals(_empTxn.ItemId.Trim()))
+                        {
+                            HrlyPay hp = new HrlyPay(employee, connection) { Owner = this };
+                            hp.OnEmployeeHrlyAmountChanged += new HrlyPay.HrlyAmountHandler(hp_OnEmployeeHrlyAmountChanged);
+                            hp.Text = _empTxn.ItemId.ToString().Trim().ToUpper();
+                            //hp.Owner = this;
+                            hp.ShowDialog(this);
+                        }
+                        else if ("NON_CASH_BENEFIT".Equals(_empTxn.ItemId.Trim()))
+                        {
+                            NonCashBenefits ncb = new NonCashBenefits(employee, connection) { Owner = this };
+                            ncb.OnEmployeeBenefitAmountChanged += new NonCashBenefits.BenefitAmountHandler(ncb_OnEmployeeBenefitAmountChanged);
+                            ncb.Text = _empTxn.ItemId.ToString().Trim().ToUpper();
+                            //ncb.Owner = this;
+                            ncb.ShowDialog(this);
+                        }
+                        else
+                        {
+                            EditEmpTxn f = new EditEmpTxn(_empTxn, _User, connection) { Owner = this };
+                            f.Text = _empTxn.ItemId.ToString().Trim().ToUpper();
+                            f.ShowDialog();
+                        }
+
+                    }
+                    else
+                    {
+                        //if (employee.BasicComputation.Equals("H"))
+                        //{
+                        //    EditEmpTxn f = new EditEmpTxn(_empTxn, _User, connection) { Owner = this };
+                        //    f.Text = _empTxn.ItemId.ToString().Trim().ToUpper();
+                        //    f.ShowDialog();
+                        //}
+                        //else
+                        //{
+                        //    MessageBox.Show("Cannot Edit default item\n" + _empTxn.ItemId.ToString().Trim().ToUpper() + "\nif payment mode is monthly.", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //}
+
+                        EditEmpTxn f = new EditEmpTxn(_empTxn, _User, connection) { Owner = this };
+                        f.Text = _empTxn.ItemId.ToString().Trim().ToUpper();
+                        f.ShowDialog();
+
                     }
 
                 }
@@ -1353,13 +1441,13 @@ namespace winSBPayroll.Forms
             try
             {
                 UploadEmployeePhoto(strFileName, _User);
-                MessageBox.Show("Upload completed successfully", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Upload completed successfully", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("There was an error during upload. Error details are  " + ex.Message, "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("There was an error during upload. Error details are  " + ex.Message, Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                MessageBox.Show("Upload incomplete", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Upload incomplete", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
         }
@@ -1636,16 +1724,16 @@ namespace winSBPayroll.Forms
                 {
                     switch (cboEmployeeGroup.SelectedValue.ToString())
                     {
-                        case "PTR": 
+                        case "PTR":
                             cboEmpPayroll.SelectedValue = "Temporary";
                             break;
                         case "PTT":
                             cboEmpPayroll.SelectedValue = "Temporary";
                             break;
-                        case "FTR": 
+                        case "FTR":
                             cboEmpPayroll.SelectedValue = "End-Month";
                             break;
-                        case "FTT": 
+                        case "FTT":
                             cboEmpPayroll.SelectedValue = "End-Month";
                             break;
                     }
@@ -1680,52 +1768,7 @@ namespace winSBPayroll.Forms
                 Utils.ShowError(ex);
             }
         }
-        private void dataGridViewEmpTxn_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-                if (dataGridViewEmpTxn.SelectedRows.Count != 0)
-                {
-                    DAL.EmployeeTransaction _empTxn = (DAL.EmployeeTransaction)bindingSourceEmpTxns.Current;
-                    List<string> defaultItems = new List<string>() { "BASIC", "PAYE", "NSSF", "NHIF" };
-                    if (!defaultItems.Contains(_empTxn.ItemId.Trim()))
-                    {
-                        if ("HOURLY_PAY".Equals(_empTxn.ItemId.Trim()))
-                        {
-                            HrlyPay hp = new HrlyPay(employee, connection) { Owner = this };
-                            hp.OnEmployeeHrlyAmountChanged += new HrlyPay.HrlyAmountHandler(hp_OnEmployeeHrlyAmountChanged);
-                            hp.Text = _empTxn.ItemId.ToString().Trim().ToUpper();
-                            //hp.Owner = this;
-                            hp.ShowDialog(this);
-                        }
-                        else if ("NON_CASH_BENEFIT".Equals(_empTxn.ItemId.Trim()))
-                        {
-                            NonCashBenefits ncb = new NonCashBenefits(employee, connection) { Owner = this };
-                            ncb.OnEmployeeBenefitAmountChanged += new NonCashBenefits.BenefitAmountHandler(ncb_OnEmployeeBenefitAmountChanged);
-                            ncb.Text = _empTxn.ItemId.ToString().Trim().ToUpper();
-                            //ncb.Owner = this;
-                            ncb.ShowDialog(this);
-                        }
-                        else
-                        {
-                            EditEmpTxn f = new EditEmpTxn(_empTxn, _User, connection) { Owner = this };
-                            f.Text = _empTxn.ItemId.ToString().Trim().ToUpper();
-                            f.ShowDialog();
-                        }
-
-                    }
-                    else
-                    {
-                        MessageBox.Show("Cannot Edit default items\n" + _empTxn.ItemId.ToString().Trim().ToUpper(), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-                Utils.ShowError(ex);
-            }
-        }
+        
         private void btnSearchBank_Click(object sender, EventArgs e)
         {
             try

@@ -113,7 +113,7 @@ namespace winSBPayroll.Forms
 
                     if (_employees.Count > 0)
                     {
-                        MessageBox.Show("There is an Employee Associated with this Department\nDelete the Employee first!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("There is an Employee Associated with this Department\nDelete the Employee first!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                         if (DialogResult.Yes == MessageBox.Show("Are you sure you want to delete Department\n" + dep.Description.ToString().Trim().ToUpper(), "Confirm Delete", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))

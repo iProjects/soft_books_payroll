@@ -30,12 +30,16 @@ namespace winSBPayroll.Reports.PDF
         Font rms8Normal = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL);
         Font rms6Bold = new Font(Font.TIMES_ROMAN, 6, Font.BOLD);
         Font rms8Bold = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
-        public P9BPDFBuilder(string ResourcePath, P9BReportModel P9BModel, string FileName)
+        public P9BPDFBuilder(string ResourcePath, P9BReportModel P9BModel, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (P9BModel == null)
                 throw new ArgumentNullException("P9BReportModel is null");
             _ViewModel = P9BModel;
+
+            _notificationmessageEventname = notificationmessageEventname;
 
             sFilePDF = FileName;
 
@@ -77,7 +81,7 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
         }
         private void AddDocHeaders()
@@ -96,8 +100,8 @@ namespace winSBPayroll.Reports.PDF
             // c1.Colspan = 3;
             empInfoTable.AddCell(c2, new System.Drawing.Point(1, 1));
 
-            PDFGen pdfgen = new PDFGen();
-            Image img0 = pdfgen.DoGetImageFile(_resourcePath + "kra2.jpg");
+            PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
+            Image img0 = pdfgen.DoGetImageFile(Path.Combine(_resourcePath, "kra2.jpg"));
             img0.Alignment = Image.ALIGN_CENTER;
             Cell c1 = new Cell(img0);// header1);
             c1.Border = Cell.NO_BORDER;

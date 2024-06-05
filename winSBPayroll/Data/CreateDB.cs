@@ -33,7 +33,7 @@ namespace winSBPayroll.Forms
         {
             try
             {
-                if (MessageBox.Show("Going to look for all SQL Servers in the Network this might take some time.\n Do you want to proceed...", "SB Payroll", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                if (MessageBox.Show("Going to look for all SQL Servers in the Network this might take some time.\n Do you want to proceed...", Utils.APP_NAME, MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 {
                     DataTable dt = SmoApplication.EnumAvailableSqlServers();
                     foreach (DataRow dr in dt.Rows)
@@ -112,7 +112,7 @@ namespace winSBPayroll.Forms
                             sb.AppendLine("Success!");
                             this.txtProgressStatus.Text = sb.ToString();
                             this.txtProgressStatus.ScrollToCaret();
-                            NotifyMessage("Soft Books Payroll", "Database " + this.txtDBName.Text + " Created Successfully.");
+                            NotifyMessage(Utils.APP_NAME, "Database " + this.txtDBName.Text + " Created Successfully.");
                         }
                         sb.AppendLine("Proceed or select another Database");
                         this.txtProgressStatus.Text = sb.ToString();
@@ -139,7 +139,7 @@ namespace winSBPayroll.Forms
                 sb.AppendLine("Success!");
                 this.txtProgressStatus.Text = sb.ToString();
                 this.txtProgressStatus.ScrollToCaret();
-                NotifyMessage("Soft Books Payroll", "Database " + this.txtDBName.Text + " Created Successfully.");
+                NotifyMessage(Utils.APP_NAME, "Database " + this.txtDBName.Text + " Created Successfully.");
             }
             catch (Exception ex)
             { 
@@ -192,7 +192,7 @@ namespace winSBPayroll.Forms
         {
             try
             {
-                appNotifyIcon.Text = "Soft Books Payroll";
+                appNotifyIcon.Text = Utils.APP_NAME;
                 appNotifyIcon.Icon = new Icon("Resources/Icons/Dollar.ico");
                 appNotifyIcon.BalloonTipIcon = ToolTipIcon.Info; 
                 appNotifyIcon.BalloonTipTitle = _Title;

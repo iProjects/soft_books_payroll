@@ -21,11 +21,11 @@ namespace CommonLib
 
             logFileName = GetSetting("LOGFILENAME");
             errorLogFileName = GetSetting("ERRORLOGFILENAME");
-            
+
             if (logFileName == null) logFileName = "C:\\SBlog.txt";
             if (errorLogFileName == null) logFileName = "C:\\SBerrlog.txt";
 
-            IsDirectoryPresent(StripDirectoryName( logFileName), true);
+            IsDirectoryPresent(StripDirectoryName(logFileName), true);
             IsDirectoryPresent(StripDirectoryName(errorLogFileName), true);
         }
 
@@ -119,7 +119,7 @@ namespace CommonLib
         public static string GetSetting(string val)
         {
             try
-            { 
+            {
                 return System.Configuration.ConfigurationManager.AppSettings[val];
             }
             catch (Exception ex)
@@ -144,12 +144,12 @@ namespace CommonLib
             if (IsDirectoryPresent(StripDirectoryName(log), true))
             {
                 FileStream fs = null;
-                StreamWriter sw = null; 
-                string fileName; 
+                StreamWriter sw = null;
+                string fileName;
 
                 try
-                { 
-                    fileName = log; 
+                {
+                    fileName = log;
                     message = DateTime.Now.ToString() + " - " + message;
                     fs = new FileStream(fileName, FileMode.Append, FileAccess.Write);
                     sw = new StreamWriter(fs);
@@ -178,17 +178,17 @@ namespace CommonLib
         /// Writes the message to the FileSystem Watcher Log File
         /// </summary>
         public static void WriteToLogFile(string message)
-        {  
+        {
             if (IsDirectoryPresent(StripDirectoryName(logFileName), true))
             {
                 FileStream fs = null;
-                StreamWriter sw = null; 
-                string fileName; 
+                StreamWriter sw = null;
+                string fileName;
 
                 try
-                { 
-                    fileName = logFileName;  
-                    message = DateTime.Now.ToString() + " - " + message; 
+                {
+                    fileName = logFileName;
+                    message = DateTime.Now.ToString() + " - " + message;
                     fs = new FileStream(fileName, FileMode.Append, FileAccess.Write);
                     sw = new StreamWriter(fs);
                     sw.WriteLine(message);
@@ -217,8 +217,6 @@ namespace CommonLib
         /// </summary>
         public static void WriteToErrorLogFile(Exception sourceException)
         {
-            if (Utils.LogEventViewer(sourceException)) { }
-
             if (IsDirectoryPresent(StripDirectoryName(errorLogFileName), true))
             {
                 FileStream fs = null;
@@ -230,7 +228,7 @@ namespace CommonLib
                     sw.WriteLine("==================================================================");
                     sw.WriteLine("ERROR OCCOURED AT :" + DateTime.Now.ToString());
                     sw.WriteLine("SOURCE:" + sourceException.Source);
-                    sw.WriteLine("MESSAGE:" + sourceException.Message);  
+                    sw.WriteLine("MESSAGE:" + sourceException.Message);
                     sw.WriteLine("Whole Exception:" + sourceException.ToString());
                     sw.WriteLine("==================================================================");
                     sw.WriteLine("");
@@ -252,8 +250,48 @@ namespace CommonLib
                     }
                 }
             }
+        }
 
+        /// <summary>
+        /// Writes the Exception to the Error Log File
+        /// </summary>
+        public static void WriteToErrorLogFile_and_EventViewer(Exception sourceException)
+        {
+            if (Utils.LogEventViewer(sourceException)) { }
 
+            if (IsDirectoryPresent(StripDirectoryName(errorLogFileName), true))
+            {
+                FileStream fs = null;
+                StreamWriter sw = null;
+                try
+                {
+                    fs = new FileStream(errorLogFileName, FileMode.Append, FileAccess.Write);
+                    sw = new StreamWriter(fs);
+                    sw.WriteLine("==================================================================");
+                    sw.WriteLine("ERROR OCCOURED AT :" + DateTime.Now.ToString());
+                    sw.WriteLine("SOURCE:" + sourceException.Source);
+                    sw.WriteLine("MESSAGE:" + sourceException.Message);
+                    sw.WriteLine("Whole Exception:" + sourceException.ToString());
+                    sw.WriteLine("==================================================================");
+                    sw.WriteLine("");
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    if (sw != null)
+                    {
+                        sw.Close();
+                    }
+
+                    if (fs != null)
+                    {
+                        fs.Close();
+                    }
+                }
+            }
         }
 
         public static void Write_To_Log_File(Exception sourceException)

@@ -15,7 +15,6 @@ namespace winSBPayroll.Reports.PDF
 {
     public class MakePayslipPDF2
     {
-
         Payslip _ViewModel1;
         Payslip _ViewModel2;
         Document document;
@@ -37,10 +36,10 @@ namespace winSBPayroll.Reports.PDF
         Font tcFont3 = new Font(Font.HELVETICA, 6, Font.BOLD);//table cell
         Font tcFont4 = new Font(Font.TIMES_ROMAN, 6, Font.NORMAL);//table cell
         Font rms10Normal = new Font(Font.HELVETICA, 7, Font.NORMAL);
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
-
-
-        public MakePayslipPDF2(Payslip PayslipModel1, Payslip PayslipModel2, Document doc, string Conn)
+        public MakePayslipPDF2(Payslip PayslipModel1, Payslip PayslipModel2, Document doc, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             //if (PayslipModel1 == null)
             //    throw new ArgumentNullException("PayslipViewModel is null");
@@ -59,8 +58,13 @@ namespace winSBPayroll.Reports.PDF
             rep = new Repository(connection);
 
             document = doc;
+
+            _notificationmessageEventname = notificationmessageEventname;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed MakePayslipPDF2", TAG));
+
         }
-         
+
         public void BuildPDF()
         {
             try
@@ -75,12 +79,12 @@ namespace winSBPayroll.Reports.PDF
                 payslipsTable.BorderWidthBottom = 0;
                 payslipsTable.BorderWidthTop = 0;
                 payslipsTable.BorderWidthLeft = 0;
-                payslipsTable.BorderWidthRight = 0; 
+                payslipsTable.BorderWidthRight = 0;
 
-                int[] colWidthPercentages = new int[Cols]; 
+                int[] colWidthPercentages = new int[Cols];
                 colWidthPercentages[0] = 45;
                 colWidthPercentages[1] = 5;
-                colWidthPercentages[2] = 45;  
+                colWidthPercentages[2] = 45;
 
                 payslipsTable.SetWidths(colWidthPercentages);
 
@@ -126,7 +130,7 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
         }
 
@@ -145,15 +149,15 @@ namespace winSBPayroll.Reports.PDF
                     _payslipTable.InsertTable(payslipTable11);
                 }
                 if (_ViewModel1 != null)
-                {                    
+                {
                     Table payslipTable11 = new Table(2);
                     payslipTable11.WidthPercentage = 100;
                     payslipTable11.Padding = 1;
-                    payslipTable11.Border = Rectangle.BOX; 
+                    payslipTable11.Border = Rectangle.BOX;
 
                     Cell aCell = new Cell(new Phrase(_ViewModel1.EmployerName.ToUpper().Trim() + "\n", hFont1));
                     aCell.HorizontalAlignment = Cell.ALIGN_CENTER;
-                    aCell.Colspan = 2;                    
+                    aCell.Colspan = 2;
                     payslipTable11.AddCell(aCell);
 
                     Cell emailCell = new Cell(new Phrase(_ViewModel1.EmployerAddress.Trim() + "\n", hFont1));
@@ -262,12 +266,12 @@ namespace winSBPayroll.Reports.PDF
                 }
                 #endregion "payslip1"
 
-                #region "middle column" 
-                    Table middleTable = new Table(2);
-                    middleTable.WidthPercentage = 100;
-                    middleTable.Padding = 1;
+                #region "middle column"
+                Table middleTable = new Table(2);
+                middleTable.WidthPercentage = 100;
+                middleTable.Padding = 1;
 
-                    _payslipTable.InsertTable(middleTable); 
+                _payslipTable.InsertTable(middleTable);
                 #endregion "middle column"
 
                 #region "payslip2"
@@ -282,7 +286,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel2 != null)
                 {
-                    
+
                     Table payslipTable2 = new Table(2);
                     payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
@@ -300,7 +304,7 @@ namespace winSBPayroll.Reports.PDF
 
                     Cell titleCell = new Cell(new Phrase("PAYSLIP", new Font(Font.TIMES_ROMAN, 10, Font.BOLD, Color.BLACK)));
                     titleCell.HorizontalAlignment = Cell.ALIGN_CENTER;
-                    titleCell.Colspan = 2;   
+                    titleCell.Colspan = 2;
                     //titleCell.Border = Cell.NO_BORDER;
                     payslipTable2.AddCell(titleCell);
 
@@ -424,7 +428,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel1 != null)
                 {
-                   
+
                     Table payslipTable1 = new Table(2);
                     payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
@@ -480,7 +484,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel2 != null)
                 {
-                   
+
                     Table payslipTable2 = new Table(2);
                     payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
@@ -541,7 +545,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel1 != null)
                 {
-                    
+
                     Table payslipTable1 = new Table(2);
                     payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
@@ -610,7 +614,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel2 != null)
                 {
-                    
+
                     Table payslipTable2 = new Table(2);
                     payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
@@ -683,7 +687,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel1 != null)
                 {
-                   
+
                     Table payslipTable1 = new Table(2);
                     payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
@@ -739,7 +743,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel2 != null)
                 {
-                    
+
                     Table payslipTable2 = new Table(2);
                     payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
@@ -799,7 +803,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel1 != null)
                 {
-                   
+
                     Table payslipTable1 = new Table(2);
                     payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
@@ -838,7 +842,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel2 != null)
                 {
-                    
+
                     Table payslipTable2 = new Table(2);
                     payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
@@ -902,7 +906,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel1 != null)
                 {
-                   
+
                     Table payslipTable1 = new Table(2);
                     payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
@@ -960,7 +964,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel2 != null)
                 {
-                    
+
                     Table payslipTable2 = new Table(2);
                     payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
@@ -1022,7 +1026,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel1 != null)
                 {
-                    
+
                     Table payslipTable1 = new Table(2);
                     payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
@@ -1080,7 +1084,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel2 != null)
                 {
-                   
+
                     Table payslipTable2 = new Table(2);
                     payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
@@ -1184,14 +1188,14 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel1 != null)
                 {
-                    
+
                     Table payslipTable1 = new Table(3);
                     payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
                     payslipTable1.Padding = 1;
 
                     Cell aCell = new Cell(new Phrase("Employee LOANS\n", hFont2));
-                    aCell.HorizontalAlignment = Cell.ALIGN_CENTER;                    
+                    aCell.HorizontalAlignment = Cell.ALIGN_CENTER;
                     aCell.Colspan = 3;
                     //aCell.Border = Cell.NO_BORDER;
                     payslipTable1.AddCell(aCell);
@@ -1251,14 +1255,14 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel2 != null)
                 {
-                   
+
                     Table payslipTable2 = new Table(3);
                     payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
                     payslipTable2.Padding = 1;
 
                     Cell loansCell = new Cell(new Phrase("Employee LOANS\n", hFont2));
-                    loansCell.HorizontalAlignment = Cell.ALIGN_CENTER;                 
+                    loansCell.HorizontalAlignment = Cell.ALIGN_CENTER;
                     //loansCell.Border = Cell.NO_BORDER;
                     loansCell.Colspan = 3;
                     payslipTable2.AddCell(loansCell);
@@ -1322,7 +1326,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel1 != null)
                 {
-                   
+
                     Table payslipTable1 = new Table(3);
                     payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
@@ -1388,7 +1392,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel2 != null)
                 {
-                  
+
                     Table payslipTable2 = new Table(3);
                     payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
@@ -1441,7 +1445,7 @@ namespace winSBPayroll.Reports.PDF
                 return;
             }
         }
-         
+
         private void AddDocFooter(Table _payslipTable)
         {
             try
@@ -1450,14 +1454,14 @@ namespace winSBPayroll.Reports.PDF
                 if (_ViewModel1 == null)
                 {
                     Table payslipTable11 = new Table(2);
-                    payslipTable11.WidthPercentage = 100; 
+                    payslipTable11.WidthPercentage = 100;
                     payslipTable11.Padding = 1;
 
                     _payslipTable.InsertTable(payslipTable11);
                 }
                 if (_ViewModel1 != null)
                 {
-                   
+
                     Table payslipTable1 = new Table(1);
                     payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Table.NO_BORDER;
@@ -1491,7 +1495,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel2 != null)
                 {
-                    
+
                     Table payslipTable2 = new Table(1);
                     payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Table.NO_BORDER;

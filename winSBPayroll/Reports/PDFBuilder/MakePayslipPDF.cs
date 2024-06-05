@@ -13,12 +13,11 @@ using winSBPayroll.ViewModel;
 
 namespace winSBPayroll.Reports.PDF
 {
-   public  class MakePayslipPDF
+    public class MakePayslipPDF
     {
-        
         Payslip _ViewModel;
         Document document;
-        string Message; 
+        string Message;
         DataEntry de;
         SBPayrollDBEntities db;
         Repository rep;
@@ -36,15 +35,14 @@ namespace winSBPayroll.Reports.PDF
         Font tcFont3 = new Font(Font.HELVETICA, 6, Font.BOLD);//table cell
         Font tcFont4 = new Font(Font.TIMES_ROMAN, 6, Font.NORMAL);//table cell
         Font rms10Normal = new Font(Font.HELVETICA, 7, Font.NORMAL);
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
-
-
-        public MakePayslipPDF(Payslip PayslipModel, Document doc, string Conn)
+        public MakePayslipPDF(Payslip PayslipModel, Document doc, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (PayslipModel == null)
                 throw new ArgumentNullException("PayslipViewModel is null");
             _ViewModel = PayslipModel;
-
 
             if (string.IsNullOrEmpty(Conn))
                 throw new ArgumentNullException("connection");
@@ -55,12 +53,17 @@ namespace winSBPayroll.Reports.PDF
             rep = new Repository(connection);
 
             document = doc;
+
+            _notificationmessageEventname = notificationmessageEventname;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed MakePayslipPDF", TAG));
+
         }
 
         public void BuildPDF()
         {
             try
-            {  
+            {
                 //Add  Header 
                 AddHeader();
 
@@ -102,8 +105,8 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
-            } 
+                Log.WriteToErrorLogFile(ex);
+            }
         }
 
 

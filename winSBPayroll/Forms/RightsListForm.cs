@@ -63,7 +63,7 @@ namespace winSBPayroll.Forms
             {
                 try
                 {
-                    spAllowedRoleMenu _right = (spAllowedRoleMenu)bindingSourceRights.Current; 
+                    spAllowedRoleMenu _right = (spAllowedRoleMenu)bindingSourceRights.Current;
                     EditRightForm eus = new EditRightForm(_right, connection) { Owner = this };
                     eus.Text = "Edit Right";
                     eus.ShowDialog();
@@ -94,7 +94,7 @@ namespace winSBPayroll.Forms
             {
                 try
                 {
-                    spAllowedRoleMenu _right = (spAllowedRoleMenu)bindingSourceRights.Current; 
+                    spAllowedRoleMenu _right = (spAllowedRoleMenu)bindingSourceRights.Current;
                     EditRightForm eus = new EditRightForm(_right, connection) { Owner = this };
                     eus.Text = "Edit Right";
                     eus.ShowDialog();
@@ -111,15 +111,18 @@ namespace winSBPayroll.Forms
             try
             {
                 bindingSourceRights.DataSource = null;
+
                 var rightsquery = from rts in db.spAllowedRoleMenus
                                   select rts;
                 bindingSourceRights.DataSource = rightsquery.ToList();
+                dataGridViewRights.DataSource = bindingSourceRights;
                 groupBox1.Text = bindingSourceRights.Count.ToString();
+
                 foreach (DataGridViewRow row in dataGridViewRights.Rows)
                 {
-                    dataGridViewRights.Rows[dataGridViewRights.Rows.Count - 1].Selected = true;
-                    int nRowIndex = dataGridViewRights.Rows.Count - 1;
-                    bindingSourceRights.Position = nRowIndex;
+                    //dataGridViewRights.Rows[dataGridViewRights.Rows.Count - 1].Selected = true;
+                    //int nRowIndex = dataGridViewRights.Rows.Count - 1;
+                    //bindingSourceRights.Position = nRowIndex;
                 }
             }
             catch (Exception ex)
@@ -187,13 +190,15 @@ namespace winSBPayroll.Forms
                     dataGridViewRights.Columns.Add(colCboxMenu);
                 }
 
+                dataGridViewRights.AutoGenerateColumns = false;
+                dataGridViewRights.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
                 var rightsquery = from rts in db.spAllowedRoleMenus
                                   select rts;
                 bindingSourceRights.DataSource = rightsquery.ToList();
-                dataGridViewRights.AutoGenerateColumns = false;
-                dataGridViewRights.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dataGridViewRights.DataSource = bindingSourceRights;
                 groupBox1.Text = bindingSourceRights.Count.ToString();
+
                 _AllowedRoleMenus = db.spAllowedRoleMenus;
 
                 AutoCompleteStringCollection acsctrm = new AutoCompleteStringCollection();
@@ -251,11 +256,11 @@ namespace winSBPayroll.Forms
         {
             try
             {
-
+                throw e.Exception;
             }
             catch (Exception ex)
             {
-                Utils.ShowError(ex);
+                Log.WriteToErrorLogFile(ex);
             }
         }
         private void txtRole_Validated(object sender, EventArgs e)
@@ -340,7 +345,7 @@ namespace winSBPayroll.Forms
             return _allowedMenu;
 
         }
-        
+
         private void btnReports_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             try

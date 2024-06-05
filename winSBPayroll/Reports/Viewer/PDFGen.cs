@@ -46,14 +46,15 @@ namespace VVX
         public delegate void ReportsEngineCompleteEventHandler(object sender, ReportsEngineCompleteEventArg e);
         //event
         public event ReportsEngineCompleteEventHandler OnCompleteReportsEngine;
+        public event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
         #endregion "Properties"
 
         #region "Constructor"
-        public PDFGen()
+        public PDFGen(EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
-
+            _notificationmessageEventname = notificationmessageEventname;
         }
-        public PDFGen(string ResourcePath, string Conn)
+        public PDFGen(string ResourcePath, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (string.IsNullOrEmpty(Conn))
                 throw new ArgumentNullException("connection");
@@ -61,6 +62,8 @@ namespace VVX
 
             rep = new Repository(connection);
             db = new SBPayrollDBEntities(connection);
+
+            _notificationmessageEventname = notificationmessageEventname;
 
             resourcePath = ResourcePath;
 
@@ -107,7 +110,7 @@ namespace VVX
             }
             catch (Exception ex)
             {
-                Utils.ShowError(ex); 
+                Utils.ShowError(ex);
             }
 
             return bRet;
@@ -208,18 +211,18 @@ namespace VVX
                 {
                     //VikepayslipView pm = new VikepayslipView(new VikePayslipViewModel(pslip), sFilePDF, connection);
                     //VikepayslipView2 pm = new VikepayslipView2(new VikePayslipViewModel(pslip), sFilePDF,connection);
-                    VikepayslipView3 pm = new VikepayslipView3(new VikePayslipViewModel(pslip), sFilePDF, connection);
+                    VikepayslipView3 pm = new VikepayslipView3(new VikePayslipViewModel(pslip), sFilePDF, connection, _notificationmessageEventname);
                     pm.GetPDF();
                     return true;
                 }
                 else
                 {
                     //Build the defualt payslip 
-                    VikepayslipView2 pm = new VikepayslipView2(new VikePayslipViewModel(pslip), sFilePDF, connection);
+                    VikepayslipView2 pm = new VikepayslipView2(new VikePayslipViewModel(pslip), sFilePDF, connection, _notificationmessageEventname);
                     pm.GetPDF();
 
                     return true;
-                } 
+                }
             }
             catch (Exception ex)
             {
@@ -235,7 +238,7 @@ namespace VVX
                 //PayslipMakerAll pm = new PayslipMakerAll(pslips, sFilePDF, connection);
                 //pm.GetPDF();
 
-                PayslipMakerAll2 pm = new PayslipMakerAll2(pslips, sFilePDF, connection); 
+                PayslipMakerAll2 pm = new PayslipMakerAll2(pslips, sFilePDF, connection, _notificationmessageEventname);
                 pm.GetPDF();
 
                 return true;
@@ -245,7 +248,7 @@ namespace VVX
                 Utils.ShowError(ex);
                 return false;
             }
-        } 
+        }
         #endregion
 
         #region By Products
@@ -426,7 +429,7 @@ namespace VVX
 
             catch (Exception ex)
             {
-               Utils.ShowError(ex);
+                Utils.ShowError(ex);
             }
             finally
             {
@@ -451,7 +454,7 @@ namespace VVX
             bRet = false;
             try
             {
-                P9APDFBuilder p9AMaker = new P9APDFBuilder(resourcePath, p9A, sFilePDF);
+                P9APDFBuilder p9AMaker = new P9APDFBuilder(resourcePath, p9A, sFilePDF, _notificationmessageEventname);
                 p9AMaker.GetPDF();
                 return true;
             }
@@ -473,7 +476,7 @@ namespace VVX
             bRet = false;
             try
             {
-                P9AHospPDFBuilder p9Maker = new P9AHospPDFBuilder(resourcePath, p9A, sFilePDF);
+                P9AHospPDFBuilder p9Maker = new P9AHospPDFBuilder(resourcePath, p9A, sFilePDF, _notificationmessageEventname);
                 p9Maker.GetP9AHOSPPDF();
                 return true;
             }
@@ -495,7 +498,7 @@ namespace VVX
             bRet = false;
             try
             {
-                P9BPDFBuilder p9BMaker = new P9BPDFBuilder(resourcePath, p9B, sFilePDF);
+                P9BPDFBuilder p9BMaker = new P9BPDFBuilder(resourcePath, p9B, sFilePDF, _notificationmessageEventname);
                 p9BMaker.GetP9BPDF();
                 return true;
             }
@@ -516,7 +519,7 @@ namespace VVX
             bRet = false;
             try
             {
-                P10PDFMaker p10Maker = new P10PDFMaker(resourcePath, p10, sFilePDF);
+                P10PDFMaker p10Maker = new P10PDFMaker(resourcePath, p10, sFilePDF, _notificationmessageEventname);
                 p10Maker.GetP10PDF();
                 return true;
             }
@@ -537,7 +540,7 @@ namespace VVX
             bRet = false;
             try
             {
-                P10APDFBuilder p10AMaker = new P10APDFBuilder(resourcePath, p10a, sFilePDF);
+                P10APDFBuilder p10AMaker = new P10APDFBuilder(resourcePath, p10a, sFilePDF, _notificationmessageEventname);
                 p10AMaker.GetP10APDF();
                 return true;
             }
@@ -558,7 +561,7 @@ namespace VVX
             bRet = false;
             try
             {
-                P11PDFBuilder p11Builder = new P11PDFBuilder(resourcePath, p11, sFilePDF);
+                P11PDFBuilder p11Builder = new P11PDFBuilder(resourcePath, p11, sFilePDF, _notificationmessageEventname);
                 p11Builder.GetP11PDF();
                 return true;
             }
@@ -582,14 +585,14 @@ namespace VVX
             {
                 if ("pdf".Equals(app.ToLower()))
                 {
-                    PayeePDFBuilder pmaker = new PayeePDFBuilder(payModel, sFilePDF);
+                    PayeePDFBuilder pmaker = new PayeePDFBuilder(payModel, sFilePDF, _notificationmessageEventname);
                     pmaker.GetPayeePDF();
                     return true;
                 }
                 else
                 {
 
-                    PAYEExcelBuilder pe = new PAYEExcelBuilder(payModel, sFilePDF);
+                    PAYEExcelBuilder pe = new PAYEExcelBuilder(payModel, sFilePDF, _notificationmessageEventname);
                     pe.GetExcel();
                     return true;
                 }
@@ -615,13 +618,13 @@ namespace VVX
                 if ("pdf".Equals(app.ToLower()))
                 {
                     //PayrollMasterPDFBuilder payPdfMaker = new PayrollMasterPDFBuilder(pMaster, sFilePDF,connection);
-                    PayrollMasterPDFBuilder2 payPdfMaker = new PayrollMasterPDFBuilder2(earnings, deductions,pMaster, sFilePDF, connection);
+                    PayrollMasterPDFBuilder2 payPdfMaker = new PayrollMasterPDFBuilder2(earnings, deductions, pMaster, sFilePDF, connection, _notificationmessageEventname);
                     payPdfMaker.GetPDF();
                 }
                 else
                 {
-                    //PayrollMasterExcelBuilder pe = new PayrollMasterExcelBuilder(pMaster, sFilePDF, connection);
-                    PayrollMasterExcelBuilder pe = new PayrollMasterExcelBuilder(earnings, deductions, pMaster, sFilePDF, connection);
+                    //PayrollMasterExcelBuilder pe = new PayrollMasterExcelBuilder(pMaster, sFilePDF, connection, _notificationmessageEventname);
+                    PayrollMasterExcelBuilder pe = new PayrollMasterExcelBuilder(earnings, deductions, pMaster, sFilePDF, connection, _notificationmessageEventname);
                     pe.GetExcel();
 
                 }
@@ -646,13 +649,13 @@ namespace VVX
             {
                 if ("pdf".Equals(app.ToLower()))
                 {
-                    NHIFPDFBuilder payPdfMaker = new NHIFPDFBuilder(nhifreportmodel, sFilePDF);
+                    NHIFPDFBuilder payPdfMaker = new NHIFPDFBuilder(nhifreportmodel, sFilePDF, _notificationmessageEventname);
                     payPdfMaker.GetPDF();
                     return true;
                 }
                 else
-                { 
-                    NHIFExcelBuilder pe = new NHIFExcelBuilder(nhifreportmodel, sFilePDF);
+                {
+                    NHIFExcelBuilder pe = new NHIFExcelBuilder(nhifreportmodel, sFilePDF, _notificationmessageEventname);
                     pe.GetExcel();
                     return true;
                 }
@@ -661,25 +664,25 @@ namespace VVX
             {
                 Utils.ShowError(ex);
                 return false;
-            } 
-        } 
+            }
+        }
         #endregion
 
-        #region NSSF 
-        public bool ShowNSSF(DAL.Employer _employer,string app, NSSFReportModel nssfreportmodel, string sFilePDF)
+        #region NSSF
+        public bool ShowNSSF(DAL.Employer _employer, string app, NSSFReportModel nssfreportmodel, string sFilePDF)
         {
             bRet = false;
             try
             {
                 if ("pdf".Equals(app.ToLower()))
                 {
-                    NSSFPDFBuilder payPdfMaker = new NSSFPDFBuilder(_employer,nssfreportmodel, sFilePDF, connection);
+                    NSSFPDFBuilder payPdfMaker = new NSSFPDFBuilder(_employer, nssfreportmodel, sFilePDF, connection, _notificationmessageEventname);
                     payPdfMaker.GetPDF();
                     return true;
                 }
                 else
-                {  
-                    NSSFExcelBuilder pe = new NSSFExcelBuilder(nssfreportmodel, sFilePDF);
+                {
+                    NSSFExcelBuilder pe = new NSSFExcelBuilder(nssfreportmodel, sFilePDF, _notificationmessageEventname);
                     pe.GetExcel();
                     return true;
                 }
@@ -688,22 +691,22 @@ namespace VVX
             {
                 Utils.ShowError(ex);
                 return false;
-            } 
+            }
         }
-        public bool ShowNewNSSF( string app, NSSFReportModel nssfreportmodel, string sFilePDF)
+        public bool ShowNewNSSF(string app, NSSFReportModel nssfreportmodel, string sFilePDF)
         {
             bRet = false;
             try
             {
                 if ("pdf".Equals(app.ToLower()))
                 {
-                    NSSFPDFBuilder payPdfMaker = new NSSFPDFBuilder(  nssfreportmodel, sFilePDF, connection);
+                    NSSFPDFBuilder payPdfMaker = new NSSFPDFBuilder(nssfreportmodel, sFilePDF, connection, _notificationmessageEventname);
                     payPdfMaker.GetPDF();
                     return true;
                 }
                 else
-                { 
-                    NSSFExcelBuilder pe = new NSSFExcelBuilder(nssfreportmodel, sFilePDF);
+                {
+                    NSSFExcelBuilder pe = new NSSFExcelBuilder(nssfreportmodel, sFilePDF, _notificationmessageEventname);
                     pe.GetExcel();
                     return true;
                 }
@@ -712,7 +715,7 @@ namespace VVX
             {
                 Utils.ShowError(ex);
                 return false;
-            } 
+            }
         }
         #endregion
 
@@ -725,14 +728,14 @@ namespace VVX
             {
                 if ("pdf".Equals(app.ToLower()))
                 {
-                    BankTransferPDFBuilder payPdfMaker = new BankTransferPDFBuilder(bbtreportmodel, sFilePDF);
+                    BankTransferPDFBuilder payPdfMaker = new BankTransferPDFBuilder(bbtreportmodel, sFilePDF, _notificationmessageEventname);
                     payPdfMaker.GetPDF();
                     return true;
                 }
                 else
                 {
 
-                    BankTransferExcelBuilder pe = new BankTransferExcelBuilder(bbtreportmodel, sFilePDF);
+                    BankTransferExcelBuilder pe = new BankTransferExcelBuilder(bbtreportmodel, sFilePDF, _notificationmessageEventname);
                     pe.GetExcel();
                     return true;
                 }
@@ -756,14 +759,14 @@ namespace VVX
             {
                 if ("pdf".Equals(app.ToLower()))
                 {
-                    BankBranchTransferPDFBuilder payPdfMaker = new BankBranchTransferPDFBuilder(bbtreportmodel, sFilePDF);
+                    BankBranchTransferPDFBuilder payPdfMaker = new BankBranchTransferPDFBuilder(bbtreportmodel, sFilePDF, _notificationmessageEventname);
                     payPdfMaker.GetPDF();
                     return true;
                 }
                 else
                 {
 
-                    BankBranchExcelBuilder pe = new BankBranchExcelBuilder(bbtreportmodel, sFilePDF);
+                    BankBranchExcelBuilder pe = new BankBranchExcelBuilder(bbtreportmodel, sFilePDF, _notificationmessageEventname);
                     pe.GetExcel();
                     return true;
                 }
@@ -772,12 +775,12 @@ namespace VVX
             {
                 Utils.ShowError(ex);
                 return false;
-            } 
+            }
         }
-         
+
         #endregion
 
-        #region schedule 
+        #region schedule
         public bool ShowShedule(string app, string itemid, SheduleReportModel model, string sFilePDF)
         {
 
@@ -786,7 +789,7 @@ namespace VVX
             {
                 try
                 {
-                    ShedulePDFBuilder smaker = new ShedulePDFBuilder(itemid, model, sFilePDF, connection);
+                    ShedulePDFBuilder smaker = new ShedulePDFBuilder(itemid, model, sFilePDF, connection, _notificationmessageEventname);
                     smaker.GetshedulePDF();
                     return true;
 
@@ -801,7 +804,7 @@ namespace VVX
             {
                 try
                 {
-                    ScheduleExcelBuilder schExcelBuilder = new ScheduleExcelBuilder(itemid, model, sFilePDF, connection);
+                    ScheduleExcelBuilder schExcelBuilder = new ScheduleExcelBuilder(itemid, model, sFilePDF, connection, _notificationmessageEventname);
                     schExcelBuilder.GetExcel();
                     return true;
 
@@ -827,7 +830,7 @@ namespace VVX
             {
                 try
                 {
-                    LoanRepaymentSchedulePDFBuilder lrspdfbuilder = new LoanRepaymentSchedulePDFBuilder(loanrepaymentshedulemodel, sFilePDF);
+                    LoanRepaymentSchedulePDFBuilder lrspdfbuilder = new LoanRepaymentSchedulePDFBuilder(loanrepaymentshedulemodel, sFilePDF, _notificationmessageEventname);
                     lrspdfbuilder.GetshedulePDF();
                     return true;
 
@@ -842,7 +845,7 @@ namespace VVX
             {
                 try
                 {
-                    LoanRepaymentScheduleExcelBuilder lrsebuilder = new LoanRepaymentScheduleExcelBuilder(loanrepaymentshedulemodel, sFilePDF);
+                    LoanRepaymentScheduleExcelBuilder lrsebuilder = new LoanRepaymentScheduleExcelBuilder(loanrepaymentshedulemodel, sFilePDF, _notificationmessageEventname);
                     lrsebuilder.GetExcel();
                     return true;
 
@@ -868,7 +871,7 @@ namespace VVX
             {
                 try
                 {
-                    SaccoPaymentSchedulePDFBuilder lrspdfbuilder = new SaccoPaymentSchedulePDFBuilder(saccopaymentshedulemodel, sFilePDF);
+                    SaccoPaymentSchedulePDFBuilder lrspdfbuilder = new SaccoPaymentSchedulePDFBuilder(saccopaymentshedulemodel, sFilePDF, _notificationmessageEventname);
                     lrspdfbuilder.GetshedulePDF();
                     return true;
 
@@ -883,7 +886,7 @@ namespace VVX
             {
                 try
                 {
-                    SaccoPaymentScheduleExcelBuilder lrsebuilder = new SaccoPaymentScheduleExcelBuilder(saccopaymentshedulemodel, sFilePDF);
+                    SaccoPaymentScheduleExcelBuilder lrsebuilder = new SaccoPaymentScheduleExcelBuilder(saccopaymentshedulemodel, sFilePDF, _notificationmessageEventname);
                     lrsebuilder.GetExcel();
                     return true;
 
@@ -901,7 +904,7 @@ namespace VVX
 
         #region statement
 
-        public bool ShowStatement(string app, string itemid,BLL.KRA.Models.StatementModel statementmodel, string sFilePDF)
+        public bool ShowStatement(string app, string itemid, BLL.KRA.Models.StatementModel statementmodel, string sFilePDF)
         {
 
             bRet = false;
@@ -910,7 +913,7 @@ namespace VVX
                 try
                 {
                     StatementPDFBuilder
-                        statementpdfbuilder = new StatementPDFBuilder(itemid, statementmodel, sFilePDF,connection);
+                        statementpdfbuilder = new StatementPDFBuilder(itemid, statementmodel, sFilePDF, connection, _notificationmessageEventname);
                     statementpdfbuilder.GetstatementPDF();
                     return true;
 
@@ -925,7 +928,7 @@ namespace VVX
             {
                 try
                 {
-                    StatementExcelBuilder sexcel = new StatementExcelBuilder(itemid, statementmodel, sFilePDF, connection);
+                    StatementExcelBuilder sexcel = new StatementExcelBuilder(itemid, statementmodel, sFilePDF, connection, _notificationmessageEventname);
                     sexcel.GetExcel();
 
                     return true;
@@ -952,14 +955,14 @@ namespace VVX
 
                 if ("pdf".Equals(app.ToLower()))
                 {
-                    NetSalaryPDFBuilder netsalarypdfbuilder = new NetSalaryPDFBuilder(netsalaryreportmodel, sFilePDF);
+                    NetSalaryPDFBuilder netsalarypdfbuilder = new NetSalaryPDFBuilder(netsalaryreportmodel, sFilePDF, _notificationmessageEventname);
                     netsalarypdfbuilder.GetNetSalaryPDF();
                     return true;
                 }
                 else
                 {
 
-                    winSBPayroll.Reports.ExcelBuilder.NetSalaryExcelBuilder netsalaryexcelbuilder = new winSBPayroll.Reports.ExcelBuilder.NetSalaryExcelBuilder(netsalaryreportmodel, sFilePDF);
+                    winSBPayroll.Reports.ExcelBuilder.NetSalaryExcelBuilder netsalaryexcelbuilder = new winSBPayroll.Reports.ExcelBuilder.NetSalaryExcelBuilder(netsalaryreportmodel, sFilePDF, _notificationmessageEventname);
                     netsalaryexcelbuilder.GetExcel();
                     return true;
                 }
@@ -976,6 +979,89 @@ namespace VVX
 
         #region Employees
 
+        public bool ShowBankEmployees(string app, BankEmployeesModelReport employeereportmodel, string sFilePDF)
+        {
+            bRet = false;
+            try
+            {
+
+                if ("pdf".Equals(app.ToLower()))
+                {
+                    BankEmployeesPDFBuilder employeespdfbuilder = new BankEmployeesPDFBuilder(employeereportmodel, sFilePDF, _notificationmessageEventname);
+                    employeespdfbuilder.GetEmployeePDF();
+                    return true;
+                }
+                else
+                {
+
+                    BankEmployeeExcelBuilder employeeexcelbuilder = new BankEmployeeExcelBuilder(employeereportmodel, sFilePDF, _notificationmessageEventname);
+                    employeeexcelbuilder.GetExcel();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Utils.ShowError(ex);
+                return false;
+            }
+
+        }
+
+        public bool ShowCashEmployees(string app, CashEmployeesModelReport employeereportmodel, string sFilePDF)
+        {
+            bRet = false;
+            try
+            {
+
+                if ("pdf".Equals(app.ToLower()))
+                {
+                    CashEmployeesPDFBuilder employeespdfbuilder = new CashEmployeesPDFBuilder(employeereportmodel, sFilePDF, _notificationmessageEventname);
+                    employeespdfbuilder.GetEmployeePDF();
+                    return true;
+                }
+                else
+                {
+
+                    CashEmployeeExcelBuilder employeeexcelbuilder = new CashEmployeeExcelBuilder(employeereportmodel, sFilePDF, _notificationmessageEventname);
+                    employeeexcelbuilder.GetExcel();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Utils.ShowError(ex);
+                return false;
+            }
+
+        }
+
+        public bool ShowMpesaEmployees(string app, MpesaEmployeesModelReport employeereportmodel, string sFilePDF)
+        {
+            bRet = false;
+            try
+            {
+
+                if ("pdf".Equals(app.ToLower()))
+                {
+                    MpesaEmployeesPDFBuilder employeespdfbuilder = new MpesaEmployeesPDFBuilder(employeereportmodel, sFilePDF, _notificationmessageEventname);
+                    employeespdfbuilder.GetEmployeePDF();
+                    return true;
+                }
+                else
+                {
+
+                    MpesaEmployeeExcelBuilder employeeexcelbuilder = new MpesaEmployeeExcelBuilder(employeereportmodel, sFilePDF, _notificationmessageEventname);
+                    employeeexcelbuilder.GetExcel();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Utils.ShowError(ex);
+                return false;
+            }
+
+        }
         public bool ShowEmployees(string app, EmployeesModelReport employeereportmodel, string sFilePDF)
         {
             bRet = false;
@@ -984,14 +1070,14 @@ namespace VVX
 
                 if ("pdf".Equals(app.ToLower()))
                 {
-                    EmployeesPDFBuilder employeespdfbuilder = new EmployeesPDFBuilder(employeereportmodel, sFilePDF);
+                    EmployeesPDFBuilder employeespdfbuilder = new EmployeesPDFBuilder(employeereportmodel, sFilePDF, _notificationmessageEventname);
                     employeespdfbuilder.GetEmployeePDF();
                     return true;
                 }
                 else
                 {
 
-                    EmployeeExcelBuilder employeeexcelbuilder = new EmployeeExcelBuilder(employeereportmodel, sFilePDF);
+                    EmployeeExcelBuilder employeeexcelbuilder = new EmployeeExcelBuilder(employeereportmodel, sFilePDF, _notificationmessageEventname);
                     employeeexcelbuilder.GetExcel();
                     return true;
                 }
@@ -1016,14 +1102,14 @@ namespace VVX
 
                 if ("pdf".Equals(app.ToLower()))
                 {
-                    AdvancePDFBuilder advancepdfbuilder = new AdvancePDFBuilder(advancereport, sFilePDF);
+                    AdvancePDFBuilder advancepdfbuilder = new AdvancePDFBuilder(advancereport, sFilePDF, _notificationmessageEventname);
                     advancepdfbuilder.GetPDF();
                     return true;
                 }
                 else
                 {
 
-                    AdvanceExcelBuilder advanceexcelbuilder = new AdvanceExcelBuilder(advancereport, sFilePDF);
+                    AdvanceExcelBuilder advanceexcelbuilder = new AdvanceExcelBuilder(advancereport, sFilePDF, _notificationmessageEventname);
                     advanceexcelbuilder.GetExcel();
                     return true;
                 }

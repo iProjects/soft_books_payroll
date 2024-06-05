@@ -32,12 +32,17 @@ namespace winSBPayroll.Reports.PDF
         Font tcFont2 = new Font(Font.TIMES_ROMAN, 7, Font.NORMAL);
 
         string _resourcePath;
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
+
         //constructor
-        public P11PDFBuilder(string ResourcePath, P11ReportModel P11Model, string FileName)
+        public P11PDFBuilder(string ResourcePath, P11ReportModel P11Model, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (P11Model == null)
                 throw new ArgumentNullException("P11ReportModel is null");
             _ViewModel = P11Model;
+
+            _notificationmessageEventname = notificationmessageEventname;
 
             sFilePDF = FileName;
             _resourcePath = ResourcePath;
@@ -84,16 +89,16 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
         }
         //document header
         private void AddDocHeader()
         {
 
-            PDFGen pdfgen = new PDFGen();
+            PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
 
-            Image img0 = pdfgen.DoGetImageFile(_resourcePath + "kra2.jpg");
+            Image img0 = pdfgen.DoGetImageFile(Path.Combine(_resourcePath, "kra2.jpg"));
             img0.Alignment = Image.ALIGN_CENTER;
 
 

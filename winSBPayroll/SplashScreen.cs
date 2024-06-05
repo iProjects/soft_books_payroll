@@ -60,11 +60,33 @@ namespace Splash
         public SplashScreen()
         {
             InitializeComponent();
+
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
+            Application.ThreadException += new ThreadExceptionEventHandler(ThreadException);
+
             this.Opacity = .00;
             timer1.Interval = TIMER_INTERVAL;
             timer1.Start();
             if (this.BackgroundImage != null)
+            {
                 this.ClientSize = this.BackgroundImage.Size;
+            }
+        }
+
+        private void UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Exception ex = (Exception)e.ExceptionObject;
+            Utils.LogEventViewer(ex);
+            Log.WriteToErrorLogFile(ex);
+            Console.WriteLine(ex.ToString());
+        }
+
+        private void ThreadException(object sender, ThreadExceptionEventArgs e)
+        {
+            Exception ex = e.Exception;
+            Utils.LogEventViewer(ex);
+            Log.WriteToErrorLogFile(ex);
+            Console.WriteLine(ex.ToString());
         }
 
         /// <summary>
@@ -90,6 +112,7 @@ namespace Splash
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SplashScreen));
             this.lblStatus = new System.Windows.Forms.Label();
             this.pnlStatus = new System.Windows.Forms.Panel();
             this.lblTimeRemaining = new System.Windows.Forms.Label();
@@ -141,6 +164,7 @@ namespace Splash
             this.Controls.Add(this.pnlStatus);
             this.Controls.Add(this.lblStatus);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SplashScreen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Soft Books Payroll Loading..........";
@@ -455,7 +479,7 @@ namespace Splash
         {
             try
             {
-                appNotifyIcon.Text = "Soft Books Payroll";
+                appNotifyIcon.Text = Utils.APP_NAME;
                 appNotifyIcon.Icon = new Icon("Resources/Icons/Dollar.ico");
                 appNotifyIcon.BalloonTipIcon = ToolTipIcon.Info;
                 appNotifyIcon.BalloonTipTitle = _Title;
@@ -475,7 +499,7 @@ namespace Splash
         {
             try
             {
-                NotifyMessage("Soft Books Payroll", "System Launching...");
+                NotifyMessage(Utils.APP_NAME, "System Launching...");
             }
             catch (Exception ex)
             {

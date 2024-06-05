@@ -14,19 +14,18 @@ using VVX;
 namespace winSBPayroll.Reports.PDFBuilder
 {
     public class SaccoPaymentSchedulePDFBuilder
-    { 
-         SaccoPaymentScheduleModel _ViewModel;
+    {
+        SaccoPaymentScheduleModel _ViewModel;
         Document document;
         string Message;
         string sFilePDF;
-
 
         Font hFont1 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
         Font hFont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
         Font bFont1 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
         Font bFont3 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
         Font bFont2 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);
-        Font tHFont = new Font(Font.TIMES_ROMAN, 10, Font.BOLD); 
+        Font tHFont = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
         Font tcFont = new Font(Font.HELVETICA, 8, Font.NORMAL);
         Font tcFont2 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);
         Font rms6Normal = new Font(Font.TIMES_ROMAN, 6, Font.NORMAL);
@@ -34,13 +33,16 @@ namespace winSBPayroll.Reports.PDFBuilder
         Font rms6Bold = new Font(Font.TIMES_ROMAN, 11, Font.BOLD);
         Font rms11Bold = new Font(Font.HELVETICA, 11, Font.BOLD);
         Font rms10Normal = new Font(Font.HELVETICA, 10, Font.NORMAL);
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
-
-        public SaccoPaymentSchedulePDFBuilder(SaccoPaymentScheduleModel SaccoPaymentScheduleModel, string FileName)
+        public SaccoPaymentSchedulePDFBuilder(SaccoPaymentScheduleModel SaccoPaymentScheduleModel, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (SaccoPaymentScheduleModel == null)
                 throw new ArgumentNullException("SaccoPaymentScheduleModel is null");
             _ViewModel = SaccoPaymentScheduleModel;
+
+            _notificationmessageEventname = notificationmessageEventname;
 
             sFilePDF = FileName;
         }
@@ -69,7 +71,7 @@ namespace winSBPayroll.Reports.PDFBuilder
                 AddDocHeader();
 
 
-               
+
                 Table rTable = new Table(5);
                 rTable.Padding = 1;
                 rTable.Spacing = 1;
@@ -80,7 +82,7 @@ namespace winSBPayroll.Reports.PDFBuilder
 
                 //Add table details
                 foreach (var tr in _ViewModel.saccorepaymentschedule)
-                {                    
+                {
                     AddTableRow(rTable, tr);
                 }
 
@@ -102,8 +104,8 @@ namespace winSBPayroll.Reports.PDFBuilder
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
-            }  
+                Log.WriteToErrorLogFile(ex);
+            }
         }
 
 
@@ -133,13 +135,13 @@ namespace winSBPayroll.Reports.PDFBuilder
             bCell.HorizontalAlignment = Cell.ALIGN_CENTER;
             bCell.Colspan = 5;
             bCell.Border = Cell.NO_BORDER;
-            saccoPaymentsTable.AddCell(bCell);  
+            saccoPaymentsTable.AddCell(bCell);
 
             Cell reportNameCell = new Cell(new Phrase(_ViewModel.ReportName, hFont2));
             reportNameCell.HorizontalAlignment = Cell.ALIGN_CENTER;
             reportNameCell.Colspan = 5;
             reportNameCell.Border = Cell.NO_BORDER;
-            saccoPaymentsTable.AddCell(reportNameCell); 
+            saccoPaymentsTable.AddCell(reportNameCell);
 
             Cell PrintedonCell = new Cell(new Phrase("Printed on: " + _ViewModel.PrintedOn.ToString("dd-dddd-MMMM-yyyy"), hFont2));
             PrintedonCell.HorizontalAlignment = Cell.ALIGN_LEFT;
@@ -148,7 +150,7 @@ namespace winSBPayroll.Reports.PDFBuilder
             saccoPaymentsTable.AddCell(PrintedonCell);
 
             //create the logo
-            PDFGen pdfgen = new PDFGen();
+            PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
             Image img0 = pdfgen.DoGetImageFile(_ViewModel.CompanyLogo);
             img0.Alignment = Image.ALIGN_MIDDLE;
             Cell logoCell = new Cell(img0);
@@ -180,7 +182,7 @@ namespace winSBPayroll.Reports.PDFBuilder
 
             Cell totalSharesCell = new Cell(new Phrase("Total Shares\nKshs", tHFont));
             totalSharesCell.HorizontalAlignment = Cell.ALIGN_CENTER;
-            saccoPaymentsTable.AddCell(totalSharesCell); 
+            saccoPaymentsTable.AddCell(totalSharesCell);
 
         }
 
@@ -190,11 +192,11 @@ namespace winSBPayroll.Reports.PDFBuilder
             {
                 //Totals
 
-                Cell B = new Cell(new Phrase(tr.employeenumber , tcFont));
+                Cell B = new Cell(new Phrase(tr.employeenumber, tcFont));
                 B.HorizontalAlignment = Cell.ALIGN_LEFT;
                 saccoPaymentsTable.AddCell(B);//Col 2
 
-                Cell C = new Cell(new Phrase(tr.employeename , tcFont));
+                Cell C = new Cell(new Phrase(tr.employeename, tcFont));
                 C.HorizontalAlignment = Cell.ALIGN_LEFT;
                 saccoPaymentsTable.AddCell(C);//Col 3
 
@@ -202,7 +204,7 @@ namespace winSBPayroll.Reports.PDFBuilder
                 G.HorizontalAlignment = Cell.ALIGN_LEFT;
                 saccoPaymentsTable.AddCell(G);//Col 2
 
-                Cell D = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", tr.monthamount), tcFont)); 
+                Cell D = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", tr.monthamount), tcFont));
                 D.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 saccoPaymentsTable.AddCell(D);//Col 2
 
@@ -229,16 +231,16 @@ namespace winSBPayroll.Reports.PDFBuilder
             Cell B = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.TotalShares), rms10Bold));
             B.HorizontalAlignment = Cell.ALIGN_RIGHT;
             saccoPaymentsTable.AddCell(B);//Col 3 
-          }
+        }
 
         private void AddFooter()
-        { 
+        {
             document.Add(new Phrase("\nSignature .....................................................................................................", rms10Normal));
-            
+
         }
 
 
-       
+
 
 
     }

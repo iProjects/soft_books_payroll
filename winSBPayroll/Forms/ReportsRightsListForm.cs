@@ -251,11 +251,11 @@ namespace winSBPayroll.Forms
         {
             try
             {
-
+                throw e.Exception;
             }
             catch (Exception ex)
             {
-                Utils.ShowError(ex);
+                Log.WriteToErrorLogFile(ex);
             }
         }
         private void txtRole_Validated(object sender, EventArgs e)

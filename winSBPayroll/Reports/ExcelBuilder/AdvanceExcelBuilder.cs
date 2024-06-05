@@ -11,17 +11,18 @@ namespace winSBPayroll.Reports.ExcelBuilder
 {
     public class AdvanceExcelBuilder
     {
-
-
         AdvanceReportModel _advancereport;
         CreateExcelDoc document;
         string Message;
         string sFileExcel;
-        
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
         //constructor
-        public AdvanceExcelBuilder(AdvanceReportModel advancereport, string FileName)
+        public AdvanceExcelBuilder(AdvanceReportModel advancereport, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
+            _notificationmessageEventname = notificationmessageEventname;
+
             _advancereport = advancereport;
             sFileExcel = FileName;
         }
@@ -57,7 +58,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
 
         }
@@ -77,7 +78,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
 
             row++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
-            document.createHeaders(row, col, "ADVANCE", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");        
+            document.createHeaders(row, col, "ADVANCE", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
             row++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
@@ -87,7 +88,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, "Printed on: " + _advancereport.PrintedOn.ToString("dd-dddd-MMMM-yyyy"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
-            
+
         }
 
         private void AddDocBody(ref int row, ref int col)
@@ -126,21 +127,21 @@ namespace winSBPayroll.Reports.ExcelBuilder
             //col++;
             //cellrangeaddr1 = document.IntAlpha(col) + row;
             //document.createHeaders(row, col, "DATE", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
-            
-            
+
+
         }
 
         //table details
-        private void AddBodyTableDetail(advance   adv, ref int row, ref int col)
+        private void AddBodyTableDetail(advance adv, ref int row, ref int col)
         {
 
             row++; col = 1;
             string cellrangeaddr1 = document.IntAlpha(col) + row;
-            document.createHeaders(row, col, adv.employeeno.ToString().Trim() , cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
+            document.createHeaders(row, col, adv.employeeno.ToString().Trim(), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
-            document.createHeaders(row, col, adv.employeename.ToString().Trim().ToUpper() , cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
+            document.createHeaders(row, col, adv.employeename.ToString().Trim().ToUpper(), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
@@ -149,7 +150,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
             //col++;
             //cellrangeaddr1 = document.IntAlpha(col) + row;
             //document.createHeaders(row, col,  adv.dateposted.ToString("dd-MMM-yyyy"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
-           
+
 
         }
 
@@ -162,7 +163,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
 
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
-            document.createHeaders(row, col,"", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
+            document.createHeaders(row, col, "", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
@@ -173,8 +174,8 @@ namespace winSBPayroll.Reports.ExcelBuilder
         //document footer
         private void AddDocFooter(ref int row, ref int col)
         {
-           
-           
+
+
         }
 
 

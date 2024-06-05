@@ -11,17 +11,19 @@ namespace winSBPayroll.Reports.ExcelBuilder
 {
     public class BankBranchExcelBuilder
     {
-
         //private attributes
         BankTransferModel _bbtreportmodel;
         CreateExcelDoc document;
         string Message;
         string sFileExcel;
-       
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
         //constructor
-        public BankBranchExcelBuilder(BankTransferModel bbtreportmodel, string FileName)
+        public BankBranchExcelBuilder(BankTransferModel bbtreportmodel, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
+            _notificationmessageEventname = notificationmessageEventname;
+
             _bbtreportmodel = bbtreportmodel;
             sFileExcel = FileName;
         }
@@ -58,7 +60,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
 
         }
@@ -83,7 +85,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
 
             row++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
-            document.createHeaders(row, col, "Printed On: " + _bbtreportmodel.PrintedOn.ToString("dd-dddd-MMMM-yyyy"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");    
+            document.createHeaders(row, col, "Printed On: " + _bbtreportmodel.PrintedOn.ToString("dd-dddd-MMMM-yyyy"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
 
             //Bank address
@@ -100,9 +102,9 @@ namespace winSBPayroll.Reports.ExcelBuilder
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, _bbtreportmodel.BankBranch, cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
-           
+
             //Salutation
-            row=row+2; col = 1;
+            row = row + 2; col = 1;
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, "Dear Sir / Madam", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
@@ -112,14 +114,14 @@ namespace winSBPayroll.Reports.ExcelBuilder
 
             row = row + 2;
             cellrangeaddr1 = document.IntAlpha(col) + row;
-            document.createHeaders(row, col, "Below is a list of Names, Banks, Branches, Accounts and Amounts to be credited in their respective accounts", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");    
+            document.createHeaders(row, col, "Below is a list of Names, Banks, Branches, Accounts and Amounts to be credited in their respective accounts", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
         }
 
 
         private void AddDocBody(ref int row, ref int col)
         {
-            
+
             foreach (var bankTransferItem in _bbtreportmodel.BankTransferItems)
             {
                 AddBodyTable(bankTransferItem, ref  row, ref  col);
@@ -172,7 +174,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, "Amount\nKshs", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
- 
+
         }
 
         //table details
@@ -203,13 +205,13 @@ namespace winSBPayroll.Reports.ExcelBuilder
 
 
 
-       
+
         //table totals
         private void AddDocBodyTableTotals(BankTransferItem bti, ref int row, ref int col)
         {
-            row++; col=1;
+            row++; col = 1;
             string cellrangeaddr1 = document.IntAlpha(col) + row;
-            document.createHeaders(row, col,"Total Amount", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
+            document.createHeaders(row, col, "Total Amount", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
@@ -223,9 +225,9 @@ namespace winSBPayroll.Reports.ExcelBuilder
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, "", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
-            col ++;
+            col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
-            document.createHeaders(row, col, bti.Total.ToString("#,##0"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n"); 
+            document.createHeaders(row, col, bti.Total.ToString("#,##0"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
         }
 
@@ -254,15 +256,15 @@ namespace winSBPayroll.Reports.ExcelBuilder
             string s = "Kindly credit the Accounts with the amounts specified on the above date and debit Account: ";
             s = s + _bbtreportmodel.AccountName + " Account No: " + _bbtreportmodel.AccountNo;
             document.createHeaders(row, col, s, cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
-            
+
             row++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
             s = "Yours faithfully";
             document.createHeaders(row, col, s, cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
-            row=row + 2;
+            row = row + 2;
             cellrangeaddr1 = document.IntAlpha(col) + row;
-            document.createHeaders(row, col,"Account Signatory..." +  _bbtreportmodel.AccountSignatory, cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
+            document.createHeaders(row, col, "Account Signatory..." + _bbtreportmodel.AccountSignatory, cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
             row++;
             cellrangeaddr1 = document.IntAlpha(col) + row;

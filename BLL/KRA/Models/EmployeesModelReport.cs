@@ -13,26 +13,26 @@ namespace BLL.KRA.Models
         public string employeraddress { get; set; }
         public string employertelephone { get; set; }
         public string CompanyLogo { get; set; }
-        public string CompanySlogan { get; set; } 
-        public List<printallemployees> pae { get; set; }
+        public string CompanySlogan { get; set; }
+        public List<print_employees> pe { get; set; }
         public DateTime PeriodDate { get; set; }
         public string ReportName
         {
             get
             {
-                return "" ;
+                return "";
             }
         }
         public decimal totalbasic
         {
             get
             {
-                return pae.Sum(i => i.basicpay);
+                return pe.Sum(i => i.basicpay);
             }
         }
     }
-     
-    public class printallemployees
+
+    public class print_employees
     {
 
         public string employeenumber { get; set; }
@@ -44,6 +44,9 @@ namespace BLL.KRA.Models
         public DateTime dateofemployment { get; set; }
         public decimal basicpay { get; set; }
         public string paymentmode { get; set; }
-    
+        public string telephone_no { get; set; }
+        public string nssf_no { get; set; }
+        public string nhif_no { get; set; }
+
     }
 }

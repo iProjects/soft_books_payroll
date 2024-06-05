@@ -15,7 +15,6 @@ namespace winSBPayroll.Views
 {
     public class VikepayslipView3
     {
-
         VikePayslipViewModel _ViewModel;
         Document document;
         string Message;
@@ -35,8 +34,9 @@ namespace winSBPayroll.Views
         Font tableDataCellFont;
         Font signatureFont;
         #endregion "fonts"
+        public event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
 
-        public VikepayslipView3(VikePayslipViewModel PayslipModel, string FileName, string Conn)
+        public VikepayslipView3(VikePayslipViewModel PayslipModel, string FileName, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (PayslipModel == null)
                 throw new ArgumentNullException("VikePayslipViewModel is null");
@@ -49,6 +49,8 @@ namespace winSBPayroll.Views
             de = new DataEntry(connection);
             db = new SBPayrollDBEntities(connection);
             rep = new Repository(connection);
+
+            _notificationmessageEventname = notificationmessageEventname;
 
             sFilePDF = FileName;
 
@@ -172,7 +174,7 @@ namespace winSBPayroll.Views
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
         }
 

@@ -30,13 +30,17 @@ namespace winSBPayroll.Reports.PDF
         Font rms6Bold = new Font(Font.TIMES_ROMAN, 6, Font.BOLD);
         Font rms8Bold = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);
 
-
         string _resourcePath;
-        public P9AHospPDFBuilder(string ResourcePath, P9AHOSPReportModel P9AHOSPModel, string FileName)
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
+
+        public P9AHospPDFBuilder(string ResourcePath, P9AHOSPReportModel P9AHOSPModel, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (P9AHOSPModel == null)
                 throw new ArgumentNullException("P9AHOSPReportModel is null");
             _ViewModel = P9AHOSPModel;
+
+            _notificationmessageEventname = notificationmessageEventname;
 
             sFilePDF = FileName;
             _resourcePath = ResourcePath;
@@ -64,14 +68,14 @@ namespace winSBPayroll.Reports.PDF
 
                 // step 2: we create a writer that listens to the document
                 PdfWriter.GetInstance(document, new FileStream(sFilePDF, FileMode.Create));
-                 
+
                 document.Open();
 
-                PDFGen pdfgen = new PDFGen();
+                PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
 
-                Image img0 = pdfgen.DoGetImageFile(_resourcePath + "kra2.jpg");
+                Image img0 = pdfgen.DoGetImageFile(Path.Combine(_resourcePath, "kra2.jpg"));
                 img0.Alignment = Image.ALIGN_CENTER;
-                 
+
                 Table empInfoTable = new Table(3, 3);
                 empInfoTable.WidthPercentage = 100;
                 empInfoTable.Border = Table.NO_BORDER;
@@ -81,11 +85,11 @@ namespace winSBPayroll.Reports.PDF
                 c2.Border = Cell.NO_BORDER;
                 c2.HorizontalAlignment = Cell.ALIGN_CENTER;
                 empInfoTable.AddCell(c2, new System.Drawing.Point(1, 1));
-                 
+
                 Cell c1 = new Cell(img0);// header1);
                 c1.Border = Cell.NO_BORDER;
-                c1.HorizontalAlignment = Cell.ALIGN_CENTER;                 
-                empInfoTable.AddCell(c1, new System.Drawing.Point(0, 1)); 
+                c1.HorizontalAlignment = Cell.ALIGN_CENTER;
+                empInfoTable.AddCell(c1, new System.Drawing.Point(0, 1));
 
                 empInfoTable.Border = Table.NO_BORDER;
                 Chunk employerName = new Chunk("Employers Name ..." + _ViewModel.EmployerName.ToUpper().Trim() + "..", bFont1);
@@ -151,9 +155,9 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
-        } 
+        }
         private void AddTableHeaders(Table aTable)
         {
             aTable.AddCell(new Phrase("Month", tHFont));  //Col 0
@@ -386,8 +390,8 @@ namespace winSBPayroll.Reports.PDF
             Cell f41 = new Cell(p2);
             f41.HorizontalAlignment = Cell.ALIGN_LEFT;
             f41.Border = Table.NO_BORDER;
-            aTable.AddCell(f41); 
-             
+            aTable.AddCell(f41);
+
             StringBuilder sb3 = new StringBuilder();
             sb3.AppendLine("NAMES OF APPROVED INSTITUTION .....................................");
             sb3.AppendLine("REGISTRATION NUMBER OF  APPROVED INSTITUTION..................................");

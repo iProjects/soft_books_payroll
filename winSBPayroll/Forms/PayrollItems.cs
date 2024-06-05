@@ -117,7 +117,7 @@ namespace winSBPayroll.Forms
                     List<string> defaultItems = new List<string>() { "BASIC", "PAYE", "NSSF", "NHIF", "NON_CASH_BENEFIT", "HOURLY_PAY", "ADVANCE" };
                     if (defaultItems.Contains(payrollitem.Id.Trim()))
                     {
-                        MessageBox.Show("Cannot Edit Default Payroll Item " + payrollitem.Id.Trim(), "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Cannot Edit Default Payroll Item " + payrollitem.Id.Trim(), Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
@@ -149,11 +149,11 @@ namespace winSBPayroll.Forms
                     List<string> defaultItems = new List<string>() { "BASIC", "PAYE", "NSSF", "NHIF", "NON_CASH_BENEFIT", "HOURLY_PAY", "ADVANCE" };
                     if (defaultItems.Contains(payrollitem.Id.Trim()))
                     {
-                        MessageBox.Show("Cannot Delete Default Payroll Item " + payrollitem.Id.Trim(), "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Cannot Delete Default Payroll Item " + payrollitem.Id.Trim(), Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else if ((_employees.Count > 0))
                     {
-                        MessageBox.Show("There is an Employee Associated with this Payroll Item\nDelete the Employee first!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("There is an Employee Associated with this Payroll Item\nDelete the Employee first!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                         if (DialogResult.Yes == MessageBox.Show("Are you sure you want to Delete Payroll Item\n " + payrollitem.Id.ToString().Trim().ToUpper(), "Confirm Delete", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
@@ -230,7 +230,7 @@ namespace winSBPayroll.Forms
                     List<string> defaultItems = new List<string>() { "BASIC", "PAYE", "NSSF", "NHIF", "NON_CASH_BENEFIT", "HOURLY_PAY", "ADVANCE" };
                     if (defaultItems.Contains(payrollitem.Id.Trim()))
                     {
-                        MessageBox.Show("Cannot Edit Default Payroll Item " + payrollitem.Id.Trim(), "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Cannot Edit Default Payroll Item " + payrollitem.Id.Trim(), Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {

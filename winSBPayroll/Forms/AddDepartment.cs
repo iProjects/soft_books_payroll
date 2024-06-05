@@ -50,11 +50,12 @@ namespace winSBPayroll.Forms
                     }
                     _Department.IsDeleted = false;
 
-                    if (db.Departments.Any(c => c.Code == _Department.Code && c.IsDeleted == false))
+                    if (db.Departments.Any(c => c.Code == _Department.Code || c.Description == _Department.Description))
                     {
-                        MessageBox.Show("Code Exist!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Department Exist!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
                     }
-                    if (!db.Departments.Any(c => c.Code == _Department.Code && c.IsDeleted == false))
+                    if (!db.Departments.Any(c => c.Code == _Department.Code || c.Description == _Department.Description))
                     {
                         db.Departments.AddObject(_Department);
                         db.SaveChanges();

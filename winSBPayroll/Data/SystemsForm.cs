@@ -65,14 +65,15 @@ namespace winSBPayroll.Forms
 
                 //save to file
                 ds.WriteXml(SystemsConfigFile);
-                MessageBox.Show("Successfully saved file " + SystemsConfigFile, "SB Payroll", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
+
+                MessageBox.Show("Successfully saved file " + SystemsConfigFile, Utils.APP_NAME, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
                 string msg = ex.Message;
                 if (ex.InnerException != null)
                     msg += "\n" + ex.InnerException.Message;
-                MessageBox.Show(msg, "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(msg, Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         private void SystemsForm_Load(object sender, System.EventArgs e)
@@ -98,7 +99,7 @@ namespace winSBPayroll.Forms
                 string msg = ex.Message;
                 if (ex.InnerException != null)
                     msg += "\n" + ex.InnerException.Message;
-                MessageBox.Show(msg, "SB Payroll",  MessageBoxButtons.OK,  MessageBoxIcon.Information);
+                MessageBox.Show(msg, Utils.APP_NAME,  MessageBoxButtons.OK,  MessageBoxIcon.Information);
 
             }
         } 

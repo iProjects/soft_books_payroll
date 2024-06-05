@@ -15,32 +15,38 @@ namespace winSBPayroll.Reports.PDFBuilder
 {
     public class LoanRepaymentSchedulePDFBuilder
     {
-       
         LoanRepaymentScheduleModel _ViewModel;
         Document document;
         string Message;
         string sFilePDF;
 
-
         Font hFont1 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
+        Font hfont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
         Font hFont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
-        Font bFont1 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);//body
+        Font bfont1 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);//body
         Font bFont2 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);//body
         Font bFont3 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);//body
-        Font tHFont = new Font(Font.TIMES_ROMAN, 10, Font.BOLD); //table Header
-        Font tHFont1 = new Font(Font.TIMES_ROMAN, 9, Font.BOLD);//TABLE HEADER
+        Font tHFont = new Font(Font.TIMES_ROMAN, 9, Font.BOLD); //table Header
+        Font tHfont1 = new Font(Font.TIMES_ROMAN, 11, Font.BOLD); //table Header
         Font tcFont = new Font(Font.HELVETICA, 8, Font.NORMAL);//table cell
-        Font rms6Normal = new Font(Font.TIMES_ROMAN, 6, Font.NORMAL);
-        Font rms10Bold = new Font(Font.HELVETICA, 9, Font.BOLD);
+        Font rms6Normal = new Font(Font.TIMES_ROMAN, 9, Font.NORMAL);
+        Font rms10Bold = new Font(Font.HELVETICA, 10, Font.BOLD);
         Font rms6Bold = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
-        Font rms11Bold = new Font(Font.HELVETICA, 11, Font.BOLD);
+        Font rms8Bold = new Font(Font.HELVETICA, 8, Font.BOLD);
+        Font rms9Bold = new Font(Font.HELVETICA, 9, Font.BOLD);
         Font rms10Normal = new Font(Font.HELVETICA, 10, Font.NORMAL);
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
-        public LoanRepaymentSchedulePDFBuilder(LoanRepaymentScheduleModel loanrepaymentshedulemodel, string FileName)
+        public LoanRepaymentSchedulePDFBuilder(LoanRepaymentScheduleModel loanrepaymentshedulemodel, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (loanrepaymentshedulemodel == null)
                 throw new ArgumentNullException("LoanRepaymentScheduleModel is null");
             _ViewModel = loanrepaymentshedulemodel;
+
+            _notificationmessageEventname = notificationmessageEventname;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed LoanRepaymentSchedulePDFBuilder", TAG));
 
             sFilePDF = FileName;
         }
@@ -78,7 +84,7 @@ namespace winSBPayroll.Reports.PDFBuilder
 
                 //Add table details
                 foreach (var tr in _ViewModel.loanslist)
-                {                    
+                {
                     AddTableRow(rTable, tr);
                 }
 
@@ -100,8 +106,8 @@ namespace winSBPayroll.Reports.PDFBuilder
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
-            } 
+                Log.WriteToErrorLogFile(ex);
+            }
         }
 
         //document header
@@ -145,7 +151,7 @@ namespace winSBPayroll.Reports.PDFBuilder
             loanRePaymentsTable.AddCell(PrintedonCell);
 
             //create the logo
-            PDFGen pdfgen = new PDFGen();
+            PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
             Image img0 = pdfgen.DoGetImageFile(_ViewModel.CompanyLogo);
             img0.Alignment = Image.ALIGN_MIDDLE;
             Cell logoCell = new Cell(img0);
@@ -183,11 +189,11 @@ namespace winSBPayroll.Reports.PDFBuilder
 
             Cell balanceCell = new Cell(new Phrase("Balance\nKshs", tHFont));
             balanceCell.HorizontalAlignment = Cell.ALIGN_CENTER;
-            loanRePaymentsTable.AddCell(balanceCell);  
- 
+            loanRePaymentsTable.AddCell(balanceCell);
+
         }
 
-        private void AddTableRow(Table loanRePaymentsTable,  loanrepayments  tr)
+        private void AddTableRow(Table loanRePaymentsTable, loanrepayments tr)
         {
             if (tr != null)
             {
@@ -223,12 +229,12 @@ namespace winSBPayroll.Reports.PDFBuilder
                 loanRePaymentsTable.AddCell(G);//Col 2
 
             }
-            else 
+            else
             {
                 Cell ErCell = new Cell(new Phrase("Payroll Must Be Closed!", tcFont));
                 ErCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                 loanRePaymentsTable.AddCell(ErCell);//Col 2
-            
+
             }
         }
 
@@ -236,7 +242,7 @@ namespace winSBPayroll.Reports.PDFBuilder
 
         private void AddTotals(Table loanRePaymentsTable)
         {
-            
+
 
             Cell I = new Cell(new Phrase("TOTAL", rms10Bold));
             I.HorizontalAlignment = Cell.ALIGN_LEFT;
@@ -255,7 +261,7 @@ namespace winSBPayroll.Reports.PDFBuilder
             Cell V = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _tbalance), rms10Bold));
             V.HorizontalAlignment = Cell.ALIGN_RIGHT;
             loanRePaymentsTable.AddCell(V);//Col 3 
-          }
+        }
 
         //document footer
         private void AddDocFooter()
@@ -277,7 +283,7 @@ namespace winSBPayroll.Reports.PDFBuilder
         }
 
 
-       
+
 
 
     }

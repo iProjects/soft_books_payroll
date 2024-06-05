@@ -39,10 +39,10 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnViewPayslip = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -64,12 +64,12 @@
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.btnShowPDF = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnExcel = new System.Windows.Forms.ToolStripButton();
+            this.btnShowExcel = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbExit = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabControlReportsData = new System.Windows.Forms.TabControl();
+            this.tabPagePayrolls = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dataGridViewPayroll = new System.Windows.Forms.DataGridView();
             this.Year = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -78,20 +78,24 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.chkUseCurrentPayroll = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.cbYr = new System.Windows.Forms.ComboBox();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.cbopayrollyears = new System.Windows.Forms.ComboBox();
+            this.tabPageEmployers = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.dataGridViewEmployers = new System.Windows.Forms.DataGridView();
             this.ColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnIsActive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPageEmployees = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dataGridViewEmployee = new System.Windows.Forms.DataGridView();
+            this.EmpNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Surname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OtherNames = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnBasicPay = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnRemoveFilter = new System.Windows.Forms.Button();
             this.btnFilterEmployees = new System.Windows.Forms.Button();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPagePayrollByProducts = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dataGridViewPayrollItem = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -99,11 +103,13 @@
             this.ColumnDefaultItem = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel3 = new System.Windows.Forms.Panel();
             this.cbopayrollproducts = new System.Windows.Forms.ComboBox();
-            this.btnShow = new System.Windows.Forms.Button();
-            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.btnShow_Statement_or_Schedule = new System.Windows.Forms.Button();
+            this.tabPageLogs = new System.Windows.Forms.TabPage();
+            this.txtlog = new System.Windows.Forms.RichTextBox();
+            this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.statusStripReports = new System.Windows.Forms.StatusStrip();
-            this.ctlInfoLBL = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblstatusinfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.bindingSourceEmployees = new System.Windows.Forms.BindingSource(this.components);
             this.bindingSourcePayroll = new System.Windows.Forms.BindingSource(this.components);
             this.bindingSourcePayrollItem = new System.Windows.Forms.BindingSource(this.components);
@@ -117,31 +123,28 @@
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EmpNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Surname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OtherNames = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnBasicPay = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.tabControlReportsData.SuspendLayout();
+            this.tabPagePayrolls.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPayroll)).BeginInit();
             this.panel2.SuspendLayout();
-            this.tabPage4.SuspendLayout();
+            this.tabPageEmployers.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEmployers)).BeginInit();
-            this.tabPage1.SuspendLayout();
+            this.tabPageEmployees.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEmployee)).BeginInit();
             this.panel1.SuspendLayout();
-            this.tabPage3.SuspendLayout();
+            this.tabPagePayrollByProducts.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPayrollItem)).BeginInit();
             this.panel3.SuspendLayout();
+            this.tabPageLogs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.statusStripReports.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEmployees)).BeginInit();
@@ -174,12 +177,12 @@
             this.toolStripSeparator11,
             this.btnShowPDF,
             this.toolStripSeparator8,
-            this.btnExcel,
+            this.btnShowExcel,
             this.toolStripSeparator10,
             this.tsbExit});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1003, 38);
+            this.toolStrip1.Size = new System.Drawing.Size(1238, 38);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -319,18 +322,6 @@
             this.cboItemTypesReports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cboItemTypesReports.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.cboItemTypesReports.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cboItemTypesReports.Items.AddRange(new object[] {
-            "Payroll Master",
-            "PAYE",
-            "NSSF",
-            "NHIF",
-            "Net Salary",
-            "Bank Transfer",
-            "Bank Branch Transfer",
-            "Loan Repayments",
-            "Sacco Contributions",
-            "Advances",
-            "Employees"});
             this.cboItemTypesReports.Name = "cboItemTypesReports";
             this.cboItemTypesReports.Size = new System.Drawing.Size(170, 38);
             this.cboItemTypesReports.SelectedIndexChanged += new System.EventHandler(this.cboItemTypesReports_SelectedIndexChanged);
@@ -358,16 +349,16 @@
             this.toolStripSeparator8.Name = "toolStripSeparator8";
             this.toolStripSeparator8.Size = new System.Drawing.Size(6, 38);
             // 
-            // btnExcel
+            // btnShowExcel
             // 
-            this.btnExcel.CheckOnClick = true;
-            this.btnExcel.Image = ((System.Drawing.Image)(resources.GetObject("btnExcel.Image")));
-            this.btnExcel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnExcel.Name = "btnExcel";
-            this.btnExcel.Size = new System.Drawing.Size(69, 35);
-            this.btnExcel.Text = "Show Excel";
-            this.btnExcel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnExcel.Click += new System.EventHandler(this.btnExcel_Click);
+            this.btnShowExcel.CheckOnClick = true;
+            this.btnShowExcel.Image = ((System.Drawing.Image)(resources.GetObject("btnShowExcel.Image")));
+            this.btnShowExcel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowExcel.Name = "btnShowExcel";
+            this.btnShowExcel.Size = new System.Drawing.Size(70, 35);
+            this.btnShowExcel.Text = "Show Excel";
+            this.btnShowExcel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnShowExcel.Click += new System.EventHandler(this.btnExcel_Click);
             // 
             // toolStripSeparator10
             // 
@@ -379,7 +370,7 @@
             this.tsbExit.Image = ((System.Drawing.Image)(resources.GetObject("tsbExit.Image")));
             this.tsbExit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbExit.Name = "tsbExit";
-            this.tsbExit.Size = new System.Drawing.Size(29, 35);
+            this.tsbExit.Size = new System.Drawing.Size(30, 35);
             this.tsbExit.Text = "Exit";
             this.tsbExit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.tsbExit.Click += new System.EventHandler(this.btnTsbExit_Click);
@@ -392,40 +383,41 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.tabControl1);
+            this.splitContainer1.Panel1.Controls.Add(this.tabControlReportsData);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.webBrowser1);
-            this.splitContainer1.Size = new System.Drawing.Size(1003, 359);
-            this.splitContainer1.SplitterDistance = 371;
+            this.splitContainer1.Panel2.Controls.Add(this.webBrowser);
+            this.splitContainer1.Size = new System.Drawing.Size(1238, 659);
+            this.splitContainer1.SplitterDistance = 427;
             this.splitContainer1.TabIndex = 3;
             // 
-            // tabControl1
+            // tabControlReportsData
             // 
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(371, 359);
-            this.tabControl1.TabIndex = 0;
-            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
+            this.tabControlReportsData.Controls.Add(this.tabPagePayrolls);
+            this.tabControlReportsData.Controls.Add(this.tabPageEmployers);
+            this.tabControlReportsData.Controls.Add(this.tabPageEmployees);
+            this.tabControlReportsData.Controls.Add(this.tabPagePayrollByProducts);
+            this.tabControlReportsData.Controls.Add(this.tabPageLogs);
+            this.tabControlReportsData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlReportsData.Location = new System.Drawing.Point(0, 0);
+            this.tabControlReportsData.Name = "tabControlReportsData";
+            this.tabControlReportsData.SelectedIndex = 0;
+            this.tabControlReportsData.Size = new System.Drawing.Size(427, 659);
+            this.tabControlReportsData.TabIndex = 0;
+            this.tabControlReportsData.SelectedIndexChanged += new System.EventHandler(this.tabControlReportsData_SelectedIndexChanged);
             // 
-            // tabPage2
+            // tabPagePayrolls
             // 
-            this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.tabPage2.Controls.Add(this.groupBox3);
-            this.tabPage2.Controls.Add(this.panel2);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(363, 333);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Payrolls";
+            this.tabPagePayrolls.BackColor = System.Drawing.Color.LimeGreen;
+            this.tabPagePayrolls.Controls.Add(this.groupBox3);
+            this.tabPagePayrolls.Controls.Add(this.panel2);
+            this.tabPagePayrolls.Location = new System.Drawing.Point(4, 22);
+            this.tabPagePayrolls.Name = "tabPagePayrolls";
+            this.tabPagePayrolls.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPagePayrolls.Size = new System.Drawing.Size(419, 633);
+            this.tabPagePayrolls.TabIndex = 1;
+            this.tabPagePayrolls.Text = "Payrolls";
             // 
             // groupBox3
             // 
@@ -433,7 +425,7 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(3, 71);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(357, 259);
+            this.groupBox3.Size = new System.Drawing.Size(413, 559);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             // 
@@ -476,8 +468,10 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewPayroll.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.dataGridViewPayroll.Size = new System.Drawing.Size(351, 240);
+            this.dataGridViewPayroll.Size = new System.Drawing.Size(407, 540);
             this.dataGridViewPayroll.TabIndex = 0;
+            this.dataGridViewPayroll.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewPayroll_DataError);
+            this.dataGridViewPayroll.SelectionChanged += new System.EventHandler(this.dataGridViewPayroll_SelectionChanged);
             // 
             // Year
             // 
@@ -486,6 +480,7 @@
             this.Year.HeaderText = "Year";
             this.Year.Name = "Year";
             this.Year.ReadOnly = true;
+            this.Year.Width = 60;
             // 
             // Period
             // 
@@ -494,10 +489,11 @@
             this.Period.HeaderText = "Period";
             this.Period.Name = "Period";
             this.Period.ReadOnly = true;
+            this.Period.Width = 70;
             // 
             // ColumnDateRun
             // 
-            this.ColumnDateRun.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ColumnDateRun.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.ColumnDateRun.DataPropertyName = "DateRun";
             this.ColumnDateRun.HeaderText = "Date Run";
             this.ColumnDateRun.Name = "ColumnDateRun";
@@ -505,14 +501,14 @@
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.panel2.BackColor = System.Drawing.Color.Transparent;
             this.panel2.Controls.Add(this.chkUseCurrentPayroll);
             this.panel2.Controls.Add(this.label1);
-            this.panel2.Controls.Add(this.cbYr);
+            this.panel2.Controls.Add(this.cbopayrollyears);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(357, 68);
+            this.panel2.Size = new System.Drawing.Size(413, 68);
             this.panel2.TabIndex = 0;
             // 
             // chkUseCurrentPayroll
@@ -539,27 +535,27 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Year";
             // 
-            // cbYr
+            // cbopayrollyears
             // 
-            this.cbYr.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbYr.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbYr.FormattingEnabled = true;
-            this.cbYr.Location = new System.Drawing.Point(50, 15);
-            this.cbYr.Name = "cbYr";
-            this.cbYr.Size = new System.Drawing.Size(143, 21);
-            this.cbYr.TabIndex = 0;
-            this.cbYr.SelectedIndexChanged += new System.EventHandler(this.cbYr_SelectedIndexChanged);
+            this.cbopayrollyears.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbopayrollyears.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbopayrollyears.FormattingEnabled = true;
+            this.cbopayrollyears.Location = new System.Drawing.Point(50, 15);
+            this.cbopayrollyears.Name = "cbopayrollyears";
+            this.cbopayrollyears.Size = new System.Drawing.Size(143, 21);
+            this.cbopayrollyears.TabIndex = 0;
+            this.cbopayrollyears.SelectedIndexChanged += new System.EventHandler(this.cbYr_SelectedIndexChanged);
             // 
-            // tabPage4
+            // tabPageEmployers
             // 
-            this.tabPage4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.tabPage4.Controls.Add(this.groupBox4);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(363, 333);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Employers";
+            this.tabPageEmployers.BackColor = System.Drawing.Color.LimeGreen;
+            this.tabPageEmployers.Controls.Add(this.groupBox4);
+            this.tabPageEmployers.Location = new System.Drawing.Point(4, 22);
+            this.tabPageEmployers.Name = "tabPageEmployers";
+            this.tabPageEmployers.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageEmployers.Size = new System.Drawing.Size(497, 650);
+            this.tabPageEmployers.TabIndex = 3;
+            this.tabPageEmployers.Text = "Employers";
             // 
             // groupBox4
             // 
@@ -567,7 +563,7 @@
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox4.Location = new System.Drawing.Point(3, 3);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(357, 327);
+            this.groupBox4.Size = new System.Drawing.Size(491, 644);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             // 
@@ -610,8 +606,9 @@
             dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewEmployers.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
-            this.dataGridViewEmployers.Size = new System.Drawing.Size(351, 308);
+            this.dataGridViewEmployers.Size = new System.Drawing.Size(485, 625);
             this.dataGridViewEmployers.TabIndex = 0;
+            this.dataGridViewEmployers.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewEmployers_DataError);
             this.dataGridViewEmployers.SelectionChanged += new System.EventHandler(this.dataGridViewEmployers_SelectionChanged);
             // 
             // ColumnId
@@ -643,17 +640,17 @@
             this.ColumnName.Name = "ColumnName";
             this.ColumnName.ReadOnly = true;
             // 
-            // tabPage1
+            // tabPageEmployees
             // 
-            this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.tabPage1.Controls.Add(this.groupBox1);
-            this.tabPage1.Controls.Add(this.panel1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(363, 333);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Employees";
+            this.tabPageEmployees.BackColor = System.Drawing.Color.LimeGreen;
+            this.tabPageEmployees.Controls.Add(this.groupBox1);
+            this.tabPageEmployees.Controls.Add(this.panel1);
+            this.tabPageEmployees.Location = new System.Drawing.Point(4, 22);
+            this.tabPageEmployees.Name = "tabPageEmployees";
+            this.tabPageEmployees.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageEmployees.Size = new System.Drawing.Size(497, 650);
+            this.tabPageEmployees.TabIndex = 0;
+            this.tabPageEmployees.Text = "Employees";
             // 
             // groupBox1
             // 
@@ -661,7 +658,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(3, 76);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(357, 254);
+            this.groupBox1.Size = new System.Drawing.Size(491, 571);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             // 
@@ -705,19 +702,56 @@
             dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewEmployee.RowHeadersDefaultCellStyle = dataGridViewCellStyle10;
-            this.dataGridViewEmployee.Size = new System.Drawing.Size(351, 235);
+            this.dataGridViewEmployee.Size = new System.Drawing.Size(485, 552);
             this.dataGridViewEmployee.TabIndex = 0;
             this.dataGridViewEmployee.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewEmployee_CellContentDoubleClick);
+            this.dataGridViewEmployee.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewEmployee_DataError);
+            // 
+            // EmpNo
+            // 
+            this.EmpNo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.EmpNo.DataPropertyName = "EmpNo";
+            this.EmpNo.HeaderText = "EmpNo";
+            this.EmpNo.Name = "EmpNo";
+            this.EmpNo.ReadOnly = true;
+            this.EmpNo.Width = 60;
+            // 
+            // Surname
+            // 
+            this.Surname.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Surname.DataPropertyName = "Surname";
+            this.Surname.HeaderText = "Surname";
+            this.Surname.Name = "Surname";
+            this.Surname.ReadOnly = true;
+            // 
+            // OtherNames
+            // 
+            this.OtherNames.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.OtherNames.DataPropertyName = "OtherNames";
+            this.OtherNames.HeaderText = "OtherNames";
+            this.OtherNames.Name = "OtherNames";
+            this.OtherNames.ReadOnly = true;
+            // 
+            // ColumnBasicPay
+            // 
+            this.ColumnBasicPay.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ColumnBasicPay.DataPropertyName = " BasicPay";
+            dataGridViewCellStyle8.Format = "C2";
+            dataGridViewCellStyle8.NullValue = null;
+            this.ColumnBasicPay.DefaultCellStyle = dataGridViewCellStyle8;
+            this.ColumnBasicPay.HeaderText = " Basic Pay";
+            this.ColumnBasicPay.Name = "ColumnBasicPay";
+            this.ColumnBasicPay.ReadOnly = true;
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
             this.panel1.Controls.Add(this.btnRemoveFilter);
             this.panel1.Controls.Add(this.btnFilterEmployees);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(357, 73);
+            this.panel1.Size = new System.Drawing.Size(491, 73);
             this.panel1.TabIndex = 0;
             // 
             // btnRemoveFilter
@@ -744,17 +778,17 @@
             this.btnFilterEmployees.UseVisualStyleBackColor = false;
             this.btnFilterEmployees.Click += new System.EventHandler(this.btnFilterEmployees_Click);
             // 
-            // tabPage3
+            // tabPagePayrollByProducts
             // 
-            this.tabPage3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.tabPage3.Controls.Add(this.groupBox2);
-            this.tabPage3.Controls.Add(this.panel3);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(363, 333);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Payroll By Products";
+            this.tabPagePayrollByProducts.BackColor = System.Drawing.Color.LimeGreen;
+            this.tabPagePayrollByProducts.Controls.Add(this.groupBox2);
+            this.tabPagePayrollByProducts.Controls.Add(this.panel3);
+            this.tabPagePayrollByProducts.Location = new System.Drawing.Point(4, 22);
+            this.tabPagePayrollByProducts.Name = "tabPagePayrollByProducts";
+            this.tabPagePayrollByProducts.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPagePayrollByProducts.Size = new System.Drawing.Size(497, 650);
+            this.tabPagePayrollByProducts.TabIndex = 2;
+            this.tabPagePayrollByProducts.Text = "Payroll By Products";
             // 
             // groupBox2
             // 
@@ -762,7 +796,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(3, 102);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(357, 228);
+            this.groupBox2.Size = new System.Drawing.Size(491, 545);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             // 
@@ -805,9 +839,10 @@
             dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewPayrollItem.RowHeadersDefaultCellStyle = dataGridViewCellStyle13;
-            this.dataGridViewPayrollItem.Size = new System.Drawing.Size(351, 209);
+            this.dataGridViewPayrollItem.Size = new System.Drawing.Size(485, 526);
             this.dataGridViewPayrollItem.TabIndex = 0;
             this.dataGridViewPayrollItem.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewByProducts_CellContentDoubleClick);
+            this.dataGridViewPayrollItem.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewPayrollItem_DataError);
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -840,13 +875,13 @@
             // 
             // panel3
             // 
-            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.panel3.BackColor = System.Drawing.Color.Transparent;
             this.panel3.Controls.Add(this.cbopayrollproducts);
-            this.panel3.Controls.Add(this.btnShow);
+            this.panel3.Controls.Add(this.btnShow_Statement_or_Schedule);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(3, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(357, 99);
+            this.panel3.Size = new System.Drawing.Size(491, 99);
             this.panel3.TabIndex = 0;
             // 
             // cbopayrollproducts
@@ -859,30 +894,54 @@
             "Statement"});
             this.cbopayrollproducts.Location = new System.Drawing.Point(21, 20);
             this.cbopayrollproducts.Name = "cbopayrollproducts";
-            this.cbopayrollproducts.Size = new System.Drawing.Size(169, 21);
+            this.cbopayrollproducts.Size = new System.Drawing.Size(216, 21);
             this.cbopayrollproducts.TabIndex = 0;
             // 
-            // btnShow
+            // btnShow_Statement_or_Schedule
             // 
-            this.btnShow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.btnShow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnShow.Location = new System.Drawing.Point(21, 56);
-            this.btnShow.Name = "btnShow";
-            this.btnShow.Size = new System.Drawing.Size(75, 23);
-            this.btnShow.TabIndex = 1;
-            this.btnShow.Text = "Show";
-            this.btnShow.UseVisualStyleBackColor = false;
-            this.btnShow.Click += new System.EventHandler(this.btnShow_Click);
+            this.btnShow_Statement_or_Schedule.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btnShow_Statement_or_Schedule.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnShow_Statement_or_Schedule.Location = new System.Drawing.Point(21, 56);
+            this.btnShow_Statement_or_Schedule.Name = "btnShow_Statement_or_Schedule";
+            this.btnShow_Statement_or_Schedule.Size = new System.Drawing.Size(75, 23);
+            this.btnShow_Statement_or_Schedule.TabIndex = 1;
+            this.btnShow_Statement_or_Schedule.Text = "Show";
+            this.btnShow_Statement_or_Schedule.UseVisualStyleBackColor = false;
+            this.btnShow_Statement_or_Schedule.Click += new System.EventHandler(this.btnShow_Click);
             // 
-            // webBrowser1
+            // tabPageLogs
             // 
-            this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser1.Location = new System.Drawing.Point(0, 0);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(628, 359);
-            this.webBrowser1.TabIndex = 0;
-            this.webBrowser1.Url = new System.Uri("", System.UriKind.Relative);
+            this.tabPageLogs.BackColor = System.Drawing.Color.LimeGreen;
+            this.tabPageLogs.Controls.Add(this.txtlog);
+            this.tabPageLogs.Location = new System.Drawing.Point(4, 22);
+            this.tabPageLogs.Name = "tabPageLogs";
+            this.tabPageLogs.Size = new System.Drawing.Size(497, 650);
+            this.tabPageLogs.TabIndex = 4;
+            this.tabPageLogs.Text = "Logs";
+            // 
+            // txtlog
+            // 
+            this.txtlog.BackColor = System.Drawing.Color.Black;
+            this.txtlog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtlog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtlog.ForeColor = System.Drawing.Color.Lime;
+            this.txtlog.Location = new System.Drawing.Point(0, 0);
+            this.txtlog.Name = "txtlog";
+            this.txtlog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.txtlog.Size = new System.Drawing.Size(497, 650);
+            this.txtlog.TabIndex = 0;
+            this.txtlog.Text = "";
+            // 
+            // webBrowser
+            // 
+            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowser.Location = new System.Drawing.Point(0, 0);
+            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser.Name = "webBrowser";
+            this.webBrowser.ScriptErrorsSuppressed = true;
+            this.webBrowser.Size = new System.Drawing.Size(807, 659);
+            this.webBrowser.TabIndex = 0;
+            this.webBrowser.Url = new System.Uri("", System.UriKind.Relative);
             // 
             // errorProvider1
             // 
@@ -893,20 +952,20 @@
             this.statusStripReports.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.statusStripReports.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("statusStripReports.BackgroundImage")));
             this.statusStripReports.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ctlInfoLBL});
-            this.statusStripReports.Location = new System.Drawing.Point(0, 397);
+            this.lblstatusinfo});
+            this.statusStripReports.Location = new System.Drawing.Point(0, 697);
             this.statusStripReports.Name = "statusStripReports";
-            this.statusStripReports.Size = new System.Drawing.Size(1003, 22);
+            this.statusStripReports.Size = new System.Drawing.Size(1238, 22);
             this.statusStripReports.TabIndex = 0;
             this.statusStripReports.Text = "statusStrip1";
             // 
-            // ctlInfoLBL
+            // lblstatusinfo
             // 
-            this.ctlInfoLBL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.ctlInfoLBL.Name = "ctlInfoLBL";
-            this.ctlInfoLBL.Size = new System.Drawing.Size(39, 17);
-            this.ctlInfoLBL.Text = "Ready";
-            this.ctlInfoLBL.Click += new System.EventHandler(this.btnReportsFolder_Click);
+            this.lblstatusinfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.lblstatusinfo.Name = "lblstatusinfo";
+            this.lblstatusinfo.Size = new System.Drawing.Size(39, 17);
+            this.lblstatusinfo.Text = "Ready";
+            this.lblstatusinfo.Click += new System.EventHandler(this.lblstatusinfo_Click);
             // 
             // appNotifyIcon
             // 
@@ -983,47 +1042,11 @@
             this.dataGridViewTextBoxColumn10.ReadOnly = true;
             this.dataGridViewTextBoxColumn10.Width = 78;
             // 
-            // EmpNo
-            // 
-            this.EmpNo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.EmpNo.DataPropertyName = "EmpNo";
-            this.EmpNo.HeaderText = "EmpNo";
-            this.EmpNo.Name = "EmpNo";
-            this.EmpNo.ReadOnly = true;
-            this.EmpNo.Width = 60;
-            // 
-            // Surname
-            // 
-            this.Surname.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Surname.DataPropertyName = "Surname";
-            this.Surname.HeaderText = "Surname";
-            this.Surname.Name = "Surname";
-            this.Surname.ReadOnly = true;
-            // 
-            // OtherNames
-            // 
-            this.OtherNames.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.OtherNames.DataPropertyName = "OtherNames";
-            this.OtherNames.HeaderText = "OtherNames";
-            this.OtherNames.Name = "OtherNames";
-            this.OtherNames.ReadOnly = true;
-            // 
-            // ColumnBasicPay
-            // 
-            this.ColumnBasicPay.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ColumnBasicPay.DataPropertyName = " BasicPay";
-            dataGridViewCellStyle8.Format = "C2";
-            dataGridViewCellStyle8.NullValue = null;
-            this.ColumnBasicPay.DefaultCellStyle = dataGridViewCellStyle8;
-            this.ColumnBasicPay.HeaderText = " Basic Pay";
-            this.ColumnBasicPay.Name = "ColumnBasicPay";
-            this.ColumnBasicPay.ReadOnly = true;
-            // 
             // PDFViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1003, 419);
+            this.ClientSize = new System.Drawing.Size(1238, 719);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStripReports);
@@ -1039,23 +1062,24 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
+            this.tabControlReportsData.ResumeLayout(false);
+            this.tabPagePayrolls.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPayroll)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.tabPage4.ResumeLayout(false);
+            this.tabPageEmployers.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEmployers)).EndInit();
-            this.tabPage1.ResumeLayout(false);
+            this.tabPageEmployees.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEmployee)).EndInit();
             this.panel1.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
+            this.tabPagePayrollByProducts.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPayrollItem)).EndInit();
             this.panel3.ResumeLayout(false);
+            this.tabPageLogs.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.statusStripReports.ResumeLayout(false);
             this.statusStripReports.PerformLayout();
@@ -1073,8 +1097,8 @@
         private System.Windows.Forms.StatusStrip statusStripReports;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.WebBrowser webBrowser1;
-        private System.Windows.Forms.ToolStripStatusLabel ctlInfoLBL;
+        private System.Windows.Forms.WebBrowser webBrowser;
+        private System.Windows.Forms.ToolStripStatusLabel lblstatusinfo;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.ToolStripButton btnViewPayslip;
         private System.Windows.Forms.BindingSource bindingSourceEmployees;
@@ -1096,23 +1120,23 @@
         private System.Windows.Forms.ToolStripButton tsbExit;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.BindingSource bindingSourcePayrollItem;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabControl tabControlReportsData;
+        private System.Windows.Forms.TabPage tabPagePayrolls;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.CheckBox chkUseCurrentPayroll;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox cbYr;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.ComboBox cbopayrollyears;
+        private System.Windows.Forms.TabPage tabPageEmployees;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnFilterEmployees;
         private System.Windows.Forms.ToolStripComboBox cboItemTypesReports;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripButton btnShowPDF;
-        private System.Windows.Forms.ToolStripButton btnExcel;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.ToolStripButton btnShowExcel;
+        private System.Windows.Forms.TabPage tabPagePayrollByProducts;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.ComboBox cbopayrollproducts;
-        private System.Windows.Forms.Button btnShow;
+        private System.Windows.Forms.Button btnShow_Statement_or_Schedule;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
@@ -1128,14 +1152,11 @@
         private System.Windows.Forms.DataGridView dataGridViewPayrollItem;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.DataGridView dataGridViewPayroll;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Year;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Period;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDateRun;
         private System.Windows.Forms.NotifyIcon appNotifyIcon;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnDefaultItem;
-        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TabPage tabPageEmployers;
         private System.Windows.Forms.DataGridView dataGridViewEmployers;
         private System.Windows.Forms.BindingSource bindingSourceEmployers;
         private System.Windows.Forms.GroupBox groupBox4;
@@ -1148,6 +1169,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Surname;
         private System.Windows.Forms.DataGridViewTextBoxColumn OtherNames;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnBasicPay;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Year;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Period;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDateRun;
+        private System.Windows.Forms.TabPage tabPageLogs;
+        private System.Windows.Forms.RichTextBox txtlog;
 
     }
 }

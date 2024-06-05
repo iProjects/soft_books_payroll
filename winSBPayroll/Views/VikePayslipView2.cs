@@ -15,7 +15,6 @@ namespace winSBPayroll.Views
 {
     public class VikepayslipView2
     {
-
         VikePayslipViewModel _ViewModel;
         Document document;
         string Message;
@@ -37,15 +36,14 @@ namespace winSBPayroll.Views
         Font tcFont3 = new Font(Font.HELVETICA, 6, Font.BOLD);//table cell
         Font tcFont4 = new Font(Font.TIMES_ROMAN, 6, Font.NORMAL);//table cell
         Font rms10Normal = new Font(Font.HELVETICA, 7, Font.NORMAL);
+        public event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
 
 
-        public VikepayslipView2(VikePayslipViewModel PayslipModel, string FileName, string Conn)
+        public VikepayslipView2(VikePayslipViewModel PayslipModel, string FileName, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
-
             if (PayslipModel == null)
                 throw new ArgumentNullException("VikePayslipViewModel is null");
             _ViewModel = PayslipModel;
-
 
             if (string.IsNullOrEmpty(Conn))
                 throw new ArgumentNullException("connection");
@@ -54,6 +52,8 @@ namespace winSBPayroll.Views
             de = new DataEntry(connection);
             db = new SBPayrollDBEntities(connection);
             rep = new Repository(connection);
+
+            _notificationmessageEventname = notificationmessageEventname;
 
             sFilePDF = FileName;
 
@@ -67,7 +67,7 @@ namespace winSBPayroll.Views
                 return sFilePDF;
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return null;
             }
@@ -130,8 +130,8 @@ namespace winSBPayroll.Views
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
-            } 
+                Log.WriteToErrorLogFile(ex);
+            }
         }
 
 
@@ -149,7 +149,7 @@ namespace winSBPayroll.Views
                 payslipTable.BorderWidthBottom = 0;
                 payslipTable.BorderWidthTop = 0;
                 payslipTable.BorderWidthLeft = 0;
-                payslipTable.BorderWidthRight = 0; 
+                payslipTable.BorderWidthRight = 0;
 
                 Cell aCell = new Cell(new Phrase(_ViewModel.EmployerName.ToUpper().Trim() + "\n", hFont1));
                 aCell.HorizontalAlignment = Cell.ALIGN_CENTER;
@@ -263,7 +263,7 @@ namespace winSBPayroll.Views
 
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -276,7 +276,7 @@ namespace winSBPayroll.Views
                 Table payslipTable = new Table(2);
                 payslipTable.WidthPercentage = 100;
                 payslipTable.Padding = 1;
-                payslipTable.Width = 100; 
+                payslipTable.Width = 100;
                 payslipTable.Border = 0;
                 payslipTable.BorderWidth = 0;
                 payslipTable.BorderWidthBottom = 0;
@@ -312,7 +312,7 @@ namespace winSBPayroll.Views
                 document.Add(payslipTable);
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -377,7 +377,7 @@ namespace winSBPayroll.Views
                 document.Add(payslipTable);
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -427,7 +427,7 @@ namespace winSBPayroll.Views
                 document.Add(payslipTable);
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -459,7 +459,7 @@ namespace winSBPayroll.Views
                 document.Add(payslipTable);
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -481,7 +481,7 @@ namespace winSBPayroll.Views
                 }
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -532,7 +532,7 @@ namespace winSBPayroll.Views
                 document.Add(payslipTable);
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -585,7 +585,7 @@ namespace winSBPayroll.Views
                 document.Add(payslipTable);
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -606,7 +606,7 @@ namespace winSBPayroll.Views
                 }
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -627,7 +627,7 @@ namespace winSBPayroll.Views
                 }
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -650,7 +650,7 @@ namespace winSBPayroll.Views
                 payslipTable.BorderWidthRight = 0;
 
                 Cell aCell = new Cell(new Phrase("Employee LOANS\n", hFont2));
-                aCell.HorizontalAlignment = Cell.ALIGN_CENTER; 
+                aCell.HorizontalAlignment = Cell.ALIGN_CENTER;
                 aCell.Colspan = 3;
                 //aCell.Border = Cell.NO_BORDER;
                 payslipTable.AddCell(aCell);
@@ -688,7 +688,7 @@ namespace winSBPayroll.Views
                 document.Add(payslipTable);
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -711,7 +711,7 @@ namespace winSBPayroll.Views
 
 
                 Cell aCell = new Cell(new Phrase("SACCO Contributions\n", hFont2));
-                aCell.HorizontalAlignment = Cell.ALIGN_CENTER; 
+                aCell.HorizontalAlignment = Cell.ALIGN_CENTER;
                 aCell.Colspan = 3;
                 //aCell.Border = Cell.NO_BORDER;
                 payslipTable.AddCell(aCell);
@@ -749,7 +749,7 @@ namespace winSBPayroll.Views
                 document.Add(payslipTable);
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -781,7 +781,7 @@ namespace winSBPayroll.Views
                 document.Add(payslipTable);
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }

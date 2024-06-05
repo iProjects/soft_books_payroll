@@ -16,11 +16,14 @@ namespace winSBPayroll.Reports.Excel
         CreateExcelDoc document;
         string Message;
         string sFileExcel;
-        
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
         //constructor
-        public NHIFExcelBuilder(NHIFReportModel nhifreportmodel, string FileName)
+        public NHIFExcelBuilder(NHIFReportModel nhifreportmodel, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
+            _notificationmessageEventname = notificationmessageEventname;
+
             _nhifreportmodel = nhifreportmodel;
             sFileExcel = FileName;
         }
@@ -57,7 +60,7 @@ namespace winSBPayroll.Reports.Excel
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
 
         }
@@ -94,7 +97,7 @@ namespace winSBPayroll.Reports.Excel
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, "Printed on: " + _nhifreportmodel.PrintedOn.ToString("dd-dddd-MMMM-yyyy"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
-         
+
         }
 
 

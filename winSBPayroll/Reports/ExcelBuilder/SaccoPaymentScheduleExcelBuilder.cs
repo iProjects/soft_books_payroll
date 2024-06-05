@@ -11,17 +11,19 @@ namespace winSBPayroll.Reports.ExcelBuilder
 {
     public class SaccoPaymentScheduleExcelBuilder
     {
-
         //private attributes 
         SaccoPaymentScheduleModel _saccopaymentshedulemodel;
         CreateExcelDoc document;
         string Message;
         string sFileExcel;
-        
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
         //constructor
-        public SaccoPaymentScheduleExcelBuilder(SaccoPaymentScheduleModel saccopaymentshedulemodel, string FileName)
+        public SaccoPaymentScheduleExcelBuilder(SaccoPaymentScheduleModel saccopaymentshedulemodel, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
+            _notificationmessageEventname = notificationmessageEventname;
+
             _saccopaymentshedulemodel = saccopaymentshedulemodel;
             sFileExcel = FileName;
         }
@@ -58,7 +60,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
 
         }
@@ -91,7 +93,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
             document.createHeaders(row, col, "Printed on: " + _saccopaymentshedulemodel.PrintedOn.ToString("dd-dddd-MMMM-yyyy"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
 
-            
+
         }
 
 
@@ -136,7 +138,7 @@ namespace winSBPayroll.Reports.ExcelBuilder
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, "TOTAL SHARES", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
-          
+
         }
 
         //table details
@@ -163,8 +165,8 @@ namespace winSBPayroll.Reports.ExcelBuilder
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, tr.ytdamt.ToString("#,##0"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
-         
-            
+
+
 
         }
 
@@ -187,19 +189,19 @@ namespace winSBPayroll.Reports.ExcelBuilder
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, _saccopaymentshedulemodel.TotalMonthAmount.ToString("#,##0"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
-            
+
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, _saccopaymentshedulemodel.TotalShares.ToString("#,##0"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
-          
+
 
         }
 
         //document footer
         private void AddDocFooter(ref int row, ref int col)
         {
-            
+
         }
 
 

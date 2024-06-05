@@ -36,18 +36,18 @@ namespace BLL.Payroll
         }
 
         #region Payroll
-        public void RunPayroll(bool simulate, int PayrollPeriod, int year, ref string sError)
+        public void RunPayroll(bool simulate, int PayrollPeriod, int year, ref string sError, int EmployerId)
         {
-            GeneratePayslipsForAll(simulate, PayrollPeriod, year, ref  sError);
+            GeneratePayslipsForAll(simulate, PayrollPeriod, year, ref  sError, EmployerId);
         }
 
-        public void ArchivePayroll(int period, int Year)
+        public void ArchivePayroll(int period, int Year, int EmployerId)
         {
             //Remove previous records first if any
             try
             {
-                rep.ClearPayslipDet(period, Year);
-                rep.ClearPayslipMaster(period, Year);
+                rep.ClearPayslipDet(period, Year, EmployerId);
+                rep.ClearPayslipMaster(period, Year, EmployerId);
 
 
                 //Transfer records from working table PayslipMaster to payroll
@@ -55,11 +55,13 @@ namespace BLL.Payroll
                 rep.CopyPayslipsToPayroll(period, Year);
 
                 //Clear PayslipMaster + det table
-                rep.ClearPayslipDet_Temp();
-                rep.ClearPayslipMaster_Temp();
+                rep.ClearPayslipDet_Temp(period, Year, EmployerId);
+                rep.ClearPayslipMaster_Temp(period, Year, EmployerId);
 
                 //Mark Payroll as processed
-                rep.MarkPayrollAsClosed(period, Year);
+                //rep.MarkPayrollAsClosed(period, Year);
+                rep.mark_payroll_for_employer_as_closed(period, Year, EmployerId);
+
             }
             catch (Exception e)
             {
@@ -77,7 +79,7 @@ namespace BLL.Payroll
 
 
         #region Payslips
-        public bool GeneratePayslipsForAll(bool simulate, int PayrollPeriod, int Year, ref string sError)
+        public bool GeneratePayslipsForAll(bool simulate, int PayrollPeriod, int Year, ref string sError, int EmployerId)
         {
             bool ret = true;
 
@@ -86,13 +88,13 @@ namespace BLL.Payroll
             {
                 if (simulate)
                 {
-                    rep.ClearPayslipDet_Temp();
-                    rep.ClearPayslipMaster_Temp();
+                    rep.ClearPayslipDet_Temp(PayrollPeriod, Year, EmployerId);
+                    rep.ClearPayslipMaster_Temp(PayrollPeriod, Year, EmployerId);
                 }
                 else
                 {
-                    rep.ClearPayslipDet(PayrollPeriod, Year);
-                    rep.ClearPayslipMaster(PayrollPeriod, Year);
+                    rep.ClearPayslipDet(PayrollPeriod, Year, EmployerId);
+                    rep.ClearPayslipMaster(PayrollPeriod, Year, EmployerId);
                 }
             }
             catch (Exception e)
@@ -100,9 +102,11 @@ namespace BLL.Payroll
                 Log.WriteToErrorLogFile(e);
                 return false;
             }
+
             //Recreate transactions
-            List<Employee> emps = rep.GetAllActiveEmployees();
+            List<Employee> emps = rep.GetAllActiveEmployeesforEmployer(EmployerId);
             int count = emps.Count();
+
             for (int value = 0; value < count; value++) //all active 
             {
                 Employee emp = emps[value];
@@ -140,6 +144,7 @@ namespace BLL.Payroll
                         if (payslip == null)
                         {
                             Msg = "Payslip for [" + EmpNo.Trim() + "] not successful \n Error = See error log file";
+                            Log.WriteToErrorLogFile(new Exception(Msg));
                             error = true;
                             return false;
                         }
@@ -148,17 +153,20 @@ namespace BLL.Payroll
                         if (!SavePayslip(simulate, payslip, ref saveErr))
                         {
                             Msg = "Payslip for [" + EmpNo.Trim() + "] not successful\n Error = " + saveErr;
+                            Log.WriteToErrorLogFile(new Exception(Msg));
                             error = true;
                             return false;
                         }
 
 
                         Msg = "Payslip for [" + EmpNo.Trim() + "] Month [" + PayrollPeriod + "] Year [" + Year + "] successfuly completed";
+                        Log.WriteToErrorLogFile(new Exception(Msg));
                         return true;
 
                     }
                     catch (Exception ex)
                     {
+                        Log.WriteToErrorLogFile(ex);
                         Utils.ShowError(ex);
                         return false;
                     }
@@ -166,6 +174,7 @@ namespace BLL.Payroll
                 else
                 {
                     Msg = "Payslip for [" + EmpNo.Trim() + "] not successful\n Error = " + payMaker._errMsg;
+                    Log.WriteToErrorLogFile(new Exception(Msg));
                     error = true;
                     return false;
                 }
@@ -173,6 +182,7 @@ namespace BLL.Payroll
             }
             catch (Exception ex)
             {
+                Log.WriteToErrorLogFile(ex);
                 Utils.ShowError(ex);
                 return false;
             }

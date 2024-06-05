@@ -42,6 +42,7 @@ namespace winSBPayroll.Forms
 
         private static UserModel ObtainUserByNameAndPassword(string username, string password, IList<UserModel> users)
         {
+            //return users.Where((u) => u.UserName == username && u.Password == password).FirstOrDefault();
             return users.Where((u) => u.UserName == username && u.Password == password).FirstOrDefault();
         }
 

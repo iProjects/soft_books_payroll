@@ -1,29 +1,29 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics; 
+using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
-using System.Management;
-using System.Management.Instrumentation;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Reflection;
-using System.Runtime;
 using System.Runtime.InteropServices;
-using System.Security.Policy;
-using System.Text; 
-using System.Threading;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows.Forms;
-using System.Xml;
-using Microsoft.Win32;
 
 namespace CommonLib
 {
     public static class Utils
     {
+        public static string ENCRIPTION_DECRYPTION_KEY = "soft_books_payroll";
+        public static string APP_NAME = "Soft Books Payroll";
+        public static string APP_NAME_SB = "SB Payroll";
+        public static string AUTO_COMPLETE_LOGIN_FILENAME = "resources/auto_complete_login.xml";
+        public static string AUTO_COMPLETE_USERS_FILENAME = "resources/auto_complete_users.xml";
+        public static string AUTO_COMPLETE_SERVER_LOGIN_FILENAME = "resources/auto_complete_server_login.xml";
+        public static string ACTIVATOR_FILENAME = "resources/activator.xml";
+
         public static string NextSeries(string from)
         {
             //string from is a string of the form STRNUM, STR_NUM,etc
@@ -83,11 +83,11 @@ namespace CommonLib
         }
         public static void ShowError(Exception ex)
         {
-            Utils.LogEventViewer(ex);
             string msg = ex.Message;
             if (ex.InnerException != null) msg += ("\n" + ex.InnerException.Message);
             if (!string.IsNullOrEmpty(ex.StackTrace)) msg += ("\nTrace = " + ex.StackTrace);
-            MessageBox.Show(msg, "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(msg, APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Log.WriteToErrorLogFile_and_EventViewer(ex);
         }
 
         #region Resources
@@ -146,7 +146,7 @@ namespace CommonLib
             {
                 using (NotifyIcon appNotifyIcon = new NotifyIcon())
                 {
-                    appNotifyIcon.Text = "Soft Books Payroll";
+                    appNotifyIcon.Text = Utils.APP_NAME;
                     appNotifyIcon.Icon = new Icon("Resources/Icons/Dollar.ico");
                     ContextMenuStrip contextMenuStripSystemNotification = new ContextMenuStrip();
                     appNotifyIcon.ContextMenuStrip = contextMenuStripSystemNotification;
@@ -169,19 +169,43 @@ namespace CommonLib
             try
             {
                 System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage();
-                message.To.Add("calvinr451@gmail.com");
-                message.Subject = "soft books payroll administrator follow up [ " + DateTime.Now.ToString() + " ]";
-                message.From = new System.Net.Mail.MailAddress("kevinmk30@gmail.com");
+                message.To.Add("zetainstitute254@gmail.com");
+                message.Subject = APP_NAME + " administrator follow up [ " + DateTime.Now.ToString() + " ]";
+                message.From = new System.Net.Mail.MailAddress("fanikiwa254@gmail.com");
                 message.Body = template;
-                message.ReplyToList.Add("kevinmk30@gmail.com");
+                message.ReplyToList.Add("fanikiwa254@gmail.com");
                 message.Bcc.Add(
-"brianmatin@gmail.com,brianmatin6@gmail.com,brianmatin8@gmail.com, brnkevin65@gmail.com,bkevin719@gmail.com,bkevin812@gmail.com,calvinr451@gmail.com, kevinmatin4@gmail.com, kevinmatin5@gmail.com, kevinmatin6@gmail.com, kevinmk30@gmail.com, nikevnitam@gmail.com, matinbrian5@gmail.com,matinbrian6@gmail.com");
+                    "kevinmutugikithinji@gmail.com," +
+                    "mutugikevin254@gmail.com," +
+                    "kevinmk30@gmail.com," +
+                    "kevinmk40@gmail.com," +
+                    "kevinmk200@gmail.com," +
+                    "calvinr451@gmail.com," +
+                    "nikevnitam@gmail.com," +
+                    "obramato5@gmail.com," +
+                    "matinbrian5@gmail.com," +
+                    "matinbrian6@gmail.com," +
+                    "kevinmatin4@gmail.com," +
+                    "kevinmatin5@gmail.com," +
+                    "kevinmatin6@gmail.com," +
+                    "bitclass21@gmail.com," +
+                    "bitclass2.2@gmail.com," +
+                    "brianmatin@gmail.com," +
+                    "brianmatin6@gmail.com," +
+                    "brianmatin8@gmail.com," +
+                    "brnkevin65@gmail.com," +
+                    "bkevin719@gmail.com," +
+                    "bkevin812@gmail.com," +
+                    "fanikiwa254@gmail.com," +
+                    "softwareproviders254@gmail.com," +
+                    "zetainstitute254@gmail.com"
+                );
 
                 System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient();
                 smtp.UseDefaultCredentials = false;
                 System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
-                NetworkCred.UserName = "kevinmk30@gmail.com";
-                NetworkCred.Password = "kevinbrian";
+                NetworkCred.UserName = "fanikiwa254@gmail.com";
+                NetworkCred.Password = "phkbommtmijgshws";
                 smtp.Credentials = NetworkCred;
                 smtp.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
                 smtp.Host = "smtp.gmail.com";
@@ -232,12 +256,18 @@ namespace CommonLib
             try
             {
                 string content = null;
-                string inputPath = ("Logs/error.txt");
+
+                string base_directory = get_application_path();
+                string log_path = build_file_path(base_directory, "Logs");
+
+                string log_file_name = "error.log";
+                string inputPath = Utils.build_file_path(log_path, log_file_name);
+
                 if (File.Exists(inputPath))
                 {
                     using (FileStream fs = new FileStream(inputPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                     {
-                        using (StreamReader reader = new StreamReader(fs, Encoding.UTF8))
+                        using (StreamReader reader = new StreamReader(fs))
                         {
                             content = reader.ReadToEnd();
                         }
@@ -247,7 +277,7 @@ namespace CommonLib
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                LogEventViewer(ex);
                 return null;
             }
         }
@@ -264,7 +294,7 @@ namespace CommonLib
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Console.WriteLine(ex.ToString());
                 return false;
             }
         }
@@ -330,8 +360,8 @@ namespace CommonLib
                 sb.AppendLine("WHOLE EXCEPTION : " + ex.ToString());
                 string msg = sb.ToString();
 
-                String eventsourceName = "Soft Books Payroll";
-                String logName = "SB Payroll";
+                String eventsourceName = APP_NAME_SB;
+                String logName = APP_NAME_SB;
                 if (!EventLog.SourceExists(eventsourceName))
                 {
                     EventLog.CreateEventSource(eventsourceName, logName);
@@ -345,10 +375,201 @@ namespace CommonLib
             }
             catch (Exception exc)
             {
-                string msg = exc.Message;
+                Console.WriteLine(exc.ToString());
                 return false;
             }
         }
+
+        public static string get_computer_name()
+        {
+            string computer_name = Environment.MachineName.ToString();
+            return computer_name;
+        }
+
+        public static string get_application_path()
+        {
+            string base_directory = AppDomain.CurrentDomain.BaseDirectory;
+            return base_directory;
+        }
+        public static string build_file_path(string directory, string filename)
+        {
+            string file_path = Path.Combine(directory, filename);
+            return file_path;
+        }
+        public static string strip_invalid_characters_from_file_name(string filename)
+        {
+            string safe_file_name = filename
+                                    .Replace("\\", "")
+                                    .Replace("/", "")
+                                    .Replace("*", "")
+                                    .Replace(":", "")
+                                    .Replace("?", "")
+                                    .Replace("<", "")
+                                    .Replace(">", "")
+                                    .Replace(">", "")
+                                    .Replace("|", "");
+            return safe_file_name;
+        }
+        public static string create_random_salt()
+        {
+            try
+            {
+                string now = DateTime.Now.ToString("dd dddd MM MMMM yyyy HH mm ss tt");
+                return get_SHA512_hash(now);
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
+            }
+        }
+
+        public static string get_Md5_hash(string hash_key)
+        {
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                byte[] unicode_text = Encoding.UTF8.GetBytes(hash_key);
+                MD5 md5 = MD5.Create();
+                byte[] encoded_result = md5.ComputeHash(unicode_text);
+
+                //convert to text
+                for (int i = 0; i < encoded_result.Length; i++)
+                {
+                    sb.Append(encoded_result[i].ToString("X2"));
+                }
+                return sb.ToString();
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
+            }
+        }
+        public static string get_SHA512_hash(string hash_key)
+        {
+            try
+            {
+                StringBuilder sb = new StringBuilder(128);
+                byte[] unicode_text = Encoding.UTF8.GetBytes(hash_key);
+                using (SHA512 hash = new SHA512Managed())
+                {
+                    byte[] hashed_bytes = hash.ComputeHash(unicode_text);
+
+                    //Convert to text
+                    for (int i = 0; i < hashed_bytes.Length; i++)
+                    {
+                        sb.Append(hashed_bytes[i].ToString("X2"));
+                    }
+                }
+                return sb.ToString();
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
+            }
+        }
+        public static string format_license_key(string identifier)
+        {
+            try
+            {
+                int no_of_characters_in_license_key = int.Parse(System.Configuration.ConfigurationManager.AppSettings["NO_OF_CHARACTERS_IN_LICENSE_KEY"]);
+
+                string _identifier = identifier.Substring(0, no_of_characters_in_license_key).ToUpper();
+                char[] serial_aray = _identifier.ToCharArray();
+
+                StringBuilder sb = new StringBuilder();
+                int j = 0;
+                for (int i = 0; i < no_of_characters_in_license_key; i++)
+                {
+                    for (j = i; j < 4 + i; j++)
+                    {
+                        sb.Append(serial_aray[j]);
+                    }
+                    if (j == no_of_characters_in_license_key)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        i = (j) - 1;
+                        sb.Append("-");
+                    }
+                }
+                return sb.ToString();
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
+            }
+        }
+        //encryption
+        public static string encrypt_string(string input)
+        {
+            try
+            {
+                string output = string.Empty;
+                byte[] buffer_bytes = Encoding.UTF8.GetBytes(input);
+                string key = get_Md5_hash(ENCRIPTION_DECRYPTION_KEY);
+                using (Aes aes = Aes.Create())
+                {
+                    Rfc2898DeriveBytes crypto = new Rfc2898DeriveBytes(key, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x67, 0x61, 0x63, 0x73 });
+                    aes.Key = crypto.GetBytes(32);
+                    aes.IV = crypto.GetBytes(16);
+                    using (MemoryStream mstream = new MemoryStream())
+                    {
+                        using (CryptoStream cstream = new CryptoStream(mstream, aes.CreateEncryptor(), CryptoStreamMode.Write))
+                        {
+                            cstream.Write(buffer_bytes, 0, buffer_bytes.Length);
+                            cstream.Close();
+                        }
+                        output = Convert.ToBase64String(mstream.ToArray());
+                    }
+                }
+                return output;
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
+            }
+        }
+        //decryption
+        public static string decrypt_string(string input)
+        {
+            try
+            {
+                string output = string.Empty;
+                string encrypted_input = input.Replace(" ", "+");
+                byte[] buffer_bytes = Convert.FromBase64String(encrypted_input);
+                string key = get_Md5_hash(ENCRIPTION_DECRYPTION_KEY);
+                using (Aes aes = Aes.Create())
+                {
+                    Rfc2898DeriveBytes crypto = new Rfc2898DeriveBytes(key, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x67, 0x61, 0x63, 0x73 });
+                    aes.Key = crypto.GetBytes(32);
+                    aes.IV = crypto.GetBytes(16);
+                    using (MemoryStream mstream = new MemoryStream())
+                    {
+                        using (CryptoStream cstream = new CryptoStream(mstream, aes.CreateDecryptor(), CryptoStreamMode.Write))
+                        {
+                            cstream.Write(buffer_bytes, 0, buffer_bytes.Length);
+                            cstream.Close();
+                        }
+                        output = Encoding.UTF8.GetString(mstream.ToArray());
+                    }
+                }
+                return output;
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
+            }
+        }
+        #endregion  "Helpers"
+
 
     }
 
@@ -378,6 +599,42 @@ namespace CommonLib
             return InternetGetConnectedState(out Desc, 0);
         }
     }
-        #endregion  "Helpers"
+
+    public static class RegionAndLanguageHelper
+    { 
+        private const int GEO_FRIENDLYNAME = 8;
+         
+        private enum GeoClass : int
+        {
+            Nation = 16,
+            Region = 14,
+        };
+         
+        [DllImport("kernel32.dll", ExactSpelling = true, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
+        private static extern int GetUserGeoID(GeoClass geoClass);
+
+        [DllImport("kernel32.dll")]
+        private static extern int GetUserDefaultLCID();
+
+        [DllImport("kernel32.dll")]
+        private static extern int GetGeoInfo(int geoid, int geoType, StringBuilder lpGeoData, int cchData, int langid);
+         
+        /// <summary>
+        /// Returns machine current location as specified in Region and Language settings.
+        /// </summary>
+        public static string GetMachineCurrentLocation()
+        {
+            int geoId = GetUserGeoID(GeoClass.Nation); ;
+            int lcid = GetUserDefaultLCID();
+            StringBuilder locationBuffer = new StringBuilder(100);
+            GetGeoInfo(geoId, GEO_FRIENDLYNAME, locationBuffer, locationBuffer.Capacity, lcid);
+
+            return locationBuffer.ToString().Trim();
+        }
+         
+    }
+
+
+
 
 }

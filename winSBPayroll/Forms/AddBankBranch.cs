@@ -172,7 +172,7 @@ namespace winSBPayroll.Forms
 
                     if (db.BankBranches.Any(c => c.Bank == _BankBranch.Bank && c.BranchCode == _BankBranch.BranchCode))
                     {
-                        MessageBox.Show("Branch Code Exist!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Branch Code Exist!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     if (!db.BankBranches.Any(c => c.Bank == _BankBranch.Bank && c.BranchCode == _BankBranch.BranchCode))
                     {

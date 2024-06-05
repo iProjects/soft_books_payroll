@@ -15,7 +15,7 @@ namespace winSBPayroll.Forms
 {
     public partial class NHIFRates : Form
     {
-        DataEntry de ;
+        DataEntry de;
         SBPayrollDBEntities db;
         Repository rep;
         string connection;
@@ -39,22 +39,22 @@ namespace winSBPayroll.Forms
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
-        } 
+        }
         public void RefreshGrid()
         {
             try
             {
-            //set the datasource to null
-            bindingSourceNHIF.DataSource = null;
-            //set the datasource to a method
-            bindingSourceNHIF.DataSource = de.NHIFTable();
-            groupBox2.Text = bindingSourceNHIF.Count.ToString();
+                //set the datasource to null
+                bindingSourceNHIF.DataSource = null;
+                //set the datasource to a method
+                bindingSourceNHIF.DataSource = de.NHIFTable();
+                groupBox2.Text = bindingSourceNHIF.Count.ToString();
             }
             catch (Exception ex)
             {
                 Utils.ShowError(ex);
             }
-        } 
+        }
         private void NHIFRates_Load(object sender, EventArgs e)
         {
             try
@@ -69,14 +69,14 @@ namespace winSBPayroll.Forms
             {
                 Utils.ShowError(ex);
             }
-        } 
+        }
         private void btnUpload_Click(object sender, EventArgs e)
         {
-            openFileDialog1.Title = "select an excel file"; 
-            openFileDialog1.Filter = "Excel Files|*.xls|Excel Files |*.xlsx";  
-            openFileDialog1.ShowDialog();
+            openFileDialog.Title = "select an excel file";
+            openFileDialog.Filter = "Excel Files|*.xlsx | Excel Files|*.xls";
+            openFileDialog.ShowDialog();
 
-            string strFileName = openFileDialog1.FileName;
+            string strFileName = openFileDialog.FileName;
 
             // use bulkcopy method of upload
             try
@@ -138,7 +138,7 @@ namespace winSBPayroll.Forms
                 bulkCopy.ColumnMappings.Add("Id", "Id"); //
                 bulkCopy.ColumnMappings.Add("FromAmt", "FromAmt"); //
                 bulkCopy.ColumnMappings.Add("ToAmt", "ToAmt");
-                bulkCopy.ColumnMappings.Add("Rate", "Rate"); 
+                bulkCopy.ColumnMappings.Add("Rate", "Rate");
 
                 bulkCopy.DestinationTableName = "NHIFRates";
 
@@ -160,7 +160,7 @@ namespace winSBPayroll.Forms
                         destinationConnection.Close();
                     }
                 }
-                    
+
                 using (var myCommand = new OleDbCommand(query, myConnection))
                 {
                     myConnection.Open();
@@ -168,7 +168,7 @@ namespace winSBPayroll.Forms
                     destinationConnection.Open();
 
                     var myReader = myCommand.ExecuteReader();
-                    
+
                     bulkCopy.WriteToServer(myReader);
                 }
             }
@@ -186,7 +186,7 @@ namespace winSBPayroll.Forms
             excell_app.createHeaders(1, 3, "ToAmt", "A3", "A3", 0, "WHITE", true, 10, "n");
             excell_app.createHeaders(1, 4, "Rate", "A4", "A4", 0, "WHITE", true, 10, "n");
 
-            int row=2; 
+            int row = 2;
             foreach (var rec in de.NHIFTable())
             {
                 //add Data to to cells
@@ -196,7 +196,7 @@ namespace winSBPayroll.Forms
                 excell_app.createHeaders(row, col, rec.Id.ToString(), addr, addr, 0, "WHITE", true, 10, "n");
 
                 col++;
-                addr = excell_app.IntAlpha(col)+row;
+                addr = excell_app.IntAlpha(col) + row;
                 //excell_app.addData(row, col, rec.FromAmt.ToString(), addr, addr, "#,##0");
                 excell_app.createHeaders(row, col, rec.FromAmt.ToString(), addr, addr, 0, "WHITE", true, 10, "n");
 
@@ -211,9 +211,9 @@ namespace winSBPayroll.Forms
                 excell_app.createHeaders(row, col, rec.Rate.ToString(), addr, addr, 0, "WHITE", true, 10, "n");
 
                 row++;
- 
+
             }
-         
+            excell_app.Save(strFileName);
         }
 
 
@@ -244,31 +244,35 @@ namespace winSBPayroll.Forms
 
         private void btnExcel_Click(object sender, EventArgs e)
         {
-            saveFileDialog1.Title = "Select an excel file";
+            saveFileDialog.Title = "Select an excel file";
             //openFileDialog1.FileName = "";
             //"Text files (*.txt)|*.txt|All files (*.*)|*.*"
-            saveFileDialog1.Filter = "Excel Files|*.xls|Excel Files |*.xlsx";
+            saveFileDialog.Filter = "Excel Files|*.xlsx | Excel Files|*.xls";
 
+            DialogResult result = saveFileDialog.ShowDialog();
 
-            saveFileDialog1.ShowDialog();
-
-            string strFileName = saveFileDialog1.FileName;
-
-            // use bulkcopy method of upload
-            try
+            if (result == System.Windows.Forms.DialogResult.OK)
             {
-                //clear or backup the destination
-                Download(strFileName, _User);
-                MessageBox.Show("Download completed successfully");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("There was an error during download. Error details are  " + ex.Message);
+                string strFileName = saveFileDialog.FileName;
 
-                MessageBox.Show("Download incomplete");
-                return;
-            }
+                // use bulkcopy method of upload
+                try
+                {
+                    //clear or backup the destination
+                    Download(strFileName, _User);
+                    MessageBox.Show("Download completed successfully");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("There was an error during download. Error details are  " + ex.Message);
 
+                    MessageBox.Show("Download incomplete");
+                    return;
+                }
+            }
         }
+
+
+
     }
 }

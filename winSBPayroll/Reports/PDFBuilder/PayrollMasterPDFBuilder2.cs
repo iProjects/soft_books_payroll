@@ -19,29 +19,37 @@ namespace winSBPayroll.Reports.PDF
         PayrollMasterModel _ViewModel;
         Document document;
         string Message;
-        string sFilePDF; 
+        string sFilePDF;
         DataEntry de;
         SBPayrollDBEntities db;
         Repository rep;
         string connection;
         System.Collections.Generic.List<string> _earnings;
-       System.Collections.Generic.List<string> _deductions;
+        System.Collections.Generic.List<string> _deductions;
 
         //define fonts
-        Font hFont1 = new Font(Font.TIMES_ROMAN,12,Font.BOLD);
-        Font hFont2 = new Font(Font.TIMES_ROMAN,10,Font.BOLD); 
-        Font bFont1 = new Font(Font.TIMES_ROMAN, 12, Font.NORMAL);//body 
-        Font tHFont = new Font(Font.TIMES_ROMAN, 8, Font.BOLD); //table Header 
+        Font hFont1 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
+        Font hfont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font hFont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font bfont1 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);//body
+        Font bFont2 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);//body
+        Font bFont3 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);//body
+        Font tHFont = new Font(Font.TIMES_ROMAN, 9, Font.BOLD); //table Header
+        Font tHfont1 = new Font(Font.TIMES_ROMAN, 11, Font.BOLD); //table Header
+        Font tcFont = new Font(Font.HELVETICA, 8, Font.NORMAL);//table cell
         Font helv8Font = new Font(Font.HELVETICA, 8, Font.NORMAL);//table cell 
-        Font rms6Normal = new Font(Font.TIMES_ROMAN, 6, Font.NORMAL);
+        Font rms6Normal = new Font(Font.TIMES_ROMAN, 9, Font.NORMAL);
         Font rms8Normal = new Font(Font.HELVETICA, 10, Font.BOLD);
-        Font rms6Bold = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
-        Font rms8Bold = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);
+        Font rms10Bold = new Font(Font.HELVETICA, 10, Font.BOLD);
+        Font rms6Bold = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font rms8Bold = new Font(Font.HELVETICA, 8, Font.BOLD);
+        Font rms9Bold = new Font(Font.HELVETICA, 9, Font.BOLD);
         Font rms10Normal = new Font(Font.HELVETICA, 10, Font.NORMAL);
-
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
         //constructor
-        public PayrollMasterPDFBuilder2(System.Collections.Generic.List<string> earnings, System.Collections.Generic.List<string> deductions, PayrollMasterModel payrollMasterModel, string FileName, string Conn)
+        public PayrollMasterPDFBuilder2(System.Collections.Generic.List<string> earnings, System.Collections.Generic.List<string> deductions, PayrollMasterModel payrollMasterModel, string FileName, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (payrollMasterModel == null)
                 throw new ArgumentNullException("PayrollMasterModel is null");
@@ -54,6 +62,8 @@ namespace winSBPayroll.Reports.PDF
             de = new DataEntry(connection);
             db = new SBPayrollDBEntities(connection);
             rep = new Repository(connection);
+
+            _notificationmessageEventname = notificationmessageEventname;
 
             sFilePDF = FileName;
 
@@ -112,12 +122,12 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
-            }  
+                Log.WriteToErrorLogFile(ex);
+            }
         }
 
 
-        /*Build the document now**/        
+        /*Build the document now**/
         private void AddDocHeader()
         {
             Table payrollMasterTable = new Table(5);
@@ -157,7 +167,7 @@ namespace winSBPayroll.Reports.PDF
             payrollMasterTable.AddCell(PrintedonCell);
 
             //create the logo
-            PDFGen pdfgen = new PDFGen();
+            PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
             Image img0 = pdfgen.DoGetImageFile(_ViewModel.CompanyLogo);
             img0.Alignment = Image.ALIGN_MIDDLE;
             Cell logoCell = new Cell(img0);
@@ -170,7 +180,7 @@ namespace winSBPayroll.Reports.PDF
 
         }
 
-        private void AddDocBody() 
+        private void AddDocBody()
         {
 
             int Cols = 2 + _earnings.Count + 1 + _deductions.Count + 4;
@@ -181,7 +191,7 @@ namespace winSBPayroll.Reports.PDF
             //initialize the first 2
             int initialcols = 2;
             colWidthPercentages[0] = 3;
-            colWidthPercentages[1] = 5; 
+            colWidthPercentages[1] = 5;
 
             int others = colWidthPercentages.Sum();
             int dif = 100 - others;
@@ -194,7 +204,7 @@ namespace winSBPayroll.Reports.PDF
 
             payrollMasterTable.SetWidths(colWidthPercentages);
             payrollMasterTable.Spacing = 1;
-            payrollMasterTable.Padding = 1;  
+            payrollMasterTable.Padding = 1;
 
             //Put table headers
             BodyAddtableHeaders(payrollMasterTable);
@@ -224,18 +234,18 @@ namespace winSBPayroll.Reports.PDF
             c2.HorizontalAlignment = Cell.ALIGN_CENTER;
             payrollMasterTable.AddCell(c2);
 
-            
+
             foreach (var sub in _earnings)
             {
                 Cell markCell = new Cell(new Phrase(sub + "\nKshs", tHFont));
                 markCell.Border = Cell.RECTANGLE;
                 markCell.HorizontalAlignment = Cell.ALIGN_CENTER;
-                payrollMasterTable.AddCell(markCell); 
-            } 
+                payrollMasterTable.AddCell(markCell);
+            }
 
             Cell c7 = new Cell(new Phrase("Gross Pay\nKshs", tHFont));
             c7.HorizontalAlignment = Cell.ALIGN_CENTER;
-            payrollMasterTable.AddCell(c7); 
+            payrollMasterTable.AddCell(c7);
 
             foreach (var sub in _deductions)
             {
@@ -259,7 +269,7 @@ namespace winSBPayroll.Reports.PDF
 
             Cell c13 = new Cell(new Phrase("Net Pay\nKshs", tHFont));
             c13.HorizontalAlignment = Cell.ALIGN_CENTER;
-            payrollMasterTable.AddCell(c13);  
+            payrollMasterTable.AddCell(c13);
         }
 
         private void BodAddTableDetail(DAL.psuedovwPayrollMaster rec, Table payrollMasterTable)
@@ -273,13 +283,13 @@ namespace winSBPayroll.Reports.PDF
             enameCell.HorizontalAlignment = Cell.ALIGN_LEFT;
             payrollMasterTable.AddCell(enameCell);
 
-            
+
             foreach (var sub in this._earnings)
             {
                 var _rec = rec.GetMainEarnings.Where(s => s.Description == sub).SingleOrDefault();
                 if (_rec != null)
                 {
-                    decimal item = decimal.Parse( _rec.Amount.ToString());
+                    decimal item = decimal.Parse(_rec.Amount.ToString());
 
                     Cell markCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", item), helv8Font));
                     markCell.Border = Cell.RECTANGLE;
@@ -293,12 +303,12 @@ namespace winSBPayroll.Reports.PDF
                     markCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payrollMasterTable.AddCell(markCell);
                 }
-            } 
+            }
 
             Cell t1Cell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", rec.GrossTaxableEarnings), helv8Font));
             t1Cell.HorizontalAlignment = Cell.ALIGN_RIGHT;
             payrollMasterTable.AddCell(t1Cell);
-            
+
             foreach (var sub in this._deductions)
             {
                 var _rec = rec.GetOtherDeductions.Where(s => s.Description == sub).SingleOrDefault();
@@ -337,7 +347,7 @@ namespace winSBPayroll.Reports.PDF
                 }
             }
 
-            Cell loanCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}",rec.TotalLoansDeductions), helv8Font));
+            Cell loanCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", rec.TotalLoansDeductions), helv8Font));
             loanCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
             payrollMasterTable.AddCell(loanCell);
 
@@ -382,9 +392,9 @@ namespace winSBPayroll.Reports.PDF
                     markCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payrollMasterTable.AddCell(markCell);
                 }
-            } 
-             
-            decimal gp = _ViewModel.paymaster.Sum(a=>a.GrossTaxableEarnings);
+            }
+
+            decimal gp = _ViewModel.paymaster.Sum(a => a.GrossTaxableEarnings);
             Cell tCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", gp), tHFont));
             tCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
             payrollMasterTable.AddCell(tCell);
@@ -420,7 +430,7 @@ namespace winSBPayroll.Reports.PDF
 
                 if (totalOtherDeductions != null)
                 {
-                    decimal item = decimal.Parse(totalOtherDeductions.ToString());                     
+                    decimal item = decimal.Parse(totalOtherDeductions.ToString());
 
                     Cell markCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", item), helv8Font));
                     markCell.Border = Cell.RECTANGLE;
@@ -454,9 +464,9 @@ namespace winSBPayroll.Reports.PDF
             payrollMasterTable.AddCell(d6Cell);
         }
 
-        private void AddFooter() 
+        private void AddFooter()
         {
- 
+
             Table payrollMasterTable = new Table(2);
             payrollMasterTable.WidthPercentage = 50;
             payrollMasterTable.Padding = 2;
@@ -468,7 +478,7 @@ namespace winSBPayroll.Reports.PDF
             Cell netsalarypayable = new Cell(new Phrase("Please write the following cheques:", rms6Bold));
             netsalarypayable.Border = Cell.NO_BORDER;
             netsalarypayable.HorizontalAlignment = Cell.ALIGN_LEFT;
-            netsalarypayable.Colspan = 2;            
+            netsalarypayable.Colspan = 2;
             payrollMasterTable.AddCell(netsalarypayable);
 
 
@@ -511,12 +521,12 @@ namespace winSBPayroll.Reports.PDF
             totalsCell.HorizontalAlignment = Cell.ALIGN_LEFT;
             payrollMasterTable.AddCell(totalsCell);
 
-            Cell totalsvalueCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", (_ViewModel.Salaries + _ViewModel.deductionNSSF + _ViewModel.NHIF +  _ViewModel.PAYE).ToString("#,##0")), rms8Normal));
+            Cell totalsvalueCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", (_ViewModel.Salaries + _ViewModel.deductionNSSF + _ViewModel.NHIF + _ViewModel.PAYE).ToString("#,##0")), rms8Normal));
             totalsvalueCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
             payrollMasterTable.AddCell(totalsvalueCell);
 
             document.Add(payrollMasterTable);
-        
+
         }
 
         //document footer
@@ -525,12 +535,12 @@ namespace winSBPayroll.Reports.PDF
 
             Table payrollMasterTable = new Table(1);
             payrollMasterTable.WidthPercentage = 100;
-            payrollMasterTable.Border = Table.NO_BORDER; 
+            payrollMasterTable.Border = Table.NO_BORDER;
 
             Cell sgCell = new Cell(new Phrase("Signature.....................................................................................................", rms10Normal));
             sgCell.HorizontalAlignment = Cell.ALIGN_LEFT;
             sgCell.Border = Cell.NO_BORDER;
-            payrollMasterTable.AddCell(sgCell); 
+            payrollMasterTable.AddCell(sgCell);
 
             document.Add(payrollMasterTable);
 

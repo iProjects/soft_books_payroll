@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using DAL;
-using System.Diagnostics;
-using System.Linq;
 using CommonLib;
 using BLL.KRA.Models;
 
@@ -13,17 +10,19 @@ namespace BLL.KRA.ModelMakers
     public class EmployeesModelBuilder
     {
         EmployeesModelReport _ViewModel;
-        public bool error = false;
         SBPayrollDBEntities db;
         Repository rep;
         string connection;
+        bool error = false;
+        int _year;
+        int _period;
         DAL.Employer _employer;
+        bool _current;
         string fileLogo;
         string slogan;
 
-        public EmployeesModelBuilder(DAL.Employer employer, string Conn)
+        public EmployeesModelBuilder(DAL.Employer employer, bool current, int period, int year, string Conn)
         {
-            //initialize
             if (string.IsNullOrEmpty(Conn))
                 throw new ArgumentNullException("connection");
             connection = Conn;
@@ -31,7 +30,10 @@ namespace BLL.KRA.ModelMakers
             db = new SBPayrollDBEntities(connection);
             rep = new Repository(connection);
 
+            _current = current;
             _employer = employer;
+            _year = year;
+            _period = period;
 
             fileLogo = _employer.Logo;
             slogan = _employer.Slogan;
@@ -62,41 +64,69 @@ namespace BLL.KRA.ModelMakers
                 _ViewModel.CompanyLogo = fileLogo;
                 _ViewModel.CompanySlogan = slogan;
                 _ViewModel.PrintedOn = DateTime.Today;
-                _ViewModel.pae = this.GetEmployees();
+                _ViewModel.pe = this.GetEmployees();
             }
             catch (Exception ex)
             {
-                Utils.ShowError(ex); 
+                Utils.ShowError(ex);
             }
         }
-        private List<printallemployees> GetEmployees()
+        private List<print_employees> GetEmployees()
         {
             try
             {
-                List<printallemployees> esmr = new List<Models.printallemployees>();
-                List<Employee> employees = rep.GetAllActiveEmployeesforEmployer(_employer.Id);
-                foreach (var e in employees)
+                List<print_employees> lst_pe = new List<Models.print_employees>();
+
+                var _empnosforEmployer = from em in rep.GetAllActiveEmployees()
+                                         where em.EmployerId == _employer.Id
+                                         select em.EmpNo;
+
+                List<string> Empnos = _empnosforEmployer.ToList();
+
+                var payrollmasterquery = from p in rep.GetPayrollMaster(_current, _period, _year)
+                                         where Empnos.Contains(p.EmpNo)
+                                         select p;
+
+                List<DAL.psuedovwPayrollMaster> employees_payroll = payrollmasterquery.ToList();
+
+                foreach (var emp_pay in employees_payroll)
                 {
-                    printallemployees emp = new printallemployees();
-                    emp.employeenumber = e.EmpNo;
-                    emp.employeename = e.Surname + ",  " + e.OtherNames;
-                    emp.gender = e.Gender;
-                    emp.pinnumber = e.PINNo;
-                    emp.idnumber = e.IDNo;
+                    print_employees pe = new print_employees();
+                    pe.employeenumber = emp_pay.EmpNo;
+                    pe.employeename = emp_pay.Surname + ",  " + emp_pay.OtherNames;
 
-                    var _departmentquery = from dp in db.Departments
-                                           where dp.Id == e.DepartmentId
-                                           select dp;
-                    Department _department = _departmentquery.FirstOrDefault();
+                    var employee_query = from emp in db.Employees
+                                         where emp.Id == emp_pay.EmployeeId
+                                         select emp;
+                    DAL.Employee _employee = employee_query.FirstOrDefault();
 
-                    emp.department = _department.Description;
-                    emp.dateofemployment = e.DoE ?? DateTime.Today;
-                    emp.basicpay = (decimal)e.BasicPay;
-                    emp.paymentmode = e.PaymentMode;
+                    pe.gender = _employee.Gender;
+                    pe.pinnumber = emp_pay.PINNo;
+                    pe.idnumber = emp_pay.IDNo;
 
-                    esmr.Add(emp);
+                    pe.department = emp_pay.Department;
+                    pe.dateofemployment = _employee.DoE ?? DateTime.Today;
+                    pe.basicpay = (decimal)emp_pay.NetPay;
+                    pe.telephone_no = _employee.TelephoneNo;
+                    pe.nssf_no = _employee.NSSFNo;
+                    pe.nhif_no = _employee.NHIFNo;
+
+                    switch (emp_pay.PaymentMode)
+                    {
+                        case "M":
+                            pe.paymentmode = "MPESA";
+                            break;
+                        case "B":
+                            pe.paymentmode = "BANKACCOUNT";
+                            break;
+                        case "C":
+                            pe.paymentmode = "CASH";
+                            break;
+                    }
+                    
+                    lst_pe.Add(pe);
                 }
-                return esmr;
+                return lst_pe;
             }
             catch (Exception ex)
             {

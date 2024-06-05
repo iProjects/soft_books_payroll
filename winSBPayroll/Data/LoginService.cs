@@ -65,7 +65,7 @@ namespace winSBPayroll.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(ex.ToString(), Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
         }

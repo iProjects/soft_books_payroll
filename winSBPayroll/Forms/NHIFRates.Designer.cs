@@ -47,8 +47,8 @@
             this.NHIFRate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bindingSourceNHIF = new System.Windows.Forms.BindingSource(this.components);
             this.btnDownload = new System.Windows.Forms.Button();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -160,14 +160,15 @@
             this.btnDownload.UseVisualStyleBackColor = false;
             this.btnDownload.Click += new System.EventHandler(this.btnExcel_Click);
             // 
-            // saveFileDialog1
+            // saveFileDialog
             // 
-            this.saveFileDialog1.DefaultExt = "xls";
-            this.saveFileDialog1.FileName = "nhif";
+            this.saveFileDialog.DefaultExt = "xlsx";
+            this.saveFileDialog.FileName = "nhif";
             // 
-            // openFileDialog1
+            // openFileDialog
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog.DefaultExt = "xlsx";
+            this.openFileDialog.FileName = "openFileDialog";
             // 
             // groupBox1
             // 
@@ -255,8 +256,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn NHIFToAmount;
         private System.Windows.Forms.DataGridViewTextBoxColumn NHIFRate;
         private System.Windows.Forms.Button btnDownload;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;

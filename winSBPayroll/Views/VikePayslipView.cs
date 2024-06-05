@@ -15,7 +15,6 @@ namespace winSBPayroll.Views
 {
     public class VikepayslipView
     {
-
         VikePayslipViewModel _ViewModel;
         Document document;
         string Message;
@@ -37,15 +36,14 @@ namespace winSBPayroll.Views
         Font tcFont3 = new Font(Font.HELVETICA, 6, Font.BOLD);//table cell
         Font tcFont4 = new Font(Font.TIMES_ROMAN, 6, Font.NORMAL);//table cell
         Font rms10Normal = new Font(Font.HELVETICA, 7, Font.NORMAL);
+        public event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
 
 
-        public VikepayslipView(VikePayslipViewModel PayslipModel, string FileName, string Conn)
+        public VikepayslipView(VikePayslipViewModel PayslipModel, string FileName, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
-
             if (PayslipModel == null)
                 throw new ArgumentNullException("VikePayslipViewModel is null");
             _ViewModel = PayslipModel;
-
 
             if (string.IsNullOrEmpty(Conn))
                 throw new ArgumentNullException("connection");
@@ -54,6 +52,8 @@ namespace winSBPayroll.Views
             de = new DataEntry(connection);
             db = new SBPayrollDBEntities(connection);
             rep = new Repository(connection);
+
+            _notificationmessageEventname = notificationmessageEventname;
 
             sFilePDF = FileName;
 
@@ -67,7 +67,7 @@ namespace winSBPayroll.Views
                 return sFilePDF;
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return null;
             }
@@ -130,8 +130,8 @@ namespace winSBPayroll.Views
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
-            } 
+                Log.WriteToErrorLogFile(ex);
+            }
         }
 
 
@@ -256,7 +256,7 @@ namespace winSBPayroll.Views
 
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -299,7 +299,7 @@ namespace winSBPayroll.Views
                 document.Add(payslipTable);
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -356,7 +356,7 @@ namespace winSBPayroll.Views
                 document.Add(payslipTable);
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -399,7 +399,7 @@ namespace winSBPayroll.Views
                 document.Add(payslipTable);
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -424,7 +424,7 @@ namespace winSBPayroll.Views
                 document.Add(payslipTable);
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -446,7 +446,7 @@ namespace winSBPayroll.Views
                 }
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -490,7 +490,7 @@ namespace winSBPayroll.Views
                 document.Add(payslipTable);
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -536,7 +536,7 @@ namespace winSBPayroll.Views
                 document.Add(payslipTable);
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -557,7 +557,7 @@ namespace winSBPayroll.Views
                 }
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -578,7 +578,7 @@ namespace winSBPayroll.Views
                 }
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -632,7 +632,7 @@ namespace winSBPayroll.Views
                 document.Add(payslipTable);
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -686,7 +686,7 @@ namespace winSBPayroll.Views
                 document.Add(payslipTable);
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }
@@ -710,7 +710,7 @@ namespace winSBPayroll.Views
                 document.Add(payslipTable);
             }
             catch (Exception ex)
-            { 
+            {
                 Utils.ShowError(ex);
                 return;
             }

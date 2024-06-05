@@ -39,20 +39,23 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Employees));
             this.btnClose = new System.Windows.Forms.Button();
             this.btnViewDetails = new System.Windows.Forms.Button();
-            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.btnEdit = new System.Windows.Forms.Button();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.bindingSourceEmployees = new System.Windows.Forms.BindingSource(this.components);
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btndownload_employees = new System.Windows.Forms.Button();
+            this.btnupload_employees = new System.Windows.Forms.Button();
             this.chkInActive = new System.Windows.Forms.CheckBox();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnEdit = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cboEmployer = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtDepartment = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtSurName = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtOtherNames = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtEmpNo = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -62,20 +65,20 @@
             this.OtherNames = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BasicPay = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnIsActive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.bindingSourceEmployees = new System.Windows.Forms.BindingSource(this.components);
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label5 = new System.Windows.Forms.Label();
-            this.cboEmployer = new System.Windows.Forms.ComboBox();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEmployees)).BeginInit();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEmployees)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEmployees)).BeginInit();
             this.SuspendLayout();
             // 
             // btnClose
@@ -103,35 +106,62 @@
             this.btnViewDetails.UseVisualStyleBackColor = false;
             this.btnViewDetails.Click += new System.EventHandler(this.btnViewDetails_Click);
             // 
-            // errorProvider1
+            // errorProvider
             // 
-            this.errorProvider1.ContainerControl = this;
+            this.errorProvider.ContainerControl = this;
             // 
-            // btnDelete
+            // groupBox1
             // 
-            this.btnDelete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDelete.Image = global::winSBPayroll.Properties.Resources.Delete;
-            this.btnDelete.Location = new System.Drawing.Point(700, 12);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(59, 23);
-            this.btnDelete.TabIndex = 2;
-            this.btnDelete.Text = "Delete";
-            this.btnDelete.UseVisualStyleBackColor = false;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            this.groupBox1.Controls.Add(this.btndownload_employees);
+            this.groupBox1.Controls.Add(this.btnupload_employees);
+            this.groupBox1.Controls.Add(this.chkInActive);
+            this.groupBox1.Controls.Add(this.btnClose);
+            this.groupBox1.Controls.Add(this.btnAdd);
+            this.groupBox1.Controls.Add(this.btnEdit);
+            this.groupBox1.Controls.Add(this.btnDelete);
+            this.groupBox1.Controls.Add(this.btnViewDetails);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.groupBox1.Location = new System.Drawing.Point(0, 328);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(911, 45);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
             // 
-            // btnEdit
+            // btndownload_employees
             // 
-            this.btnEdit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEdit.Image = global::winSBPayroll.Properties.Resources.Edit;
-            this.btnEdit.Location = new System.Drawing.Point(630, 12);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(59, 23);
-            this.btnEdit.TabIndex = 1;
-            this.btnEdit.Text = "&Edit";
-            this.btnEdit.UseVisualStyleBackColor = false;
-            this.btnEdit.Click += new System.EventHandler(this.btnUpdate_Click);
+            this.btndownload_employees.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btndownload_employees.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btndownload_employees.Location = new System.Drawing.Point(276, 12);
+            this.btndownload_employees.Name = "btndownload_employees";
+            this.btndownload_employees.Size = new System.Drawing.Size(137, 23);
+            this.btndownload_employees.TabIndex = 11;
+            this.btndownload_employees.Text = "&Download Employees";
+            this.btndownload_employees.UseVisualStyleBackColor = false;
+            this.btndownload_employees.Click += new System.EventHandler(this.btndownload_employees_Click);
+            // 
+            // btnupload_employees
+            // 
+            this.btnupload_employees.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btnupload_employees.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnupload_employees.Location = new System.Drawing.Point(140, 12);
+            this.btnupload_employees.Name = "btnupload_employees";
+            this.btnupload_employees.Size = new System.Drawing.Size(114, 23);
+            this.btnupload_employees.TabIndex = 10;
+            this.btnupload_employees.Text = "&Upload Employees";
+            this.btnupload_employees.UseVisualStyleBackColor = false;
+            this.btnupload_employees.Click += new System.EventHandler(this.btnuploademployees_Click);
+            // 
+            // chkInActive
+            // 
+            this.chkInActive.AutoSize = true;
+            this.chkInActive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkInActive.Location = new System.Drawing.Point(12, 14);
+            this.chkInActive.Name = "chkInActive";
+            this.chkInActive.Size = new System.Drawing.Size(65, 17);
+            this.chkInActive.TabIndex = 5;
+            this.chkInActive.Text = "In Active";
+            this.chkInActive.UseVisualStyleBackColor = true;
+            this.chkInActive.CheckedChanged += new System.EventHandler(this.chkInActive_CheckedChanged);
             // 
             // btnAdd
             // 
@@ -146,32 +176,31 @@
             this.btnAdd.UseVisualStyleBackColor = false;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // groupBox1
+            // btnEdit
             // 
-            this.groupBox1.Controls.Add(this.chkInActive);
-            this.groupBox1.Controls.Add(this.btnClose);
-            this.groupBox1.Controls.Add(this.btnAdd);
-            this.groupBox1.Controls.Add(this.btnEdit);
-            this.groupBox1.Controls.Add(this.btnDelete);
-            this.groupBox1.Controls.Add(this.btnViewDetails);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox1.Location = new System.Drawing.Point(0, 328);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(911, 45);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
+            this.btnEdit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEdit.Image = global::winSBPayroll.Properties.Resources.Edit;
+            this.btnEdit.Location = new System.Drawing.Point(630, 12);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(59, 23);
+            this.btnEdit.TabIndex = 1;
+            this.btnEdit.Text = "&Edit";
+            this.btnEdit.UseVisualStyleBackColor = false;
+            this.btnEdit.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
-            // chkInActive
+            // btnDelete
             // 
-            this.chkInActive.AutoSize = true;
-            this.chkInActive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.chkInActive.Location = new System.Drawing.Point(12, 14);
-            this.chkInActive.Name = "chkInActive";
-            this.chkInActive.Size = new System.Drawing.Size(65, 17);
-            this.chkInActive.TabIndex = 5;
-            this.chkInActive.Text = "In Active";
-            this.chkInActive.UseVisualStyleBackColor = true;
-            this.chkInActive.CheckedChanged += new System.EventHandler(this.chkInActive_CheckedChanged);
+            this.btnDelete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDelete.Image = global::winSBPayroll.Properties.Resources.Delete;
+            this.btnDelete.Location = new System.Drawing.Point(700, 12);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(59, 23);
+            this.btnDelete.TabIndex = 2;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // groupBox3
             // 
@@ -192,6 +221,19 @@
             this.groupBox3.Size = new System.Drawing.Size(911, 54);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
+            // 
+            // cboEmployer
+            // 
+            this.cboEmployer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboEmployer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cboEmployer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboEmployer.ForeColor = System.Drawing.Color.Black;
+            this.cboEmployer.FormattingEnabled = true;
+            this.cboEmployer.Location = new System.Drawing.Point(64, 19);
+            this.cboEmployer.Name = "cboEmployer";
+            this.cboEmployer.Size = new System.Drawing.Size(224, 21);
+            this.cboEmployer.TabIndex = 0;
+            this.cboEmployer.SelectedIndexChanged += new System.EventHandler(this.cboEmployer_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -249,6 +291,15 @@
             this.txtOtherNames.TabIndex = 3;
             this.txtOtherNames.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtOtherNames_KeyPress);
             this.txtOtherNames.Validated += new System.EventHandler(this.txtOtherNames_Validated);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(11, 23);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(50, 13);
+            this.label5.TabIndex = 31;
+            this.label5.Text = "Employer";
             // 
             // label2
             // 
@@ -432,27 +483,11 @@
             this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             this.dataGridViewTextBoxColumn6.ReadOnly = true;
             // 
-            // label5
+            // saveFileDialog
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(11, 23);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(50, 13);
-            this.label5.TabIndex = 31;
-            this.label5.Text = "Employer";
-            // 
-            // cboEmployer
-            // 
-            this.cboEmployer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboEmployer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cboEmployer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboEmployer.ForeColor = System.Drawing.Color.Black;
-            this.cboEmployer.FormattingEnabled = true;
-            this.cboEmployer.Location = new System.Drawing.Point(64, 19);
-            this.cboEmployer.Name = "cboEmployer";
-            this.cboEmployer.Size = new System.Drawing.Size(224, 21);
-            this.cboEmployer.TabIndex = 0;
-            this.cboEmployer.SelectedIndexChanged += new System.EventHandler(this.cboEmployer_SelectedIndexChanged);
+            this.saveFileDialog.DefaultExt = "xlsx";
+            this.saveFileDialog.FileName = "Employees";
+            this.saveFileDialog.RestoreDirectory = true;
             // 
             // Employees
             // 
@@ -470,14 +505,14 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Employees";
             this.Load += new System.EventHandler(this.Employees_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEmployees)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEmployees)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEmployees)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -490,7 +525,7 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.BindingSource bindingSourceEmployees;
         private System.Windows.Forms.Button btnViewDetails;
-        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
@@ -517,5 +552,8 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnIsActive;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cboEmployer;
+        private System.Windows.Forms.Button btnupload_employees;
+        private System.Windows.Forms.Button btndownload_employees;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
     }
 }

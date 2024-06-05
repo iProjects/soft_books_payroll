@@ -125,7 +125,7 @@ namespace winSBPayroll.Forms
             try
             {
                 db.SaveChanges();
-                MessageBox.Show("Save Sucessfull!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Save Sucessfull!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {

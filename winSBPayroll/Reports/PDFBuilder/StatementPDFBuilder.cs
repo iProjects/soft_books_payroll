@@ -15,8 +15,7 @@ namespace winSBPayroll.Reports.PDFBuilder
 {
     public class StatementPDFBuilder
     {
-
-         StatementModel _ViewModel;
+        StatementModel _ViewModel;
         Document document;
         string Message;
         string sFilePDF;
@@ -26,18 +25,27 @@ namespace winSBPayroll.Reports.PDFBuilder
         Repository rep;
         string connection;
 
-        Font hFont1 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
-        Font hFont2 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);
-        Font bFont1 = new Font(Font.TIMES_ROMAN, 10, Font.NORMAL);//body
-        Font bFont2 = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL);//body
-        Font tHFont = new Font(Font.TIMES_ROMAN, 8, Font.BOLD); //table Header
+        Font hFont1 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
+        Font hfont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font hFont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font bfont1 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);//body
+        Font bFont2 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);//body
+        Font bFont3 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);//body
+        Font tHFont = new Font(Font.TIMES_ROMAN, 9, Font.BOLD); //table Header
+        Font tHfont1 = new Font(Font.TIMES_ROMAN, 11, Font.BOLD); //table Header
         Font tcFont = new Font(Font.HELVETICA, 8, Font.NORMAL);//table cell
-        Font tcFont1 = new Font(Font.HELVETICA, 10, Font.BOLD);//table cell
+        Font tcFont1 = new Font(Font.HELVETICA, 6, Font.NORMAL);//table cell
+        Font rms6Normal = new Font(Font.TIMES_ROMAN, 9, Font.NORMAL);
+        Font rms10Bold = new Font(Font.HELVETICA, 10, Font.BOLD);
+        Font rms6Bold = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font rms8Bold = new Font(Font.HELVETICA, 8, Font.BOLD);
+        Font rms9Bold = new Font(Font.HELVETICA, 9, Font.BOLD);
         Font rms10Normal = new Font(Font.HELVETICA, 10, Font.NORMAL);
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
-
-        public StatementPDFBuilder(string Itemid, StatementModel statementmodel, string FileName, string Conn)
-        { 
+        public StatementPDFBuilder(string Itemid, StatementModel statementmodel, string FileName, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
+        {
             if (statementmodel == null)
                 throw new ArgumentNullException("StatementModel is null");
             _ViewModel = statementmodel;
@@ -50,12 +58,14 @@ namespace winSBPayroll.Reports.PDFBuilder
             db = new SBPayrollDBEntities(connection);
             rep = new Repository(connection);
 
+            _notificationmessageEventname = notificationmessageEventname;
+
             if (Itemid == null)
                 throw new ArgumentNullException("Itemid is null");
             _Itemid = Itemid;
 
             sFilePDF = FileName;
-            
+
         }
 
         public string GetstatementPDF()
@@ -86,7 +96,7 @@ namespace winSBPayroll.Reports.PDFBuilder
                 AddDocBody();
 
                 //Add Footer
-                AddDocFooter(); 
+                AddDocFooter();
 
                 //close document
                 document.Close();
@@ -101,8 +111,8 @@ namespace winSBPayroll.Reports.PDFBuilder
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
-            } 
+                Log.WriteToErrorLogFile(ex);
+            }
         }
 
         //document header
@@ -143,7 +153,7 @@ namespace winSBPayroll.Reports.PDFBuilder
             sidCell.HorizontalAlignment = Cell.ALIGN_CENTER;
             sidCell.Border = Cell.NO_BORDER;
             sidCell.Colspan = 5;
-            statementInfoTable.AddCell(sidCell);  
+            statementInfoTable.AddCell(sidCell);
 
             Cell PDCell = new Cell(new Phrase("Printed on: " + _ViewModel.PrintedOn.ToString("dd-dddd-MMMM-yyyy"), hFont2));
             PDCell.HorizontalAlignment = Cell.ALIGN_LEFT;
@@ -152,17 +162,17 @@ namespace winSBPayroll.Reports.PDFBuilder
             statementInfoTable.AddCell(PDCell);
 
             //create the logo
-            PDFGen pdfgen = new PDFGen();
+            PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
             Image img0 = pdfgen.DoGetImageFile(_ViewModel.CompanyLogo);
             img0.Alignment = Image.ALIGN_MIDDLE;
             Cell logoCell = new Cell(img0);
             logoCell.HorizontalAlignment = Cell.ALIGN_LEFT;
-            logoCell.Border = Cell.NO_BORDER; 
+            logoCell.Border = Cell.NO_BORDER;
             logoCell.Add(new Phrase(_ViewModel.CompanySlogan, new Font(Font.HELVETICA, 8, Font.ITALIC, Color.BLACK)));
             statementInfoTable.AddCell(logoCell);
 
-            document.Add(statementInfoTable); 
-        } 
+            document.Add(statementInfoTable);
+        }
 
         //document body
         private void AddDocBody()
@@ -204,13 +214,13 @@ namespace winSBPayroll.Reports.PDFBuilder
             Table statementInfoTable = new Table(5);
             statementInfoTable.WidthPercentage = 100;
             statementInfoTable.Padding = 1;
-            statementInfoTable.Spacing = 1;  
+            statementInfoTable.Spacing = 1;
 
             Chunk date = new Chunk("Post Date", tcFont1);
             Cell statementdate = new Cell(date);
             statementdate.Border = Cell.RECTANGLE;
             statementdate.HorizontalAlignment = Cell.ALIGN_CENTER;
-            statementInfoTable.AddCell(statementdate); 
+            statementInfoTable.AddCell(statementdate);
 
             Chunk amountin = new Chunk("Amount\nKshs", tcFont1);
             Cell statementamountin = new Cell(amountin);
@@ -221,7 +231,7 @@ namespace winSBPayroll.Reports.PDFBuilder
             Cell balance = new Cell(new Chunk("Balance\nKshs", tcFont1));
             balance.Border = Cell.RECTANGLE;
             balance.HorizontalAlignment = Cell.ALIGN_CENTER;
-            statementInfoTable.AddCell(balance); 
+            statementInfoTable.AddCell(balance);
 
             Chunk empContribChunk = new Chunk("Employer's Contribution\nKshs", tcFont1);
             Cell empContribCell = new Cell(empContribChunk);
@@ -236,7 +246,7 @@ namespace winSBPayroll.Reports.PDFBuilder
             statementInfoTable.AddCell(totalContribCell);
 
             document.Add(statementInfoTable);
-        } 
+        }
         //table headers
         private void AddTableHeaders()
         {
@@ -250,20 +260,20 @@ namespace winSBPayroll.Reports.PDFBuilder
             statementdate.Border = Cell.RECTANGLE;
             statementdate.HorizontalAlignment = Cell.ALIGN_CENTER;
             statementInfoTable.AddCell(statementdate);
-             
+
             Chunk amountin = new Chunk("Amount\nKshs", tcFont1);
             Cell statementamountin = new Cell(amountin);
             statementamountin.Border = Cell.RECTANGLE;
             statementamountin.HorizontalAlignment = Cell.ALIGN_CENTER;
-            statementInfoTable.AddCell(statementamountin); 
+            statementInfoTable.AddCell(statementamountin);
 
             Cell balance = new Cell(new Chunk("Balance\nKshs", tcFont1));
             balance.Border = Cell.RECTANGLE;
             balance.HorizontalAlignment = Cell.ALIGN_CENTER;
-            statementInfoTable.AddCell(balance); 
+            statementInfoTable.AddCell(balance);
 
-            document.Add(statementInfoTable); 
-        } 
+            document.Add(statementInfoTable);
+        }
         //table details
         private void AddNSSFTableDetails()
         {
@@ -271,15 +281,15 @@ namespace winSBPayroll.Reports.PDFBuilder
             statementInfoTable.WidthPercentage = 100;
             statementInfoTable.Padding = 1;
             statementInfoTable.Spacing = 1;
-            statementInfoTable.Border = Table.RECTANGLE; 
+            statementInfoTable.Border = Table.RECTANGLE;
 
             foreach (var item in _ViewModel._Statementlist)
             {
                 AddNSSFTableBodyDetails(item, statementInfoTable);
             }
 
-            document.Add(statementInfoTable); 
-        } 
+            document.Add(statementInfoTable);
+        }
         //table details
         private void AddTableDetails()
         {
@@ -295,22 +305,22 @@ namespace winSBPayroll.Reports.PDFBuilder
             }
 
             document.Add(statementInfoTable);
-        } 
+        }
         //table details
         private void AddNSSFTableBodyDetails(StatementDTO det, Table statementInfoTable)
         {
             Cell A = new Cell(new Phrase(det.date.ToString("dd-MMM-yyyy"), tcFont));
             A.HorizontalAlignment = Cell.ALIGN_LEFT;
             statementInfoTable.AddCell(A);
- 
-            Cell C = new Cell(new Phrase( det.Amountin.ToString("#,##0"), tcFont));
+
+            Cell C = new Cell(new Phrase(det.Amountin.ToString("#,##0"), tcFont));
             C.HorizontalAlignment = Cell.ALIGN_RIGHT;
             statementInfoTable.AddCell(C);
-            
+
             Cell E = new Cell(new Phrase(det.Balance.ToString("#,##0"), tcFont));
             E.HorizontalAlignment = Cell.ALIGN_RIGHT;
             statementInfoTable.AddCell(E);
-             
+
             Cell D = new Cell(new Phrase(det.EmpNSSFContrib.ToString("#,##0"), tcFont));
             D.HorizontalAlignment = Cell.ALIGN_RIGHT;
             statementInfoTable.AddCell(D);
@@ -318,14 +328,14 @@ namespace winSBPayroll.Reports.PDFBuilder
             Cell F = new Cell(new Phrase(det.TotalContribs.ToString("#,##0"), tcFont));
             F.HorizontalAlignment = Cell.ALIGN_RIGHT;
             statementInfoTable.AddCell(F);
-        } 
+        }
         //table  details
         private void AddTableBodyDetails(StatementDTO det, Table statementInfoTable)
         {
             Cell A = new Cell(new Phrase(det.date.ToString("dd-MMM-yyyy"), tcFont));
             A.HorizontalAlignment = Cell.ALIGN_LEFT;
             statementInfoTable.AddCell(A);
-             
+
             Cell C = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", det.Amountin), tcFont));
             C.HorizontalAlignment = Cell.ALIGN_RIGHT;
             statementInfoTable.AddCell(C);
@@ -338,7 +348,7 @@ namespace winSBPayroll.Reports.PDFBuilder
             Cell E = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _tbalance), tcFont));
             E.HorizontalAlignment = Cell.ALIGN_RIGHT;
             statementInfoTable.AddCell(E);
-        } 
+        }
         //table totals
         private void AddNSSFTableTotals()
         {
@@ -351,7 +361,7 @@ namespace winSBPayroll.Reports.PDFBuilder
             Cell totalsCell = new Cell(new Phrase("TOTAL", tcFont1));
             totalsCell.HorizontalAlignment = Cell.ALIGN_LEFT;
             totalsCell.Colspan = 4;
-            statementInfoTable.AddCell(totalsCell); 
+            statementInfoTable.AddCell(totalsCell);
 
             Cell totalContribCell = new Cell(new Phrase(_ViewModel.totalContributions.ToString("#,##0"), tcFont1));
             totalContribCell.Border = Cell.RECTANGLE;
@@ -360,7 +370,7 @@ namespace winSBPayroll.Reports.PDFBuilder
 
             document.Add(statementInfoTable);
 
-        } 
+        }
         //table totals
         private void AddTableTotals()
         {
@@ -371,17 +381,17 @@ namespace winSBPayroll.Reports.PDFBuilder
             statementInfoTable.Spacing = 1;
 
             Cell total = new Cell(new Phrase("TOTAL", tcFont1));
-            total.HorizontalAlignment = Cell.ALIGN_LEFT; 
+            total.HorizontalAlignment = Cell.ALIGN_LEFT;
             statementInfoTable.AddCell(total);
 
             Cell totalamountin = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.totalamountin), tcFont1));
             totalamountin.Colspan = 1;
             totalamountin.HorizontalAlignment = Cell.ALIGN_RIGHT;
-            statementInfoTable.AddCell(totalamountin);  
+            statementInfoTable.AddCell(totalamountin);
 
             document.Add(statementInfoTable);
 
-        } 
+        }
         //document footer
         private void AddDocFooter()
         {
@@ -398,7 +408,7 @@ namespace winSBPayroll.Reports.PDFBuilder
             document.Add(statementInfoTable);
 
         }
-         
+
 
     }
 }

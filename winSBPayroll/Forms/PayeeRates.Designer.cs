@@ -41,8 +41,8 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.bindingSourcePayeeRates = new System.Windows.Forms.BindingSource(this.components);
             this.btnDownload = new System.Windows.Forms.Button();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPayeeRates)).BeginInit();
@@ -131,9 +131,15 @@
             this.btnDownload.UseVisualStyleBackColor = false;
             this.btnDownload.Click += new System.EventHandler(this.btnDownload_Click);
             // 
-            // openFileDialog1
+            // saveFileDialog
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
+            this.saveFileDialog.DefaultExt = "xlsx";
+            this.saveFileDialog.FileName = "payee_rates";
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.DefaultExt = "xlsx";
+            this.openFileDialog.FileName = "payee_rates";
             // 
             // groupBox1
             // 
@@ -184,8 +190,8 @@
         private System.Windows.Forms.DataGridView dataGridViewPayeeRates;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnDownload;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridViewTextBoxColumn FromAmount;

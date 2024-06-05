@@ -13,11 +13,10 @@ namespace winSBPayroll.Reports.PDF
 {
     public class Payslip2PDFBuilder
     {
-        Payslip _ViewModel; 
+        Payslip _ViewModel;
         Document document;
         string Message;
         string sFilePDF;
-        
 
         ////DEFINED FONTS
         Font hFont1 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
@@ -30,13 +29,16 @@ namespace winSBPayroll.Reports.PDF
         Font tcFont3 = new Font(Font.HELVETICA, 8, Font.NORMAL);//table cell
         Font tcFont4 = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL);//table cell
         Font rms10Normal = new Font(Font.HELVETICA, 10, Font.NORMAL);
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
-
-        public Payslip2PDFBuilder(Payslip PayslipModel, string FileName)
+        public Payslip2PDFBuilder(Payslip PayslipModel, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (PayslipModel == null)
                 throw new ArgumentNullException("Payslip is null");
             _ViewModel = PayslipModel;
+
+            _notificationmessageEventname = notificationmessageEventname;
 
             sFilePDF = FileName;
 
@@ -95,9 +97,9 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
-            }  
-        } 
+                Log.WriteToErrorLogFile(ex);
+            }
+        }
 
         private void AddHeader()
         {
@@ -156,7 +158,7 @@ namespace winSBPayroll.Reports.PDF
 
 
             document.Add(hTable);
-            
+
 
         }
 
@@ -217,13 +219,13 @@ namespace winSBPayroll.Reports.PDF
 
 
             document.Add(aTable);
-           
+
         }
 
         private void AddEarningsAndDeductions()
         {
-            
-           
+
+
 
             //Add earnings
             Table earningsTable = new Table(3); //New table with 2 columns
@@ -233,7 +235,7 @@ namespace winSBPayroll.Reports.PDF
 
 
             Cell fCell = new Cell(new Phrase("Earnings", hFont1));
-            fCell.HorizontalAlignment = Cell.ALIGN_LEFT; 
+            fCell.HorizontalAlignment = Cell.ALIGN_LEFT;
             fCell.Colspan = 3;
             earningsTable.AddCell(fCell);
 
@@ -290,7 +292,7 @@ namespace winSBPayroll.Reports.PDF
 
 
             Cell dgCell = new Cell(new Phrase("Deductions", hFont1));
-            dgCell.HorizontalAlignment = Cell.ALIGN_LEFT ;
+            dgCell.HorizontalAlignment = Cell.ALIGN_LEFT;
             dgCell.Colspan = 3;
             deductionsTable.AddCell(dgCell);
 
@@ -329,9 +331,9 @@ namespace winSBPayroll.Reports.PDF
             deductionsTable.AddCell(sdCell);
 
 
-            document.Add(deductionsTable);         
+            document.Add(deductionsTable);
 
-        } 
+        }
 
         private void AddEarningsAndDeductionsTableHeadings(Table aTable)
         {
@@ -347,7 +349,7 @@ namespace winSBPayroll.Reports.PDF
 
         private void AddTaxComputationInfo()
         {
-            
+
 
             Table taxDetails = new Table(2);
             taxDetails.AutoFillEmptyCells = true;
@@ -398,8 +400,8 @@ namespace winSBPayroll.Reports.PDF
             taxDetails.AddCell(netTaxCell);
 
             document.Add(taxDetails);
-            
-        } 
+
+        }
 
         private void PayslipDetailsTableHeaders(Table aTable)
         {
@@ -423,7 +425,7 @@ namespace winSBPayroll.Reports.PDF
 
 
             Cell hCell = new Cell(new Phrase("Other Payments", hFont1));
-            hCell.HorizontalAlignment = Cell.ALIGN_LEFT ;
+            hCell.HorizontalAlignment = Cell.ALIGN_LEFT;
             hCell.Colspan = 2;
             OtherPayments.AddCell(hCell);
 
@@ -445,7 +447,7 @@ namespace winSBPayroll.Reports.PDF
 
             }
 
-        
+
             Cell eaopCell = new Cell(new Phrase("Totals", tHFont));
             eaopCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
             OtherPayments.AddCell(eaopCell);
@@ -464,7 +466,7 @@ namespace winSBPayroll.Reports.PDF
             OtherDeductions.Spacing = 2;
 
             Cell fCell = new Cell(new Phrase("Other Deductions", hFont1));
-            fCell.HorizontalAlignment = Cell.ALIGN_LEFT ;
+            fCell.HorizontalAlignment = Cell.ALIGN_LEFT;
             fCell.Colspan = 2;
             OtherDeductions.AddCell(fCell);
 
@@ -487,7 +489,7 @@ namespace winSBPayroll.Reports.PDF
             }
 
 
-           
+
             Cell tdCell = new Cell(new Phrase("Totals", tHFont));
             tdCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
             OtherDeductions.AddCell(tdCell);
@@ -497,7 +499,7 @@ namespace winSBPayroll.Reports.PDF
             //OtherDeductions.AddCell(tsCell);
 
             document.Add(OtherDeductions);
-        } 
+        }
 
         private void PayslipDetailsLoansTableHeaders(Table aTable)
         {
@@ -509,7 +511,7 @@ namespace winSBPayroll.Reports.PDF
                 payslipheadersCell.HorizontalAlignment = Cell.ALIGN_CENTER;
                 aTable.AddCell(payslipheadersCell);
             }
-        } 
+        }
 
         private void PayslipDetailsSaccoTableHeaders(Table aTable)
         {
@@ -521,7 +523,7 @@ namespace winSBPayroll.Reports.PDF
                 payslipheadersCell.HorizontalAlignment = Cell.ALIGN_CENTER;
                 aTable.AddCell(payslipheadersCell);
             }
-        } 
+        }
 
         private void AddOtherPayslipLoanInfo()
         {
@@ -533,7 +535,7 @@ namespace winSBPayroll.Reports.PDF
 
 
             Cell helCell = new Cell(new Phrase("Employee Loans", hFont1));
-            helCell.HorizontalAlignment = Cell.ALIGN_LEFT ;
+            helCell.HorizontalAlignment = Cell.ALIGN_LEFT;
             helCell.Colspan = 3;
             employeeloanstable.AddCell(helCell);
 
@@ -561,7 +563,7 @@ namespace winSBPayroll.Reports.PDF
                 }
             }
 
-          
+
             Cell eaCell = new Cell(new Phrase("Totals", tHFont));
             eaCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
             employeeloanstable.AddCell(eaCell);
@@ -576,7 +578,7 @@ namespace winSBPayroll.Reports.PDF
 
             document.Add(employeeloanstable);
 
-            
+
 
 
             Table SaccoContriTable = new Table(3);
@@ -586,7 +588,7 @@ namespace winSBPayroll.Reports.PDF
             SaccoContriTable.TableFitsPage = true;
 
             Cell fCell = new Cell(new Phrase("Sacco Contributions", hFont1));
-            fCell.HorizontalAlignment = Cell.ALIGN_LEFT ;
+            fCell.HorizontalAlignment = Cell.ALIGN_LEFT;
             fCell.Colspan = 3;
             SaccoContriTable.AddCell(fCell);
 
@@ -619,7 +621,7 @@ namespace winSBPayroll.Reports.PDF
             }
 
 
-      
+
             Cell tdscCell = new Cell(new Phrase("Totals", tHFont));
             tdscCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
             SaccoContriTable.AddCell(tdscCell);
@@ -633,7 +635,7 @@ namespace winSBPayroll.Reports.PDF
             //SaccoContriTable.AddCell(tvscCell);
 
             document.Add(SaccoContriTable);
-        } 
+        }
 
         //document footer
         private void AddDocFooter()

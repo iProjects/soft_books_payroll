@@ -15,7 +15,6 @@ namespace winSBPayroll.Reports.PDF
 {
     public class ShedulePDFBuilder
     {
-        
         SheduleReportModel _ViewModel;
         Document document;
         string Message;
@@ -26,17 +25,26 @@ namespace winSBPayroll.Reports.PDF
         Repository rep;
         string connection;
 
-        Font hFont1 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
-        Font hFont2 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);
-        Font bFont1 = new Font(Font.TIMES_ROMAN, 10, Font.NORMAL);//body
-        Font bFont2 = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL);//body
-        Font tHFont = new Font(Font.TIMES_ROMAN, 8, Font.BOLD); //table Header
+        Font hFont1 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
+        Font hfont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font hFont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font bfont1 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);//body
+        Font bFont2 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);//body
+        Font bFont3 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);//body
+        Font tHFont = new Font(Font.TIMES_ROMAN, 9, Font.BOLD); //table Header
+        Font tHfont1 = new Font(Font.TIMES_ROMAN, 11, Font.BOLD); //table Header
         Font tcFont = new Font(Font.HELVETICA, 8, Font.NORMAL);//table cell
-        Font tcFont1 = new Font(Font.HELVETICA, 10, Font.BOLD);//table cell
+        Font tcFont1 = new Font(Font.HELVETICA, 6, Font.NORMAL);//table cell
+        Font rms6Normal = new Font(Font.TIMES_ROMAN, 9, Font.NORMAL);
+        Font rms10Bold = new Font(Font.HELVETICA, 10, Font.BOLD);
+        Font rms6Bold = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font rms8Bold = new Font(Font.HELVETICA, 8, Font.BOLD);
+        Font rms9Bold = new Font(Font.HELVETICA, 9, Font.BOLD);
         Font rms10Normal = new Font(Font.HELVETICA, 10, Font.NORMAL);
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
-
-        public ShedulePDFBuilder(string Itemid,SheduleReportModel shedulemodel, string FileName, string Conn)
+        public ShedulePDFBuilder(string Itemid, SheduleReportModel shedulemodel, string FileName, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (shedulemodel == null)
                 throw new ArgumentNullException("SheduleReportModel is null");
@@ -54,6 +62,8 @@ namespace winSBPayroll.Reports.PDF
                 throw new ArgumentNullException("Itemid is null");
             _Itemid = Itemid;
 
+            _notificationmessageEventname = notificationmessageEventname;
+
             sFilePDF = FileName;
         }
 
@@ -63,14 +73,14 @@ namespace winSBPayroll.Reports.PDF
             return sFilePDF;
         }
         private void BuildPDF()
-        { 
+        {
             try
             {
                 // step 1: creation of a document-object
                 document = new Document(PageSize.A4);
 
                 // step 2: we create a writer that listens to the document
-                PdfWriter.GetInstance(document, new FileStream(sFilePDF, FileMode.Create)); 
+                PdfWriter.GetInstance(document, new FileStream(sFilePDF, FileMode.Create));
 
                 //open document
                 document.Open();
@@ -82,7 +92,7 @@ namespace winSBPayroll.Reports.PDF
                 AddDocBody();
 
                 //Add Footer
-                AddDocFooter(); 
+                AddDocFooter();
 
                 //close document
                 document.Close();
@@ -98,11 +108,11 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
-            } 
+                Log.WriteToErrorLogFile(ex);
+            }
         }
 
-       
+
         //document header
         private void AddDocHeader()
         {
@@ -141,7 +151,7 @@ namespace winSBPayroll.Reports.PDF
             reportCell.HorizontalAlignment = Cell.ALIGN_CENTER;
             reportCell.Colspan = 5;
             reportCell.Border = Cell.NO_BORDER;
-            statementInfoTable.AddCell(reportCell); 
+            statementInfoTable.AddCell(reportCell);
 
             Cell PrintedonCell = new Cell(new Phrase("Printed on: " + _ViewModel.PrintedOn.ToString("dd-dddd-MMMM-yyyy"), hFont2));
             PrintedonCell.HorizontalAlignment = Cell.ALIGN_LEFT;
@@ -150,7 +160,7 @@ namespace winSBPayroll.Reports.PDF
             statementInfoTable.AddCell(PrintedonCell);
 
             //create the logo
-            PDFGen pdfgen = new PDFGen();
+            PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
             Image img0 = pdfgen.DoGetImageFile(_ViewModel.CompanyLogo);
             img0.Alignment = Image.ALIGN_MIDDLE;
             Cell logoCell = new Cell(img0);
@@ -159,7 +169,7 @@ namespace winSBPayroll.Reports.PDF
             logoCell.Add(new Phrase(_ViewModel.CompanySlogan, new Font(Font.HELVETICA, 8, Font.ITALIC, Color.BLACK)));
             statementInfoTable.AddCell(logoCell);
 
-            document.Add(statementInfoTable); 
+            document.Add(statementInfoTable);
         }
         //document body
         private void AddDocBody()
@@ -256,8 +266,8 @@ namespace winSBPayroll.Reports.PDF
             Cell balance = new Cell(new Chunk("Amount\nKshs", tcFont1));
             balance.Border = Cell.RECTANGLE;
             balance.HorizontalAlignment = Cell.ALIGN_CENTER;
-            statementInfoTable.AddCell(balance); 
-             
+            statementInfoTable.AddCell(balance);
+
             document.Add(statementInfoTable);
         }
         //Nssf table details
@@ -328,7 +338,7 @@ namespace winSBPayroll.Reports.PDF
 
             Cell E = new Cell(new Phrase(det.Amount.ToString("#,##0"), tcFont));
             E.HorizontalAlignment = Cell.ALIGN_RIGHT;
-            statementInfoTable.AddCell(E); 
+            statementInfoTable.AddCell(E);
         }
         //Nssf table totals
         private void AddNSSFTableTotals()

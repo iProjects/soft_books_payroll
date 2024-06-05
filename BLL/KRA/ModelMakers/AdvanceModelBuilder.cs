@@ -1,12 +1,12 @@
-﻿using System; 
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using BLL;
-using BLL.DataEntry; 
+using BLL.DataEntry;
 using BLL.KRA.Models;
-using CommonLib; 
+using CommonLib;
 using DAL;
 
 namespace BLL.KRA.ModelMakers
@@ -109,15 +109,19 @@ namespace BLL.KRA.ModelMakers
             try
             {
                 List<DAL.psuedovwPayslipDetails> _NssfPayList = new List<psuedovwPayslipDetails>();
+
                 var _empnosforEmployer = from em in rep.GetAllActiveEmployees()
                                          where em.EmployerId == _employer.Id
                                          select em.EmpNo;
+
                 List<string> Empnos = _empnosforEmployer.ToList();
 
                 var paylistquery = from p in rep.GetvwPayslipDetailsAdvance("ADVANCE", _current, _period, _year)
                                    where Empnos.Contains(p.EmpNo)
                                    select p;
+
                 List<DAL.psuedovwPayslipDetails> nssfpaylist = paylistquery.ToList();
+
                 foreach (var pay in nssfpaylist)
                 {
                     if (!_NssfPayList.Any(i => i.EmpNo == pay.EmpNo))

@@ -35,13 +35,16 @@ namespace winSBPayroll.Reports.PDF
         Font rms8Bold = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);
 
         string _resourcePath;
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
-
-        public P9APDFBuilder(string ResourcePath, P9AReportModel P9AModel, string FileName)
+        public P9APDFBuilder(string ResourcePath, P9AReportModel P9AModel, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (P9AModel == null)
                 throw new ArgumentNullException("P9AReportModel is null");
             _ViewModel = P9AModel;
+
+            _notificationmessageEventname = notificationmessageEventname;
 
             sFilePDF = FileName;
             _resourcePath = ResourcePath;
@@ -61,9 +64,9 @@ namespace winSBPayroll.Reports.PDF
             try
             {
                 // step 2: we create a writer that listens to the document
-                PdfWriter.GetInstance(document, new FileStream(sFilePDF, FileMode.Create)); 
+                PdfWriter.GetInstance(document, new FileStream(sFilePDF, FileMode.Create));
 
-                document.Open(); 
+                document.Open();
 
                 // we Add a Header 
                 AddDocHeader();
@@ -104,19 +107,19 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
-        } 
+        }
         private void AddDocHeader()
         {
 
-            PDFGen pdfgen = new PDFGen(); 
-            Image img0 = pdfgen.DoGetImageFile(_resourcePath + "kra2.jpg");
+            PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
+            Image img0 = pdfgen.DoGetImageFile(Path.Combine(_resourcePath, "kra2.jpg"));
             img0.Alignment = Image.ALIGN_CENTER;
 
             Table empInfoTable = new Table(3, 4);
             empInfoTable.WidthPercentage = 100;
-            empInfoTable.Border = Table.NO_BORDER; 
+            empInfoTable.Border = Table.NO_BORDER;
 
             Phrase header1 = new Phrase(_ViewModel.ReportName, hFont2);
             Cell c2 = new Cell(header1);
@@ -131,7 +134,7 @@ namespace winSBPayroll.Reports.PDF
             c1.HorizontalAlignment = Cell.ALIGN_CENTER;
             // c1.Colspan = 3;
 
-            empInfoTable.AddCell(c1, new System.Drawing.Point(0, 1)); 
+            empInfoTable.AddCell(c1, new System.Drawing.Point(0, 1));
 
             Chunk employerName = new Chunk("Employers Name ..." + _ViewModel.EmployerName.ToUpper().Trim() + "..", bFont1);
             Cell empCell = new Cell(employerName);
@@ -161,7 +164,7 @@ namespace winSBPayroll.Reports.PDF
             document.Add(empInfoTable);
             document.Add(new Phrase("", new Font(Font.TIMES_ROMAN, 2, Font.NORMAL)));
 
-        } 
+        }
         private void AddTableHeaders(Table aTable)
         {
             aTable.AddCell(new Phrase("Month\nKshs", tHFont));  //Col 0
@@ -218,7 +221,7 @@ namespace winSBPayroll.Reports.PDF
             KCell.Colspan = 2;
             aTable.AddCell(KCell);
             aTable.AddCell(new Phrase("", tHFont)); //Col 10 
-        } 
+        }
         private void AddTableRow(int Month, Table aTable, EmployersMonthlyTaxRecord monthRecs)
         {
             try

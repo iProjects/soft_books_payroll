@@ -24,9 +24,11 @@ namespace winSBPayroll.Reports.PDF
         DataEntry de;
         SBPayrollDBEntities db;
         Repository rep;
-        string connection; 
+        string connection;
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
-        public PayslipMakerAll2(List<Payslip> PayslipList, string FileName, string Conn)
+        public PayslipMakerAll2(List<Payslip> PayslipList, string FileName, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (string.IsNullOrEmpty(Conn))
                 throw new ArgumentNullException("connection");
@@ -39,6 +41,8 @@ namespace winSBPayroll.Reports.PDF
             if (PayslipList == null)
                 throw new ArgumentNullException("Payslip List is null");
             payslipList = PayslipList;
+
+            _notificationmessageEventname = notificationmessageEventname;
 
             sFilePDF = FileName;
         }
@@ -57,7 +61,7 @@ namespace winSBPayroll.Reports.PDF
                 document = new Document(PageSize.A4, 10, 10, 10, 10);
 
                 // step 2: we create a writer that listens to the document
-                PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(sFilePDF, FileMode.Create)); 
+                PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(sFilePDF, FileMode.Create));
 
                 //open document
                 document.Open();
@@ -69,10 +73,10 @@ namespace winSBPayroll.Reports.PDF
                     var payslip1 = payslip.Item1;
                     var payslip2 = payslip.Item2;
 
-                    MakePayslipPDF3 pm = new MakePayslipPDF3(payslip1, payslip2, document, connection);
+                    MakePayslipPDF3 pm = new MakePayslipPDF3(payslip1, payslip2, document, connection, _notificationmessageEventname);
                     pm.BuildPDF();
-                    document.NewPage(); 
-                } 
+                    document.NewPage();
+                }
 
                 //Finished
                 document.Close();
@@ -87,10 +91,10 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
         }
-         
+
 
     }
 
@@ -112,7 +116,7 @@ namespace winSBPayroll.Reports.PDF
                 else
                     yield return new Tuple<T, T>(list[index++], list[index++]);
             }
-        } 
+        }
 
         // Create Pairs from a list. Note if the list is not even in count, the last value is skipped.
         public static IEnumerable<Tuple<T, T>> AsPairsSafe<T>(this List<T> list)

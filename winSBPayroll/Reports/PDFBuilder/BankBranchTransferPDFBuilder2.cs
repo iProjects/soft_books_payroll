@@ -15,7 +15,7 @@ using VVX;
 namespace winSBPayroll.Reports.PDFBuilder
 {
     public class BankBranchTransferPDFBuilder2
-    {  
+    {
         BankTransferModel _ViewModel;
         Document document;
         string Message;
@@ -24,21 +24,32 @@ namespace winSBPayroll.Reports.PDFBuilder
         //DEFINED fONTS
         Font hFont1 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
         Font hfont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
-        Font bfont1 = new Font(Font.TIMES_ROMAN, 10, Font.NORMAL);//BODY
-        Font tHfont1 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);//TABLE HEADER
+        Font hFont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font bfont1 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);//body
+        Font bFont2 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);//body
+        Font bFont3 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);//body
+        Font tHFont = new Font(Font.TIMES_ROMAN, 9, Font.BOLD); //table Header
+        Font tHfont1 = new Font(Font.TIMES_ROMAN, 11, Font.BOLD); //table Header
         Font tcFont = new Font(Font.HELVETICA, 8, Font.NORMAL);//table cell
-        Font rms6Normal = new Font(Font.TIMES_ROMAN, 6, Font.NORMAL);
-        Font rms8Normal = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL);
-        Font rms6Bold = new Font(Font.TIMES_ROMAN, 6, Font.BOLD);
-        Font rms8Bold = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);
-
+        Font rms6Normal = new Font(Font.TIMES_ROMAN, 9, Font.NORMAL);
+        Font rms10Bold = new Font(Font.HELVETICA, 10, Font.BOLD);
+        Font rms6Bold = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font rms8Bold = new Font(Font.HELVETICA, 8, Font.BOLD);
+        Font rms9Bold = new Font(Font.HELVETICA, 9, Font.BOLD);
+        Font rms10Normal = new Font(Font.HELVETICA, 10, Font.NORMAL);
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
         //constructor
-        public BankBranchTransferPDFBuilder2(BankTransferModel bbtransfermodel, string FileName)
+        public BankBranchTransferPDFBuilder2(BankTransferModel bbtransfermodel, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (bbtransfermodel == null)
                 throw new ArgumentNullException("BankTransferModel is null");
-            _ViewModel = bbtransfermodel; 
+            _ViewModel = bbtransfermodel;
+
+            _notificationmessageEventname = notificationmessageEventname;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed BankBranchTransferPDFBuilder2", TAG));
 
             sFilePDF = FileName;
         }
@@ -83,8 +94,8 @@ namespace winSBPayroll.Reports.PDFBuilder
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
-            } 
+                Log.WriteToErrorLogFile(ex);
+            }
         }
 
         //document header
@@ -122,16 +133,16 @@ namespace winSBPayroll.Reports.PDFBuilder
             salutationCell.Border = Cell.NO_BORDER;
             salutationCell.HorizontalAlignment = Cell.ALIGN_LEFT;
             salutationCell.Colspan = 5;
-            bankTransferTable.AddCell(salutationCell); 
+            bankTransferTable.AddCell(salutationCell);
 
             Cell reportdateCell = new Cell(new Phrase("Print Date:  " + _ViewModel.PrintedOn.ToString("dd-dddd-MMMM-yyyy"), tHfont1));
             reportdateCell.HorizontalAlignment = Cell.ALIGN_LEFT;
             reportdateCell.Colspan = 4;
             reportdateCell.Border = Cell.NO_BORDER;
             bankTransferTable.AddCell(reportdateCell);
-            
+
             //create the logo
-            PDFGen pdfgen = new PDFGen();
+            PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
             Image img0 = pdfgen.DoGetImageFile(_ViewModel.CompanyLogo);
             img0.Alignment = Image.ALIGN_MIDDLE;
             Cell logoCell = new Cell(img0);

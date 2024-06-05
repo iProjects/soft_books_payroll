@@ -11,7 +11,6 @@ namespace winSBPayroll.Reports.Excel
 {
     public class PayrollMasterExcelBuilder2
     {
-
         //private attributes 
         PayrollMasterModel _ViewModel;
         CreateExcelDoc document;
@@ -21,9 +20,11 @@ namespace winSBPayroll.Reports.Excel
         SBPayrollDBEntities db;
         Repository rep;
         string connection;
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
         //constructor
-        public PayrollMasterExcelBuilder2(PayrollMasterModel payrollMasterModel, string FileName, string Conn)
+        public PayrollMasterExcelBuilder2(PayrollMasterModel payrollMasterModel, string FileName, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (payrollMasterModel == null)
                 throw new ArgumentNullException("PayrollMasterModel is null");
@@ -36,6 +37,8 @@ namespace winSBPayroll.Reports.Excel
             de = new DataEntry(connection);
             db = new SBPayrollDBEntities(connection);
             rep = new Repository(connection);
+
+            _notificationmessageEventname = notificationmessageEventname;
 
             _ViewModel = payrollMasterModel;
             sFileExcel = FileName;
@@ -72,7 +75,7 @@ namespace winSBPayroll.Reports.Excel
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
 
         }
@@ -147,7 +150,7 @@ namespace winSBPayroll.Reports.Excel
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, "Basic Pay\nKshs", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
-           
+
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, "Gross Pay\nKshs", cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
@@ -201,7 +204,7 @@ namespace winSBPayroll.Reports.Excel
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, rec.BasicPay.ToString("#,##0"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");
 
-            
+
             col++;
             cellrangeaddr1 = document.IntAlpha(col) + row;
             document.createHeaders(row, col, rec.GrossTaxableEarnings.ToString("#,##0"), cellrangeaddr1, cellrangeaddr1, 0, "WHITE", true, 10, "n");

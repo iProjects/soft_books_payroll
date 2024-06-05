@@ -13,8 +13,9 @@ using CommonLib;
 using DAL;
 //--- Add the following to make this code work
 using iTextSharp.text;
-using VVX; 
+using VVX;
 using winSBPayroll.Forms;
+using System.Threading;
 
 namespace winSBPayroll.Forms
 {
@@ -22,8 +23,8 @@ namespace winSBPayroll.Forms
     {
         #region "Private Fields"
         private string msAppName = "SB Payroll Report.....";
-        PDFGen mPdf;
-        string msFilePDF = "";
+        PDFGen pdf_generator;
+        string current_file_name = "";
         string msFolder = "";
         List<Employee> _employeesList;
         List<DAL.Payroll> openPayrolls;
@@ -35,21 +36,27 @@ namespace winSBPayroll.Forms
         string _resourcesPath = null;
         string connection;
         List<NssfContributionsDTO> _nssfcomputations = new List<NssfContributionsDTO>();
+        string TAG;
+        List<notificationdto> _lstnotificationdto = new List<notificationdto>();
+        //Event declaration:
+        //event for publishing messages to output
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname_from_parent;
         #endregion "Private Fields"
 
         #region "Public Fields"
         //delegate
-        public delegate void ReportsProcessCompleteEventHandler(object sender, ReportsProcessCompleteEventArg e);
+        delegate void ReportsProcessCompleteEventHandler(object sender, ReportsProcessCompleteEventArg e);
         //event
-        public event ReportsProcessCompleteEventHandler OnCompleteReportsProcess;
+        event ReportsProcessCompleteEventHandler OnCompleteReportsProcess;
         //delegate
-        public delegate void ReportsEngineCompleteEventHandler(object sender, ReportsEngineCompleteEventArg e);
+        delegate void ReportsEngineCompleteEventHandler(object sender, ReportsEngineCompleteEventArg e);
         //event
-        public event ReportsEngineCompleteEventHandler OnCompleteReportsEngine;
+        event ReportsEngineCompleteEventHandler OnCompleteReportsEngine;
         #endregion "Public Fields"
 
         #region "Constructor"
-        public PDFViewer(string user, string Conn)
+        public PDFViewer(string user, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname_from_parent)
         {
             InitializeComponent();
 
@@ -61,6 +68,19 @@ namespace winSBPayroll.Forms
             rep = new Repository(connection);
             db = new SBPayrollDBEntities(connection);
 
+            TAG = this.GetType().Name;
+
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
+            Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(ThreadException);
+
+            //Subscribing to the event: 
+            //Dynamically:
+            //EventName += HandlerName;
+            _notificationmessageEventname += notificationmessageHandler;
+            _notificationmessageEventname_from_parent = notificationmessageEventname_from_parent;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("finished PDFViewer initialization", TAG));
+
             _user = user;
 
             DisableAllMenus();
@@ -68,19 +88,22 @@ namespace winSBPayroll.Forms
             Authorize();
 
             //--- init the folder in which generated PDF's will be saved.
-            msFolder = Application.ExecutablePath;
+            msFolder = AppDomain.CurrentDomain.BaseDirectory;
             int n = msFolder.LastIndexOf(@"\");
             msFolder = msFolder.Substring(0, n + 1);
 
             SetResourcePath();
-            mPdf = new PDFGen(_resourcesPath, connection);
 
-            //NavigateToHomePage();
+            pdf_generator = new PDFGen(_resourcesPath, connection, _notificationmessageEventname);
+
         }
         public PDFViewer(List<NssfContributionsDTO> nssfcomputations, string user, string Conn)
         {
             InitializeComponent();
 
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
+            Application.ThreadException += new ThreadExceptionEventHandler(ThreadException);
+
             if (string.IsNullOrEmpty(Conn))
                 throw new ArgumentNullException("connection");
             connection = Conn;
@@ -89,6 +112,18 @@ namespace winSBPayroll.Forms
             rep = new Repository(connection);
             db = new SBPayrollDBEntities(connection);
 
+            TAG = this.GetType().Name;
+
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
+            Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(ThreadException);
+
+            //Subscribing to the event: 
+            //Dynamically:
+            //EventName += HandlerName;
+            _notificationmessageEventname += notificationmessageHandler;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("finished PDFViewer initialization", TAG));
+
             _user = user;
 
             DisableAllMenus();
@@ -96,20 +131,21 @@ namespace winSBPayroll.Forms
             Authorize();
 
             //--- init the folder in which generated PDF's will be saved.
-            msFolder = Application.ExecutablePath;
+            msFolder = AppDomain.CurrentDomain.BaseDirectory;
             int n = msFolder.LastIndexOf(@"\");
             msFolder = msFolder.Substring(0, n + 1);
 
             SetResourcePath();
-            mPdf = new PDFGen(_resourcesPath, connection);
+
+            pdf_generator = new PDFGen(_resourcesPath, connection, _notificationmessageEventname);
 
             _nssfcomputations = nssfcomputations;
 
             ShowNewNSSF("pdf", _nssfcomputations);
         }
+
         #endregion "Constructor"
 
-        #region "Private Methods"
         #region "General Purpose Helpers for this Form"
         //************************************************************
         /// <summary>
@@ -121,70 +157,102 @@ namespace winSBPayroll.Forms
             {
                 this.Text = this.msAppName;
 
-                if (this.msFilePDF.Length == 0)
+                if (this.current_file_name.Length == 0)
                 {
                     this.Text += "<...no PDF file created...>";
                 }
                 else
                 {
-                    FileInfo fi = new FileInfo(this.msFilePDF);
+                    FileInfo fi = new FileInfo(get_reports_uri(this.current_file_name));
                     this.Text += @"...\" + fi.Name;
                 }
             }
             catch (Exception ex)
             {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
                 Utils.ShowError(ex);
             }
         }
         private void DoPreProcess(object sender, EventArgs e)
         {
-            this.ctlInfoLBL.Text = string.Empty;
+            this.lblstatusinfo.Text = string.Empty;
+            string msg = "processing report...";
+            this.lblstatusinfo.Text = msg;
+            this.Text = msg;
+        }
+        public string pathlookup(string folder)
+        {
+            try
+            {
+                string app_dir = Utils.get_application_path();
+                var dir = Path.Combine(app_dir, folder);
+
+
+                if (!Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
+
+                return dir;
+
+            }
+            catch (Exception ex)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
+            }
         }
         private void DoPostProcess(object sender, EventArgs e)
         {
             try
             {
-                string dir = rep.SettingLookup("REPORTPATH");
-                string sRet = dir + "\\" + msFilePDF;
+                string dir = pathlookup("reports");
+                string sRet = Utils.build_file_path(dir, current_file_name);
                 int pdfCount = Directory.GetFiles(dir, "*.pdf", SearchOption.TopDirectoryOnly).Length;
                 int excelCount = Directory.GetFiles(dir, "*.xls", SearchOption.TopDirectoryOnly).Length;
                 int _totalFiles = pdfCount + excelCount;
-                this.ctlInfoLBL.Text = msFilePDF.ToString() + "     [  " + _totalFiles.ToString() + "  ] ";
+                this.lblstatusinfo.Text = current_file_name.ToString() + "     [  " + _totalFiles.ToString() + "  ] ";
+
+                copy_to_user_temp();
             }
             catch (Exception ex)
             {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
                 Utils.ShowError(ex);
             }
         }
-        private string GetURI(string sFile)
+        private string get_reports_uri(string sFile)
         {
             string sRet;
             try
             {
-                string dir = de.SettingLookup("REPORTPATH");
-                sRet = dir + "\\" + sFile;
+                string dir = pathlookup("reports");
+                sRet = Utils.build_file_path(dir, sFile);
+
                 //check if directory exists.
                 if (!System.IO.Directory.Exists(dir))
                 {
-                    sRet = msFolder + "Output\\" + sFile;
+                    Directory.CreateDirectory(dir);
                 }
+                return sRet;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Utils.ShowError(e);
-                sRet = msFolder + "Output\\" + sFile;
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Utils.ShowError(ex);
+                return "";
             }
-            return sRet;
         }
         private void SetResourcePath()
         {
             string sRet = string.Empty;
             try
             {
-                string dir = de.SettingLookup("RESOURCEPATH");
-                if (!System.IO.Directory.Exists(dir))
+                string dir = pathlookup("resources");
+                if (!Directory.Exists(dir))
                 {
-                    sRet = msFolder + "Resources\\";
+                    Directory.CreateDirectory(dir);
                 }
                 else
                 {
@@ -193,95 +261,518 @@ namespace winSBPayroll.Forms
 
                 this._resourcesPath = sRet;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Utils.ShowError(e);
-                this._resourcesPath = msFolder + "Resources\\";
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Utils.ShowError(ex);
+                this._resourcesPath = Utils.build_file_path(msFolder, "resources");
             }
         }
         private void DoShowPDF(string sFilePDF)
         {
             this.DoUpdateCaption();
-            this.webBrowser1.Navigate(GetURI(sFilePDF));
+            this.webBrowser.Navigate(get_reports_uri(sFilePDF));
         }
+        private void NavigateToHomePage()
+        {
+            try
+            {
+                string help_file = "index.html";
+
+                string base_directory = AppDomain.CurrentDomain.BaseDirectory;
+                string help_path = Path.Combine(base_directory, "help");
+                string help_file_path = Path.Combine(help_path, help_file);
+
+                FileInfo fi = new FileInfo(help_file_path);
+
+                if (fi.Exists)
+                    this.webBrowser.Navigate(fi.FullName);
+            }
+            catch (Exception ex)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Utils.LogEventViewer(ex);
+            }
+        }
+
+        private void copy_to_user_temp()
+        {
+            try
+            {
+                string base_directory = AppDomain.CurrentDomain.BaseDirectory;
+                string reports_path = Path.Combine(base_directory, "Reports");
+
+                string temp_path = Path.GetTempPath();
+
+                DirectoryInfo reports_dir_info = new DirectoryInfo(reports_path);
+                DirectoryInfo temp_dir_info = new DirectoryInfo(temp_path);
+
+                var files = reports_dir_info.GetFiles();
+
+                foreach (var report_file_info in files)
+                {
+                    var _temp_file = Path.Combine(temp_path, report_file_info.Name);
+
+                    System.IO.File.Copy(report_file_info.FullName, _temp_file, true);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+            }
+        }
+
+        private void lblstatusinfo_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string base_directory = AppDomain.CurrentDomain.BaseDirectory;
+                string reports_path = Path.Combine(base_directory, "Reports");
+
+                if (Directory.Exists(reports_path))
+                {
+                    string _filetoSelect = Path.Combine(reports_path, current_file_name);
+                    // opens the folder in explorer and selects the displayed file
+                    string args = string.Format("/Select, {0}", _filetoSelect);
+                    ProcessStartInfo pfi = new ProcessStartInfo("Explorer.exe", args);
+                    System.Diagnostics.Process.Start(pfi);
+                }
+            }
+            catch (Exception ex)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Utils.ShowError(ex);
+            }
+        }
+        private bool NotifyMessage(string _Title, string _Text)
+        {
+            try
+            {
+                appNotifyIcon.Text = Utils.APP_NAME;
+                appNotifyIcon.Icon = new Icon("Resources/Icons/Dollar.ico");
+                appNotifyIcon.BalloonTipIcon = ToolTipIcon.Info;
+                appNotifyIcon.BalloonTipTitle = _Title;
+                appNotifyIcon.BalloonTipText = _Text;
+                appNotifyIcon.Visible = true;
+                appNotifyIcon.ShowBalloonTip(900000);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Utils.LogEventViewer(ex);
+                return false;
+            }
+        }
+
         #endregion "General Purpose Helpers for this Form"
+
+        #region "Private Methods"
+
+        #region "initialization"
+
+        private void PDFViewer_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                NavigateToHomePage();
+                InitializeControls();
+                RefreshGrid();
+
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("finished PDFViewer load", TAG));
+            }
+            catch (Exception ex)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Utils.ShowError(ex);
+            }
+        }
+        private void InitializeControls()
+        {
+            try
+            {
+                var _employersquery = from ep in db.Employers
+                                      where ep.IsActive == true
+                                      where ep.IsDeleted == false
+                                      select ep;
+
+                List<DAL.Employer> _employers = _employersquery.ToList();
+                DataGridViewComboBoxColumn colCboxEmployer = new DataGridViewComboBoxColumn();
+                colCboxEmployer.HeaderText = "Employers";
+                colCboxEmployer.Name = "cbEmployer";
+                colCboxEmployer.DataSource = _employers;
+                // The display member is the name column in the column datasource  
+                colCboxEmployer.DisplayMember = "Name";
+                // The DataPropertyName refers to the foreign key column on the datagridview datasource
+                colCboxEmployer.DataPropertyName = "EmployerId";
+                // The value member is the primary key of the parent table  
+                colCboxEmployer.ValueMember = "Id";
+                colCboxEmployer.MaxDropDownItems = 10;
+                colCboxEmployer.Width = 100;
+                colCboxEmployer.DisplayIndex = 3;
+                colCboxEmployer.MinimumWidth = 5;
+                colCboxEmployer.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                colCboxEmployer.FlatStyle = FlatStyle.Flat;
+                colCboxEmployer.DefaultCellStyle.NullValue = "--- Select ---";
+                colCboxEmployer.ReadOnly = true;
+                if (!this.dataGridViewPayroll.Columns.Contains("cbEmployer"))
+                {
+                    dataGridViewPayroll.Columns.Add(colCboxEmployer);
+                }
+
+                var _payroll_years_query = (from p in db.Payrolls
+                                            orderby p.Year descending
+                                            select p.Year).Distinct();
+
+                _payroll_years_query = _payroll_years_query.OrderByDescending(i => i);
+
+                List<int> _lst_payroll_years = _payroll_years_query.ToList();
+
+                cbopayrollyears.DisplayMember = "Year";
+                cbopayrollyears.ValueMember = "Year";
+                cbopayrollyears.DataSource = _lst_payroll_years;
+
+                cbopayrollproducts.SelectedIndex = 0;
+
+                dataGridViewPayroll.AutoGenerateColumns = false;
+                this.dataGridViewPayroll.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+                dataGridViewEmployers.AutoGenerateColumns = false;
+                this.dataGridViewEmployers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+                dataGridViewEmployee.AutoGenerateColumns = false;
+                this.dataGridViewEmployee.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+                dataGridViewPayrollItem.AutoGenerateColumns = false;
+                this.dataGridViewPayrollItem.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+                bindingSourcePayrollItem.DataSource = de.GetActivePayrollItems();
+                dataGridViewPayrollItem.DataSource = bindingSourcePayrollItem;
+                groupBox2.Text = bindingSourcePayrollItem.Count.ToString();
+
+                Dictionary<string, string> reports_items = new Dictionary<string, string>(){
+                    {"Payroll Master","Payroll Master"},
+                    {"PAYE","PAYE"},
+                    {"NSSF","NSSF"},
+                    {"NHIF","NHIF"},
+                    {"Net Salary","Net Salary"},
+                    {"Bank Transfer","Bank Transfer"},
+                    {"Bank Branch Transfer","Bank Branch Transfer"},
+                    {"Loan Repayments","Loan Repayments"},
+                    {"Sacco Contributions","Sacco Contributions"},
+                    {"Advances","Advances"},
+                    {"Employees","Employees"},
+                    {"Bank Employees","Bank Employees"},
+                    {"Mpesa Employees","Mpesa Employees"},
+                    {"Cash Employees","Cash Employees"}
+                };
+
+                cboItemTypesReports.ComboBox.DisplayMember = "key";
+                cboItemTypesReports.ComboBox.ValueMember = "value";
+                cboItemTypesReports.ComboBox.DataSource = new BindingSource(reports_items, null);
+
+                tabControlReportsData.SelectedTab = tabControlReportsData.TabPages[tabControlReportsData.TabPages.IndexOf(tabPagePayrolls)];
+                tabControlReportsData.SelectedTab = tabControlReportsData.TabPages[tabControlReportsData.TabPages.IndexOf(tabPageEmployers)];
+                tabControlReportsData.SelectedTab = tabControlReportsData.TabPages[tabControlReportsData.TabPages.IndexOf(tabPageEmployees)];
+                tabControlReportsData.SelectedTab = tabControlReportsData.TabPages[tabControlReportsData.TabPages.IndexOf(tabPagePayrollByProducts)];
+                tabControlReportsData.SelectedTab = tabControlReportsData.TabPages[tabControlReportsData.TabPages.IndexOf(tabPagePayrolls)];
+            }
+            catch (Exception ex)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Utils.ShowError(ex);
+            }
+        }
+
+        private void UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Exception ex = (Exception)e.ExceptionObject;
+            Log.WriteToErrorLogFile_and_EventViewer(ex);
+            this._notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.Message, TAG));
+        }
+
+        private void ThreadException(object sender, ThreadExceptionEventArgs e)
+        {
+            Exception ex = e.Exception;
+            Log.WriteToErrorLogFile_and_EventViewer(ex);
+            this._notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.Message, TAG));
+        }
+
+        //Event handler declaration:
+        private void notificationmessageHandler(object sender, notificationmessageEventArgs args)
+        {
+            try
+            {
+                /* Handler logic */
+                notificationdto _notificationdto = new notificationdto();
+
+                DateTime currentDate = DateTime.Now;
+                String dateTimenow = currentDate.ToString("dd-MM-yyyy HH:mm:ss tt");
+
+                String _logtext = Environment.NewLine + "[ " + dateTimenow + " ]   " + args.message;
+
+                _notificationdto._notification_message = _logtext;
+                _notificationdto._created_datetime = dateTimenow;
+                _notificationdto.TAG = args.TAG;
+
+                _lstnotificationdto.Add(_notificationdto);
+                Console.WriteLine(args.message);
+                _notificationmessageEventname_from_parent.Invoke(this, new notificationmessageEventArgs(args.message, TAG));
+
+                var _lstmsgdto = from msgdto in _lstnotificationdto
+                                 orderby msgdto._created_datetime descending
+                                 select msgdto._notification_message;
+
+                String[] _logflippedlines = _lstmsgdto.ToArray();
+
+                if (_logflippedlines.Length > 5000)
+                {
+                    _lstnotificationdto.Clear();
+                }
+
+                txtlog.Lines = _logflippedlines;
+                txtlog.ScrollToCaret();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private void RefreshGrid()
+        {
+            try
+            {
+                //start with process 
+                if (chkUseCurrentPayroll.Checked)
+                {
+                    //For current payroll; isOpen = true; Processed = true
+                    openPayrolls = de.GetPayrolls(PayrollState.OpenProcessed);
+                }
+                else
+                {
+                    //For current payroll; isOpen = false; Processed = true
+                    openPayrolls = de.GetPayrolls(PayrollState.NotOpenProcessed);
+                }
+
+                bindingSourcePayroll.DataSource = openPayrolls.OrderByDescending(i => i.DateRun).ToList();
+                dataGridViewPayroll.DataSource = bindingSourcePayroll;
+                groupBox3.Text = bindingSourcePayroll.Count.ToString();
+
+                cbYr_SelectedIndexChanged(this, null);
+            }
+            catch (Exception ex)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Utils.LogEventViewer(ex);
+            }
+        }
+        private void Authorize()
+        {
+            try
+            {
+                var _dbuserquery = (from us in db.spUsers
+                                    where us.UserName == _user
+                                    select us).FirstOrDefault();
+
+                spUser LoggedInUser = _dbuserquery;
+
+                if (LoggedInUser != null)
+                {
+                    var allowedmenusquery = from arm in db.spAllowedReportsRolesMenus
+                                            where arm.RoleId == LoggedInUser.RoleId
+                                            select arm;
+
+                    foreach (var armq in allowedmenusquery.ToList())
+                    {
+                        ToolStripItem tsbitem = toolStrip1.Items.Find(armq.spReportsMenuItem.mnuName, true).OfType<ToolStripItem>().FirstOrDefault();
+
+                        if (tsbitem != null && armq.Allowed == true)
+                        {
+                            tsbitem.Enabled = true;
+                            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(string.Format("Authorized menu [ {0} ]", armq.spReportsMenuItem.mnuName), TAG));
+                        }
+
+                        ToolStripButton tsbutton = toolStrip1.Items.Find(armq.spReportsMenuItem.mnuName, true).OfType<ToolStripButton>().FirstOrDefault();
+
+                        if (tsbutton != null && armq.Allowed == true)
+                        {
+                            tsbutton.Enabled = true;
+                            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(string.Format("Authorized menu [ {0} ]", armq.spReportsMenuItem.mnuName), TAG));
+                        }
+
+                        Button btnitem = panel3.Controls.Find(armq.spReportsMenuItem.mnuName, true).OfType<Button>().FirstOrDefault();
+
+                        if (btnitem != null && armq.Allowed == true)
+                        {
+                            btnitem.Enabled = true;
+                            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(string.Format("Authorized menu [ {0} ]", armq.spReportsMenuItem.mnuName), TAG));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Utils.ShowError(ex);
+            }
+        }
+        private void DisableAllMenus()
+        {
+            try
+            {
+                this.btnViewPayslip.Enabled = false;
+                this.btnP9A.Enabled = false;
+                this.btnP9AHOSP.Enabled = false;
+                this.btnP9B.Enabled = false;
+                this.btnP10.Enabled = false;
+                this.btnP10A.Enabled = false;
+                this.btnp11.Enabled = false;
+                this.btnViewAllPayslip.Enabled = false;
+                this.cboItemTypesReports.Enabled = false;
+                this.btnShowPDF.Enabled = false;
+                this.btnShowExcel.Enabled = false;
+                this.btnShow_Statement_or_Schedule.Enabled = false;
+            }
+            catch (Exception ex)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Utils.ShowError(ex);
+            }
+        }
+        //hander
+        private void HandleSelectedEmployeeList(object sender, EmployeeSelectEventArgs e)
+        {
+            try
+            {
+                SetEmpNos(e._Employee);
+            }
+            catch (Exception ex)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Utils.ShowError(ex);
+            }
+        }
+        //Implementation
+        public void SetEmpNos(DAL.Employee _Employee)
+        {
+            try
+            {
+                if (_Employee != null)
+                {
+                    bindingSourceEmployees.DataSource = _Employee;
+                    groupBox1.Text = bindingSourceEmployees.Count.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Utils.ShowError(ex);
+            }
+        }
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        #endregion "initialization"
+
         #region "datagridview"
         private void dataGridViewByProducts_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if ("STATEMENT".Equals(cbopayrollproducts.Text.Trim().ToUpper()))
+            try
             {
-                if (dataGridViewEmployee.SelectedRows.Count != 0 && dataGridViewPayrollItem.SelectedRows.Count != 0 && dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
+                if ("STATEMENT".Equals(cbopayrollproducts.Text.Trim().ToUpper()))
                 {
-                    DAL.Employee _employee = (DAL.Employee)bindingSourceEmployees.Current;
-                    DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
-                    DAL.PayrollItem _Payrollitem = (DAL.PayrollItem)bindingSourcePayrollItem.Current;
-                    int Year = int.Parse(cbYr.Text);
-                    Payroll pay = (Payroll)bindingSourcePayroll.Current;
-
-                    StatementModel statementmodel = ProcessStatement(_employee, Year, pay.Period, _Payrollitem);
-                    msFilePDF = "Statement " + _employee.EmpNo.Trim() + "  " + _Payrollitem.Id.Trim() + "  " + pay.Period.ToString() + "  " + pay.Year.ToString();
-
-                    DoPreProcess(sender, e);
-                    string app = string.Empty;
-                    if (showExcel)
+                    if (dataGridViewEmployee.SelectedRows.Count != 0 && dataGridViewPayrollItem.SelectedRows.Count != 0 && dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
                     {
-                        msFilePDF = msFilePDF + ".xls";
-                        app = "excel";
+                        DAL.Employee _employee = (DAL.Employee)bindingSourceEmployees.Current;
+                        DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
+                        DAL.PayrollItem _Payrollitem = (DAL.PayrollItem)bindingSourcePayrollItem.Current;
+                        int Year = int.Parse(cbopayrollyears.Text);
+                        Payroll pay = (Payroll)bindingSourcePayroll.Current;
+
+                        StatementModel statementmodel = ProcessStatement(_employee, Year, pay.Period, _Payrollitem);
+                        current_file_name = "Statement " + _employee.EmpNo.Trim() + "  " + _Payrollitem.Id.Trim() + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name;
+
+                        DoPreProcess(sender, e);
+
+                        string app = string.Empty;
+                        if (showExcel)
+                        {
+                            current_file_name = current_file_name + ".xlsx";
+                            app = "excel";
+                        }
+                        else
+                        {
+                            current_file_name = current_file_name + ".pdf";
+                            app = "pdf";
+                        }
+
+                        _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
+
+                        if (pdf_generator.ShowStatement(app, _Payrollitem.Id, statementmodel, get_reports_uri(current_file_name)))
+                        {
+                            DoShowPDF(current_file_name);
+                        }
+                        this.DoPostProcess(sender, e);
                     }
                     else
                     {
-                        msFilePDF = msFilePDF + ".pdf";
-                        app = "pdf";
+                        MessageBox.Show("Please select a Payroll Year , an Employee and a Payroll By Product ",
+                          "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
-                    if (mPdf.ShowStatement(app, _Payrollitem.Id, statementmodel, GetURI(msFilePDF)))
-                    {
-                        DoShowPDF(msFilePDF);
-                    }
-                    this.DoPostProcess(sender, e);
                 }
-                else
+                else //schedule
                 {
-                    MessageBox.Show("Please select a Payroll Year , an Employee and a Payroll By Product ",
-                      "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                    if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewPayrollItem.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
+                    {
+                        Payroll pay = (Payroll)bindingSourcePayroll.Current;
+                        DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
+                        DAL.PayrollItem _payrollitem = (DAL.PayrollItem)bindingSourcePayrollItem.Current;
 
+                        SheduleReportModel schedule = ProcessSchedule(pay, _payrollitem);
+                        current_file_name = "Schedule " + _payrollitem.Id.Trim() + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name;
+
+                        string app = string.Empty;
+
+                        DoPreProcess(sender, e);
+
+                        if (showExcel)
+                        {
+                            current_file_name = current_file_name + ".xlsx";
+                            app = "excel";
+                        }
+                        else
+                        {
+                            current_file_name = current_file_name + ".pdf";
+                            app = "pdf";
+                        }
+
+                        _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
+
+                        if (pdf_generator.ShowShedule(app, _payrollitem.Id, schedule, get_reports_uri(current_file_name)))
+                        {
+                            DoShowPDF(current_file_name);
+                        }
+                        this.DoPostProcess(sender, e);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please select a Payroll Year and a Payroll By Product ",
+                          "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
             }
-            else //schedule
+            catch (Exception ex)
             {
-                if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewPayrollItem.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
-                {
-                    Payroll pay = (Payroll)bindingSourcePayroll.Current;
-                    DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
-                    DAL.PayrollItem _payrollitem = (DAL.PayrollItem)bindingSourcePayrollItem.Current;
-
-                    SheduleReportModel schedule = ProcessSchedule(pay, _payrollitem);
-                    msFilePDF = "Schedule " + _payrollitem.Id.Trim() + "  " + pay.Period.ToString() + "  " + pay.Year.ToString();
-
-                    string app = string.Empty;
-                    DoPreProcess(sender, e);
-                    if (showExcel)
-                    {
-                        msFilePDF = msFilePDF + ".xls";
-                        app = "excel";
-                    }
-                    else
-                    {
-                        msFilePDF = msFilePDF + ".pdf";
-                        app = "pdf";
-                    }
-
-                    if (mPdf.ShowShedule(app, _payrollitem.Id, schedule, GetURI(msFilePDF)))
-                    {
-                        DoShowPDF(msFilePDF);
-                    }
-                    this.DoPostProcess(sender, e);
-                }
-                else
-                {
-                    MessageBox.Show("Please select a Payroll Year and a Payroll By Product ",
-                      "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Utils.ShowError(ex);
             }
         }
         private void dataGridViewEmployee_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -292,6 +783,7 @@ namespace winSBPayroll.Forms
             }
             catch (Exception ex)
             {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
                 Utils.ShowError(ex);
             }
         }
@@ -310,33 +802,153 @@ namespace winSBPayroll.Forms
                                           where ep.IsDeleted == false
                                           where ep.EmployerId == _employer.Id
                                           select ep;
-                    List<Employee> _Employees = _Employeesquery.ToList();
+                    List<DAL.Employee> _Employees = _Employeesquery.ToList();
 
                     bindingSourceEmployees.DataSource = _Employees;
-                    dataGridViewEmployee.AutoGenerateColumns = false;
-                    this.dataGridViewEmployee.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                     dataGridViewEmployee.DataSource = bindingSourceEmployees;
                     groupBox1.Text = bindingSourceEmployees.Count.ToString();
                 }
             }
             catch (Exception ex)
             {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
                 Utils.ShowError(ex);
             }
         }
+
+        private void dataGridViewPayroll_SelectionChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                bindingSourceEmployers.DataSource = null;
+
+                if (dataGridViewPayroll.SelectedRows.Count != 0)
+                {
+                    DAL.Payroll pay = (DAL.Payroll)bindingSourcePayroll.Current;
+
+                    var _Employersquery = from emp in db.Employers
+                                          where emp.IsActive == true
+                                          where emp.IsDeleted == false
+                                          where emp.Id == pay.EmployerId
+                                          orderby emp.Id descending
+                                          select emp;
+
+                    List<DAL.Employer> _Employers = _Employersquery.ToList();
+
+                    bindingSourceEmployers.DataSource = _Employers;
+                    dataGridViewEmployers.DataSource = bindingSourceEmployers;
+                    groupBox4.Text = bindingSourceEmployers.Count.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Utils.ShowError(ex);
+            }
+        }
+        private void tabControlReportsData_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                var selected_tab = tabControlReportsData.SelectedTab.Name;
+
+                switch (selected_tab)
+                {
+                    case "tabPageEmployees":
+                        DAL.Employee _employee = (DAL.Employee)bindingSourceEmployees.Current;
+                        break;
+                    case "tabPageEmployers":
+                        DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
+                        dataGridViewEmployers_SelectionChanged(sender, e);
+                        break;
+                    case "tabPagePayrollByProducts":
+                        DAL.PayrollItem _Payrollitem = (DAL.PayrollItem)bindingSourcePayrollItem.Current;
+                        break;
+                    case "tabPagePayrolls":
+                        Payroll pay = (Payroll)bindingSourcePayroll.Current;
+                        dataGridViewPayroll_SelectionChanged(sender, e);
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Utils.ShowError(ex);
+            }
+        }
+
+        private void dataGridViewPayroll_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            try
+            {
+                throw e.Exception;
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+            }
+        }
+
+        private void dataGridViewEmployers_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            try
+            {
+                throw e.Exception;
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+            }
+        }
+
+        private void dataGridViewEmployee_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            try
+            {
+                throw e.Exception;
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+            }
+        }
+
+        private void dataGridViewPayrollItem_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            try
+            {
+                throw e.Exception;
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+            }
+        }
+
         #endregion "datagridview"
+
         #region "buttons"
         private void btnEmployeeReportbutton_Click(object sender, EventArgs e)
         {
-            DoPreProcess(sender, e);
-
-            msFilePDF = "EmpList.pdf";
-
-            if (mPdf.EmployeeListing(GetURI(msFilePDF)))
+            try
             {
-                DoShowPDF(msFilePDF);
+                DoPreProcess(sender, e);
+
+                current_file_name = "EmpList.pdf";
+
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
+
+                if (pdf_generator.EmployeeListing(get_reports_uri(current_file_name)))
+                {
+                    DoShowPDF(current_file_name);
+                }
+                this.DoPostProcess(sender, e);
             }
-            this.DoPostProcess(sender, e);
+            catch (Exception ex)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Utils.ShowError(ex);
+            }
         }
         private void btnFilterEmployees_Click(object sender, EventArgs e)
         {
@@ -350,46 +962,11 @@ namespace winSBPayroll.Forms
             }
             catch (Exception ex)
             {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
                 Utils.ShowError(ex);
             }
         }
-        private void btnViewPayslip_Click(object sender, EventArgs e)
-        {
-            if (dataGridViewEmployee.SelectedRows.Count != 0 && dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
-            {
-                try
-                {
-                    string payslipType = de.SettingLookup("PAYSLIPTYPE");
-                    DAL.Employee emp = (DAL.Employee)bindingSourceEmployees.Current;
-                    Payroll pay = (Payroll)bindingSourcePayroll.Current;
-                    DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
 
-                    msFilePDF = "Payslip " + emp.EmpNo.Trim() + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + " .pdf";
-
-                    PayslipReader pr = new PayslipReader(emp.Id,emp.EmpNo, pay.Period, pay.Year, connection);
-                    Payslip pslip = pr.CreatePayslipFromPayslipMaster(chkUseCurrentPayroll.Checked);
-
-                    DoPreProcess(sender, e);
-
-                    if (mPdf.ShowPayslip(payslipType, pslip, GetURI(msFilePDF)))
-                    {
-                        DoShowPDF(msFilePDF);
-                    }
-
-                    this.DoPostProcess(sender, e);
-                }
-                catch (Exception ex)
-                {
-                    Utils.ShowError(ex);
-                    return;
-                }
-            }
-            else
-            {
-                MessageBox.Show("Please select a Payroll Year, an Employer and an Employee",
-                    "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
         private void btnP9A_Click(object sender, EventArgs e)
         {
             if (dataGridViewEmployee.SelectedRows.Count != 0 && dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
@@ -400,21 +977,25 @@ namespace winSBPayroll.Forms
                     DAL.Employee emp = (DAL.Employee)bindingSourceEmployees.Current;
                     DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
 
-                    msFilePDF = "P9A " + emp.EmpNo.Trim() + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + " .pdf";
+                    current_file_name = "P9A " + emp.EmpNo.Trim() + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".pdf";
+
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
 
                     P9AReportMaker p9AMaker = new P9AReportMaker(_employer, chkUseCurrentPayroll.Checked, emp.Id, emp.EmpNo, pay.Year, connection);
                     P9AReportModel p9A = p9AMaker.GetP9A();
 
                     DoPreProcess(sender, e);
 
-                    if (mPdf.ShowP9A(p9A, GetURI(msFilePDF)))
+                    if (pdf_generator.ShowP9A(p9A, get_reports_uri(current_file_name)))
                     {
-                        DoShowPDF(msFilePDF);
+                        DoShowPDF(current_file_name);
                     }
                     this.DoPostProcess(sender, e);
                 }
                 catch (Exception ex)
                 {
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                    Log.WriteToErrorLogFile_and_EventViewer(ex);
                     Utils.ShowError(ex);
                     return;
                 }
@@ -435,21 +1016,25 @@ namespace winSBPayroll.Forms
                     DAL.Employee emp = (DAL.Employee)bindingSourceEmployees.Current;
                     DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
 
-                    msFilePDF = "P9AHOSP " + emp.EmpNo.Trim() + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + " .pdf";
+                    current_file_name = "P9AHOSP " + emp.EmpNo.Trim() + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".pdf";
+
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
 
                     P9AHospReportMaker p9AMaker = new P9AHospReportMaker(_employer, chkUseCurrentPayroll.Checked, emp.Id, emp.EmpNo, pay.Year, connection);
                     P9AHOSPReportModel p9A = p9AMaker.GetP9Hosp();
 
                     DoPreProcess(sender, e);
 
-                    if (mPdf.ShowP9AHOSP(p9A, GetURI(msFilePDF)))
+                    if (pdf_generator.ShowP9AHOSP(p9A, get_reports_uri(current_file_name)))
                     {
-                        DoShowPDF(msFilePDF);
+                        DoShowPDF(current_file_name);
                     }
                     this.DoPostProcess(sender, e);
                 }
                 catch (Exception ex)
                 {
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                    Log.WriteToErrorLogFile_and_EventViewer(ex);
                     Utils.ShowError(ex);
                     return;
                 }
@@ -470,21 +1055,25 @@ namespace winSBPayroll.Forms
                     DAL.Employee emp = (DAL.Employee)bindingSourceEmployees.Current;
                     DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
 
-                    msFilePDF = "P9B " + emp.EmpNo.Trim() + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + " .pdf";
+                    current_file_name = "P9B " + emp.EmpNo.Trim() + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".pdf";
+
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
 
                     P9BReportMaker p9BMaker = new P9BReportMaker(_employer, chkUseCurrentPayroll.Checked, emp.Id, emp.EmpNo, pay.Year, connection);
                     P9BReportModel p9B = p9BMaker.GetP9B();
 
                     DoPreProcess(sender, e);
 
-                    if (mPdf.ShowP9B(p9B, GetURI(msFilePDF)))
+                    if (pdf_generator.ShowP9B(p9B, get_reports_uri(current_file_name)))
                     {
-                        DoShowPDF(msFilePDF);
+                        DoShowPDF(current_file_name);
                     }
                     this.DoPostProcess(sender, e);
                 }
                 catch (Exception ex)
                 {
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                    Log.WriteToErrorLogFile_and_EventViewer(ex);
                     Utils.ShowError(ex);
                     return;
                 }
@@ -504,22 +1093,26 @@ namespace winSBPayroll.Forms
                     Payroll pay = (Payroll)bindingSourcePayroll.Current;
                     DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
 
-                    msFilePDF = "P10A " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + " .pdf";
+                    current_file_name = "P10A " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".pdf";
+
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
 
                     P10AReportMaker p10AMaker = new P10AReportMaker(_employer, chkUseCurrentPayroll.Checked, pay.Year, connection);
                     P10AReportModel p10A = p10AMaker.GetP10A();
 
                     DoPreProcess(sender, e);
 
-                    if (mPdf.ShowP10A(p10A, GetURI(msFilePDF)))
+                    if (pdf_generator.ShowP10A(p10A, get_reports_uri(current_file_name)))
                     {
-                        DoShowPDF(msFilePDF);
+                        DoShowPDF(current_file_name);
                     }
                     this.DoPostProcess(sender, e);
 
                 }
                 catch (Exception ex)
                 {
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                    Log.WriteToErrorLogFile_and_EventViewer(ex);
                     Utils.ShowError(ex);
                     return;
                 }
@@ -540,22 +1133,26 @@ namespace winSBPayroll.Forms
                     Payroll pay = (Payroll)bindingSourcePayroll.Current;
                     DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
 
-                    msFilePDF = "P10 " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + " .pdf";
+                    current_file_name = "P10 " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".pdf";
+
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
 
                     P10ReportMaker p10maker = new P10ReportMaker(_employer, chkUseCurrentPayroll.Checked, pay.Year, connection);
                     P10ReportModel p10model = p10maker.BuildP10();
 
                     DoPreProcess(sender, e);
 
-                    if (mPdf.ShowP10(p10model, GetURI(msFilePDF)))
+                    if (pdf_generator.ShowP10(p10model, get_reports_uri(current_file_name)))
                     {
-                        DoShowPDF(msFilePDF);
+                        DoShowPDF(current_file_name);
                     }
                     this.DoPostProcess(sender, e);
 
                 }
                 catch (Exception ex)
                 {
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                    Log.WriteToErrorLogFile_and_EventViewer(ex);
                     Utils.ShowError(ex);
                     return;
                 }
@@ -576,22 +1173,26 @@ namespace winSBPayroll.Forms
                     Payroll pay = (Payroll)bindingSourcePayroll.Current;
                     DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
 
-                    msFilePDF = "p11 " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + " .pdf";
+                    current_file_name = "p11 " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".pdf";
+
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
 
                     P11ReportMaker p11Maker = new P11ReportMaker(_employer, chkUseCurrentPayroll.Checked, pay.Period, pay.Year, connection);
                     P11ReportModel p11 = p11Maker.GetP11Model();
 
                     DoPreProcess(sender, e);
 
-                    if (mPdf.ShowP11(p11, GetURI(msFilePDF)))
+                    if (pdf_generator.ShowP11(p11, get_reports_uri(current_file_name)))
                     {
-                        DoShowPDF(msFilePDF);
+                        DoShowPDF(current_file_name);
                     }
                     this.DoPostProcess(sender, e);
 
                 }
                 catch (Exception ex)
                 {
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                    Log.WriteToErrorLogFile_and_EventViewer(ex);
                     Utils.ShowError(ex);
                     return;
                 }
@@ -602,40 +1203,104 @@ namespace winSBPayroll.Forms
                    "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+        private void btnViewPayslip_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewEmployee.SelectedRows.Count != 0 && dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
+            {
+                try
+                {
+                    string payslipType = de.SettingLookup("PAYSLIPTYPE");
+                    DAL.Employee emp = (DAL.Employee)bindingSourceEmployees.Current;
+                    Payroll pay = (Payroll)bindingSourcePayroll.Current;
+                    DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
+
+                    current_file_name = "Payslip " + emp.EmpNo.Trim() + " " + emp.Surname + " " + emp.OtherNames + " " + pay.Period.ToString() + " " + pay.Year.ToString() + " " + _employer.Name + ".pdf";
+
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
+
+                    PayslipReader pr = new PayslipReader(emp.Id, emp.EmpNo, pay.Period, pay.Year, connection);
+                    Payslip payslip = pr.CreatePayslipFromPayslipMaster(chkUseCurrentPayroll.Checked);
+
+                    if (payslip == null)
+                    {
+                        MessageBox.Show("Paslip for this employee does not exist, please check if Payroll for this Employee and Employer is processed.",
+                                           "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    DoPreProcess(sender, e);
+
+                    if (pdf_generator.ShowPayslip(payslipType, payslip, get_reports_uri(current_file_name)))
+                    {
+                        DoShowPDF(current_file_name);
+                    }
+
+                    this.DoPostProcess(sender, e);
+                }
+                catch (Exception ex)
+                {
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                    Log.WriteToErrorLogFile_and_EventViewer(ex);
+                    Utils.ShowError(ex);
+                    return;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a Payroll Year, an Employer and an Employee",
+                    "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
         private void btnViewAllPayslip_Click(object sender, EventArgs e)
         {
-
             if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
             {
-                if (_employeesList == null)
-                    _employeesList = rep.GetAllActiveEmployees();
-
-                Payroll pay = (Payroll)bindingSourcePayroll.Current;
+                DAL.Payroll pay = (DAL.Payroll)bindingSourcePayroll.Current;
                 DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
 
-                msFilePDF = "All Payslip " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + " .pdf";
+                List<DAL.Employee> _employees_List = rep.GetAllActiveEmployeesforEmployer(_employer.Id);
 
-                List<Payslip> payslips = new List<Payslip>();
-                foreach (var emp in _employeesList)
+                current_file_name = "All Payslip " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".pdf";
+
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
+
+                List<DAL.Payslip> payslips = new List<DAL.Payslip>();
+
+                foreach (var emp in _employees_List)
                 {
                     try
                     {
                         //read payslip form payslipmaster + payslipdet
-                        PayslipReader pr = new PayslipReader(emp.Id,emp.EmpNo, pay.Period, pay.Year, connection);
-                        payslips.Add(pr.CreatePayslipFromPayslipMaster(chkUseCurrentPayroll.Checked));
-
+                        PayslipReader pr = new PayslipReader(emp.Id, emp.EmpNo, pay.Period, pay.Year, connection);
+                        DAL.Payslip payslip = pr.CreatePayslipFromPayslipMaster(chkUseCurrentPayroll.Checked);
+                        if (payslip != null)
+                        {
+                            payslips.Add(payslip);
+                            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(string.Format("generated payslip for Employee [ {0} ], Period [ {1} ], Year [{2}], Employer [ {3} ]", emp.OtherNames + " " + emp.Surname, pay.Period, pay.Year, _employer.Name), TAG));
+                        }
                     }
                     catch (Exception ex)
                     {
+                        _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                        Log.WriteToErrorLogFile_and_EventViewer(ex);
                         Utils.ShowError(ex);
                         return;
                     }
                 }
+
+                if (payslips.Count == 0)
+                {
+                    string msg = string.Format("Error processing payslips for [ {0} ] employees, please check if Payroll for these Employees for Employer [ {1} ] are processed.", _employees_List.Count, _employer.Name);
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(msg, TAG));
+                    MessageBox.Show(msg, "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 DoPreProcess(sender, e);
 
-                if (mPdf.ShowPayslip(payslips, GetURI(msFilePDF)))
+                if (pdf_generator.ShowPayslip(payslips, get_reports_uri(current_file_name)))
                 {
-                    DoShowPDF(msFilePDF);
+                    DoShowPDF(current_file_name);
                 }
                 this.DoPostProcess(sender, e);
             }
@@ -655,80 +1320,96 @@ namespace winSBPayroll.Forms
         }
         private void btnShow_Click(object sender, EventArgs e)
         {
-            if ("STATEMENT".Equals(cbopayrollproducts.Text.Trim().ToUpper()))
+            try
             {
-                if (dataGridViewEmployee.SelectedRows.Count != 0 && dataGridViewPayrollItem.SelectedRows.Count != 0 && dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
+                if ("STATEMENT".Equals(cbopayrollproducts.Text.Trim().ToUpper()))
                 {
-                    DAL.Employee emp = (DAL.Employee)bindingSourceEmployees.Current;
-                    DAL.PayrollItem _Payrollitem = (DAL.PayrollItem)bindingSourcePayrollItem.Current;
-                    Payroll pay = (Payroll)bindingSourcePayroll.Current;
-                    DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
-                    int Year = int.Parse(cbYr.Text);
-
-                    StatementModel statementmodel = ProcessStatement(emp, Year, pay.Period, _Payrollitem);
-                    msFilePDF = "Statement " + emp.EmpNo.Trim() + "  " + _Payrollitem.Id.Trim() + "  " + pay.Period.ToString() + "  " + pay.Year.ToString();
-
-                    DoPreProcess(sender, e);
-                    string app = string.Empty;
-                    if (showExcel)
+                    if (dataGridViewEmployee.SelectedRows.Count != 0 && dataGridViewPayrollItem.SelectedRows.Count != 0 && dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
                     {
-                        msFilePDF = msFilePDF + ".xls";
-                        app = "excel";
+                        DAL.Employee emp = (DAL.Employee)bindingSourceEmployees.Current;
+                        DAL.PayrollItem _Payrollitem = (DAL.PayrollItem)bindingSourcePayrollItem.Current;
+                        Payroll pay = (Payroll)bindingSourcePayroll.Current;
+                        DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
+                        int Year = int.Parse(cbopayrollyears.Text);
+
+                        StatementModel statementmodel = ProcessStatement(emp, Year, pay.Period, _Payrollitem);
+                        current_file_name = "Statement " + emp.EmpNo.Trim() + "  " + _Payrollitem.Id.Trim() + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name;
+
+                        _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
+
+                        DoPreProcess(sender, e);
+
+                        string app = string.Empty;
+                        if (showExcel)
+                        {
+                            current_file_name = current_file_name + ".xlsx";
+                            app = "excel";
+                        }
+                        else
+                        {
+                            current_file_name = current_file_name + ".pdf";
+                            app = "pdf";
+                        }
+
+                        if (pdf_generator.ShowStatement(app, _Payrollitem.Id, statementmodel, get_reports_uri(current_file_name)))
+                        {
+                            DoShowPDF(current_file_name);
+                        }
+                        this.DoPostProcess(sender, e);
                     }
                     else
                     {
-                        msFilePDF = msFilePDF + ".pdf";
-                        app = "pdf";
+                        MessageBox.Show("Please select a Payroll Year , an Employee and a Payroll By Product ",
+                          "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
-                    if (mPdf.ShowStatement(app, _Payrollitem.Id, statementmodel, GetURI(msFilePDF)))
-                    {
-                        DoShowPDF(msFilePDF);
-                    }
-                    this.DoPostProcess(sender, e);
                 }
-                else
+                else //schedule
                 {
-                    MessageBox.Show("Please select a Payroll Year , an Employee and a Payroll By Product ",
-                      "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                    if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewPayrollItem.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
+                    {
+                        Payroll pay = (Payroll)bindingSourcePayroll.Current;
+                        DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
+                        DAL.PayrollItem _payrollitem = (DAL.PayrollItem)bindingSourcePayrollItem.Current;
 
+                        SheduleReportModel schedule = ProcessSchedule(pay, _payrollitem);
+                        current_file_name = "Schedule " + _payrollitem.Id.Trim() + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name;
+
+                        _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
+
+                        string app = string.Empty;
+
+                        DoPreProcess(sender, e);
+                        if (showExcel)
+                        {
+                            current_file_name = current_file_name + ".xlsx";
+                            app = "excel";
+                        }
+                        else
+                        {
+                            current_file_name = current_file_name + ".pdf";
+                            app = "pdf";
+                        }
+
+                        if (pdf_generator.ShowShedule(app, _payrollitem.Id, schedule, get_reports_uri(current_file_name)))
+                        {
+                            DoShowPDF(current_file_name);
+                        }
+                        this.DoPostProcess(sender, e);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please select a Payroll Year and a Payroll By Product ",
+                          "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
             }
-            else //schedule
+            catch (Exception ex)
             {
-                if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewPayrollItem.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
-                {
-                    Payroll pay = (Payroll)bindingSourcePayroll.Current;
-                    DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
-                    DAL.PayrollItem _payrollitem = (DAL.PayrollItem)bindingSourcePayrollItem.Current;
-
-                    SheduleReportModel schedule = ProcessSchedule(pay, _payrollitem);
-                    msFilePDF = "Schedule " + _payrollitem.Id.Trim() + "  " + pay.Period.ToString() + "  " + pay.Year.ToString();
-
-                    string app = string.Empty;
-                    DoPreProcess(sender, e);
-                    if (showExcel)
-                    {
-                        msFilePDF = msFilePDF + ".xls";
-                        app = "excel";
-                    }
-                    else
-                    {
-                        msFilePDF = msFilePDF + ".pdf";
-                        app = "pdf";
-                    }
-
-                    if (mPdf.ShowShedule(app, _payrollitem.Id, schedule, GetURI(msFilePDF)))
-                    {
-                        DoShowPDF(msFilePDF);
-                    }
-                    this.DoPostProcess(sender, e);
-                }
-                else
-                {
-                    MessageBox.Show("Please select a Payroll Year and a Payroll By Product ",
-                      "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                Utils.ShowError(ex);
+                return;
             }
         }
         private void btnTsbExit_Click(object sender, EventArgs e)
@@ -739,6 +1420,7 @@ namespace winSBPayroll.Forms
             }
             catch (Exception ex)
             {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
                 Utils.ShowError(ex);
             }
         }
@@ -767,512 +1449,389 @@ namespace winSBPayroll.Forms
             }
             catch (Exception ex)
             {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
                 Utils.ShowError(ex);
             }
-        }
-        private void btnReportsFolder_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                string _ReportsDir = rep.SettingLookup("REPORTPATH");
-                if (Directory.Exists(_ReportsDir))
-                {
-                    string _filetoSelect = _ReportsDir + "\\" + msFilePDF;
-                    // opens the folder in explorer and selects the displayed file
-                    string args = string.Format("/Select, {0}", _filetoSelect);
-                    if (System.IO.File.Exists(_filetoSelect))
-                    {
-                        ProcessStartInfo pfi = new ProcessStartInfo("Explorer.exe", args);
-                        System.Diagnostics.Process.Start(pfi);
-                    }
-                    else
-                    {
-                        Utils.ShowError(new Exception("File \n[ " + _filetoSelect + " ] \ndoes not exist."));
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Utils.ShowError(ex);
-            }
-
         }
         #endregion "buttons"
         #region "custom"
-        private void NavigateToHomePage()
-        {
-            string sFile = "iTextSharpTutorial.html";
-
-            string sPath = sFile;
-            for (int i = 0; i < 6; i++)
-            {
-                if (VVX.File.Exists(sPath))
-                {
-                    FileInfo fi = new FileInfo(sPath);
-                    this.webBrowser1.Navigate(fi.FullName);
-                    break;
-                }
-                sPath = @"..\" + sPath;
-            }
-        }
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-        private void PDFViewer_Load(object sender, EventArgs e)
-        {
-            try
-            {
-                InitializeControls();
-
-                RefreshGrid();
-            }
-            catch (Exception ex)
-            {
-                Utils.ShowError(ex);
-            }
-        }
-        private void InitializeControls()
-        {
-            try
-            {
-                dataGridViewPayroll.AutoGenerateColumns = false;
-                this.dataGridViewPayroll.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-
-                cbYr.DataSource = de.GetPayrollYears();
-                cbYr.DisplayMember = "Year";
-
-                dataGridViewPayrollItem.AutoGenerateColumns = false;
-                this.dataGridViewPayrollItem.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                bindingSourcePayrollItem.DataSource = de.GetActivePayrollItems();
-                dataGridViewPayrollItem.DataSource = bindingSourcePayrollItem;
-                groupBox2.Text = bindingSourcePayrollItem.Count.ToString();
-
-                cbopayrollproducts.SelectedIndex = 0;
-
-                dataGridViewEmployers.AutoGenerateColumns = false;
-                this.dataGridViewEmployers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                bindingSourceEmployers.DataSource = rep.GetAllActiveEmployers();
-                dataGridViewEmployers.DataSource = bindingSourceEmployers;
-                groupBox4.Text = bindingSourceEmployers.Count.ToString();
-            }
-            catch (Exception ex)
-            {
-                Utils.ShowError(ex);
-            }
-        }
-        private void Authorize()
-        {
-            try
-            {
-                var _dbuserquery = (from us in db.spUsers
-                                    where us.UserName == _user
-                                    select us).FirstOrDefault();
-                spUser LoggedInUser = _dbuserquery;
-                if (LoggedInUser != null)
-                {
-                    var allowedmenusquery = from arm in db.spAllowedReportsRolesMenus
-                                            where arm.RoleId == LoggedInUser.RoleId
-                                            select arm;
-                    List<spMenuItem> menuitems = new List<spMenuItem>();
-                    foreach (var armq in allowedmenusquery.ToList())
-                    {
-                        ToolStripItem tsbitem = toolStrip1.Items.Find(armq.spReportsMenuItem.mnuName, true).OfType<ToolStripItem>().FirstOrDefault();
-
-                        if (tsbitem != null && armq.Allowed == true)
-                        {
-                            tsbitem.Enabled = true;
-                        }
-
-                        Button btnitem = panel3.Controls.Find(armq.spReportsMenuItem.mnuName, true).OfType<Button>().FirstOrDefault();
-
-                        if (btnitem != null && armq.Allowed == true)
-                        {
-                            btnitem.Enabled = true;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Utils.ShowError(ex);
-            }
-        }
-        private void DisableAllMenus()
-        {
-            try
-            {
-                this.btnViewPayslip.Enabled = false;
-                this.btnP9A.Enabled = false;
-                this.btnP9AHOSP.Enabled = false;
-                this.btnP9B.Enabled = false;
-                this.btnP10.Enabled = false;
-                this.btnP10A.Enabled = false;
-                this.btnp11.Enabled = false;
-                this.btnViewAllPayslip.Enabled = false;
-                this.cboItemTypesReports.Enabled = false;
-                this.btnShowPDF.Enabled = false;
-                this.btnExcel.Enabled = false;
-                this.btnShow.Enabled = false;
-            }
-            catch (Exception ex)
-            {
-                Utils.ShowError(ex);
-            }
-        }
-        //hander
-        private void HandleSelectedEmployeeList(object sender, EmployeeSelectEventArgs e)
-        {
-            try
-            {
-                SetEmpNos(e._Employee);
-            }
-            catch (Exception ex)
-            {
-                Utils.ShowError(ex);
-            }
-        }
-        //Implementation
-        public void SetEmpNos(DAL.Employee _Employee)
-        {
-            try
-            {
-                if (_Employee != null)
-                {
-                    bindingSourceEmployees.DataSource = _Employee;
-                    groupBox1.Text = bindingSourceEmployees.Count.ToString();
-                }
-            }
-            catch (Exception ex)
-            {
-                Utils.ShowError(ex);
-            }
-        }
-        public bool NotifyMessage(string _Title, string _Text)
-        {
-            try
-            {
-                appNotifyIcon.Text = "Soft Books Payroll";
-                appNotifyIcon.Icon = new Icon("Resources/Icons/Dollar.ico");
-                appNotifyIcon.BalloonTipIcon = ToolTipIcon.Info;
-                appNotifyIcon.BalloonTipTitle = _Title;
-                appNotifyIcon.BalloonTipText = _Text;
-                appNotifyIcon.Visible = true;
-                appNotifyIcon.ShowBalloonTip(900000);
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Utils.LogEventViewer(ex);
-                return false;
-            }
-        }
-        private void RefreshGrid()
-        {
-            try
-            {
-                //start with process 
-                if (chkUseCurrentPayroll.Checked)
-                {
-                    //For current payroll; isOpen = true; Processed = true
-                    openPayrolls = de.GetPayrolls(PayrollState.OpenProcessed);
-                }
-                else
-                {
-                    //For current payroll; isOpen = false; Processed = true
-                    openPayrolls = de.GetPayrolls(PayrollState.NotOpenProcessed);
-                }
-
-                bindingSourcePayroll.DataSource = openPayrolls;
-                dataGridViewPayroll.DataSource = bindingSourcePayroll;
-                groupBox3.Text = bindingSourcePayroll.Count.ToString();
-
-                cbYr_SelectedIndexChanged(this, null);
-            }
-            catch (Exception ex)
-            {
-                Utils.LogEventViewer(ex);
-            }
-        }
         private void ShowPayrollMaster(string app, object sender, EventArgs e)
         {
-            if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
+            try
             {
-                Payroll pay = (Payroll)bindingSourcePayroll.Current;
-                DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
-
-                //create payeeModel
-                PayrollMasterBuilder pm = new PayrollMasterBuilder(_employer, chkUseCurrentPayroll.Checked, pay.Period, pay.Year, connection);
-                PayrollMasterModel payModel = pm.GetPayrollMaster();
-
-                var _engs = rep.GetAllEarnings();
-                var _ddct = rep.GetAllOtherDeductions();
-
-                List<string> earnings = (from ea in _engs
-                                         orderby ea.Description descending
-                                         select ea.Description).Distinct().ToList();
-                List<string> deductions = (from dd in _ddct
-                                           orderby dd.Description descending
-                                           select dd.Description).Distinct().ToList();
-
-                DoPreProcess(sender, e);
-                if ("pdf".Equals(app.ToLower()))
+                if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
                 {
-                    msFilePDF = "Payroll Master " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + " .pdf";
+                    Payroll pay = (Payroll)bindingSourcePayroll.Current;
+                    DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
+
+                    //create payeeModel
+                    PayrollMasterBuilder pm = new PayrollMasterBuilder(_employer, chkUseCurrentPayroll.Checked, pay.Period, pay.Year, connection);
+                    PayrollMasterModel payModel = pm.GetPayrollMaster();
+
+                    var _engs = rep.GetAllEarnings();
+                    var _ddct = rep.GetAllOtherDeductions();
+
+                    List<string> earnings = (from ea in _engs
+                                             orderby ea.Description descending
+                                             select ea.Description).Distinct().ToList();
+                    List<string> deductions = (from dd in _ddct
+                                               orderby dd.Description descending
+                                               select dd.Description).Distinct().ToList();
+
+                    DoPreProcess(sender, e);
+
+                    if ("pdf".Equals(app.ToLower()))
+                    {
+                        current_file_name = "Payroll Master " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".pdf";
+                    }
+                    else
+                    {
+                        current_file_name = "Payroll Master " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".xlsx";
+                    }
+
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
+
+                    if (pdf_generator.ShowPayrollMaster(earnings, deductions, app, payModel, get_reports_uri(current_file_name)))
+                    {
+                        DoShowPDF(current_file_name);
+                    }
+                    this.DoPostProcess(sender, e);
                 }
                 else
                 {
-                    msFilePDF = "Payroll Master " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + " .xls";
+                    //MessageBox.Show("Please select  a Payroll Year and an Employer", "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-                if (mPdf.ShowPayrollMaster(earnings, deductions, app, payModel, GetURI(msFilePDF)))
-                {
-                    DoShowPDF(msFilePDF);
-                }
-                this.DoPostProcess(sender, e);
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Please select  a Payroll Year and an Employer",
-                  "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                Utils.ShowError(ex);
+                return;
             }
         }
         private void ShowPAYE(string app, object sender, EventArgs e)
         {
-            if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
+            try
             {
-
-                Payroll pay = (Payroll)bindingSourcePayroll.Current;
-                DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
-
-                //create payeeModle
-                PAYEModelBuilder pmb = new PAYEModelBuilder(_employer, chkUseCurrentPayroll.Checked, pay.Year, pay.Period, connection);
-                PAYEModel payeModel = pmb.GetPAYEModel();
-                DoPreProcess(sender, e);
-                if ("pdf".Equals(app.ToLower()))
+                if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
                 {
-                    msFilePDF = "PAYE " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + " .pdf";
+
+                    Payroll pay = (Payroll)bindingSourcePayroll.Current;
+                    DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
+
+                    //create payeeModle
+                    PAYEModelBuilder pmb = new PAYEModelBuilder(_employer, chkUseCurrentPayroll.Checked, pay.Year, pay.Period, connection);
+                    PAYEModel payeModel = pmb.GetPAYEModel();
+
+                    DoPreProcess(sender, e);
+
+                    if ("pdf".Equals(app.ToLower()))
+                    {
+                        current_file_name = "PAYE " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".pdf";
+                    }
+                    else
+                    {
+                        current_file_name = "PAYE " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".xlsx";
+                    }
+
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
+
+                    if (pdf_generator.ShowPayee(app, payeModel, get_reports_uri(current_file_name)))
+                    {
+                        DoShowPDF(current_file_name);
+                    }
+                    this.DoPostProcess(sender, e);
                 }
                 else
                 {
-                    msFilePDF = "PAYE " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + ".xls";
+                    MessageBox.Show("Please select  a Payroll Year and an Employer", "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-                if (mPdf.ShowPayee(app, payeModel, GetURI(msFilePDF)))
-                {
-                    DoShowPDF(msFilePDF);
-                }
-                this.DoPostProcess(sender, e);
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Please select  a Payroll Year and an Employer",
-                 "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                Utils.ShowError(ex);
+                return;
             }
         }
         private void ShowNSSF(string app, object sender, EventArgs e)
         {
-            if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
+            try
             {
-
-                Payroll pay = (Payroll)bindingSourcePayroll.Current;
-                DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
-
-                //create model
-                NSSFReportBuilder nssfreportbuilder = new NSSFReportBuilder(_employer, chkUseCurrentPayroll.Checked, pay.Period, pay.Year, connection);
-                NSSFReportModel nssfreportmodel = nssfreportbuilder.GetNSSFReport();
-
-                DoPreProcess(sender, e);
-                if ("pdf".Equals(app.ToLower()))
+                if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
                 {
-                    msFilePDF = "NSSF " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + " .pdf";
+
+                    Payroll pay = (Payroll)bindingSourcePayroll.Current;
+                    DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
+
+                    //create model
+                    NSSFReportBuilder nssfreportbuilder = new NSSFReportBuilder(_employer, chkUseCurrentPayroll.Checked, pay.Period, pay.Year, connection);
+                    NSSFReportModel nssfreportmodel = nssfreportbuilder.GetNSSFReport();
+
+                    DoPreProcess(sender, e);
+
+                    if ("pdf".Equals(app.ToLower()))
+                    {
+                        current_file_name = "NSSF " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".pdf";
+                    }
+                    else
+                    {
+                        current_file_name = "NSSF " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".xlsx";
+                    }
+
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
+
+                    if (pdf_generator.ShowNSSF(_employer, app, nssfreportmodel, get_reports_uri(current_file_name)))
+                    {
+                        DoShowPDF(current_file_name);
+                    }
+                    this.DoPostProcess(sender, e);
                 }
                 else
                 {
-                    msFilePDF = "NSSF " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + ".xls";
+                    MessageBox.Show("Please select  a Payroll Year and an Employer", "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-                if (mPdf.ShowNSSF(_employer, app, nssfreportmodel, GetURI(msFilePDF)))
-                {
-                    DoShowPDF(msFilePDF);
-                }
-                this.DoPostProcess(sender, e);
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Please select  a Payroll Year and an Employer",
-                 "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                Utils.ShowError(ex);
+                return;
             }
         }
         private void ShowNewNSSF(string app, List<NssfContributionsDTO> nssfcomputations)
         {
-            if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
+            try
             {
-                int Period = DateTime.Now.Month;
-                int year = DateTime.Now.Year;
-
-                //create model
-                NSSFReportBuilder nssfreportbuilder = new NSSFReportBuilder(chkUseCurrentPayroll.Checked, Period, year, connection);
-                NSSFReportModel nssfreportmodel = nssfreportbuilder.GetNewNSSFReport();
-
-                DoPreProcess(this, null);
-                if ("pdf".Equals(app.ToLower()))
+                if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
                 {
-                    msFilePDF = "NSSF " + "  " + Period.ToString() + "  " + year.ToString() + " .pdf";
+                    DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
+                    Payroll pay = (Payroll)bindingSourcePayroll.Current;
+
+                    int Period = DateTime.Now.Month;
+                    int year = DateTime.Now.Year;
+
+                    //create model
+                    NSSFReportBuilder nssfreportbuilder = new NSSFReportBuilder(chkUseCurrentPayroll.Checked, Period, year, connection);
+                    NSSFReportModel nssfreportmodel = nssfreportbuilder.GetNewNSSFReport();
+
+                    DoPreProcess(this, null);
+
+                    if ("pdf".Equals(app.ToLower()))
+                    {
+                        current_file_name = "NSSF " + "  " + Period.ToString() + "  " + year.ToString() + "  " + _employer.Name + ".pdf";
+                    }
+                    else
+                    {
+                        current_file_name = "NSSF " + "  " + Period.ToString() + "  " + year.ToString() + "  " + _employer.Name + ".xlsx";
+                    }
+
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
+
+                    if (pdf_generator.ShowNewNSSF(app, nssfreportmodel, get_reports_uri(current_file_name)))
+                    {
+                        DoShowPDF(current_file_name);
+                    }
+                    this.DoPostProcess(this, null);
                 }
                 else
                 {
-                    msFilePDF = "NSSF " + "  " + Period.ToString() + "  " + year.ToString() + ".xls";
+                    MessageBox.Show("Please select  a Payroll Year and an Employer", "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-                if (mPdf.ShowNewNSSF(app, nssfreportmodel, GetURI(msFilePDF)))
-                {
-                    DoShowPDF(msFilePDF);
-                }
-                this.DoPostProcess(this, null);
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Please select  a Payroll Year and an Employer",
-                 "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                Utils.ShowError(ex);
+                return;
             }
         }
         private void ShowNetSalary(string app, object sender, EventArgs e)
         {
-            if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
+            try
             {
-
-                Payroll pay = (Payroll)bindingSourcePayroll.Current;
-                DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
-
-                //create model
-                NetSalaryReportMaker netsalaryreportmaker = new NetSalaryReportMaker(_employer, chkUseCurrentPayroll.Checked, pay.Year, pay.Period, connection);
-                NetSalaryReportModel netsalaryreportmodel = netsalaryreportmaker.GetNetSalaryModel();
-
-                DoPreProcess(sender, e);
-                if ("pdf".Equals(app.ToLower()))
+                if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
                 {
-                    msFilePDF = "Net Salary " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + ".pdf";
+
+                    Payroll pay = (Payroll)bindingSourcePayroll.Current;
+                    DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
+
+                    //create model
+                    NetSalaryReportMaker netsalaryreportmaker = new NetSalaryReportMaker(_employer, chkUseCurrentPayroll.Checked, pay.Year, pay.Period, connection);
+                    NetSalaryReportModel netsalaryreportmodel = netsalaryreportmaker.GetNetSalaryModel();
+
+                    DoPreProcess(sender, e);
+
+                    if ("pdf".Equals(app.ToLower()))
+                    {
+                        current_file_name = "Net Salary " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".pdf";
+                    }
+                    else
+                    {
+                        current_file_name = "Net Salary " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".xlsx";
+                    }
+
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
+
+                    if (pdf_generator.ShowNetSalary(app, netsalaryreportmodel, get_reports_uri(current_file_name)))
+                    {
+                        DoShowPDF(current_file_name);
+                    }
+                    this.DoPostProcess(sender, e);
                 }
                 else
                 {
-                    msFilePDF = "Net Salary " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + ".xls";
+                    MessageBox.Show("Please select  a Payroll Year and an Employer", "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-                if (mPdf.ShowNetSalary(app, netsalaryreportmodel, GetURI(msFilePDF)))
-                {
-                    DoShowPDF(msFilePDF);
-                }
-                this.DoPostProcess(sender, e);
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Please select  a Payroll Year and an Employer",
-                 "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                Utils.ShowError(ex);
+                return;
             }
         }
         private void ShowNHIF(string app, object sender, EventArgs e)
         {
-            if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
+            try
             {
-
-                Payroll pay = (Payroll)bindingSourcePayroll.Current;
-                DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
-
-                //create model
-                NHIFReportBuilder nhifreportbuilder = new NHIFReportBuilder(_employer, chkUseCurrentPayroll.Checked, pay.Period, pay.Year, connection);
-                NHIFReportModel nhifreportmodel = nhifreportbuilder.GetNHIFReport();
-
-                DoPreProcess(sender, e);
-                if ("pdf".Equals(app.ToLower()))
+                if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
                 {
-                    msFilePDF = "NHIF " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + ".pdf";
+
+                    Payroll pay = (Payroll)bindingSourcePayroll.Current;
+                    DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
+
+                    //create model
+                    NHIFReportBuilder nhifreportbuilder = new NHIFReportBuilder(_employer, chkUseCurrentPayroll.Checked, pay.Period, pay.Year, connection);
+                    NHIFReportModel nhifreportmodel = nhifreportbuilder.GetNHIFReport();
+
+                    DoPreProcess(sender, e);
+
+                    if ("pdf".Equals(app.ToLower()))
+                    {
+                        current_file_name = "NHIF " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".pdf";
+                    }
+                    else
+                    {
+                        current_file_name = "NHIF " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".xlsx";
+                    }
+
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
+
+                    if (pdf_generator.ShowNHIF(app, nhifreportmodel, get_reports_uri(current_file_name)))
+                    {
+                        DoShowPDF(current_file_name);
+                    }
+                    this.DoPostProcess(sender, e);
                 }
                 else
                 {
-                    msFilePDF = "NHIF " + "  " + pay.Period.ToString() + "  " + pay.Year.ToString() + ".xls";
+                    MessageBox.Show("Please select  a Payroll Year and an Employer", "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-                if (mPdf.ShowNHIF(app, nhifreportmodel, GetURI(msFilePDF)))
-                {
-                    DoShowPDF(msFilePDF);
-                }
-                this.DoPostProcess(sender, e);
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Please select  a Payroll Year and an Employer",
-                 "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                Utils.ShowError(ex);
+                return;
             }
         }
         private void ShowLoanRepaymentSchedule(string app, object sender, EventArgs e)
         {
-            if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
+            try
             {
-
-                Payroll pay = (Payroll)bindingSourcePayroll.Current;
-                DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
-
-                //create model
-                LoanRepaymentScheduleModelBuilder lrmbuilder = new LoanRepaymentScheduleModelBuilder(_employer, chkUseCurrentPayroll.Checked, pay, connection);
-                LoanRepaymentScheduleModel loanrepaymentshedulemodel = lrmbuilder.Getloanrepaymentshedule();
-
-                DoPreProcess(sender, e);
-
-                if ("pdf".Equals(app.ToLower()))
+                if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
                 {
-                    msFilePDF = "Loan Repayments " + pay.Period.ToString() + "  " + pay.Year.ToString() + " .pdf";
+
+                    Payroll pay = (Payroll)bindingSourcePayroll.Current;
+                    DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
+
+                    //create model
+                    LoanRepaymentScheduleModelBuilder lrmbuilder = new LoanRepaymentScheduleModelBuilder(_employer, chkUseCurrentPayroll.Checked, pay, connection);
+                    LoanRepaymentScheduleModel loanrepaymentshedulemodel = lrmbuilder.Getloanrepaymentshedule();
+
+                    DoPreProcess(sender, e);
+
+                    if ("pdf".Equals(app.ToLower()))
+                    {
+                        current_file_name = "Loan Repayments " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".pdf";
+                    }
+                    else
+                    {
+                        current_file_name = "Loan Repayments " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".xlsx";
+                    }
+
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
+
+                    if (pdf_generator.ShowLoanRepaymentShedule(app, loanrepaymentshedulemodel, get_reports_uri(current_file_name)))
+                    {
+                        DoShowPDF(current_file_name);
+                    }
+                    this.DoPostProcess(sender, e);
                 }
                 else
                 {
-                    msFilePDF = "Loan Repayments " + pay.Period.ToString() + "  " + pay.Year.ToString() + " .xls";
+                    MessageBox.Show("Please select  a Payroll Year and an Employer", "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-                if (mPdf.ShowLoanRepaymentShedule(app, loanrepaymentshedulemodel, GetURI(msFilePDF)))
-                {
-                    DoShowPDF(msFilePDF);
-                }
-                this.DoPostProcess(sender, e);
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Please select  a Payroll Year and an Employer",
-                 "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                Utils.ShowError(ex);
+                return;
             }
         }
         private void ShowSaccoPaymentSchedule(string app, object sender, EventArgs e)
         {
-            if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
+            try
             {
-
-                Payroll pay = (Payroll)bindingSourcePayroll.Current;
-                DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
-
-                //create model
-                SaccoPaymentScheduleModelBuilder spsmbuilder = new SaccoPaymentScheduleModelBuilder(_employer, chkUseCurrentPayroll.Checked, pay, connection);
-                SaccoPaymentScheduleModel saccopaymentshedulemodel = spsmbuilder.Getsaccopaymentshedule();
-
-                DoPreProcess(sender, e);
-                if ("pdf".Equals(app.ToLower()))
+                if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
                 {
-                    msFilePDF = "Sacco Contributions " + pay.Period.ToString() + "  " + pay.Year.ToString() + " .pdf";
+
+                    Payroll pay = (Payroll)bindingSourcePayroll.Current;
+                    DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
+
+                    //create model
+                    SaccoPaymentScheduleModelBuilder spsmbuilder = new SaccoPaymentScheduleModelBuilder(_employer, chkUseCurrentPayroll.Checked, pay, connection);
+                    SaccoPaymentScheduleModel saccopaymentshedulemodel = spsmbuilder.Getsaccopaymentshedule();
+
+                    DoPreProcess(sender, e);
+
+                    if ("pdf".Equals(app.ToLower()))
+                    {
+                        current_file_name = "Sacco Contributions " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".pdf";
+                    }
+                    else
+                    {
+                        current_file_name = "Sacco Contributions  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".xlsx";
+                    }
+
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
+
+                    if (pdf_generator.ShowSaccoPaymentShedule(app, saccopaymentshedulemodel, get_reports_uri(current_file_name)))
+                    {
+                        DoShowPDF(current_file_name);
+                    }
+                    this.DoPostProcess(sender, e);
                 }
                 else
                 {
-                    msFilePDF = "Sacco Contributions  " + pay.Period.ToString() + "  " + pay.Year.ToString() + " .xls";
+                    MessageBox.Show("Please select  a Payroll Year and an Employer", "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-                if (mPdf.ShowSaccoPaymentShedule(app, saccopaymentshedulemodel, GetURI(msFilePDF)))
-                {
-                    DoShowPDF(msFilePDF);
-                }
-                this.DoPostProcess(sender, e);
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Please select  a Payroll Year and an Employer",
-                 "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                Utils.ShowError(ex);
+                return;
             }
         }
         private StatementModel ProcessStatement(Employee emp, int Yr, int period, DAL.PayrollItem payrollitem)
@@ -1291,6 +1850,7 @@ namespace winSBPayroll.Forms
             }
             catch (Exception ex)
             {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
                 Utils.ShowError(ex);
                 return null;
             }
@@ -1311,146 +1871,327 @@ namespace winSBPayroll.Forms
             }
             catch (Exception ex)
             {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
                 Utils.ShowError(ex);
                 return null;
             }
         }
         private void ShowBankTransfer(string app, object sender, EventArgs e)
         {
-            if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
+            try
             {
-                Payroll pay = (Payroll)bindingSourcePayroll.Current;
-                DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
-
-                //create model
-                BankTransferMaker bbtbuilder = new BankTransferMaker(_employer,chkUseCurrentPayroll.Checked, pay.Period, pay.Year, connection);
-                BankTransferReportModel bbtreportmodel = bbtbuilder.GetBankTransferModelBuilder();
-
-                DoPreProcess(sender, e);
-
-                if ("pdf".Equals(app.ToLower()))
+                if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
                 {
-                    msFilePDF = "Bank Transfer  " + pay.Period.ToString() + "  " + pay.Year.ToString() + " .pdf";
+                    Payroll pay = (Payroll)bindingSourcePayroll.Current;
+                    DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
+
+                    //create model
+                    BankTransferMaker bbtbuilder = new BankTransferMaker(_employer, chkUseCurrentPayroll.Checked, pay.Period, pay.Year, connection);
+                    BankTransferReportModel bbtreportmodel = bbtbuilder.GetBankTransferModelBuilder();
+
+                    DoPreProcess(sender, e);
+
+                    if ("pdf".Equals(app.ToLower()))
+                    {
+                        current_file_name = "Bank Transfer  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".pdf";
+                    }
+                    else
+                    {
+                        current_file_name = "Bank Transfer  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".xlsx";
+                    }
+
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
+
+                    if (pdf_generator.ShowBankTransfer(app, bbtreportmodel, get_reports_uri(current_file_name)))
+                    {
+                        DoShowPDF(current_file_name);
+                    }
+                    this.DoPostProcess(sender, e);
                 }
                 else
                 {
-                    msFilePDF = "Bank Transfer  " + pay.Period.ToString() + "  " + pay.Year.ToString() + " .xls";
+                    MessageBox.Show("Please select  a Payroll Year", "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-                if (mPdf.ShowBankTransfer(app, bbtreportmodel, GetURI(msFilePDF)))
-                {
-                    DoShowPDF(msFilePDF);
-                }
-                this.DoPostProcess(sender, e);
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Please select  a Payroll Year  ",
-                 "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                Utils.ShowError(ex);
+                return;
             }
         }
 
         private void ShowBankBranchTransfer(string app, object sender, EventArgs e)
         {
-            if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
+            try
             {
-
-                Payroll pay = (Payroll)bindingSourcePayroll.Current;
-                DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
-
-                //create model
-                BankBranchTransferModelBuilder bbtbuilder = new BankBranchTransferModelBuilder(_employer, chkUseCurrentPayroll.Checked, pay.Period, pay.Year, connection);
-                BankTransferModel bbtreportmodel = bbtbuilder.GetBankBranchTransferModelBuilder();
-
-                DoPreProcess(sender, e);
-
-                if ("pdf".Equals(app.ToLower()))
+                if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
                 {
-                    msFilePDF = "Bank Branch Transfer " + pay.Period.ToString() + "  " + pay.Year.ToString() + " .pdf";
+
+                    Payroll pay = (Payroll)bindingSourcePayroll.Current;
+                    DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
+
+                    //create model
+                    BankBranchTransferModelBuilder bbtbuilder = new BankBranchTransferModelBuilder(_employer, chkUseCurrentPayroll.Checked, pay.Period, pay.Year, connection);
+                    BankTransferModel bbtreportmodel = bbtbuilder.GetBankBranchTransferModelBuilder();
+
+                    DoPreProcess(sender, e);
+
+                    if ("pdf".Equals(app.ToLower()))
+                    {
+                        current_file_name = "Bank Branch Transfer " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".pdf";
+                    }
+                    else
+                    {
+                        current_file_name = "Bank Branch Transfer  " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".xlsx";
+                    }
+
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
+
+                    if (pdf_generator.ShowBankBranchTransfer(app, bbtreportmodel, get_reports_uri(current_file_name)))
+                    {
+                        DoShowPDF(current_file_name);
+                    }
+
+                    this.DoPostProcess(sender, e);
                 }
                 else
                 {
-                    msFilePDF = "Bank Branch Transfer  " + pay.Period.ToString() + "  " + pay.Year.ToString() + " .xls";
+                    MessageBox.Show("Please select  a Payroll Year ", "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-                if (mPdf.ShowBankBranchTransfer(app, bbtreportmodel, GetURI(msFilePDF)))
-                {
-                    DoShowPDF(msFilePDF);
-                }
-
-                this.DoPostProcess(sender, e);
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Please select  a Payroll Year  ",
-                "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                Utils.ShowError(ex);
+                return;
             }
         }
         private void ShowEmployeeReport(string app, object sender, EventArgs e)
         {
-            if (cbYr.SelectedIndex != -1 && dataGridViewEmployers.SelectedRows.Count != 0)
+            try
             {
-                DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
-                int year = int.Parse(cbYr.SelectedValue.ToString());
-
-                //create model
-                EmployeesModelBuilder bbtbuilder = new EmployeesModelBuilder(_employer, connection);
-                EmployeesModelReport bbtreportmodel = bbtbuilder.GetEmployeesModel();
-
-                DoPreProcess(sender, e);
-                if ("pdf".Equals(app.ToLower()))
+                if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
                 {
-                    msFilePDF = "Employees " + year.ToString() + " .pdf";
+                    Payroll pay = (Payroll)bindingSourcePayroll.Current;
+                    DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
+
+                    //create model
+                    EmployeesModelBuilder bbtbuilder = new EmployeesModelBuilder(_employer, chkUseCurrentPayroll.Checked, pay.Period, pay.Year, connection);
+                    EmployeesModelReport bbtreportmodel = bbtbuilder.GetEmployeesModel();
+
+                    DoPreProcess(sender, e);
+
+                    if ("pdf".Equals(app.ToLower()))
+                    {
+                        current_file_name = "Employees " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".pdf";
+                    }
+                    else
+                    {
+                        current_file_name = "Employees " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".xlsx";
+                    }
+
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
+
+                    if (pdf_generator.ShowEmployees(app, bbtreportmodel, get_reports_uri(current_file_name)))
+                    {
+                        DoShowPDF(current_file_name);
+                    }
+                    this.DoPostProcess(sender, e);
                 }
                 else
                 {
-                    msFilePDF = "Employees " + year.ToString() + " .xls";
+                    MessageBox.Show("Please select  a Payroll Year and an Employer", "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-                if (mPdf.ShowEmployees(app, bbtreportmodel, GetURI(msFilePDF)))
-                {
-                    DoShowPDF(msFilePDF);
-                }
-                this.DoPostProcess(sender, e);
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Please select  a Payroll Year and an Employer",
-                "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                Utils.ShowError(ex);
+                return;
+            }
+        }
+        private void ShowBankEmployeeReport(string app, object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
+                {
+                    Payroll pay = (Payroll)bindingSourcePayroll.Current;
+                    DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
+
+                    //create model
+                    BankEmployeesModelBuilder bbtbuilder = new BankEmployeesModelBuilder(_employer, chkUseCurrentPayroll.Checked, pay.Period, pay.Year, connection);
+                    BankEmployeesModelReport bbtreportmodel = bbtbuilder.GetEmployeesModel();
+
+                    DoPreProcess(sender, e);
+
+                    if ("pdf".Equals(app.ToLower()))
+                    {
+                        current_file_name = "Bank Employees " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".pdf";
+                    }
+                    else
+                    {
+                        current_file_name = "Bank Employees " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".xlsx";
+                    }
+
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
+
+                    if (pdf_generator.ShowBankEmployees(app, bbtreportmodel, get_reports_uri(current_file_name)))
+                    {
+                        DoShowPDF(current_file_name);
+                    }
+                    this.DoPostProcess(sender, e);
+                }
+                else
+                {
+                    MessageBox.Show("Please select  a Payroll Year and an Employer", "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                Utils.ShowError(ex);
+                return;
+            }
+        }
+        private void ShowCashEmployeeReport(string app, object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
+                {
+                    Payroll pay = (Payroll)bindingSourcePayroll.Current;
+                    DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
+
+                    //create model
+                    CashEmployeesModelBuilder bbtbuilder = new CashEmployeesModelBuilder(_employer, chkUseCurrentPayroll.Checked, pay.Period, pay.Year, connection);
+                    CashEmployeesModelReport bbtreportmodel = bbtbuilder.GetEmployeesModel();
+
+                    DoPreProcess(sender, e);
+
+                    if ("pdf".Equals(app.ToLower()))
+                    {
+                        current_file_name = "Cash Employees " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".pdf";
+                    }
+                    else
+                    {
+                        current_file_name = "Cash Employees " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".xlsx";
+                    }
+
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
+
+                    if (pdf_generator.ShowCashEmployees(app, bbtreportmodel, get_reports_uri(current_file_name)))
+                    {
+                        DoShowPDF(current_file_name);
+                    }
+                    this.DoPostProcess(sender, e);
+                }
+                else
+                {
+                    MessageBox.Show("Please select  a Payroll Year and an Employer", "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                Utils.ShowError(ex);
+                return;
+            }
+        }
+        private void ShowMpesaEmployeeReport(string app, object sender, EventArgs e)
+        {
+            try
+            {
+                if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
+                {
+                    Payroll pay = (Payroll)bindingSourcePayroll.Current;
+                    DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
+
+                    //create model
+                    MpesaEmployeesModelBuilder bbtbuilder = new MpesaEmployeesModelBuilder(_employer, chkUseCurrentPayroll.Checked, pay.Period, pay.Year, connection);
+                    MpesaEmployeesModelReport bbtreportmodel = bbtbuilder.GetEmployeesModel();
+
+                    DoPreProcess(sender, e);
+
+                    if ("pdf".Equals(app.ToLower()))
+                    {
+                        current_file_name = "Mpesa Employees " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".pdf";
+                    }
+                    else
+                    {
+                        current_file_name = "Mpesa Employees " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".xlsx";
+                    }
+
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
+
+                    if (pdf_generator.ShowMpesaEmployees(app, bbtreportmodel, get_reports_uri(current_file_name)))
+                    {
+                        DoShowPDF(current_file_name);
+                    }
+                    this.DoPostProcess(sender, e);
+                }
+                else
+                {
+                    MessageBox.Show("Please select  a Payroll Year and an Employer", "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                Utils.ShowError(ex);
+                return;
             }
         }
         private void ShowAdvanceSchedule(string app, object sender, EventArgs e)
         {
-            if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
+            try
             {
-                Payroll pay = (Payroll)bindingSourcePayroll.Current;
-                DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
-
-                //create model
-                AdvanceModelBuilder advancebuilder = new AdvanceModelBuilder(_employer, chkUseCurrentPayroll.Checked, pay.Period, pay.Year, connection);
-                AdvanceReportModel advancereport = advancebuilder.GetAdvanceModel();
-
-                DoPreProcess(sender, e);
-
-                if ("pdf".Equals(app.ToLower()))
+                if (dataGridViewPayroll.SelectedRows.Count != 0 && dataGridViewEmployers.SelectedRows.Count != 0)
                 {
-                    msFilePDF = "Advances " + pay.Period.ToString() + "  " + pay.Year.ToString() + " .pdf";
+                    Payroll pay = (Payroll)bindingSourcePayroll.Current;
+                    DAL.Employer _employer = (DAL.Employer)bindingSourceEmployers.Current;
+
+                    //create model
+                    AdvanceModelBuilder advancebuilder = new AdvanceModelBuilder(_employer, chkUseCurrentPayroll.Checked, pay.Period, pay.Year, connection);
+                    AdvanceReportModel advancereport = advancebuilder.GetAdvanceModel();
+
+                    DoPreProcess(sender, e);
+
+                    if ("pdf".Equals(app.ToLower()))
+                    {
+                        current_file_name = "Advances " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".pdf";
+                    }
+                    else
+                    {
+                        current_file_name = "Advances " + pay.Period.ToString() + "  " + pay.Year.ToString() + "  " + _employer.Name + ".xlsx";
+                    }
+
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("generating report [ " + current_file_name + " ]", TAG));
+
+                    if (pdf_generator.ShowAdvanceSchedule(app, advancereport, get_reports_uri(current_file_name)))
+                    {
+                        DoShowPDF(current_file_name);
+                    }
+                    this.DoPostProcess(sender, e);
                 }
                 else
                 {
-                    msFilePDF = "Advances " + pay.Period.ToString() + "  " + pay.Year.ToString() + " .xls";
+                    MessageBox.Show("Please select  a Payroll Year and an Employer", "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-                if (mPdf.ShowAdvanceSchedule(app, advancereport, GetURI(msFilePDF)))
-                {
-                    DoShowPDF(msFilePDF);
-                }
-                this.DoPostProcess(sender, e);
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Please select  a Payroll Year and an Employer",
-                 "SB Payroll Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                Utils.ShowError(ex);
+                return;
             }
         }
         private void ToggleExcelPDF()
@@ -1458,13 +2199,13 @@ namespace winSBPayroll.Forms
             if (showExcel)
             {
                 showExcel = false;
-                btnExcel.Checked = showExcel;
+                btnShowExcel.Checked = showExcel;
                 btnShowPDF.Checked = !showExcel;
             }
             else
             {
                 showExcel = true;
-                btnExcel.Checked = showExcel;
+                btnShowExcel.Checked = showExcel;
                 btnShowPDF.Checked = !showExcel;
             }
         }
@@ -1474,11 +2215,11 @@ namespace winSBPayroll.Forms
         {
             try
             {
-                if (cbYr.SelectedItem != null && openPayrolls != null)
+                if (cbopayrollyears.SelectedItem != null && openPayrolls != null)
                 {
-                    string filter = "Year =" + cbYr.Text;
+                    string filter = "Year =" + cbopayrollyears.Text;
                     List<Payroll> filterd = (from l in openPayrolls
-                                             where l.Year == (int)cbYr.SelectedItem
+                                             where l.Year == (int)cbopayrollyears.SelectedItem
                                              select l).ToList();
                     bindingSourcePayroll.DataSource = filterd;
                     groupBox3.Text = bindingSourcePayroll.Count.ToString();
@@ -1486,6 +2227,7 @@ namespace winSBPayroll.Forms
             }
             catch (Exception ex)
             {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
                 Utils.ShowError(ex);
             }
         }
@@ -1505,6 +2247,7 @@ namespace winSBPayroll.Forms
             }
             catch (Exception ex)
             {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
                 Utils.LogEventViewer(ex);
             }
         }
@@ -1547,6 +2290,16 @@ namespace winSBPayroll.Forms
                     case "Employees":
                         ShowEmployeeReport("excel", sender, e);
                         break;
+                    case "Bank Employees":
+                        ShowBankEmployeeReport("excel", sender, e);
+                        break;
+                    case "Mpesa Employees":
+                        ShowMpesaEmployeeReport("excel", sender, e);
+                        break;
+                    case "Cash Employees":
+                        ShowCashEmployeeReport("excel", sender, e);
+                        break;
+
                 }
             }
             else
@@ -1586,23 +2339,24 @@ namespace winSBPayroll.Forms
                     case "Employees":
                         ShowEmployeeReport("pdf", sender, e);
                         break;
+                    case "Bank Employees":
+                        ShowBankEmployeeReport("pdf", sender, e);
+                        break;
+                    case "Mpesa Employees":
+                        ShowMpesaEmployeeReport("pdf", sender, e);
+                        break;
+                    case "Cash Employees":
+                        ShowCashEmployeeReport("pdf", sender, e);
+                        break;
                 }
             }
         }
         #endregion "combobox"
 
-        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-
-            }
-            catch(Exception ex)
-            {
-                Utils.ShowError(ex);
-            }
-        }
         #endregion "Private Methods"
+
+
+
     }
 
 
@@ -1623,6 +2377,6 @@ namespace winSBPayroll.Forms
 
 }
 
-    
+
 
 
