@@ -379,37 +379,37 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BLL.dll" size="1487360">
-      <assemblyIdentity name="BLL" version="1.0.0.51" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="BLL" version="1.0.0.52" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>6OfLoYwGigV1gL/jzsp0Pevnk80=</dsig:DigestValue>
+        <dsig:DigestValue>7X9xd8u6gF5WZDOQiKlY/JtH3mE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CommonLib.dll" size="35328">
-      <assemblyIdentity name="CommonLib" version="1.0.0.51" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CommonLib.dll" size="35840">
+      <assemblyIdentity name="CommonLib" version="1.0.0.52" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>U1cxx8LLcm0crwcpoxeNedteJH4=</dsig:DigestValue>
+        <dsig:DigestValue>/ZeFmBbEoBhQ2AHmqHD6shhuFvA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DAL.dll" size="642048">
-      <assemblyIdentity name="DAL" version="1.0.0.51" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="DAL" version="1.0.0.52" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>XDIXs2p/SeaS+dqh395ZK2Zt6C0=</dsig:DigestValue>
+        <dsig:DigestValue>zKdpE/YfPZjcq7H3iUepXBCEheQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -715,25 +715,25 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SMOScripting.exe" size="25600">
-      <assemblyIdentity name="SMOScripting" version="1.0.0.51" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="SMOScripting" version="1.0.0.52" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>J4SK1CbuvcWMlQGUadG2xj4WfAI=</dsig:DigestValue>
+        <dsig:DigestValue>b//bcN2rBZeoarXEa/MYgRx89Nw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="winSBPayroll.exe" size="7055360">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="winSBPayroll.exe" size="7056384">
       <assemblyIdentity name="winSBPayroll" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>60VB5u31mKPD+QpepbYI9dyIMqU=</dsig:DigestValue>
+        <dsig:DigestValue>XYUnfyTJC0pSLwMwotGaavK2aZY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -2645,13 +2645,13 @@
       <dsig:DigestValue>F9d99G74eWmQ+CBMRfUytZLb46Y=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="winSBPayroll.exe.config" size="3288">
+  <file name="winSBPayroll.exe.config" size="3523">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>irTZ58FpdekrX3GdyLhJU8xsu4I=</dsig:DigestValue>
+      <dsig:DigestValue>coimR8f43ekh2t1cZHRwPrWXzi8=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

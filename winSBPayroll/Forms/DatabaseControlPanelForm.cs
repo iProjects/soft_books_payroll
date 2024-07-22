@@ -1846,7 +1846,7 @@ namespace winSBPayroll.Forms
         }
         private void btnload_log_file_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            load_log_file_form log_form = new load_log_file_form();
+            load_log_file_form log_form = new load_log_file_form(_notificationmessageEventname);
             log_form.Show();
         }
 

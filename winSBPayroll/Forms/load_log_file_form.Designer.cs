@@ -70,7 +70,9 @@
             this.txtlog.BackColor = System.Drawing.Color.Black;
             this.txtlog.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtlog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtlog.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
             this.txtlog.ForeColor = System.Drawing.Color.Lime;
+            this.txtlog.HideSelection = false;
             this.txtlog.Location = new System.Drawing.Point(0, 24);
             this.txtlog.Name = "txtlog";
             this.txtlog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;

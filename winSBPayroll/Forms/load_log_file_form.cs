@@ -8,24 +8,60 @@ using System.Text;
 using System.Windows.Forms;
 using CommonLib;
 using System.IO;
+using System.Threading;
 
 namespace winSBPayroll.Forms
 {
     public partial class load_log_file_form : Form
     {
+        string user;
+        public string TAG;
+        //Event declaration:
+        //event for publishing messages to output
+        public event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
         FileSystemWatcher watcher;
 
-        public load_log_file_form()
+        public load_log_file_form(EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             InitializeComponent();
+
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
+            Application.ThreadException += new ThreadExceptionEventHandler(ThreadException);
+
+            TAG = this.GetType().Name;
+
+            //Subscribing to the event: 
+            //Dynamically:
+            //EventName += HandlerName;
+            _notificationmessageEventname = notificationmessageEventname;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("finished load_log_file_form initialization", TAG));
+
         }
 
+        private void UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Exception ex = (Exception)e.ExceptionObject;
+            Log.WriteToErrorLogFile_and_EventViewer(ex);
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+        }
+
+        private void ThreadException(object sender, ThreadExceptionEventArgs e)
+        {
+            Exception ex = e.Exception;
+            Log.WriteToErrorLogFile_and_EventViewer(ex);
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+        }
         private void load_log_file_form_Load(object sender, EventArgs e)
         {
             try
             {
                 watch();
+
                 load_log_file();
+
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("finished load_log_file_form load", TAG));
+
             }
             catch (Exception ex)
             {
@@ -72,7 +108,11 @@ namespace winSBPayroll.Forms
             {
                 string content = Utils.ReadLogFile();
                 if (content != null)
+                {
                     txtlog.Text = content;
+                }
+                txtlog.ScrollToCaret();
+                txtlog.HideSelection = false;
             }
             catch (Exception ex)
             {

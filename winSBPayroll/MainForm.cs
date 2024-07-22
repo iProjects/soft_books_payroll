@@ -336,6 +336,8 @@ namespace winSBPayroll
                 _lstnotificationdto.Add(_notificationdto);
                 Console.WriteLine(args.message);
 
+                Log.Write_To_Log_File_temp_dir(new Exception(_logtext));
+
                 var _lstmsgdto = from msgdto in _lstnotificationdto
                                  orderby msgdto._created_datetime descending
                                  select msgdto._notification_message;
@@ -886,7 +888,7 @@ namespace winSBPayroll
 
                 GetClientExtraInfo();
 
-                //GetHostNameandMac();
+                GetHostNameandMac();
 
                 return true;
             }
@@ -1575,8 +1577,7 @@ namespace winSBPayroll
                 _template += res;
 
                 Debug.Write(res);
-                Log.WriteToErrorLogFile_and_EventViewer(new Exception(res));
-                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(res, TAG));
+                Log.Write_To_Log_File_temp_dir(new Exception(res));
 
                 return true;
             }
@@ -1612,8 +1613,7 @@ namespace winSBPayroll
                 _template += res;
 
                 Debug.Write(res);
-                Log.WriteToErrorLogFile_and_EventViewer(new Exception(res));
-                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(res, TAG));
+                Log.Write_To_Log_File_temp_dir(new Exception(res));
 
                 return true;
             }
@@ -1652,8 +1652,7 @@ namespace winSBPayroll
                 _template += res;
 
                 Debug.Write(res);
-                Log.WriteToErrorLogFile_and_EventViewer(new Exception(res));
-                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(res, TAG));
+                Log.Write_To_Log_File_temp_dir(new Exception(res));
 
                 return true;
             }
@@ -1694,8 +1693,7 @@ namespace winSBPayroll
                 _template += res;
 
                 Debug.Write(res);
-                Log.WriteToErrorLogFile(new Exception(res));
-                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(res, TAG));
+                Log.Write_To_Log_File_temp_dir(new Exception(res));
 
                 return true;
             }

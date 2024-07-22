@@ -52,6 +52,33 @@ namespace winSBPayroll.Forms
         {
             try
             {
+                var _emp_query = from emp in db.Employers
+                                 where emp.IsActive == true
+                                 where emp.IsDeleted == false
+                                 orderby emp.Id descending
+                                 select emp;
+                List<DAL.Employer> _lst_employers = _emp_query.ToList();
+
+                cboemployer.DisplayMember = "Name";
+                cboemployer.ValueMember = "Id";
+                cboemployer.DataSource = _lst_employers;
+                cboemployer.SelectedIndex = -1;
+
+                var _payroll_years_query = (from p in db.Payrolls
+                                            orderby p.Year descending
+                                            select p.Year).Distinct();
+
+                _payroll_years_query = _payroll_years_query.OrderByDescending(i => i);
+
+                List<int> _lst_payroll_years = _payroll_years_query.ToList();
+
+                //_lst_payroll_years.Sort((a, b) => b.CompareTo(a));
+
+                cbopayrollyears.DisplayMember = "Year";
+                cbopayrollyears.ValueMember = "Year";
+                cbopayrollyears.DataSource = _lst_payroll_years;
+                cbopayrollyears.SelectedIndex = -1;
+
                 var _employersquery = from ep in db.Employers
                                       where ep.IsActive == true
                                       where ep.IsDeleted == false
@@ -83,41 +110,18 @@ namespace winSBPayroll.Forms
                     dataGridViewPayrolls.Columns.Add(colCboxEmployer);
                 }
 
-                var _emp_query = from emp in db.Employers
-                                 where emp.IsActive == true
-                                 where emp.IsDeleted == false
-                                 orderby emp.Id descending
-                                 select emp;
-                List<DAL.Employer> _lst_employers = _emp_query.ToList();
-
-                cboemployer.DisplayMember = "Name";
-                cboemployer.ValueMember = "Id";
-                cboemployer.DataSource = _lst_employers;
-
-                var _payroll_years_query = (from p in db.Payrolls
-                                            orderby p.Year descending
-                                            select p.Year).Distinct();
-
-                _payroll_years_query = _payroll_years_query.OrderByDescending(i => i);
-
-                List<int> _lst_payroll_years = _payroll_years_query.ToList();
-
-                //_lst_payroll_years.Sort((a, b) => b.CompareTo(a));
-
-                cbopayrollyears.DisplayMember = "Year";
-                cbopayrollyears.ValueMember = "Year";
-                cbopayrollyears.DataSource = _lst_payroll_years;
-
                 dataGridViewPayrolls.AutoGenerateColumns = false;
                 this.dataGridViewPayrolls.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
                 bindingSourcePayrolls.DataSource = null;
                 dataGridViewPayrolls.DataSource = null;
 
-                chkisopen.Checked = true;
-                chkfor.Checked = true;
-
                 RefreshGrid();
+
+                chkisopen.Checked = false;
+                chkfor.Checked = false;
+                cboemployer.SelectedIndex = -1;
+                cbopayrollyears.SelectedIndex = -1;
 
             }
             catch (Exception ex)
@@ -159,6 +163,10 @@ namespace winSBPayroll.Forms
                 bindingSourcePayrolls.DataSource = null;
                 dataGridViewPayrolls.DataSource = null;
 
+                var _payrolls = from p in db.Payrolls
+                                orderby p.Year descending, p.Period descending
+                                select p;
+
                 if (cboemployer.SelectedIndex != -1 && cbopayrollyears.SelectedIndex != -1)
                 {
                     DAL.Employer _employer = (DAL.Employer)cboemployer.SelectedItem;
@@ -169,10 +177,6 @@ namespace winSBPayroll.Forms
                     var is_for = chkfor.Checked;
 
                     var is_open = chkisopen.Checked;
-
-                    var _payrolls = from p in db.Payrolls
-                                    orderby p.Year descending, p.Period descending
-                                    select p;
 
                     if (is_open)
                     {
@@ -218,7 +222,7 @@ namespace winSBPayroll.Forms
 
                     bindingSourcePayrolls.DataSource = _lst_payrolls;
                     dataGridViewPayrolls.DataSource = bindingSourcePayrolls;
-                    groupBox1.Text = bindingSourcePayrolls.Count.ToString();
+                    groupBox2.Text = bindingSourcePayrolls.Count.ToString();
                 }
             }
             catch (Exception ex)
@@ -231,6 +235,9 @@ namespace winSBPayroll.Forms
         {
             try
             {
+                cboemployer.SelectedIndex = -1;
+                cbopayrollyears.SelectedIndex = -1;
+
                 var _payrolls = from p in db.Payrolls
                                 orderby p.Year descending, p.Period descending
                                 select p;
@@ -239,7 +246,7 @@ namespace winSBPayroll.Forms
 
                 bindingSourcePayrolls.DataSource = _lst_payrolls;
                 dataGridViewPayrolls.DataSource = bindingSourcePayrolls;
-                groupBox1.Text = bindingSourcePayrolls.Count.ToString();
+                groupBox2.Text = bindingSourcePayrolls.Count.ToString();
 
             }
             catch (Exception ex)
@@ -252,11 +259,11 @@ namespace winSBPayroll.Forms
         {
             try
             {
-                throw e.Exception;
+                e.ThrowException = false;
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.Write_To_Log_File_temp_dir(ex);
             }
         }
 
@@ -283,6 +290,11 @@ namespace winSBPayroll.Forms
             {
                 Log.WriteToErrorLogFile(ex);
             }
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
 
     }

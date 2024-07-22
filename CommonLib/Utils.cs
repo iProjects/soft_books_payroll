@@ -257,11 +257,11 @@ namespace CommonLib
             {
                 string content = null;
 
-                string base_directory = get_application_path();
-                string log_path = build_file_path(base_directory, "Logs");
-
-                string log_file_name = "error.log";
-                string inputPath = Utils.build_file_path(log_path, log_file_name);
+                string temp_path = Path.GetTempPath();
+                string app_name = System.Configuration.ConfigurationManager.AppSettings["APP_NAME"];
+                string log_file_name = app_name + ".log";
+                var _temp_file = Path.Combine(temp_path, log_file_name);
+                string inputPath = _temp_file;
 
                 if (File.Exists(inputPath))
                 {

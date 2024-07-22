@@ -438,6 +438,7 @@
             this.txtlog_settings.BackColor = System.Drawing.Color.Black;
             this.txtlog_settings.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtlog_settings.Dock = System.Windows.Forms.DockStyle.Right;
+            this.txtlog_settings.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtlog_settings.ForeColor = System.Drawing.Color.Lime;
             this.txtlog_settings.HideSelection = false;
             this.txtlog_settings.Location = new System.Drawing.Point(366, 16);
@@ -837,6 +838,7 @@
             this.txtlog_connect.BackColor = System.Drawing.Color.Black;
             this.txtlog_connect.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtlog_connect.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtlog_connect.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtlog_connect.ForeColor = System.Drawing.Color.Lime;
             this.txtlog_connect.HideSelection = false;
             this.txtlog_connect.Location = new System.Drawing.Point(319, 16);

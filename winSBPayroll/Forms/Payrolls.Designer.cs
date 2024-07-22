@@ -34,33 +34,34 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Payrolls));
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnclearfilter = new System.Windows.Forms.Button();
+            this.chkisopen = new System.Windows.Forms.CheckBox();
+            this.chkfor = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cboemployer = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cbopayrollyears = new System.Windows.Forms.ComboBox();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.dataGridViewPayrolls = new System.Windows.Forms.DataGridView();
             this.bindingSourcePayrolls = new System.Windows.Forms.BindingSource(this.components);
-            this.chkfor = new System.Windows.Forms.CheckBox();
-            this.chkisopen = new System.Windows.Forms.CheckBox();
-            this.btnclearfilter = new System.Windows.Forms.Button();
-            this.Approved = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.IsOpen = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Processed = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panelPager = new System.Windows.Forms.Panel();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.dataGridViewPayrolls = new System.Windows.Forms.DataGridView();
             this.Year = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Period = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dDateRun = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RunByk = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Approved = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.IsOpen = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Processed = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPayrolls)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourcePayrolls)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPayrolls)).BeginInit();
             this.SuspendLayout();
             // 
             // panel2
@@ -80,6 +81,40 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1010, 44);
             this.panel2.TabIndex = 0;
+            // 
+            // btnclearfilter
+            // 
+            this.btnclearfilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btnclearfilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnclearfilter.Location = new System.Drawing.Point(792, 11);
+            this.btnclearfilter.Name = "btnclearfilter";
+            this.btnclearfilter.Size = new System.Drawing.Size(82, 23);
+            this.btnclearfilter.TabIndex = 10;
+            this.btnclearfilter.Text = "clear filter";
+            this.btnclearfilter.UseVisualStyleBackColor = false;
+            this.btnclearfilter.Click += new System.EventHandler(this.btnclearfilter_Click);
+            // 
+            // chkisopen
+            // 
+            this.chkisopen.AutoSize = true;
+            this.chkisopen.Location = new System.Drawing.Point(346, 15);
+            this.chkisopen.Name = "chkisopen";
+            this.chkisopen.Size = new System.Drawing.Size(110, 17);
+            this.chkisopen.TabIndex = 9;
+            this.chkisopen.Text = "open payrolls only";
+            this.chkisopen.UseVisualStyleBackColor = true;
+            this.chkisopen.CheckedChanged += new System.EventHandler(this.chkisopen_CheckedChanged);
+            // 
+            // chkfor
+            // 
+            this.chkfor.AutoSize = true;
+            this.chkfor.Location = new System.Drawing.Point(302, 15);
+            this.chkfor.Name = "chkfor";
+            this.chkfor.Size = new System.Drawing.Size(38, 17);
+            this.chkfor.TabIndex = 8;
+            this.chkfor.Text = "for";
+            this.chkfor.UseVisualStyleBackColor = true;
+            this.chkfor.CheckedChanged += new System.EventHandler(this.chkfor_CheckedChanged);
             // 
             // label2
             // 
@@ -150,15 +185,56 @@
             this.btnAdd.UseVisualStyleBackColor = false;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // groupBox1
+            // dataGridViewTextBoxColumn1
             // 
-            this.groupBox1.Controls.Add(this.dataGridViewPayrolls);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(0, 44);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1010, 492);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
+            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "Year";
+            this.dataGridViewTextBoxColumn1.HeaderText = "Year";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "Period";
+            this.dataGridViewTextBoxColumn2.HeaderText = "Period";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "DateRun";
+            this.dataGridViewTextBoxColumn3.HeaderText = "Date Run";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewTextBoxColumn4.DataPropertyName = "RunBy";
+            this.dataGridViewTextBoxColumn4.HeaderText = "RunBy";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.ReadOnly = true;
+            // 
+            // panelPager
+            // 
+            this.panelPager.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelPager.Location = new System.Drawing.Point(0, 470);
+            this.panelPager.Name = "panelPager";
+            this.panelPager.Size = new System.Drawing.Size(1010, 66);
+            this.panelPager.TabIndex = 0;
+            this.panelPager.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.dataGridViewPayrolls);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox2.Location = new System.Drawing.Point(0, 44);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(1010, 426);
+            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabStop = false;
             // 
             // dataGridViewPayrolls
             // 
@@ -203,102 +279,8 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewPayrolls.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.dataGridViewPayrolls.Size = new System.Drawing.Size(1004, 473);
+            this.dataGridViewPayrolls.Size = new System.Drawing.Size(1004, 407);
             this.dataGridViewPayrolls.TabIndex = 4;
-            this.dataGridViewPayrolls.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewPayrolls_DataError);
-            // 
-            // chkfor
-            // 
-            this.chkfor.AutoSize = true;
-            this.chkfor.Location = new System.Drawing.Point(302, 15);
-            this.chkfor.Name = "chkfor";
-            this.chkfor.Size = new System.Drawing.Size(38, 17);
-            this.chkfor.TabIndex = 8;
-            this.chkfor.Text = "for";
-            this.chkfor.UseVisualStyleBackColor = true;
-            this.chkfor.CheckedChanged += new System.EventHandler(this.chkfor_CheckedChanged);
-            // 
-            // chkisopen
-            // 
-            this.chkisopen.AutoSize = true;
-            this.chkisopen.Location = new System.Drawing.Point(346, 15);
-            this.chkisopen.Name = "chkisopen";
-            this.chkisopen.Size = new System.Drawing.Size(110, 17);
-            this.chkisopen.TabIndex = 9;
-            this.chkisopen.Text = "open payrolls only";
-            this.chkisopen.UseVisualStyleBackColor = true;
-            this.chkisopen.CheckedChanged += new System.EventHandler(this.chkisopen_CheckedChanged);
-            // 
-            // btnclearfilter
-            // 
-            this.btnclearfilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.btnclearfilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnclearfilter.Location = new System.Drawing.Point(792, 11);
-            this.btnclearfilter.Name = "btnclearfilter";
-            this.btnclearfilter.Size = new System.Drawing.Size(82, 23);
-            this.btnclearfilter.TabIndex = 10;
-            this.btnclearfilter.Text = "clear filter";
-            this.btnclearfilter.UseVisualStyleBackColor = false;
-            this.btnclearfilter.Click += new System.EventHandler(this.btnclearfilter_Click);
-            // 
-            // Approved
-            // 
-            this.Approved.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Approved.DataPropertyName = "Approved";
-            this.Approved.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Approved.HeaderText = "Approved";
-            this.Approved.Name = "Approved";
-            this.Approved.ReadOnly = true;
-            // 
-            // IsOpen
-            // 
-            this.IsOpen.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.IsOpen.DataPropertyName = "IsOpen";
-            this.IsOpen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.IsOpen.HeaderText = "Is Open";
-            this.IsOpen.Name = "IsOpen";
-            this.IsOpen.ReadOnly = true;
-            // 
-            // Processed
-            // 
-            this.Processed.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Processed.DataPropertyName = "Processed";
-            this.Processed.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Processed.HeaderText = "Processed";
-            this.Processed.Name = "Processed";
-            this.Processed.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "Year";
-            this.dataGridViewTextBoxColumn1.HeaderText = "Year";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "Period";
-            this.dataGridViewTextBoxColumn2.HeaderText = "Period";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "DateRun";
-            this.dataGridViewTextBoxColumn3.HeaderText = "Date Run";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn4.DataPropertyName = "RunBy";
-            this.dataGridViewTextBoxColumn4.HeaderText = "RunBy";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
             // Year
             // 
@@ -332,6 +314,33 @@
             this.RunByk.Name = "RunByk";
             this.RunByk.ReadOnly = true;
             // 
+            // Approved
+            // 
+            this.Approved.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Approved.DataPropertyName = "Approved";
+            this.Approved.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Approved.HeaderText = "Approved";
+            this.Approved.Name = "Approved";
+            this.Approved.ReadOnly = true;
+            // 
+            // IsOpen
+            // 
+            this.IsOpen.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.IsOpen.DataPropertyName = "IsOpen";
+            this.IsOpen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.IsOpen.HeaderText = "Is Open";
+            this.IsOpen.Name = "IsOpen";
+            this.IsOpen.ReadOnly = true;
+            // 
+            // Processed
+            // 
+            this.Processed.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Processed.DataPropertyName = "Processed";
+            this.Processed.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Processed.HeaderText = "Processed";
+            this.Processed.Name = "Processed";
+            this.Processed.ReadOnly = true;
+            // 
             // Payrolls
             // 
             this.AcceptButton = this.btnAdd;
@@ -340,7 +349,8 @@
             this.BackColor = System.Drawing.Color.LimeGreen;
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(1010, 536);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.panelPager);
             this.Controls.Add(this.panel2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Payrolls";
@@ -349,9 +359,9 @@
             this.Load += new System.EventHandler(this.Payrolls_Load);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPayrolls)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourcePayrolls)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPayrolls)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -364,8 +374,6 @@
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbopayrollyears;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView dataGridViewPayrolls;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cboemployer;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
@@ -375,6 +383,9 @@
         private System.Windows.Forms.CheckBox chkfor;
         private System.Windows.Forms.CheckBox chkisopen;
         private System.Windows.Forms.Button btnclearfilter;
+        private System.Windows.Forms.Panel panelPager;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.DataGridView dataGridViewPayrolls;
         private System.Windows.Forms.DataGridViewTextBoxColumn Year;
         private System.Windows.Forms.DataGridViewTextBoxColumn Period;
         private System.Windows.Forms.DataGridViewTextBoxColumn dDateRun;

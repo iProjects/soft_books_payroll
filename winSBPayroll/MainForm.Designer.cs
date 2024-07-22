@@ -936,7 +936,7 @@
             this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser.Name = "webBrowser";
             this.webBrowser.ScriptErrorsSuppressed = true;
-            this.webBrowser.Size = new System.Drawing.Size(815, 656);
+            this.webBrowser.Size = new System.Drawing.Size(654, 656);
             this.webBrowser.TabIndex = 1;
             // 
             // txtlog
@@ -944,14 +944,14 @@
             this.txtlog.BackColor = System.Drawing.Color.Black;
             this.txtlog.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtlog.Dock = System.Windows.Forms.DockStyle.Right;
+            this.txtlog.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
             this.txtlog.ForeColor = System.Drawing.Color.Lime;
-            this.txtlog.Location = new System.Drawing.Point(815, 62);
+            this.txtlog.Location = new System.Drawing.Point(654, 62);
             this.txtlog.Name = "txtlog";
             this.txtlog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.txtlog.Size = new System.Drawing.Size(441, 656);
+            this.txtlog.Size = new System.Drawing.Size(602, 656);
             this.txtlog.TabIndex = 0;
             this.txtlog.Text = "";
-            this.txtlog.Visible = false;
             // 
             // MainForm
             // 
