@@ -1,0 +1,14 @@
+
+bll\bin
+bll\obj
+build
+CommonLib\bin
+CommonLib\obj
+dal\bin
+dal\obj
+SBPayroll Setup\debug
+SBPayroll Setup\release
+SMOScripting\bin
+SMOScripting\obj
+winSBPayroll\bin
+winSBPayroll\obj
