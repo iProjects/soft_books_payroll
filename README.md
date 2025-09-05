@@ -1,4 +1,4 @@
-I've updated the **Database Control Panel** section under **Usage** to include the features you specified. The complete, revised README is below.
+I have corrected the reporting item to reflect the KRA file name. The full, updated README is below.
 
 -----
 
@@ -101,7 +101,30 @@ The Soft Books Payroll system provides a user-friendly interface for managing al
 
 ### Reporting
 
-  * **Statutory Reports:** Generate comprehensive **Statutory Reports** (e.g., P9 forms, KRA returns) and internal management reports.
+The system provides a comprehensive suite of reports and statements to meet all business and statutory requirements:
+
+  * **Payroll Reports:**
+      * **Payroll Master**
+      * **Payroll Statement**
+      * **Payslip for All Employees**
+      * **Single Employee Payslip**
+      * **Netsalary Report**
+      * **Advanced Payments**
+  * **Statutory Reports (Kenya):**
+      * **P9A, P9B, P10A, P10, P11**
+      * **NSSF Deductions**
+      * **NHIF Deductions**
+  * **Financial & Bank Reports:**
+      * **Bank Transfer**
+      * **Bank Branch Transfer**
+      * **SACCO Payments Schedule**
+  * **Management & Employee Reports:**
+      * **Employees List**
+      * **Departments Report**
+      * **Payee Report**
+      * **Loan Repayment Schedules**
+      * **Schedules and Statements** 
+  * **Export Options:** All reports can be viewed and exported in various formats, including **PDF** and **Excel**, for easy sharing and analysis.
 
 -----
 
