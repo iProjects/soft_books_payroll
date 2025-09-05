@@ -1,4 +1,3 @@
-I have corrected the reporting item to reflect the KRA file name. The full, updated README is below.
 
 -----
 
