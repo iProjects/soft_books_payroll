@@ -137,7 +137,7 @@ The system provides a comprehensive suite of reports and statements to meet all 
 
 ## 📜 License
 
-This project is released under the **[Insert License Here (e.g., MIT License, GPL)]**. Please see the `LICENSE` file for more details.
+This project is licensed under the MIT License.
 
 -----
 
