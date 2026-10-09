@@ -11,17 +11,16 @@ using VVX;
 
 namespace winSBPayroll.Reports.PDF
 {
-     public class P10PDFMaker
+    public class P10PDFMaker
     {
-       
-         public P10ReportModel _ViewModel;
-         Document document;    
-         string sFilePDF;
-         public Employee emp;
-         string _resourcePath;
-         string Message;
+        public P10ReportModel _ViewModel;
+        Document document;
+        string sFilePDF;
+        public Employee emp;
+        string _resourcePath;
+        string Message;
 
-         Font pfont = new Font(Font.TIMES_ROMAN, 14, Font.BOLD);
+        Font pfont = new Font(Font.TIMES_ROMAN, 14, Font.BOLD);
         Font hFont1 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
         Font hFont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
         Font bFont1 = new Font(Font.TIMES_ROMAN, 10, Font.NORMAL);//body 
@@ -31,17 +30,26 @@ namespace winSBPayroll.Reports.PDF
         Font rms8Normal = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL);
         Font rms6Bold = new Font(Font.TIMES_ROMAN, 6, Font.BOLD);
         Font rms8Bold = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
-       
-        public P10PDFMaker(string ResourcePath, P10ReportModel p10Model, string filename)
+        public P10PDFMaker(string ResourcePath, P10ReportModel p10Model, string filename, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (p10Model == null)
                 throw new ArgumentNullException("P10ReportModel is null");
             _ViewModel = p10Model;
 
+            TAG = this.GetType().Name;
+
+            _notificationmessageEventname = notificationmessageEventname;
+
             sFilePDF = filename;
+
             _resourcePath = ResourcePath;
-        } 
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed P10PDFMaker", TAG));
+
+        }
         private void BuildP10PDF()
         {
             try
@@ -50,8 +58,8 @@ namespace winSBPayroll.Reports.PDF
                 PdfWriter.GetInstance(document, new FileStream(sFilePDF, FileMode.Create));
                 document.Open();
 
-                PDFGen pdfgen = new PDFGen(); 
-                Image img0 = pdfgen.DoGetImageFile(_resourcePath + "kra2.jpg");
+                PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
+                Image img0 = pdfgen.DoGetImageFile(Path.Combine(_resourcePath, "kra2.jpg"));
                 img0.Alignment = Image.ALIGN_CENTER;
 
 
@@ -138,16 +146,16 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (DocumentException de)
             {
-                this.Message = de.Message;
+                Log.WriteToErrorLogFile(de);
             }
             catch (IOException ioe)
             {
-                this.Message = ioe.Message;
+                Log.WriteToErrorLogFile(ioe);
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
-            }  
+                Log.WriteToErrorLogFile(ex);
+            }
         }
 
         private void AddTableHeaders(Table aTable)
@@ -168,16 +176,16 @@ namespace winSBPayroll.Reports.PDF
                     //Totals
                     aTable.AddCell(new Phrase(monthRecs.Month, tcFont));  //Col 0
 
-                    Cell A = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", monthRecs.PAYETax), tcFont));
+                    Cell A = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", monthRecs.PAYETax), tcFont));
                     A.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     aTable.AddCell(A);//Col 1
 
 
-                    Cell dCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", monthRecs.AuditTax), tcFont));
+                    Cell dCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", monthRecs.AuditTax), tcFont));
                     dCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     aTable.AddCell(dCell);
 
-                    Cell C = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", monthRecs.FringeBenefitTax), tcFont));
+                    Cell C = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", monthRecs.FringeBenefitTax), tcFont));
                     C.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     aTable.AddCell(C);
 
@@ -186,7 +194,7 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Utils.ShowError(ex);
+                Utils.ShowError(ex);
                 Utils.ShowError(ex);
             }
 
@@ -199,7 +207,7 @@ namespace winSBPayroll.Reports.PDF
                 //Totals
                 aTable.AddCell(new Phrase("TOTAL TAX KSHS.", tHFont));  //Col 0
 
-                Cell d1Cell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.TotalPAYETax), tHFont));
+                Cell d1Cell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.TotalPAYETax), tHFont));
                 d1Cell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 aTable.AddCell(d1Cell);
 
@@ -218,7 +226,7 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Utils.ShowError(ex); 
+                Utils.ShowError(ex);
             }
         }
 
@@ -248,10 +256,10 @@ namespace winSBPayroll.Reports.PDF
             document.Add(aTable);
 
             document.Add(new Phrase("\nNAME OF EMPLOYER ............" + _ViewModel.EmployerName.ToUpper(), tcFont));
-            document.Add(new Phrase("\nADDRESS ................" +_ViewModel.EmployerAddress, tcFont));
+            document.Add(new Phrase("\nADDRESS ................" + _ViewModel.EmployerAddress, tcFont));
             document.Add(new Phrase("\nDATE.................." + DateTime.Today.ToString("ddd-dd-MMM-yyyy"), tcFont));
             document.Add(new Phrase("\nSIGNATURE ......................................................................", tcFont));
-          
+
 
 
         }
@@ -266,7 +274,7 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Utils.ShowError(ex);
+                Utils.ShowError(ex);
                 return null;
             }
         }

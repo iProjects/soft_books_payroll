@@ -31,8 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.btnOK = new System.Windows.Forms.Button();
             this.cbSystems = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.chkIntegratedSecurity = new System.Windows.Forms.CheckBox();
@@ -42,22 +40,23 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtUserName = new System.Windows.Forms.TextBox();
             this.tslSatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.logstatus = new System.Windows.Forms.StatusStrip();
-            this.lblcopyright = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblLoggedInTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBoxServerLogin = new System.Windows.Forms.GroupBox();
             this.txtServerLoginPassword = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.txtServerLoginUserName = new System.Windows.Forms.TextBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.loggedInTimer = new System.Windows.Forms.Timer(this.components);
+            this.btnOK = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.logstatus = new System.Windows.Forms.StatusStrip();
+            this.lblcopyright = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblLoggedInTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.logstatus.SuspendLayout();
             this.groupBoxServerLogin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            this.logstatus.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox2
@@ -72,38 +71,6 @@
             this.groupBox2.Size = new System.Drawing.Size(402, 55);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
-            // 
-            // btnClose
-            // 
-            this.btnClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.ForeColor = System.Drawing.Color.Black;
-            this.btnClose.Image = global::winSBPayroll.Properties.Resources.Cancel;
-            this.btnClose.Location = new System.Drawing.Point(222, 15);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(66, 32);
-            this.btnClose.TabIndex = 1;
-            this.btnClose.Text = "&Close";
-            this.btnClose.UseVisualStyleBackColor = false;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Clicked);
-            // 
-            // btnOK
-            // 
-            this.btnOK.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOK.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOK.ForeColor = System.Drawing.Color.Black;
-            this.btnOK.Image = ((System.Drawing.Image)(resources.GetObject("btnOK.Image")));
-            this.btnOK.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnOK.Location = new System.Drawing.Point(106, 15);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(66, 32);
-            this.btnOK.TabIndex = 0;
-            this.btnOK.Text = "&Ok";
-            this.btnOK.UseVisualStyleBackColor = false;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Clicked);
             // 
             // cbSystems
             // 
@@ -208,7 +175,7 @@
             this.txtUserName.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtUserName.Location = new System.Drawing.Point(90, 20);
             this.txtUserName.MaxLength = 20;
-            this.txtUserName.Name = "txtUserId";
+            this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(260, 25);
             this.txtUserName.TabIndex = 0;
             this.txtUserName.TextChanged += new System.EventHandler(this.txtUserId_TextChanged);
@@ -221,33 +188,6 @@
             this.tslSatus.Name = "tslSatus";
             this.tslSatus.Size = new System.Drawing.Size(0, 17);
             this.tslSatus.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
-            // logstatus
-            // 
-            this.logstatus.BackgroundImage = global::winSBPayroll.Properties.Resources.Signin;
-            this.logstatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblcopyright,
-            this.lblLoggedInTime});
-            this.logstatus.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.logstatus.Location = new System.Drawing.Point(0, 311);
-            this.logstatus.Name = "logstatus";
-            this.logstatus.Padding = new System.Windows.Forms.Padding(1, 0, 12, 0);
-            this.logstatus.Size = new System.Drawing.Size(402, 22);
-            this.logstatus.TabIndex = 7;
-            // 
-            // lblcopyright
-            // 
-            this.lblcopyright.ForeColor = System.Drawing.Color.Black;
-            this.lblcopyright.Name = "lblcopyright";
-            this.lblcopyright.Size = new System.Drawing.Size(242, 17);
-            this.lblcopyright.Text = "© Software Providers 2013 - All Rights Reserved";
-            // 
-            // lblLoggedInTime
-            // 
-            this.lblLoggedInTime.ForeColor = System.Drawing.Color.Black;
-            this.lblLoggedInTime.Name = "lblLoggedInTime";
-            this.lblLoggedInTime.Size = new System.Drawing.Size(71, 17);
-            this.lblLoggedInTime.Text = "loggedInTime";
             // 
             // groupBoxServerLogin
             // 
@@ -315,9 +255,64 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // timer1
+            // btnOK
             // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.btnOK.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOK.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOK.ForeColor = System.Drawing.Color.Black;
+            this.btnOK.Image = ((System.Drawing.Image)(resources.GetObject("btnOK.Image")));
+            this.btnOK.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnOK.Location = new System.Drawing.Point(106, 15);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(66, 32);
+            this.btnOK.TabIndex = 0;
+            this.btnOK.Text = "&Ok";
+            this.btnOK.UseVisualStyleBackColor = false;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Clicked);
+            // 
+            // btnClose
+            // 
+            this.btnClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClose.ForeColor = System.Drawing.Color.Black;
+            this.btnClose.Image = global::winSBPayroll.Properties.Resources.Cancel;
+            this.btnClose.Location = new System.Drawing.Point(222, 15);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(66, 32);
+            this.btnClose.TabIndex = 1;
+            this.btnClose.Text = "&Close";
+            this.btnClose.UseVisualStyleBackColor = false;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Clicked);
+            // 
+            // logstatus
+            // 
+            this.logstatus.BackgroundImage = global::winSBPayroll.Properties.Resources.Signin;
+            this.logstatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblcopyright,
+            this.lblLoggedInTime});
+            this.logstatus.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            this.logstatus.Location = new System.Drawing.Point(0, 311);
+            this.logstatus.Name = "logstatus";
+            this.logstatus.Padding = new System.Windows.Forms.Padding(1, 0, 12, 0);
+            this.logstatus.Size = new System.Drawing.Size(402, 22);
+            this.logstatus.TabIndex = 7;
+            // 
+            // lblcopyright
+            // 
+            this.lblcopyright.ForeColor = System.Drawing.Color.Black;
+            this.lblcopyright.Name = "lblcopyright";
+            this.lblcopyright.Size = new System.Drawing.Size(257, 17);
+            this.lblcopyright.Text = "© Software Providers 2013 - All Rights Reserved";
+            // 
+            // lblLoggedInTime
+            // 
+            this.lblLoggedInTime.ForeColor = System.Drawing.Color.Black;
+            this.lblLoggedInTime.Name = "lblLoggedInTime";
+            this.lblLoggedInTime.Size = new System.Drawing.Size(80, 17);
+            this.lblLoggedInTime.Text = "loggedInTime";
             // 
             // LoginForm
             // 
@@ -338,15 +333,16 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "LoginForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.Login_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.logstatus.ResumeLayout(false);
-            this.logstatus.PerformLayout();
             this.groupBoxServerLogin.ResumeLayout(false);
             this.groupBoxServerLogin.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            this.logstatus.ResumeLayout(false);
+            this.logstatus.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -373,7 +369,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtServerLoginUserName;
         private System.Windows.Forms.ErrorProvider errorProvider1;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ToolStripStatusLabel lblcopyright;
         private System.Windows.Forms.Timer loggedInTimer;
         private System.Windows.Forms.ToolStripStatusLabel lblLoggedInTime;

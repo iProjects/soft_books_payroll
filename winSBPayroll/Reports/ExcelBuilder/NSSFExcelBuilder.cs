@@ -16,11 +16,14 @@ namespace winSBPayroll.Reports.Excel
         CreateExcelDoc document;
         string Message;
         string sFileExcel;
-
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
         //constructor
-        public NSSFExcelBuilder(NSSFReportModel nssfreportmodel, string FileName)
+        public NSSFExcelBuilder(NSSFReportModel nssfreportmodel, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
+            _notificationmessageEventname = notificationmessageEventname;
+
             _nssfreportmodel = nssfreportmodel;
             sFileExcel = FileName;
         }
@@ -53,11 +56,11 @@ namespace winSBPayroll.Reports.Excel
             }
             catch (IOException ioe)
             {
-                this.Message = ioe.Message;
+                Log.WriteToErrorLogFile(ioe);
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
 
         }

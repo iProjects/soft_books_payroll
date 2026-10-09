@@ -7,9 +7,9 @@ namespace DAL
 {
     public class EarningsDeductions
     {
-        public EarningsDeductions() 
-        { 
-        
+        public EarningsDeductions()
+        {
+
         }
 
         public int EmpTxnId { get; set; }
@@ -22,9 +22,9 @@ namespace DAL
         public bool IsStatutory { get; set; }
         public bool TrackYTD { get; set; }
         public decimal YTD { get; set; }
-        public string DEType { get; set; }  
+        public string DEType { get; set; }
 
-        public EarningsDeductions(int empTxnId, string itemType, string DE, string Des,  string Taxable, decimal amt, bool Show, bool trackYTD, decimal yTD, bool Statutory)
+        public EarningsDeductions(int empTxnId, string itemType, string DE, string Des, string Taxable, decimal amt, bool Show, bool trackYTD, decimal yTD, bool Statutory)
         {
             EmpTxnId = empTxnId;
             DEType = DE;
@@ -36,12 +36,12 @@ namespace DAL
             YTD = yTD;
             IsStatutory = Statutory;
             ItemType = itemType;
-            
+
         }
     }
     public class TaxBracket
     {
-        public int Bracket {get; set;}
+        public int Bracket { get; set; }
         public decimal From { get; set; }
         public decimal To { get; set; }
         public decimal AmtTaxed { get; set; }
@@ -69,7 +69,7 @@ namespace DAL
         {
             get
             {
-                return this.Quantity * this.Rate ;
+                return this.Quantity * this.Rate;
             }
         }
         public decimal? Rate { get; set; }
@@ -85,11 +85,11 @@ namespace DAL
         public decimal TotalContribs { get; set; }
     }
     public class ScheduleDTO
-    { 
+    {
         public string EmpName { get; set; }
         public string EmpNo { get; set; }
         public decimal EmpNSSFContrib { get; set; }
-        public decimal Amount { get; set; } 
+        public decimal Amount { get; set; }
         public decimal TotalContribs { get; set; }
     }
     public class NssfContributionsDTO
@@ -107,7 +107,9 @@ namespace DAL
         public decimal Tier2EmployeeDeduction { get; set; }
         public decimal Tier2EmployerContribution { get; set; }
         public decimal Tier2TotalContribution { get; set; }
-        public decimal TotalPensionContribution { get; set; } 
+        public decimal TotalPensionContribution { get; set; }
+        public decimal TotalEmployeeContribution { get; set; }
+        public decimal TotalEmployerContribution { get; set; }
     }
     public class EmployeeMonthlyTaxRecord
     {

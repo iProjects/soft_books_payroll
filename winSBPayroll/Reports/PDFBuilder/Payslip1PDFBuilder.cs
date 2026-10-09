@@ -14,12 +14,10 @@ namespace winSBPayroll.Reports.PDF
 {
     public class Payslip1PDFBuilder
     {
-         
         Payslip _ViewModel;
         Document document;
         string sFilePDF;
         string Message;
-
 
         Font hFont1 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
         Font hFont2 = new Font(Font.TIMES_ROMAN, 9, Font.BOLD);
@@ -30,15 +28,23 @@ namespace winSBPayroll.Reports.PDF
         Font tcFont3 = new Font(Font.HELVETICA, 8, Font.BOLD);//table cell
         Font tcFont4 = new Font(Font.TIMES_ROMAN, 7, Font.NORMAL);//table cell
         Font rms10Normal = new Font(Font.HELVETICA, 10, Font.NORMAL);
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
-
-        public Payslip1PDFBuilder(Payslip PayslipModel, string FileName)
+        public Payslip1PDFBuilder(Payslip PayslipModel, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (PayslipModel == null)
                 throw new ArgumentNullException("Payslip is null");
             _ViewModel = PayslipModel;
 
+            TAG = this.GetType().Name;
+
+            _notificationmessageEventname = notificationmessageEventname;
+
             sFilePDF = FileName;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed Payslip1PDFBuilder", TAG));
+
         }
 
         public string GetPDF()
@@ -88,16 +94,16 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (DocumentException de)
             {
-                this.Message = de.Message;
+                Log.WriteToErrorLogFile(de);
             }
             catch (IOException ioe)
             {
-                this.Message = ioe.Message;
+                Log.WriteToErrorLogFile(ioe);
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
-            } 
+                Log.WriteToErrorLogFile(ex);
+            }
         }
 
 
@@ -162,9 +168,9 @@ namespace winSBPayroll.Reports.PDF
 
         private void AddSummary()
         {
-            
+
             Table aTable;
-            aTable = new Table(5, 2);  
+            aTable = new Table(5, 2);
             aTable.Padding = 2;
             aTable.Spacing = 0;
             aTable.AutoFillEmptyCells = true;
@@ -183,23 +189,23 @@ namespace winSBPayroll.Reports.PDF
             aTable.AddCell(new Phrase("Other Deductions\nKshs", bFont1), new System.Drawing.Point(1, 3));
             aTable.AddCell(new Phrase("Net Salary\nKshs", bFont1), new System.Drawing.Point(1, 4));
 
-            Cell basicCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.BasicPay), tcFont4));
+            Cell basicCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.BasicPay), tcFont4));
             basicCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
             aTable.AddCell(basicCell, new System.Drawing.Point(2, 0));
 
-            Cell VariablesCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.Variables), tcFont4));
+            Cell VariablesCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.Non_Taxable_Earnings), tcFont4));
             VariablesCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
             aTable.AddCell(VariablesCell, new System.Drawing.Point(2, 1));
 
-            Cell tsdCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.TotalStatutoryDeductions), tcFont4));
+            Cell tsdCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.TotalStatutoryDeductions), tcFont4));
             tsdCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
             aTable.AddCell(tsdCell, new System.Drawing.Point(2, 2));
 
-            Cell odCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.OtherDeductions), tcFont4));
+            Cell odCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.OtherDeductions), tcFont4));
             odCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
             aTable.AddCell(odCell, new System.Drawing.Point(2, 3));
 
-            Cell NetSalaryCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.NetSalary), tcFont4));
+            Cell NetSalaryCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.NetSalary), tcFont4));
             NetSalaryCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
             aTable.AddCell(NetSalaryCell, new System.Drawing.Point(2, 4));
 
@@ -210,7 +216,7 @@ namespace winSBPayroll.Reports.PDF
         {
             Table hTable = new Table(2);
             hTable.WidthPercentage = 100;
-            hTable.Padding = 1;  
+            hTable.Padding = 1;
 
             Cell aCell = new Cell(new Phrase("BENEFITS\n", hFont2));
             aCell.HorizontalAlignment = Cell.ALIGN_CENTER;
@@ -218,16 +224,16 @@ namespace winSBPayroll.Reports.PDF
             aCell.BorderWidthLeft = 1;
             hTable.AddCell(aCell);
 
-             
-            document.Add(hTable); 
+
+            document.Add(hTable);
         }
 
         private void AddEarningsAndDeductions()
         {
-           
+
 
             //Add earnings
-            Table earningsTable = new Table(3); 
+            Table earningsTable = new Table(3);
             earningsTable.Padding = 1;
             earningsTable.Spacing = 0;
 
@@ -245,14 +251,14 @@ namespace winSBPayroll.Reports.PDF
                 desCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                 earningsTable.AddCell(desCell);
 
-                Cell aCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", e.Amount), tcFont4));
+                Cell aCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", e.Amount), tcFont4));
                 aCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 earningsTable.AddCell(aCell);
 
                 Cell YTDCell = new Cell(new Phrase("", tcFont4));
                 if (e.TrackYTD)
                 {
-                    YTDCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", e.YTD), tcFont4));
+                    YTDCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", e.YTD), tcFont4));
                     YTDCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 }
 
@@ -274,14 +280,14 @@ namespace winSBPayroll.Reports.PDF
                 desCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                 deductionsTable.AddCell(desCell);
 
-                Cell aCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", e.Amount), tcFont4));
+                Cell aCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", e.Amount), tcFont4));
                 aCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 deductionsTable.AddCell(aCell);
 
                 Cell YTDCell = new Cell(new Phrase("", tcFont4));
                 if (e.TrackYTD)
                 {
-                    YTDCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", e.YTD), tcFont4));
+                    YTDCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", e.YTD), tcFont4));
                     YTDCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 }
 
@@ -305,12 +311,12 @@ namespace winSBPayroll.Reports.PDF
 
             //Add totals
             //Total Earnings
-            Cell teCell = new Cell(new Phrase("Total Earnings  " + string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.TotalEarnings.ToString("#,##0")), tHFont1));
+            Cell teCell = new Cell(new Phrase("Total Earnings  " + string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.TotalEarnings.ToString("#,##0")), tHFont1));
             teCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
             earningsAndDeductionsTable.AddCell(teCell, new System.Drawing.Point(3, 0));
 
             //Total Deductions
-            Cell tdCell = new Cell(new Phrase("Total Deductions  " + string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.TotalDeductions.ToString("#,##0")), tHFont1));
+            Cell tdCell = new Cell(new Phrase("Total Deductions  " + string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.TotalDeductions.ToString("#,##0")), tHFont1));
             tdCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
             earningsAndDeductionsTable.AddCell(tdCell, new System.Drawing.Point(3, 1));
 
@@ -332,7 +338,7 @@ namespace winSBPayroll.Reports.PDF
 
         private void AddTaxComputationInfo()
         {
-           
+
 
             Table taxDetails = new Table(2);
             taxDetails.AutoFillEmptyCells = true;
@@ -348,38 +354,38 @@ namespace winSBPayroll.Reports.PDF
 
 
             taxDetails.AddCell(new Phrase("TAXABLE EARNINGS", tcFont3));
-            Cell earnCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.GrossTaxableEarnings), tcFont4));
+            Cell earnCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.GrossTaxableEarnings), tcFont4));
             earnCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
             taxDetails.AddCell(earnCell);
 
 
             taxDetails.AddCell(new Phrase(" - Allowable Deductions", tcFont3));
-            Cell adCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.AllowableDeductions), tcFont4));
+            Cell adCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.AllowableDeductions), tcFont4));
             adCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
             taxDetails.AddCell(adCell);
 
             taxDetails.AddCell(new Phrase(" - Mortgage/Insurance Relief", tcFont3));
-            Cell mrCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.MortgageRelief), tcFont4));
+            Cell mrCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.MortgageRelief), tcFont4));
             mrCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
             taxDetails.AddCell(mrCell);
 
             taxDetails.AddCell(new Phrase("=NET TAXABLE EARNINGS", tcFont3));
-            Cell ntCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.NetTaxableEarnings), tcFont4));
+            Cell ntCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.NetTaxableEarnings), tcFont4));
             ntCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
             taxDetails.AddCell(ntCell);
 
             taxDetails.AddCell(new Phrase("GROSS TAX", tcFont3));
-            Cell gtCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.GrossTax), tcFont4));
+            Cell gtCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.GrossTax), tcFont4));
             gtCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
             taxDetails.AddCell(gtCell);
 
             taxDetails.AddCell(new Phrase(" - Personal Relief", tcFont3));
-            Cell prCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.PersonalRelief), tcFont4));
+            Cell prCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.PersonalRelief), tcFont4));
             prCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
             taxDetails.AddCell(prCell);
 
             taxDetails.AddCell(new Phrase("NET TAX", tcFont3));
-            Cell netTaxCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.NetTax), tcFont4));
+            Cell netTaxCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.NetTax), tcFont4));
             netTaxCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
             taxDetails.AddCell(netTaxCell);
 

@@ -58,7 +58,7 @@ namespace winSBPayroll.Forms
 
                     if (db.spRoles.Any(i => i.ShortCode == role.ShortCode))
                     {
-                        MessageBox.Show("Role Code Exist!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Role Code Exist!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     if (!db.spRoles.Any(i => i.ShortCode == role.ShortCode))
                     {

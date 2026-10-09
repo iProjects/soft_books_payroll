@@ -36,7 +36,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtOldPassword = new System.Windows.Forms.TextBox();
-            this.txtUserId = new System.Windows.Forms.TextBox();
+            this.txtusername = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtNewPassword = new System.Windows.Forms.TextBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
@@ -55,7 +55,7 @@
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.txtOldPassword);
-            this.groupBox2.Controls.Add(this.txtUserId);
+            this.groupBox2.Controls.Add(this.txtusername);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.txtNewPassword);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -114,12 +114,12 @@
             // 
             // txtUserName
             // 
-            this.txtUserId.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtUserId.Location = new System.Drawing.Point(119, 20);
-            this.txtUserId.MaxLength = 50;
-            this.txtUserId.Name = "txtUserId";
-            this.txtUserId.Size = new System.Drawing.Size(225, 20);
-            this.txtUserId.TabIndex = 0;
+            this.txtusername.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtusername.Location = new System.Drawing.Point(119, 20);
+            this.txtusername.MaxLength = 50;
+            this.txtusername.Name = "txtUserId";
+            this.txtusername.Size = new System.Drawing.Size(225, 20);
+            this.txtusername.TabIndex = 0;
             // 
             // label1
             // 
@@ -210,7 +210,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtOldPassword;
-        private System.Windows.Forms.TextBox txtUserId;
+        private System.Windows.Forms.TextBox txtusername;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtNewPassword;
         private System.Windows.Forms.ErrorProvider errorProvider1;

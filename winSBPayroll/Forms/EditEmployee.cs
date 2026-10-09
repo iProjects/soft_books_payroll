@@ -22,8 +22,12 @@ namespace winSBPayroll.Forms
         string _User;
         // Boolean flag used to determine when a character other than a number is entered.
         private bool nonNumberEntered = false;
+        public string TAG;
+        //Event declaration:
+        //event for publishing messages to output
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
 
-        public EditEmployee(DAL.Employee emp, string user, string Conn)
+        public EditEmployee(DAL.Employee emp, string user, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             InitializeComponent();
 
@@ -38,309 +42,42 @@ namespace winSBPayroll.Forms
             employee = emp;
             _User = user;
             empTxn = de.EmpTxnList(employee.EmpNo);
+
+            TAG = this.GetType().Name;
+
+            //Subscribing to the event: 
+            //Dynamically:
+            //EventName += HandlerName;
+            _notificationmessageEventname = notificationmessageEventname;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("finished EditEmployee initialization", TAG));
+
         }
 
-        private void InitializeControls()
-        {
-            try
-            {
-                if (employee.EmpNo != null)
-                {
-                    txtEmpNo.Text = employee.EmpNo.Trim();
-                }
-                if (employee.Email != null)
-                {
-                    txtEmail.Text = employee.Email.Trim();
-                }
-                if (employee.Surname != null)
-                {
-                    txtSurname.Text = employee.Surname.Trim();
-                }
-                if (employee.OtherNames != null)
-                {
-                    txtOtherNames.Text = employee.OtherNames.Trim();
-                }
-                dtpDOB.Value = employee.DoB ?? DateTime.Today;
-                if (employee.MaritalStatus != null)
-                {
-                    cbMaritalStatus.SelectedValue = employee.MaritalStatus.Trim();
-                }
-                if (employee.Gender != null)
-                {
-                    cbGender.SelectedValue = employee.Gender.Trim();
-                }
-                chkIsActive.Checked = employee.IsActive ?? true;
-                if (employee.Photo != null)
-                {
-                    pbPhoto.ImageLocation = employee.Photo.ToString().Trim();
-                }
-                dtpDOE.Value = employee.DoE ?? DateTime.Today;
-                if (employee.BasicComputation != null)
-                {
-                    cbBasicComputation.SelectedValue = employee.BasicComputation.Trim();
-                }
-                if (employee.BasicPay != null)
-                {
-                    txtBasicPay.Text = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", employee.BasicPay);
-                }
-                if (employee.PersonalRelief != null)
-                {
-                    txtPersonalRelief.Text = employee.PersonalRelief.ToString();
-                }
-                if (employee.MortgageRelief != null)
-                {
-                    txtMortgageRelief.Text = employee.MortgageRelief.ToString();
-                }
-                if (employee.InsuranceRelief != null)
-                {
-                    txtInsuranceRelief.Text = employee.InsuranceRelief.ToString();
-                }
-                if (employee.NSSFNo != null)
-                {
-                    txtNSSF.Text = employee.NSSFNo.Trim();
-                }
-                if (employee.NHIFNo != null)
-                {
-                    txtNHIF.Text = employee.NHIFNo.Trim();
-                }
-                if (employee.IDNo != null)
-                {
-                    txtIDNo.Text = employee.IDNo.Trim();
-                }
-                if (employee.PINNo != null)
-                {
-                    txtPIN.Text = employee.PINNo.Trim();
-                }
-                if (employee.DepartmentId != null)
-                {
-                    cbDepartment.SelectedValue = employee.DepartmentId;
-                }
-                if (employee.EmployerId != null)
-                {
-                    cbEmployer.SelectedValue = employee.EmployerId;
-                }
-                if (employee.PayPoint != null)
-                {
-                    txtEmployeePaymentPoint.Text = employee.PayPoint.Trim();
-                }
-                if (employee.EmpGroup != null)
-                {
-                    cboEmployeeGroup.SelectedValue = employee.EmpGroup.Trim();
-                }
-                if (employee.EmpPayroll != null)
-                {
-                    cboEmpPayroll.SelectedValue = employee.EmpPayroll.Trim();
-                }
-                if (employee.PrevEmployer != null)
-                {
-                    txtPrevEmployer.Text = employee.PrevEmployer.Trim();
-                }
-                dtpDateLeft.Value = employee.DateLeft ?? DateTime.Today;
-                if (employee.PaymentMode != null)
-                {
-                    cboModeofPayment.SelectedValue = employee.PaymentMode.Trim();
-                }
-                switch (employee.PaymentMode)
-                {
-                    case "M":
-                        txtTelephoneNo.Visible = true;
-                        if (employee.TelephoneNo != null)
-                        {
-                            txtTelephoneNo.Text = employee.TelephoneNo;
-                            lblpaymentmode.Text = "Enter phone Number*";
-                        }
-                        break;
-                    case "B":
-                        txtBankSortCode.Visible = true;
-                        if (employee.BankCode != null)
-                        {
-                            txtBankSortCode.Text = employee.BankCode.Trim();
-                        }
-                        txtAccount.Visible = true;
-                        if (employee.BankAccount != null)
-                        {
-                            txtAccount.Text = employee.BankAccount;
-                        }
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                Utils.ShowError(ex);
-            }
-        }
-
-        private void btnUpdate_Click(object sender, EventArgs e)
-        {
-            errorProvider1.Clear();
-            if (IsEmployeeValid())
-            {
-                try
-                {
-                    if (!string.IsNullOrEmpty(txtEmpNo.Text))
-                    {
-                        employee.EmpNo = txtEmpNo.Text.Trim();
-                    }
-                    if (!string.IsNullOrEmpty(txtEmail.Text))
-                    { 
-                        employee.Email = txtEmail.Text.Trim();
-                    }
-                    if (!string.IsNullOrEmpty(txtSurname.Text))
-                    {
-                        employee.Surname = Utils.ConvertFirstLetterToUpper(txtSurname.Text.Trim());
-                    }
-                    if (!string.IsNullOrEmpty(txtOtherNames.Text))
-                    {
-                        employee.OtherNames = Utils.ConvertFirstLetterToUpper(txtOtherNames.Text.Trim());
-                    }
-                    employee.DoB = dtpDOB.Value;
-                    if (cbMaritalStatus.SelectedIndex != -1)
-                    {
-                        employee.MaritalStatus = cbMaritalStatus.SelectedValue.ToString();
-                    }
-                    if (cbGender.SelectedIndex != -1)
-                    {
-                        employee.Gender = cbGender.SelectedValue.ToString();
-                    }
-                    if (!string.IsNullOrEmpty(pbPhoto.ImageLocation))
-                    {
-                        employee.Photo = pbPhoto.ImageLocation.ToString().Trim();
-                    }
-                    employee.DoE = dtpDOE.Value;
-                    if (cbBasicComputation.SelectedIndex != -1)
-                    {
-                        employee.BasicComputation = cbBasicComputation.SelectedValue.ToString();
-                    }
-                    decimal basicpay;
-                    if (!string.IsNullOrEmpty(txtBasicPay.Text) && decimal.TryParse(txtBasicPay.Text, out basicpay))
-                    {
-                        employee.BasicPay = decimal.Parse(txtBasicPay.Text.Trim());
-                    }
-                    decimal personalrelief;
-                    if (!string.IsNullOrEmpty(txtPersonalRelief.Text) && decimal.TryParse(txtPersonalRelief.Text, out personalrelief))
-                    {
-                        employee.PersonalRelief = decimal.Parse(txtPersonalRelief.Text.Trim());
-                    }
-                    decimal morgagerelief;
-                    if (!string.IsNullOrEmpty(txtMortgageRelief.Text) && decimal.TryParse(txtMortgageRelief.Text, out morgagerelief))
-                    {
-                        employee.MortgageRelief = decimal.Parse(txtMortgageRelief.Text.Trim());
-                    }
-                    decimal insurancerelief;
-                    if (!string.IsNullOrEmpty(txtInsuranceRelief.Text) && decimal.TryParse(txtInsuranceRelief.Text, out insurancerelief))
-                    {
-                        employee.InsuranceRelief = decimal.Parse(txtInsuranceRelief.Text.Trim());
-                    }
-                    if (!string.IsNullOrEmpty(txtNSSF.Text))
-                    {
-                        employee.NSSFNo = txtNSSF.Text.Trim();
-                    }
-                    if (!string.IsNullOrEmpty(txtNHIF.Text))
-                    {
-                        employee.NHIFNo = txtNHIF.Text.Trim();
-                    }
-                    if (!string.IsNullOrEmpty(txtIDNo.Text))
-                    {
-                        employee.IDNo = txtIDNo.Text.Trim();
-                    }
-                    if (!string.IsNullOrEmpty(txtPIN.Text))
-                    {
-                        employee.PINNo = txtPIN.Text.Trim();
-                    }
-                    if (cbDepartment.SelectedIndex != -1)
-                    {
-                        employee.DepartmentId = int.Parse(cbDepartment.SelectedValue.ToString());
-                    }
-                    if (cbEmployer.SelectedIndex != -1)
-                    {
-                        employee.EmployerId = int.Parse(cbEmployer.SelectedValue.ToString());
-                    }
-                    if (!string.IsNullOrEmpty(txtEmployeePaymentPoint.Text))
-                    {
-                        employee.PayPoint = txtEmployeePaymentPoint.Text.Trim();
-                    }
-                    if (cboEmployeeGroup.SelectedIndex != -1)
-                    {
-                        employee.EmpGroup = cboEmployeeGroup.SelectedValue.ToString();
-                    }
-                    if (cboEmpPayroll.SelectedIndex != -1)
-                    {
-                        employee.EmpPayroll = cboEmpPayroll.SelectedValue.ToString();
-                    }
-                    if (!string.IsNullOrEmpty(txtPrevEmployer.Text))
-                    {
-                        employee.PrevEmployer = txtPrevEmployer.Text.Trim();
-                    }
-                    employee.DateLeft = dtpDateLeft.Value;
-                    if (cboModeofPayment.SelectedIndex != -1)
-                    {
-                        employee.PaymentMode = cboModeofPayment.SelectedValue.ToString();
-                    }
-                    switch (cboModeofPayment.SelectedValue.ToString())
-                    {
-                        case "M":
-                            if (string.IsNullOrEmpty(txtTelephoneNo.Text))
-                            {
-                                txtTelephoneNo.Text = "0";
-                                employee.TelephoneNo = txtTelephoneNo.Text.Trim();
-                            }
-                            else
-                            {
-                                employee.TelephoneNo = txtTelephoneNo.Text.Trim();
-                            }
-                            break;
-                        case "B":
-                            if (string.IsNullOrEmpty(txtAccount.Text))
-                            {
-                                txtAccount.Text = "0";
-                                employee.BankAccount = txtAccount.Text.Trim();
-                                employee.BankCode = txtBankSortCode.Text;
-                            }
-                            else
-                            {
-                                employee.BankAccount = txtAccount.Text.Trim();
-                                employee.BankCode = txtBankSortCode.Text;
-                            }
-                            break;
-                    }
-                    employee.IsActive = chkIsActive.Checked;
-                    employee.CreatedBy = _User;
-                    employee.CreatedOn = DateTime.Now;
-
-                    de.UpdateEmployee(employee);
-
-                    UpdateBasicPay();
-
-                    winSBPayroll.Forms.Employees f = (Employees)this.Owner;
-                    f.RefreshGrid();
-                    this.Close();
-                }
-                catch (Exception ex)
-                {
-                    Utils.ShowError(ex);
-                }
-            }
-        }
-        private void UpdateBasicPay( )
-        {
-            try
-            {
-                de.UpdateEmpTxnBasicPay(
-                            employee.Id,
-                            DateTime.Today,
-                            employee.EmpNo,
-                            "BASIC",
-                            decimal.Parse(txtBasicPay.Text.Trim()));
-            }
-            catch (Exception ex)
-            {
-                Utils.ShowError(ex);
-            }
-        }
         private void EditEmployee_Load(object sender, EventArgs e)
         {
             try
             {
+                dataGridViewNonCashBenefits.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dataGridViewNonCashBenefits.MultiSelect = false;
+                dataGridViewNonCashBenefits.ReadOnly = true;
+                dataGridViewNonCashBenefits.AutoGenerateColumns = false;
+
+                dataGridViewCustominfo.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dataGridViewCustominfo.MultiSelect = false;
+                dataGridViewCustominfo.ReadOnly = true;
+                dataGridViewCustominfo.AutoGenerateColumns = false;
+
+                dataGridViewEmpTxn.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dataGridViewEmpTxn.MultiSelect = false;
+                dataGridViewEmpTxn.ReadOnly = true;
+                dataGridViewEmpTxn.AutoGenerateColumns = false;
+
+                dataGridHourlyPayments.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dataGridHourlyPayments.MultiSelect = false;
+                dataGridHourlyPayments.ReadOnly = true;
+                dataGridHourlyPayments.AutoGenerateColumns = false;
+
                 //Gender Combox
                 var gender = new BindingList<KeyValuePair<string, string>>();
                 gender.Add(new KeyValuePair<string, string>("M", "Male"));
@@ -399,9 +136,9 @@ namespace winSBPayroll.Forms
                 pbPhoto.MouseLeave += new EventHandler(pbPhoto_MouseLeave);
                 pbPhoto.SizeMode = PictureBoxSizeMode.StretchImage;
 
-                cbEmployer.DataSource = rep.GetAllActiveEmployers();
-                cbEmployer.DisplayMember = "Name";
-                cbEmployer.ValueMember = "Id";
+                cbo_employer.DataSource = rep.GetAllActiveEmployers();
+                cbo_employer.DisplayMember = "Name";
+                cbo_employer.ValueMember = "Id";
 
                 bindingSourceDept.DataSource = rep.GetNonDeletedDepartments();
                 cbDepartment.DataSource = bindingSourceDept;
@@ -417,23 +154,23 @@ namespace winSBPayroll.Forms
                 cbBenefit.DisplayMember = "Description";
                 cbBenefit.ValueMember = "Id";
 
-                bindingSourceEmpBenefits.DataSource = de.GetEmpBenefits(employee.EmpNo);
+                bindingSourceEmpBenefits.DataSource = de.GetEmpBenefits(employee.Id);
                 dataGridViewNonCashBenefits.AutoGenerateColumns = false;
                 this.dataGridViewNonCashBenefits.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dataGridViewNonCashBenefits.DataSource = bindingSourceEmpBenefits;
 
-                bindingSourceEmployeeCustomInfo.DataSource = de.GetAllEmployeeCustomInfo(employee.EmpNo);
+                bindingSourceEmployeeCustomInfo.DataSource = de.GetAllEmployeeCustomInfo(employee.Id);
                 dataGridViewCustominfo.AutoGenerateColumns = false;
                 this.dataGridViewCustominfo.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dataGridViewCustominfo.DataSource = bindingSourceEmployeeCustomInfo;
 
-                bindingSourceEmpTxns.DataSource = rep.ActiveEmpTxnList(employee.EmpNo);
+                bindingSourceEmpTxns.DataSource = rep.ActiveEmpTxnList(employee.Id);
                 dataGridViewEmpTxn.AutoGenerateColumns = false;
                 this.dataGridViewEmpTxn.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dataGridViewEmpTxn.DataSource = bindingSourceEmpTxns;
                 groupBox5.Text = "Employee Transactions  " + bindingSourceEmpTxns.Count.ToString();
 
-                bindingSourceHourlyPayments.DataSource = de.GetHourlyPaymentsList(employee.EmpNo);
+                bindingSourceHourlyPayments.DataSource = de.GetHourlyPaymentsList(employee.Id);
                 dataGridHourlyPayments.AutoGenerateColumns = false;
                 this.dataGridHourlyPayments.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dataGridHourlyPayments.DataSource = bindingSourceHourlyPayments;
@@ -452,7 +189,7 @@ namespace winSBPayroll.Forms
                         lblBasicPay.Visible = false;
                         break;
                     case "M":
-                        tabControl1.TabPages.Remove(HourlyPaymentTabPage);
+                        tabControl_employees.TabPages.Remove(tabPage_hourly_payment);
                         txtBasicPay.Visible = true;
                         lblBasicPay.Visible = true;
                         break;
@@ -460,13 +197,23 @@ namespace winSBPayroll.Forms
 
                 InitializeControls();
 
-                tabControl1.TabPages.Remove(HourlyPaymentTabPage);
-                tabControl1.TabPages.Remove(tabPage5);
-                tabControl1.TabPages.Remove(tabPage6);
+                tabControl_employees.TabPages.Remove(tabPage_hourly_payment);
+                tabControl_employees.TabPages.Remove(tabPage_non_cash_benefits);
+                tabControl_employees.TabPages.Remove(tabPage_custom_information);
+
+                tabControl_employees.SelectedTab = tabPage_payslip_details;
 
                 AutoCompleteStringCollection acscempno = new AutoCompleteStringCollection();
                 acscempno.AddRange(this.AutoComplete_EmpNo());
                 txtEmpNo.AutoCompleteCustomSource = acscempno;
+                txtEmpNo.AutoCompleteMode =
+                    AutoCompleteMode.SuggestAppend;
+                txtEmpNo.AutoCompleteSource =
+                     AutoCompleteSource.CustomSource;
+
+                AutoCompleteStringCollection acsc_phone = new AutoCompleteStringCollection();
+                acsc_phone.AddRange(this.AutoComplete_phone());
+                txtEmpNo.AutoCompleteCustomSource = acsc_phone;
                 txtEmpNo.AutoCompleteMode =
                     AutoCompleteMode.SuggestAppend;
                 txtEmpNo.AutoCompleteSource =
@@ -559,6 +306,9 @@ namespace winSBPayroll.Forms
                     AutoCompleteMode.SuggestAppend;
                 txtBankSortCode.AutoCompleteSource =
                      AutoCompleteSource.CustomSource;
+
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("finished EditEmployee load", TAG));
+
             }
             catch (Exception ex)
             {
@@ -588,6 +338,22 @@ namespace winSBPayroll.Forms
                                     where bk.IsDeleted == false
                                     select bk.Surname;
                 return surnamesquery.ToArray();
+            }
+            catch (Exception ex)
+            {
+                Utils.ShowError(ex);
+                return null;
+            }
+        }
+        private string[] AutoComplete_phone()
+        {
+            try
+            {
+                var phone_query = from bk in rep.GetAllActiveEmployees()
+                                  where bk.IsActive == true
+                                  where bk.IsDeleted == false
+                                  select bk.PhoneNo;
+                return phone_query.ToArray();
             }
             catch (Exception ex)
             {
@@ -783,6 +549,334 @@ namespace winSBPayroll.Forms
                 return null;
             }
         }
+
+        private void InitializeControls()
+        {
+            try
+            {
+                if (employee.EmpNo != null)
+                {
+                    txtEmpNo.Text = employee.EmpNo.Trim();
+                }
+                if (employee.Id != null)
+                {
+                    groupBox3.Text = employee.Id.ToString();
+                }
+                if (employee.Email != null)
+                {
+                    txtEmail.Text = employee.Email.Trim();
+                }
+                if (employee.Surname != null)
+                {
+                    txtSurname.Text = employee.Surname.Trim();
+                }
+                if (employee.OtherNames != null)
+                {
+                    txtOtherNames.Text = employee.OtherNames.Trim();
+                }
+                dtpDOB.Value = employee.DoB ?? DateTime.Today;
+                if (employee.MaritalStatus != null)
+                {
+                    cbMaritalStatus.SelectedValue = employee.MaritalStatus.Trim();
+                }
+                if (employee.Gender != null)
+                {
+                    cbGender.SelectedValue = employee.Gender.Trim();
+                }
+                if (employee.PhoneNo != null)
+                {
+                    txtphone_no.Text = employee.PhoneNo.ToString();
+                }
+                if (employee.IDNo != null)
+                {
+                    txtIDNo.Text = employee.IDNo.Trim();
+                }
+                chkIsActive.Checked = employee.IsActive ?? true;
+                if (employee.Photo != null)
+                {
+                    pbPhoto.ImageLocation = employee.Photo.ToString().Trim();
+                }
+                dtpDOE.Value = employee.DoE ?? DateTime.Today;
+                if (employee.BasicComputation != null)
+                {
+                    cbBasicComputation.SelectedValue = employee.BasicComputation.Trim();
+                }
+                if (employee.BasicPay != null)
+                {
+                    txtBasicPay.Text = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", employee.BasicPay);
+                }
+                if (employee.PersonalRelief != null)
+                {
+                    txtPersonalRelief.Text = employee.PersonalRelief.ToString();
+                }
+                if (employee.MortgageRelief != null)
+                {
+                    txtMortgageRelief.Text = employee.MortgageRelief.ToString();
+                }
+                if (employee.InsuranceRelief != null)
+                {
+                    txtInsuranceRelief.Text = employee.InsuranceRelief.ToString();
+                }
+                if (employee.NSSFNo != null)
+                {
+                    txtNSSF.Text = employee.NSSFNo.Trim();
+                }
+                if (employee.NHIFNo != null)
+                {
+                    txtNHIF.Text = employee.NHIFNo.Trim();
+                }
+                if (employee.PINNo != null)
+                {
+                    txtPIN.Text = employee.PINNo.Trim();
+                }
+                if (employee.DepartmentId != null)
+                {
+                    cbDepartment.SelectedValue = employee.DepartmentId;
+                }
+                if (employee.EmployerId != null)
+                {
+                    cbo_employer.SelectedValue = employee.EmployerId;
+                }
+                if (employee.PayPoint != null)
+                {
+                    txtEmployeePaymentPoint.Text = employee.PayPoint.Trim();
+                }
+                if (employee.EmpGroup != null)
+                {
+                    cboEmployeeGroup.SelectedValue = employee.EmpGroup.Trim();
+                }
+                if (employee.EmpPayroll != null)
+                {
+                    cboEmpPayroll.SelectedValue = employee.EmpPayroll.Trim();
+                }
+                if (employee.PrevEmployer != null)
+                {
+                    txtPrevEmployer.Text = employee.PrevEmployer.Trim();
+                }
+                dtpDateLeft.Value = employee.DateLeft ?? DateTime.Today;
+                if (employee.PaymentMode != null)
+                {
+                    cboModeofPayment.SelectedValue = employee.PaymentMode.Trim();
+                }
+                switch (employee.PaymentMode)
+                {
+                    case "M":
+                        txtTelephoneNo.Visible = true;
+                        if (employee.TelephoneNo != null)
+                        {
+                            txtTelephoneNo.Text = employee.TelephoneNo;
+                            lblpaymentmode.Text = "Enter phone Number*";
+                        }
+                        break;
+                    case "B":
+                        txtBankSortCode.Visible = true;
+                        if (employee.BankCode != null)
+                        {
+                            txtBankSortCode.Text = employee.BankCode.Trim();
+                        }
+                        txtAccount.Visible = true;
+                        if (employee.BankAccount != null)
+                        {
+                            txtAccount.Text = employee.BankAccount;
+                        }
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Utils.ShowError(ex);
+            }
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            errorProvider.Clear();
+            if (IsEmployeeValid())
+            {
+                try
+                {
+                    if (!string.IsNullOrEmpty(txtEmpNo.Text))
+                    {
+                        employee.EmpNo = txtEmpNo.Text.Trim();
+                    }
+                    if (!string.IsNullOrEmpty(txtEmail.Text))
+                    {
+                        employee.Email = txtEmail.Text.Trim();
+                    }
+                    if (!string.IsNullOrEmpty(txtSurname.Text))
+                    {
+                        employee.Surname = Utils.ConvertFirstLetterToUpper(txtSurname.Text.Trim());
+                    }
+                    if (!string.IsNullOrEmpty(txtOtherNames.Text))
+                    {
+                        employee.OtherNames = Utils.ConvertFirstLetterToUpper(txtOtherNames.Text.Trim());
+                    }
+                    employee.DoB = dtpDOB.Value;
+                    if (cbMaritalStatus.SelectedIndex != -1)
+                    {
+                        employee.MaritalStatus = cbMaritalStatus.SelectedValue.ToString();
+                    }
+                    if (cbGender.SelectedIndex != -1)
+                    {
+                        employee.Gender = cbGender.SelectedValue.ToString();
+                    }
+
+                    if (!string.IsNullOrEmpty(txtIDNo.Text))
+                    {
+                        employee.IDNo = txtIDNo.Text.Trim();
+                    }
+                    if (!string.IsNullOrEmpty(txtphone_no.Text))
+                    {
+                        employee.PhoneNo = txtphone_no.Text.Trim();
+                    }
+                    if (!string.IsNullOrEmpty(pbPhoto.ImageLocation))
+                    {
+                        employee.Photo = pbPhoto.ImageLocation.ToString().Trim();
+                    }
+                    employee.DoE = dtpDOE.Value;
+                    if (cbBasicComputation.SelectedIndex != -1)
+                    {
+                        employee.BasicComputation = cbBasicComputation.SelectedValue.ToString();
+                    }
+                    decimal basicpay;
+                    if (!string.IsNullOrEmpty(txtBasicPay.Text) && decimal.TryParse(txtBasicPay.Text, out basicpay))
+                    {
+                        employee.BasicPay = decimal.Parse(txtBasicPay.Text.Trim());
+                    }
+                    decimal personalrelief;
+                    if (!string.IsNullOrEmpty(txtPersonalRelief.Text) && decimal.TryParse(txtPersonalRelief.Text, out personalrelief))
+                    {
+                        employee.PersonalRelief = decimal.Parse(txtPersonalRelief.Text.Trim());
+                    }
+                    decimal morgagerelief;
+                    if (!string.IsNullOrEmpty(txtMortgageRelief.Text) && decimal.TryParse(txtMortgageRelief.Text, out morgagerelief))
+                    {
+                        employee.MortgageRelief = decimal.Parse(txtMortgageRelief.Text.Trim());
+                    }
+                    decimal insurancerelief;
+                    if (!string.IsNullOrEmpty(txtInsuranceRelief.Text) && decimal.TryParse(txtInsuranceRelief.Text, out insurancerelief))
+                    {
+                        employee.InsuranceRelief = decimal.Parse(txtInsuranceRelief.Text.Trim());
+                    }
+                    if (!string.IsNullOrEmpty(txtNSSF.Text))
+                    {
+                        employee.NSSFNo = txtNSSF.Text.Trim();
+                    }
+                    if (!string.IsNullOrEmpty(txtNHIF.Text))
+                    {
+                        employee.NHIFNo = txtNHIF.Text.Trim();
+                    }
+                    if (!string.IsNullOrEmpty(txtPIN.Text))
+                    {
+                        employee.PINNo = txtPIN.Text.Trim();
+                    }
+                    if (cbDepartment.SelectedIndex != -1)
+                    {
+                        employee.DepartmentId = int.Parse(cbDepartment.SelectedValue.ToString());
+                    }
+                    if (cbo_employer.SelectedIndex != -1)
+                    {
+                        employee.EmployerId = int.Parse(cbo_employer.SelectedValue.ToString());
+                    }
+                    if (!string.IsNullOrEmpty(txtEmployeePaymentPoint.Text))
+                    {
+                        employee.PayPoint = txtEmployeePaymentPoint.Text.Trim();
+                    }
+                    if (cboEmployeeGroup.SelectedIndex != -1)
+                    {
+                        employee.EmpGroup = cboEmployeeGroup.SelectedValue.ToString();
+                    }
+                    if (cboEmpPayroll.SelectedIndex != -1)
+                    {
+                        employee.EmpPayroll = cboEmpPayroll.SelectedValue.ToString();
+                    }
+                    if (!string.IsNullOrEmpty(txtPrevEmployer.Text))
+                    {
+                        employee.PrevEmployer = txtPrevEmployer.Text.Trim();
+                    }
+                    employee.DateLeft = dtpDateLeft.Value;
+                    if (cboModeofPayment.SelectedIndex != -1)
+                    {
+                        employee.PaymentMode = cboModeofPayment.SelectedValue.ToString();
+                    }
+                    switch (cboModeofPayment.SelectedValue.ToString())
+                    {
+                        case "M":
+                            if (string.IsNullOrEmpty(txtTelephoneNo.Text))
+                            {
+                                txtTelephoneNo.Text = "0";
+                                employee.TelephoneNo = txtTelephoneNo.Text.Trim();
+                            }
+                            else
+                            {
+                                employee.TelephoneNo = txtTelephoneNo.Text.Trim();
+                            }
+                            break;
+                        case "B":
+                            if (string.IsNullOrEmpty(txtAccount.Text))
+                            {
+                                txtAccount.Text = "0";
+                                employee.BankAccount = txtAccount.Text.Trim();
+                                employee.BankCode = txtBankSortCode.Text;
+                            }
+                            else
+                            {
+                                employee.BankAccount = txtAccount.Text.Trim();
+                                employee.BankCode = txtBankSortCode.Text;
+                            }
+                            break;
+                    }
+                    employee.IsActive = chkIsActive.Checked;
+                    employee.CreatedBy = _User;
+                    employee.CreatedOn = DateTime.Now;
+
+                    de.UpdateEmployee(employee);
+
+                    UpdateBasicPay();
+
+                    Update_Employee_Transactions(employee);
+
+                    winSBPayroll.Forms.EmployeesForm f = (EmployeesForm)this.Owner;
+                    f.RefreshGrid(1);
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    Utils.ShowError(ex);
+                }
+            }
+            else
+            {
+                MessageBox.Show("There are errors in the Form. \nCheck all tabs for missing data.", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void UpdateBasicPay()
+        {
+            try
+            {
+                de.UpdateEmpTxnBasicPay(
+                            employee.Id,
+                            DateTime.Today,
+                            employee.EmpNo,
+                            "BASIC",
+                            decimal.Parse(txtBasicPay.Text.Trim()));
+            }
+            catch (Exception ex)
+            {
+                Utils.ShowError(ex);
+            }
+        }
+        private void Update_Employee_Transactions(Employee employee)
+        {
+            try
+            {
+                rep.Update_Employee_Transactions(employee);
+            }
+            catch (Exception ex)
+            {
+                Utils.ShowError(ex);
+            }
+        }
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -794,123 +888,114 @@ namespace winSBPayroll.Forms
 
             if (string.IsNullOrEmpty(txtEmpNo.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtEmpNo, "Employee Number cannot be null!");
-                return false;
+                errorProvider.SetError(txtEmpNo, "Employee Number cannot be null!");
+                no_error = false;
             }
             if (string.IsNullOrEmpty(txtSurname.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtSurname, "Surname cannot be null!");
-                return false;
+                errorProvider.SetError(txtSurname, "Surname cannot be null!");
+                no_error = false;
             }
             if (string.IsNullOrEmpty(txtOtherNames.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtOtherNames, "Other Names cannot be null!");
-                return false;
+                errorProvider.SetError(txtOtherNames, "Other Names cannot be null!");
+                no_error = false;
             }
             int minAge = int.Parse(de.SettingLookup("MINAGE"));
             DateTime minDoB = DateTime.Today.AddYears(-minAge);
 
             if (dtpDOB.Value > minDoB)
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(dtpDOB, "Employee Must be 18 Years and Above!");
-                return false;
+                errorProvider.SetError(dtpDOB, "Employee Must be 18 Years and Above!");
+                no_error = false;
             }
             if (cbMaritalStatus.SelectedIndex == -1)
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(cbMaritalStatus, "Select Marital Status!");
-                return false;
+                errorProvider.SetError(cbMaritalStatus, "Select Marital Status!");
+                no_error = false;
             }
             if (cbGender.SelectedIndex == -1)
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(cbGender, "Select Gender!");
-                return false;
+                errorProvider.SetError(cbGender, "Select Gender!");
+                no_error = false;
             }
             if (string.IsNullOrEmpty(txtEmail.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtEmail, "Email cannot be null!");
-                return false;
+                errorProvider.SetError(txtEmail, "Email cannot be null!");
+                no_error = false;
             }
             string emailregex = de.SettingLookup("EMAILREGEX");
             System.Text.RegularExpressions.Regex rEMail = new System.Text.RegularExpressions.Regex(emailregex, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
             if (!rEMail.IsMatch(txtEmail.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtEmail, "Please provide a valid Email e.g username@domain.com");
-                return false;
+                errorProvider.SetError(txtEmail, "Please provide a valid Email e.g username@domain.com");
+                no_error = false;
+            }
+            if (string.IsNullOrEmpty(txtphone_no.Text))
+            {
+                errorProvider.SetError(txtphone_no, "Phone No cannot be null!");
+                no_error = false;
+            }
+            if (string.IsNullOrEmpty(txtIDNo.Text))
+            {
+                errorProvider.SetError(txtIDNo, "ID No cannot be null!");
+                no_error = false;
             }
             if (cbBasicComputation.SelectedIndex == -1)
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(cbBasicComputation, "Select Basic Computation!");
-                return false;
+                errorProvider.SetError(cbBasicComputation, "Select Basic Computation!");
+                no_error = false;
             }
             if (string.IsNullOrEmpty(txtBasicPay.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtBasicPay, "Basic Pay cannot be null!");
-                return false;
+                errorProvider.SetError(txtBasicPay, "Basic Pay cannot be null!");
+                no_error = false;
             }
             decimal basic;
             if (!decimal.TryParse(txtBasicPay.Text, out basic))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtBasicPay, "Basic Pay must be a decimal");
-                return false;
+                errorProvider.SetError(txtBasicPay, "Basic Pay must be a decimal");
+                no_error = false;
             }
             if (string.IsNullOrEmpty(txtNSSF.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtNSSF, "NSSF No cannot be null!");
-                return false;
+                errorProvider.SetError(txtNSSF, "NSSF No cannot be null!");
+                no_error = false;
             }
             if (string.IsNullOrEmpty(txtNHIF.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtNHIF, "NHIF No cannot be null!");
-                return false;
+                errorProvider.SetError(txtNHIF, "NHIF No cannot be null!");
+                no_error = false;
             }
             if (string.IsNullOrEmpty(txtIDNo.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtIDNo, "ID No cannot be null!");
-                return false;
+                errorProvider.SetError(txtIDNo, "ID No cannot be null!");
+                no_error = false;
             }
             if (string.IsNullOrEmpty(txtPIN.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtPIN, "PIN No cannot be null!");
-                return false;
+                errorProvider.SetError(txtPIN, "PIN No cannot be null!");
+                no_error = false;
             }
             if (cbDepartment.SelectedIndex == -1)
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(cbDepartment, "Select Department!");
-                return false;
+                errorProvider.SetError(cbDepartment, "Select Department!");
+                no_error = false;
             }
-            if (cbEmployer.SelectedIndex == -1)
+            if (cbo_employer.SelectedIndex == -1)
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(cbEmployer, "Select Employer!");
-                return false;
+                errorProvider.SetError(cbo_employer, "Select Employer!");
+                no_error = false;
             }
             if (cboModeofPayment.SelectedIndex == -1)
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(cboModeofPayment, "Select Mode of Payment!");
-                return false;
+                errorProvider.SetError(cboModeofPayment, "Select Mode of Payment!");
+                no_error = false;
             }
             if ("B".Equals(cboModeofPayment.SelectedValue) && string.IsNullOrEmpty(txtBankSortCode.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtBankSortCode, "Bank Sort Code cannot be null!");
-                return false;
+                errorProvider.SetError(txtBankSortCode, "Bank Sort Code cannot be null!");
+                no_error = false;
             }
             if ("B".Equals(cboModeofPayment.SelectedValue) && !string.IsNullOrEmpty(txtBankSortCode.Text))
             {
@@ -921,25 +1006,23 @@ namespace winSBPayroll.Forms
                 BankBranch _branch = _branchquery;
                 if (_branch == null)
                 {
-                    errorProvider1.Clear();
-                    errorProvider1.SetError(txtBankSortCode, "Bank Sort Code does not exist!");
-                    return false;
+                    errorProvider.SetError(txtBankSortCode, "Bank Sort Code does not exist!");
+                    no_error = false;
                 }
             }
             if ("B".Equals(cboModeofPayment.SelectedValue) && string.IsNullOrEmpty(txtAccount.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtAccount, "Bank Account cannot be null!");
-                return false;
+                errorProvider.SetError(txtAccount, "Bank Account cannot be null!");
+                no_error = false;
             }
             if ("M".Equals(cboModeofPayment.SelectedValue) && string.IsNullOrEmpty(txtTelephoneNo.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtTelephoneNo, "Phone Number cannot be null!");
-                return false;
+                errorProvider.SetError(txtTelephoneNo, "Phone Number cannot be null!");
+                no_error = false;
             }
             return no_error;
         }
+
         private void btnNextSeries_Click(object sender, EventArgs e)
         {
             try
@@ -980,7 +1063,7 @@ namespace winSBPayroll.Forms
                             List<HourlyPayment> listemphrly = db.HourlyPayments.Where(ben => ben.Empno == employee.EmpNo).ToList();
                             if (listemphrly.Count > 0)
                             {
-                                MessageBox.Show("There is a Transaction  Associated with this HOURLY_PAY.\n Delete the Transaction First!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show("There are Transactions Associated with this HOURLY_PAY.\n Delete the Transactions First!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
 
                             //foreach (HourlyPayment emphrly in listemphrly)
@@ -990,7 +1073,7 @@ namespace winSBPayroll.Forms
                             //db.SaveChanges();
                             //de.DeleteEmpTxn(_empTxn.Id);
                             //GridRefresh();
-                            //MessageBox.Show("Teacher with ID No Exists!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            //MessageBox.Show("Teacher with ID No Exists!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else if ("NON_CASH_BENEFIT".Equals(_empTxn.ItemId.Trim()))
                         {
@@ -998,7 +1081,7 @@ namespace winSBPayroll.Forms
                             List<EmpNonCashBenefit> listempncben = db.EmpNonCashBenefits.Where(ben => ben.EmpNo == employee.EmpNo).ToList();
                             if (listempncben.Count > 0)
                             {
-                                MessageBox.Show("There is a Transaction  Associated with this NON_CASH_BENEFIT.\n Delete the Transaction First!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                                MessageBox.Show("There are Transactions Associated with this NON_CASH_BENEFIT.\n Delete the Transactions First!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                             }
 
                             //foreach (EmpNonCashBenefit empben in listempncben)
@@ -1008,20 +1091,34 @@ namespace winSBPayroll.Forms
                             //db.SaveChanges();
                             //de.DeleteEmpTxn(_empTxn.Id);
                             //GridRefresh();
-                            //MessageBox.Show("Teacher with ID No Exists!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            //MessageBox.Show("Teacher with ID No Exists!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else
                         {
                             if (DialogResult.Yes == MessageBox.Show("Are you sure you want to delete?\n" + _empTxn.ItemId.ToString().Trim().ToUpper(), "Confirm Delete", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
                             {
                                 de.DeleteEmpTxn(_empTxn.Id);
-                                GridRefresh();
+                                refresh_emptxn_grid();
                             }
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Cannot Delete default item\n" + _empTxn.ItemId.ToString().Trim().ToUpper(), "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //if (employee.BasicComputation.Equals("H"))
+                        //{
+                        //    if (DialogResult.Yes == MessageBox.Show("Are you sure you want to delete?\n" + _empTxn.ItemId.ToString().Trim().ToUpper(), "Confirm Delete", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
+                        //    {
+                        //        de.DeleteEmpTxn(_empTxn.Id);
+                        //        GridRefresh();
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //MessageBox.Show("Cannot Delete default item\n" + _empTxn.ItemId.ToString().Trim().ToUpper() + "\nif payment mode is monthly.", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //}
+
+                        MessageBox.Show("Cannot Delete default item\n" + _empTxn.ItemId.ToString().Trim().ToUpper() + ".", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                     }
                 }
             }
@@ -1050,8 +1147,8 @@ namespace winSBPayroll.Forms
                         }
                         else if ("NON_CASH_BENEFIT".Equals(_empTxn.ItemId.Trim()))
                         {
-                            NonCashBenefits ncb = new NonCashBenefits(employee, connection) { Owner = this };
-                            ncb.OnEmployeeBenefitAmountChanged += new NonCashBenefits.BenefitAmountHandler(ncb_OnEmployeeBenefitAmountChanged);
+                            NonCashBenefitsForm ncb = new NonCashBenefitsForm(employee, connection) { Owner = this };
+                            ncb.OnEmployeeBenefitAmountChanged += new NonCashBenefitsForm.BenefitAmountHandler(ncb_OnEmployeeBenefitAmountChanged);
                             ncb.Text = _empTxn.ItemId.ToString().Trim().ToUpper();
                             //ncb.Owner = this;
                             ncb.ShowDialog(this);
@@ -1066,7 +1163,82 @@ namespace winSBPayroll.Forms
                     }
                     else
                     {
-                        MessageBox.Show("Cannot Edit default item\n" + _empTxn.ItemId.ToString().Trim().ToUpper(), "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                        //if (employee.BasicComputation.Equals("H"))
+                        //{
+                        //    EditEmpTxn f = new EditEmpTxn(_empTxn, _User, connection) { Owner = this };
+                        //    f.Text = _empTxn.ItemId.ToString().Trim().ToUpper();
+                        //    f.ShowDialog();
+                        //}
+                        //else
+                        //{
+                        //    MessageBox.Show("Cannot Edit default item\n" + _empTxn.ItemId.ToString().Trim().ToUpper() + "\nif payment mode is monthly.", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //}
+
+                        EditEmpTxn f = new EditEmpTxn(_empTxn, _User, connection) { Owner = this };
+                        f.Text = _empTxn.ItemId.ToString().Trim().ToUpper();
+                        f.ShowDialog();
+
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Utils.ShowError(ex);
+            }
+        }
+        private void dataGridViewEmpTxn_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (dataGridViewEmpTxn.SelectedRows.Count != 0)
+                {
+                    DAL.EmployeeTransaction _empTxn = (DAL.EmployeeTransaction)bindingSourceEmpTxns.Current;
+                    List<string> defaultItems = new List<string>() { "BASIC", "PAYE", "NSSF", "NHIF" };
+                    if (!defaultItems.Contains(_empTxn.ItemId.Trim()))
+                    {
+                        if ("HOURLY_PAY".Equals(_empTxn.ItemId.Trim()))
+                        {
+                            HrlyPay hp = new HrlyPay(employee, connection) { Owner = this };
+                            hp.OnEmployeeHrlyAmountChanged += new HrlyPay.HrlyAmountHandler(hp_OnEmployeeHrlyAmountChanged);
+                            hp.Text = _empTxn.ItemId.ToString().Trim().ToUpper();
+                            //hp.Owner = this;
+                            hp.ShowDialog(this);
+
+                        }
+                        else if ("NON_CASH_BENEFIT".Equals(_empTxn.ItemId.Trim()))
+                        {
+                            NonCashBenefitsForm ncb = new NonCashBenefitsForm(employee, connection) { Owner = this };
+                            ncb.OnEmployeeBenefitAmountChanged += new NonCashBenefitsForm.BenefitAmountHandler(ncb_OnEmployeeBenefitAmountChanged);
+                            ncb.Text = _empTxn.ItemId.ToString().Trim().ToUpper();
+                            //ncb.Owner = this;
+                            ncb.ShowDialog(this);
+                        }
+                        else
+                        {
+                            EditEmpTxn f = new EditEmpTxn(_empTxn, _User, connection) { Owner = this };
+                            f.Text = _empTxn.ItemId.ToString().Trim().ToUpper();
+                            f.ShowDialog();
+                        }
+
+                    }
+                    else
+                    {
+                        //if (employee.BasicComputation.Equals("H"))
+                        //{
+                        //    EditEmpTxn f = new EditEmpTxn(_empTxn, _User, connection) { Owner = this };
+                        //    f.Text = _empTxn.ItemId.ToString().Trim().ToUpper();
+                        //    f.ShowDialog();
+                        //}
+                        //else
+                        //{
+                        //    MessageBox.Show("Cannot Edit default item\n" + _empTxn.ItemId.ToString().Trim().ToUpper() + "\nif payment mode is monthly.", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //}
+
+                        EditEmpTxn f = new EditEmpTxn(_empTxn, _User, connection) { Owner = this };
+                        f.Text = _empTxn.ItemId.ToString().Trim().ToUpper();
+                        f.ShowDialog();
+
                     }
 
                 }
@@ -1086,6 +1258,8 @@ namespace winSBPayroll.Forms
                             employee.EmpNo,
                             "NON_CASH_BENEFIT",
                             e.Totalquantity);
+
+                refresh_emptxn_grid();
             }
             catch (Exception ex)
             {
@@ -1102,13 +1276,15 @@ namespace winSBPayroll.Forms
                             employee.EmpNo,
                             "HOURLY_PAY",
                             e.TotalHrlyAmount);
+
+                refresh_emptxn_grid();
             }
             catch (Exception ex)
             {
                 Utils.ShowError(ex);
             }
         }
-        public void GridRefresh()
+        public void refresh_emptxn_grid()
         {
             try
             {
@@ -1147,16 +1323,20 @@ namespace winSBPayroll.Forms
         {
             try
             {
+                //dataGridViewNonCashBenefits.Enabled = false;
+                //dataGridHourlyPayments.Enabled = false;
+                //dataGridViewCustominfo.Enabled = false;
+                //dataGridViewEmpTxn.Enabled = false;
                 txtBankSortCode.Enabled = false;
-                cbBasicComputation.Enabled = false;
                 txtAccount.Enabled = false;
                 txtBasicPay.Enabled = false;
                 dtpDateLeft.Enabled = false;
-                cbDepartment.Enabled = false;
                 dtpDOB.Enabled = false;
                 dtpDOE.Enabled = false;
                 cboEmployeeGroup.Enabled = false;
-                cbEmployer.Enabled = false;
+                cbDepartment.Enabled = false;
+                cbBasicComputation.Enabled = false;
+                cbo_employer.Enabled = false;
                 txtEmpNo.Enabled = false;
                 cboEmpPayroll.Enabled = false;
                 cbGender.Enabled = false;
@@ -1172,18 +1352,9 @@ namespace winSBPayroll.Forms
                 txtPIN.Enabled = false;
                 txtPrevEmployer.Enabled = false;
                 txtSurname.Enabled = false;
-                dataGridViewEmpTxn.Enabled = false;
-                btnUpdate.Visible = false;
-                btnNextSeries.Enabled = false;
-                btnEmpTxnAdd.Visible = false;
-                btnEmpTxnEdit.Visible = false;
-                btnEmpTxnDelete.Visible = false;
+                txtInsuranceRelief.Enabled = false;
                 txtQty.Enabled = false;
                 comboBoxBenefit.Enabled = false;
-                dataGridViewNonCashBenefits.Enabled = false;
-                btnAddBenefit.Enabled = false;
-                btnDeleteBenefit.Enabled = false;
-                btnUpload.Enabled = false;
                 cboModeofPayment.Enabled = false;
                 txtTelephoneNo.Enabled = false;
                 cboEmpNo.Enabled = false;
@@ -1192,8 +1363,6 @@ namespace winSBPayroll.Forms
                 txtFieldInt.Enabled = false;
                 dateTimePicker1.Enabled = false;
                 txtFieldDecimal.Enabled = false;
-                btnAddCustomInfo.Enabled = false;
-                dataGridViewCustominfo.Enabled = false;
                 cboModeofPayment.Enabled = false;
                 txtChequeNo.Enabled = false;
                 txtTelephoneNo.Enabled = false;
@@ -1202,11 +1371,22 @@ namespace winSBPayroll.Forms
                 txtWorkHours.Enabled = false;
                 txtRatePerHour.Enabled = false;
                 btnAddHourlyPayment.Enabled = false;
+                btnUpdate.Visible = false;
+                btnNextSeries.Enabled = false;
+                btnEmpTxnAdd.Visible = false;
+                btnEmpTxnEdit.Visible = false;
+                btnEmpTxnDelete.Visible = false;
                 btnEditHourlyPayment.Enabled = false;
                 btnDeleteHourlyPayment.Enabled = false;
-                dataGridHourlyPayments.Enabled = false;
-                txtInsuranceRelief.Enabled = false;
+                btnAddBenefit.Enabled = false;
+                btnAddCustomInfo.Enabled = false;
+                btnDeleteBenefit.Enabled = false;
+                btnUpload.Enabled = false;
                 btnSearchBank.Enabled = false;
+                txtphone_no.Enabled = false;
+                txtEmail.Enabled = false;
+                txtEmpNo.Enabled = false;
+                btnNextSeries.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -1217,10 +1397,12 @@ namespace winSBPayroll.Forms
         {
             try
             {
+                e.ThrowException = false;
             }
             catch (Exception ex)
             {
-                Utils.ShowError(ex);
+                Console.WriteLine(ex.ToString());
+                Log.WriteToErrorLogFile(ex);
             }
         }
         private void btnSave_Click(object sender, EventArgs e)
@@ -1346,20 +1528,20 @@ namespace winSBPayroll.Forms
 
         private void btnUpload_Click(object sender, EventArgs e)
         {
-            openFileDialog1.Title = "select an Image File";
-            openFileDialog1.Filter = "Image File (*.jpg)|*.jpg|Image File (*.gif)|*.gif|Image File (*.png)|*.png|All files (*.*)|*.*";
-            openFileDialog1.ShowDialog();
-            string strFileName = openFileDialog1.FileName;
+            openFileDialog.Title = "select an Image File";
+            openFileDialog.Filter = "Image File (*.jpg)|*.jpg|Image File (*.gif)|*.gif|Image File (*.png)|*.png|All files (*.*)|*.*";
+            openFileDialog.ShowDialog();
+            string strFileName = openFileDialog.FileName;
             try
             {
                 UploadEmployeePhoto(strFileName, _User);
-                MessageBox.Show("Upload completed successfully", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Upload completed successfully", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("There was an error during upload. Error details are  " + ex.Message, "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("There was an error during upload. Error details are  " + ex.Message, Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                MessageBox.Show("Upload incomplete", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Upload incomplete", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
         }
@@ -1392,25 +1574,25 @@ namespace winSBPayroll.Forms
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
+            errorProvider.Clear();
             int fieldint;
             if (!int.TryParse(txtFieldInt.Text, out fieldint))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtFieldInt, "Field must be a integer");
+                errorProvider.SetError(txtFieldInt, "Field must be a integer");
 
             }
 
             decimal fielddecimal;
             if (!decimal.TryParse(txtFieldDecimal.Text, out fielddecimal))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtFieldDecimal, "Field must be a decimal");
+                errorProvider.SetError(txtFieldDecimal, "Field must be a decimal");
 
             }
             try
             {
                 employee_ext = new DAL.Employee_Ext();
                 employee_ext.EmpNo = cboEmpNo.Text;
+                employee_ext.EmployeeId = employee.Id;
                 employee_ext.ExFieldName = int.Parse(txtFieldName.Text);
                 employee_ext.ExFieldStr = txtFieldString.Text;
                 employee_ext.ExFieldInt = int.Parse(txtFieldInt.Text);
@@ -1426,10 +1608,20 @@ namespace winSBPayroll.Forms
                 Utils.ShowError(ex);
             }
         }
+
         private void dataGridViewCustominfo_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-
+            try
+            {
+                e.ThrowException = false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                Log.WriteToErrorLogFile(ex);
+            }
         }
+
         private void cboModeofPayment_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cboModeofPayment.SelectedIndex != -1)
@@ -1636,16 +1828,16 @@ namespace winSBPayroll.Forms
                 {
                     switch (cboEmployeeGroup.SelectedValue.ToString())
                     {
-                        case "PTR": 
+                        case "PTR":
                             cboEmpPayroll.SelectedValue = "Temporary";
                             break;
                         case "PTT":
                             cboEmpPayroll.SelectedValue = "Temporary";
                             break;
-                        case "FTR": 
+                        case "FTR":
                             cboEmpPayroll.SelectedValue = "End-Month";
                             break;
-                        case "FTT": 
+                        case "FTT":
                             cboEmpPayroll.SelectedValue = "End-Month";
                             break;
                     }
@@ -1680,52 +1872,7 @@ namespace winSBPayroll.Forms
                 Utils.ShowError(ex);
             }
         }
-        private void dataGridViewEmpTxn_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-                if (dataGridViewEmpTxn.SelectedRows.Count != 0)
-                {
-                    DAL.EmployeeTransaction _empTxn = (DAL.EmployeeTransaction)bindingSourceEmpTxns.Current;
-                    List<string> defaultItems = new List<string>() { "BASIC", "PAYE", "NSSF", "NHIF" };
-                    if (!defaultItems.Contains(_empTxn.ItemId.Trim()))
-                    {
-                        if ("HOURLY_PAY".Equals(_empTxn.ItemId.Trim()))
-                        {
-                            HrlyPay hp = new HrlyPay(employee, connection) { Owner = this };
-                            hp.OnEmployeeHrlyAmountChanged += new HrlyPay.HrlyAmountHandler(hp_OnEmployeeHrlyAmountChanged);
-                            hp.Text = _empTxn.ItemId.ToString().Trim().ToUpper();
-                            //hp.Owner = this;
-                            hp.ShowDialog(this);
-                        }
-                        else if ("NON_CASH_BENEFIT".Equals(_empTxn.ItemId.Trim()))
-                        {
-                            NonCashBenefits ncb = new NonCashBenefits(employee, connection) { Owner = this };
-                            ncb.OnEmployeeBenefitAmountChanged += new NonCashBenefits.BenefitAmountHandler(ncb_OnEmployeeBenefitAmountChanged);
-                            ncb.Text = _empTxn.ItemId.ToString().Trim().ToUpper();
-                            //ncb.Owner = this;
-                            ncb.ShowDialog(this);
-                        }
-                        else
-                        {
-                            EditEmpTxn f = new EditEmpTxn(_empTxn, _User, connection) { Owner = this };
-                            f.Text = _empTxn.ItemId.ToString().Trim().ToUpper();
-                            f.ShowDialog();
-                        }
 
-                    }
-                    else
-                    {
-                        MessageBox.Show("Cannot Edit default items\n" + _empTxn.ItemId.ToString().Trim().ToUpper(), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-                Utils.ShowError(ex);
-            }
-        }
         private void btnSearchBank_Click(object sender, EventArgs e)
         {
             try
@@ -2071,8 +2218,8 @@ namespace winSBPayroll.Forms
                         }
                         else if ("NON_CASH_BENEFIT".Equals(_empTxn.ItemId.Trim()))
                         {
-                            NonCashBenefits ncb = new NonCashBenefits(employee, connection) { Owner = this };
-                            ncb.OnEmployeeBenefitAmountChanged += new NonCashBenefits.BenefitAmountHandler(ncb_OnEmployeeBenefitAmountChanged);
+                            NonCashBenefitsForm ncb = new NonCashBenefitsForm(employee, connection) { Owner = this };
+                            ncb.OnEmployeeBenefitAmountChanged += new NonCashBenefitsForm.BenefitAmountHandler(ncb_OnEmployeeBenefitAmountChanged);
                             ncb.Text = _empTxn.ItemId.ToString().Trim().ToUpper();
                             ncb.DisableControls();
                             ncb.ShowDialog(this);
@@ -2196,6 +2343,85 @@ namespace winSBPayroll.Forms
             catch (Exception ex)
             {
                 Utils.ShowError(ex);
+            }
+        }
+
+        private void cbo_employer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                get_last_saved_employee_code_from_db();
+            }
+            catch (Exception ex)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+            }
+        }
+
+        void get_last_saved_employee_code_from_db()
+        {
+            try
+            {
+                if (cbo_employer.SelectedItem != null)
+                {
+                    Employer _emp = (Employer)cbo_employer.SelectedItem;
+                    string _empcode = string.Empty;
+
+                    if (!string.IsNullOrEmpty(_emp.Code))
+                    {
+                        var _last_saved_employee_code_for_employer = (from emp in rep.GetAllActiveEmployees()
+                                                                      where emp.EmployerId.Equals(_emp.Id)
+                                                                      orderby emp.Id descending
+                                                                      select emp.EmpNo).FirstOrDefault();
+
+                        if (_last_saved_employee_code_for_employer != null)
+                        {
+                            _empcode = _last_saved_employee_code_for_employer;
+                        }
+                        else
+                        {
+                            _empcode = _emp.Code;
+                        }
+
+                        string _next_code = Utils.NextSeries(_empcode);
+
+                        txtEmpNo.Text = _next_code;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+            }
+        }
+
+        private void dataGridViewEmpTxn_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            try
+            {
+                e.ThrowException = false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        private void txtPersonalRelief_TextChanged(object sender, EventArgs e)
+        {
+            decimal _amount = 0;
+            decimal _personal_relief = decimal.Parse(rep.get_setting_value_given_key("PRELIEF"));
+
+            if (!string.IsNullOrEmpty(txtPersonalRelief.Text) && decimal.TryParse(txtPersonalRelief.Text, out _amount))
+            {
+                if (_amount == 0)
+                {
+                    txtPersonalRelief.Text = _personal_relief.ToString();
+                }
+            }
+            if (string.IsNullOrEmpty(txtPersonalRelief.Text))
+            {
+                txtPersonalRelief.Text = _personal_relief.ToString();
             }
         }
 

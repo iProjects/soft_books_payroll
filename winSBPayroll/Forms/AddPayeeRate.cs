@@ -49,7 +49,7 @@ namespace winSBPayroll.Forms
                         decimal.Parse(txtRate.Text.Trim())
                         );
                     
-                    PayeeRates f = (PayeeRates)this.Owner;
+                    PayeeRatesForm f = (PayeeRatesForm)this.Owner;
                     f.RefreshGrid();
                     this.Close();
                 }

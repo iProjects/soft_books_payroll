@@ -30,16 +30,26 @@ namespace winSBPayroll.Reports.PDF
         Font rms6Bold = new Font(Font.TIMES_ROMAN, 6, Font.BOLD);
         Font rms8Bold = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);
 
-
         string _resourcePath;
-        public P9AHospPDFBuilder(string ResourcePath, P9AHOSPReportModel P9AHOSPModel, string FileName)
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
+
+        public P9AHospPDFBuilder(string ResourcePath, P9AHOSPReportModel P9AHOSPModel, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (P9AHOSPModel == null)
                 throw new ArgumentNullException("P9AHOSPReportModel is null");
             _ViewModel = P9AHOSPModel;
 
+            TAG = this.GetType().Name;
+
+            _notificationmessageEventname = notificationmessageEventname;
+
             sFilePDF = FileName;
+
             _resourcePath = ResourcePath;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed P9AHospPDFBuilder", TAG));
+
         }
 
         public string GetP9AHOSPPDF()
@@ -64,14 +74,14 @@ namespace winSBPayroll.Reports.PDF
 
                 // step 2: we create a writer that listens to the document
                 PdfWriter.GetInstance(document, new FileStream(sFilePDF, FileMode.Create));
-                 
+
                 document.Open();
 
-                PDFGen pdfgen = new PDFGen();
+                PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
 
-                Image img0 = pdfgen.DoGetImageFile(_resourcePath + "kra2.jpg");
+                Image img0 = pdfgen.DoGetImageFile(Path.Combine(_resourcePath, "kra2.jpg"));
                 img0.Alignment = Image.ALIGN_CENTER;
-                 
+
                 Table empInfoTable = new Table(3, 3);
                 empInfoTable.WidthPercentage = 100;
                 empInfoTable.Border = Table.NO_BORDER;
@@ -81,11 +91,11 @@ namespace winSBPayroll.Reports.PDF
                 c2.Border = Cell.NO_BORDER;
                 c2.HorizontalAlignment = Cell.ALIGN_CENTER;
                 empInfoTable.AddCell(c2, new System.Drawing.Point(1, 1));
-                 
+
                 Cell c1 = new Cell(img0);// header1);
                 c1.Border = Cell.NO_BORDER;
-                c1.HorizontalAlignment = Cell.ALIGN_CENTER;                 
-                empInfoTable.AddCell(c1, new System.Drawing.Point(0, 1)); 
+                c1.HorizontalAlignment = Cell.ALIGN_CENTER;
+                empInfoTable.AddCell(c1, new System.Drawing.Point(0, 1));
 
                 empInfoTable.Border = Table.NO_BORDER;
                 Chunk employerName = new Chunk("Employers Name ..." + _ViewModel.EmployerName.ToUpper().Trim() + "..", bFont1);
@@ -143,17 +153,17 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (DocumentException de)
             {
-                this.Message = de.Message;
+                Log.WriteToErrorLogFile(de);
             }
             catch (IOException ioe)
             {
-                this.Message = ioe.Message;
+                Log.WriteToErrorLogFile(ioe);
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
-        } 
+        }
         private void AddTableHeaders(Table aTable)
         {
             aTable.AddCell(new Phrase("Month", tHFont));  //Col 0
@@ -220,56 +230,56 @@ namespace winSBPayroll.Reports.PDF
                     //Totals
                     aTable.AddCell(new Phrase(monthRecs.Month, tcFont));  //Col 0
 
-                    Cell A = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", monthRecs.A), tcFont));
+                    Cell A = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", monthRecs.A), tcFont));
                     A.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     aTable.AddCell(A);//Col 1
 
-                    Cell B = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", monthRecs.B), tcFont));
+                    Cell B = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", monthRecs.B), tcFont));
                     B.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     aTable.AddCell(B);//Col 2
 
-                    Cell C = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", monthRecs.C), tcFont));
+                    Cell C = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", monthRecs.C), tcFont));
                     C.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     aTable.AddCell(C);//Col 3
 
-                    Cell D = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", monthRecs.D), tcFont));
+                    Cell D = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", monthRecs.D), tcFont));
                     D.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     aTable.AddCell(D);//Col 4
 
-                    Cell E1 = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", monthRecs.E1), tcFont));
+                    Cell E1 = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", monthRecs.E1), tcFont));
                     E1.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     aTable.AddCell(E1);//Col 5
 
-                    Cell E2 = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", monthRecs.E2), tcFont));
+                    Cell E2 = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", monthRecs.E2), tcFont));
                     E2.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     aTable.AddCell(E2);//Col 6
 
-                    Cell E3 = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", monthRecs.E3), tcFont));
+                    Cell E3 = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", monthRecs.E3), tcFont));
                     E3.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     aTable.AddCell(E3);//Col 7
 
-                    Cell F = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", monthRecs.F), tcFont));
+                    Cell F = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", monthRecs.F), tcFont));
                     F.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     aTable.AddCell(F);//Col 8
 
-                    Cell G = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", monthRecs.G), tcFont));
+                    Cell G = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", monthRecs.G), tcFont));
                     G.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     aTable.AddCell(G);//Col 9
 
-                    Cell H = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", monthRecs.H), tcFont));
+                    Cell H = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", monthRecs.H), tcFont));
                     H.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     aTable.AddCell(H);//Col 10
 
-                    Cell J = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", monthRecs.J), tcFont));
+                    Cell J = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", monthRecs.J), tcFont));
                     J.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     aTable.AddCell(J);//Col 11
 
-                    Cell KCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", monthRecs.K), tcFont)); //Col 12
+                    Cell KCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", monthRecs.K), tcFont)); //Col 12
                     KCell.Colspan = 2;
                     KCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     aTable.AddCell(KCell);
 
-                    Cell L = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", monthRecs.L), tcFont));
+                    Cell L = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", monthRecs.L), tcFont));
                     L.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     aTable.AddCell(L);//Col 13
                 }
@@ -286,56 +296,56 @@ namespace winSBPayroll.Reports.PDF
                 //Totals
                 aTable.AddCell(new Phrase("Total", tcFont));  //Col 0
 
-                Cell A = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.Total_A), tcFont));
+                Cell A = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.Total_A), tcFont));
                 A.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 aTable.AddCell(A);//Col 1
 
-                Cell B = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.Total_B), tcFont));
+                Cell B = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.Total_B), tcFont));
                 B.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 aTable.AddCell(B);//Col 2
 
-                Cell C = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.Total_C), tcFont));
+                Cell C = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.Total_C), tcFont));
                 C.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 aTable.AddCell(C);//Col 3
 
-                Cell D = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.Total_D), tcFont));
+                Cell D = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.Total_D), tcFont));
                 D.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 aTable.AddCell(D);//Col 4
 
-                Cell E1 = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.Total_E1), tcFont));
+                Cell E1 = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.Total_E1), tcFont));
                 E1.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 aTable.AddCell(E1);//Col 5
 
-                Cell E2 = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.Total_E2), tcFont));
+                Cell E2 = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.Total_E2), tcFont));
                 E2.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 aTable.AddCell(E2);//Col 6
 
-                Cell E3 = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.Total_E3), tcFont));
+                Cell E3 = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.Total_E3), tcFont));
                 E3.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 aTable.AddCell(E3);//Col 7
 
-                Cell F = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.Total_F), tcFont));
+                Cell F = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.Total_F), tcFont));
                 F.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 aTable.AddCell(F);//Col 8
 
-                Cell G = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.Total_G), tcFont));
+                Cell G = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.Total_G), tcFont));
                 G.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 aTable.AddCell(G);//Col 9
 
-                Cell H = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.Total_H), tcFont));
+                Cell H = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.Total_H), tcFont));
                 H.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 aTable.AddCell(H);//Col 10
 
-                Cell J = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.Total_J), tcFont));
+                Cell J = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.Total_J), tcFont));
                 J.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 aTable.AddCell(J);//Col 11
 
-                Cell KCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.Total_K), tcFont)); //Col 12
+                Cell KCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.Total_K), tcFont)); //Col 12
                 KCell.Colspan = 2;
                 KCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 aTable.AddCell(KCell);
 
-                Cell L = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.Total_L), tcFont));
+                Cell L = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.Total_L), tcFont));
                 L.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 aTable.AddCell(L);//Col 13
             }
@@ -360,11 +370,11 @@ namespace winSBPayroll.Reports.PDF
             f2.Border = Cell.NO_BORDER;
             aTable.AddCell(f2);
 
-            Cell f21 = new Cell(new Phrase("TOTAL CHARGEABLE PAY (COL.H) Kshs." + string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.Total_H.ToString("#,##0")), rms8Bold));
+            Cell f21 = new Cell(new Phrase("TOTAL CHARGEABLE PAY (COL.H) Kshs." + string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.Total_H.ToString("#,##0")), rms8Bold));
             f21.HorizontalAlignment = Cell.ALIGN_LEFT;
             f21.Border = Cell.NO_BORDER;
             aTable.AddCell(f21);
-            Cell f22 = new Cell(new Phrase("TOTAL TAX (COL.L) Kshs." + string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.Total_L.ToString("#,##0")), rms8Bold));
+            Cell f22 = new Cell(new Phrase("TOTAL TAX (COL.L) Kshs." + string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.Total_L.ToString("#,##0")), rms8Bold));
             f22.HorizontalAlignment = Cell.ALIGN_LEFT;
             f22.Border = Cell.NO_BORDER;
             aTable.AddCell(f22);
@@ -386,8 +396,8 @@ namespace winSBPayroll.Reports.PDF
             Cell f41 = new Cell(p2);
             f41.HorizontalAlignment = Cell.ALIGN_LEFT;
             f41.Border = Table.NO_BORDER;
-            aTable.AddCell(f41); 
-             
+            aTable.AddCell(f41);
+
             StringBuilder sb3 = new StringBuilder();
             sb3.AppendLine("NAMES OF APPROVED INSTITUTION .....................................");
             sb3.AppendLine("REGISTRATION NUMBER OF  APPROVED INSTITUTION..................................");

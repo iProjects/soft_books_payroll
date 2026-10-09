@@ -21,8 +21,10 @@ namespace BLL.Payroll
         public delegate void PayslipCompleteEventHandler(object sender, PayslipCompleteEventArg e);
         //event
         public event PayslipCompleteEventHandler OnCompleteGeneratePayslip;
+        public string TAG;
+        public event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
 
-        public CPayroll(string user, string Conn)
+        public CPayroll(string user, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (string.IsNullOrEmpty(Conn))
                 throw new ArgumentNullException("connection");
@@ -33,37 +35,56 @@ namespace BLL.Payroll
             rep = new Repository(connection);
 
             _User = user;
+
+            //Subscribing to the event: 
+            //Dynamically:
+            //EventName += HandlerName;
+            _notificationmessageEventname = notificationmessageEventname;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("finished CPayroll initialization", TAG));
+
         }
 
         #region Payroll
-        public void RunPayroll(bool simulate, int PayrollPeriod, int year, ref string sError)
+        public void RunPayroll(bool simulate, int PayrollPeriod, int year, ref string sError, int EmployerId)
         {
-            GeneratePayslipsForAll(simulate, PayrollPeriod, year, ref  sError);
+            GeneratePayslipsForAll(simulate, PayrollPeriod, year, ref  sError, EmployerId);
         }
 
-        public void ArchivePayroll(int period, int Year)
+        public void ArchivePayroll(int period, int Year, int EmployerId)
         {
             //Remove previous records first if any
             try
             {
-                rep.ClearPayslipDet(period, Year);
-                rep.ClearPayslipMaster(period, Year);
+                rep.ClearPayslipDet(period, Year, EmployerId);
+                rep.ClearPayslipMaster(period, Year, EmployerId);
 
 
                 //Transfer records from working table PayslipMaster to payroll
                 //and update YTD too
                 rep.CopyPayslipsToPayroll(period, Year);
 
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Transfered records from working table PayslipMaster to payroll", TAG));
+
                 //Clear PayslipMaster + det table
-                rep.ClearPayslipDet_Temp();
-                rep.ClearPayslipMaster_Temp();
+                rep.ClearPayslipDet_Temp(period, Year, EmployerId);
+                rep.ClearPayslipMaster_Temp(period, Year, EmployerId);
+
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Cleared PayslipMaster + Payslipdet tables", TAG));
 
                 //Mark Payroll as processed
-                rep.MarkPayrollAsClosed(period, Year);
+                //rep.MarkPayrollAsClosed(period, Year);
+                rep.mark_payroll_for_employer_as_closed(period, Year, EmployerId);
+
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Marked Payroll Year =  [ " + Year + " Period = [ " + period + " ]  as processed", TAG));
+
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Marked Payroll Year =  [ " + Year + " Period = [ " + period + " ] as closed", TAG));
+
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(e);
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Log.WriteToErrorLogFile(ex);
             }
         }
 
@@ -77,7 +98,7 @@ namespace BLL.Payroll
 
 
         #region Payslips
-        public bool GeneratePayslipsForAll(bool simulate, int PayrollPeriod, int Year, ref string sError)
+        public bool GeneratePayslipsForAll(bool simulate, int PayrollPeriod, int Year, ref string sError, int EmployerId)
         {
             bool ret = true;
 
@@ -86,30 +107,35 @@ namespace BLL.Payroll
             {
                 if (simulate)
                 {
-                    rep.ClearPayslipDet_Temp();
-                    rep.ClearPayslipMaster_Temp();
+                    rep.ClearPayslipDet_Temp(PayrollPeriod, Year, EmployerId);
+                    rep.ClearPayslipMaster_Temp(PayrollPeriod, Year, EmployerId);
                 }
                 else
                 {
-                    rep.ClearPayslipDet(PayrollPeriod, Year);
-                    rep.ClearPayslipMaster(PayrollPeriod, Year);
+                    rep.ClearPayslipDet(PayrollPeriod, Year, EmployerId);
+                    rep.ClearPayslipMaster(PayrollPeriod, Year, EmployerId);
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(e);
+                Log.WriteToErrorLogFile(ex);
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
                 return false;
             }
+
             //Recreate transactions
-            List<Employee> emps = rep.GetAllActiveEmployees();
+            List<Employee> emps = rep.GetAllActiveEmployeesforEmployer(EmployerId);
             int count = emps.Count();
+
             for (int value = 0; value < count; value++) //all active 
             {
                 Employee emp = emps[value];
                 string Msg = string.Empty;
                 bool error = false;
+
                 if (!GeneratePayslip(simulate, PayrollPeriod, Year, emp, _User, ref Msg, ref error))
                 {
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Payslip for  [" + emp.EmpNo + "] not completed", TAG));
                     Log.WriteToErrorLogFile(new Exception("Payslip for  [" + emp.EmpNo + "] not completed"));
                     ret = false;
                 }
@@ -125,6 +151,7 @@ namespace BLL.Payroll
             }
             return ret;
         }
+
         public bool GeneratePayslip(bool simulate, int PayrollPeriod, int Year, Employee Empdvr, string User, ref string Msg, ref bool error)
         {
             string EmpNo = Empdvr.EmpNo.Trim();
@@ -140,6 +167,8 @@ namespace BLL.Payroll
                         if (payslip == null)
                         {
                             Msg = "Payslip for [" + EmpNo.Trim() + "] not successful \n Error = See error log file";
+                            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Payslip for [" + EmpNo.Trim() + "] not successful \n Error = See error log file", TAG));
+                            Log.WriteToErrorLogFile(new Exception(Msg));
                             error = true;
                             return false;
                         }
@@ -148,17 +177,23 @@ namespace BLL.Payroll
                         if (!SavePayslip(simulate, payslip, ref saveErr))
                         {
                             Msg = "Payslip for [" + EmpNo.Trim() + "] not successful\n Error = " + saveErr;
+                            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Payslip for [" + EmpNo.Trim() + "] not successful\n Error = " + saveErr, TAG));
+                            Log.WriteToErrorLogFile(new Exception(Msg));
                             error = true;
                             return false;
                         }
 
 
                         Msg = "Payslip for [" + EmpNo.Trim() + "] Month [" + PayrollPeriod + "] Year [" + Year + "] successfuly completed";
+                        _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Payslip for [" + EmpNo.Trim() + "] Month [" + PayrollPeriod + "] Year [" + Year + "] successfuly completed", TAG));
+                        Log.WriteToErrorLogFile(new Exception(Msg));
                         return true;
 
                     }
                     catch (Exception ex)
                     {
+                        _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                        Log.WriteToErrorLogFile(ex);
                         Utils.ShowError(ex);
                         return false;
                     }
@@ -166,6 +201,8 @@ namespace BLL.Payroll
                 else
                 {
                     Msg = "Payslip for [" + EmpNo.Trim() + "] not successful\n Error = " + payMaker._errMsg;
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Payslip for [" + EmpNo.Trim() + "] not successful\n Error = " + payMaker._errMsg, TAG));
+                    Log.WriteToErrorLogFile(new Exception(Msg));
                     error = true;
                     return false;
                 }
@@ -173,6 +210,8 @@ namespace BLL.Payroll
             }
             catch (Exception ex)
             {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                Log.WriteToErrorLogFile(ex);
                 Utils.ShowError(ex);
                 return false;
             }

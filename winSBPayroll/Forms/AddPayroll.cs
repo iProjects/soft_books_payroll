@@ -6,6 +6,7 @@ using BLL.DataEntry;
 using CommonLib;
 using DAL;
 using System.Linq;
+using System.Threading;
 
 namespace winSBPayroll.Forms
 {
@@ -17,118 +18,59 @@ namespace winSBPayroll.Forms
         SBPayrollDBEntities db;
         Repository rep;
         string connection;
+        string user;
+        public string TAG;
+        //Event declaration:
+        //event for publishing messages to output
+        public event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
 
-        DAL.UserModel _User;
-
-        public AddPayroll(DAL.UserModel user, string Conn)
+        public AddPayroll(string _user, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             InitializeComponent();
 
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledException);
+            Application.ThreadException += new ThreadExceptionEventHandler(ThreadException);
+
+            TAG = this.GetType().Name;
+
+            //Subscribing to the event: 
+            //Dynamically:
+            //EventName += HandlerName;
+            _notificationmessageEventname = notificationmessageEventname;
+
             if (string.IsNullOrEmpty(Conn))
-                throw new ArgumentNullException("connection");
+                throw new ArgumentNullException("Conn");
             connection = Conn;
 
             de = new DataEntry(connection);
             db = new SBPayrollDBEntities(connection);
             rep = new Repository(connection);
-            _User = user;
+
+            user = _user;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("finished AddPayroll initialization", TAG));
+
         }
 
-        private void btnOk_Click(object sender, EventArgs e)
+        private void UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            if (is_Validate())
-            {
-                try
-                {
-                    Payroll payroll = new Payroll();
-                    payroll.Period = int.Parse(cboPeriod.SelectedValue.ToString());
-                    payroll.Year = int.Parse(txtYear.Text.Trim());
-                    payroll.EmployerId = int.Parse(cbEmployer.SelectedValue.ToString());
-                    payroll.DateRun = DateTime.Parse(txtDateRun.Text.Trim());
-                    payroll.RunBy = _User.UserName;
-                    payroll.Approved = false;
-                    payroll.ApprovedBy = "";
-                    payroll.IsOpen = true;
-                    payroll.Processed = false;
+            Exception ex = (Exception)e.ExceptionObject;
+            Log.Write_To_Log_File_temp_dir(ex);
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+        }
 
-                    if (rep.GetPayrolls().Any(i => i.Period == payroll.Period && i.Year == payroll.Year))
-                    {
-                        MessageBox.Show("Payroll Exists!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    if (!rep.GetPayrolls().Any(i => i.Period == payroll.Period && i.Year == payroll.Year))
-                    {
-                        rep.AddPayroll(payroll);
+        private void ThreadException(object sender, ThreadExceptionEventArgs e)
+        {
+            Exception ex = e.Exception;
+            Log.Write_To_Log_File_temp_dir(ex);
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+        }
 
-                        Payrolls f = (Payrolls)this.Owner;
-                        f.RefreshGrid();
-                        this.Close();
-                    } 
-                }
-                catch (Exception ex)
-                {
-                    Utils.ShowError(ex);
-                }
-            }
-        }
-        private bool is_Validate()
-        {
-            bool no_error = true;
-            if (cboPeriod.SelectedIndex == -1)
-            {
-                errorProvider1.Clear(); //clear all Error Messages
-                errorProvider1.SetError(cboPeriod, "Select Period!");
-                return false;
-            }
-            if (string.IsNullOrEmpty(txtYear.Text))
-            {
-                errorProvider1.Clear(); //clear all Error Messages
-                errorProvider1.SetError(txtYear, "Year cannot be null!");
-                return false;
-            }
-            int yr;
-            if (!int.TryParse(txtYear.Text.Trim(), out yr))
-            {
-                errorProvider1.Clear(); //clear all Error Messages
-                errorProvider1.SetError(txtYear, "Year must be an Integer!");
-                return false;
-            }
-            if (cbEmployer.SelectedIndex == -1)
-            {
-                errorProvider1.Clear(); //Clear all Error Messages
-                errorProvider1.SetError(cbEmployer, "Select Employer!");
-                return false;
-            }
-            //if (string.IsNullOrEmpty(txtDateRun.Text))
-            //{
-            //    errorProvider1.Clear(); //clear all Error Messages
-            //    errorProvider1.SetError(txtDateRun, "Date Run cannot be null!");
-            //    return false;
-            //}
-            //DateTime daterun = DateTime.Parse(txtDateRun.Text);
-            //DateTime datenow = DateTime.Today;
-            //if (daterun < datenow)
-            //{
-            //    errorProvider1.Clear(); //Clear all Error Messages
-            //    errorProvider1.SetError(txtDateRun, "Date Run must be greater than Today!");
-            //    return false;
-            //}
-            if (string.IsNullOrEmpty(txtRunBy.Text))
-            {
-                errorProvider1.Clear(); //clear all Error Messages
-                errorProvider1.SetError(txtRunBy, "Run By cannot be null!");
-                return false;
-            }
-            return no_error;
-        }
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
         private void AddPayroll_Load(object sender, EventArgs e)
         {
             try
             {
-                txtRunBy.Text = _User.UserName;
+                txtRunBy.Text = user;
                 txtDateRun.Text = DateTime.Today.ToShortDateString();
 
                 cbEmployer.ValueMember = "Id";
@@ -149,12 +91,14 @@ namespace winSBPayroll.Forms
                 months.Add(new KeyValuePair<int, string>(11, "November"));
                 months.Add(new KeyValuePair<int, string>(12, "December"));
 
-                cboPeriod.DataSource = months;
                 cboPeriod.ValueMember = "Key";
                 cboPeriod.DisplayMember = "Value";
+                cboPeriod.DataSource = months;
                 cboPeriod.SelectedValue = DateTime.Today.Month;
 
                 txtYear.Text = DateTime.Today.Year.ToString();
+
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("finished AddPayroll load", TAG));
 
             }
             catch (Exception ex)
@@ -164,6 +108,92 @@ namespace winSBPayroll.Forms
             }
         }
 
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+            if (isvalid())
+            {
+                try
+                {
+                    Payroll payroll = new Payroll();
+                    payroll.Period = int.Parse(cboPeriod.SelectedValue.ToString());
+                    payroll.Year = int.Parse(txtYear.Text.Trim());
+                    payroll.EmployerId = int.Parse(cbEmployer.SelectedValue.ToString());
+                    payroll.DateRun = DateTime.Parse(txtDateRun.Text.Trim());
+                    payroll.RunBy = user;
+                    payroll.Approved = false;
+                    payroll.ApprovedBy = user;
+                    payroll.IsOpen = true;
+                    payroll.Processed = false;
+                    payroll.ProcessedBy = user;
+
+                    if (rep.GetPayrolls().Any(i => i.Period == payroll.Period && i.Year == payroll.Year && i.EmployerId == payroll.EmployerId))
+                    {
+                        MessageBox.Show("Payroll for year [ " + payroll.Year + " ] period [ " + payroll.Period + " ] employer [ " + cbEmployer.Text + " ]  Exists!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    if (!rep.GetPayrolls().Any(i => i.Period == payroll.Period && i.Year == payroll.Year && i.EmployerId == payroll.EmployerId))
+                    {
+                        rep.AddPayroll_for_employer(payroll);
+
+                        PayrollsForm f = (PayrollsForm)this.Owner;
+                        f.refresh_years();
+                        f.RefreshGrid(1);
+                        this.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                    Utils.ShowError(ex);
+                }
+            }
+        }
+        private bool isvalid()
+        {
+            bool noerror = true;
+            if (cboPeriod.SelectedIndex == -1)
+            {
+                errorProvider.SetError(cboPeriod, "Select Period!");
+                noerror = false;
+            }
+            if (string.IsNullOrEmpty(txtYear.Text))
+            {
+                errorProvider.SetError(txtYear, "Year cannot be null!");
+                noerror = false;
+            }
+            int yr;
+            if (!int.TryParse(txtYear.Text.Trim(), out yr))
+            {
+                errorProvider.SetError(txtYear, "Year must be an Integer!");
+                noerror = false;
+            }
+            if (cbEmployer.SelectedIndex == -1)
+            {
+                errorProvider.SetError(cbEmployer, "Select Employer!");
+                noerror = false;
+            }
+            //if (string.IsNullOrEmpty(txtDateRun.Text))
+            //{ 
+            //    errorProvider1.SetError(txtDateRun, "Date Run cannot be null!");
+            //    noerror = false;
+            //}
+            //DateTime daterun = DateTime.Parse(txtDateRun.Text);
+            //DateTime datenow = DateTime.Today;
+            //if (daterun < datenow)
+            //{ 
+            //    errorProvider1.SetError(txtDateRun, "Date Run must be greater than Today!");
+            //    noerror = false;
+            //}
+            if (string.IsNullOrEmpty(txtRunBy.Text))
+            {
+                errorProvider.SetError(txtRunBy, "Run By cannot be null!");
+                noerror = false;
+            }
+            return noerror;
+        }
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
 
 
 

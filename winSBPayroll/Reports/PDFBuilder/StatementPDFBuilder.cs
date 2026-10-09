@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
-//Payroll
+// Payroll
 using BLL;
 using BLL.DataEntry;
 using CommonLib;
 using DAL;
-//--- Add the following to make itext work
+// iTextSharp
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using VVX;
@@ -15,32 +15,33 @@ namespace winSBPayroll.Reports.PDFBuilder
 {
     public class StatementPDFBuilder
     {
+        private StatementModel _ViewModel;
+        private Document document;
+        private string Message;
+        private string sFilePDF;
+        private string _Itemid;
+        private DataEntry de;
+        private SBPayrollDBEntities db;
+        private Repository rep;
+        private string connection;
 
-         StatementModel _ViewModel;
-        Document document;
-        string Message;
-        string sFilePDF;
-        string _Itemid;
-        DataEntry de;
-        SBPayrollDBEntities db;
-        Repository rep;
-        string connection;
+        // Standard iTextSharp Font and Color usage (compatible with .NET 4)
+        private Font hFont1 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
+        private Font hFont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        private Font tcFont = new Font(Font.HELVETICA, 8, Font.NORMAL);
+        private Font tcFont1 = new Font(Font.HELVETICA, 6, Font.NORMAL);
+        private Font rms10Normal = new Font(Font.HELVETICA, 10, Font.NORMAL);
 
-        Font hFont1 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
-        Font hFont2 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);
-        Font bFont1 = new Font(Font.TIMES_ROMAN, 10, Font.NORMAL);//body
-        Font bFont2 = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL);//body
-        Font tHFont = new Font(Font.TIMES_ROMAN, 8, Font.BOLD); //table Header
-        Font tcFont = new Font(Font.HELVETICA, 8, Font.NORMAL);//table cell
-        Font tcFont1 = new Font(Font.HELVETICA, 10, Font.BOLD);//table cell
-        Font rms10Normal = new Font(Font.HELVETICA, 10, Font.NORMAL);
+        private event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        private string TAG;
 
-
-        public StatementPDFBuilder(string Itemid, StatementModel statementmodel, string FileName, string Conn)
-        { 
+        public StatementPDFBuilder(string Itemid, StatementModel statementmodel, string FileName, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
+        {
             if (statementmodel == null)
                 throw new ArgumentNullException("StatementModel is null");
             _ViewModel = statementmodel;
+
+            TAG = this.GetType().Name;
 
             if (string.IsNullOrEmpty(Conn))
                 throw new ArgumentNullException("connection");
@@ -50,12 +51,15 @@ namespace winSBPayroll.Reports.PDFBuilder
             db = new SBPayrollDBEntities(connection);
             rep = new Repository(connection);
 
+            _notificationmessageEventname = notificationmessageEventname;
+
             if (Itemid == null)
                 throw new ArgumentNullException("Itemid is null");
             _Itemid = Itemid;
 
             sFilePDF = FileName;
-            
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed StatementPDFBuilder", TAG));
         }
 
         public string GetstatementPDF()
@@ -64,341 +68,214 @@ namespace winSBPayroll.Reports.PDFBuilder
             return sFilePDF;
         }
 
-
-        /*Build the document **/
         private void BuildStatementPDF()
         {
             try
             {
-                // step 1: creation of a document-object
-                document = new Document(PageSize.A4);
+                // Step 1: Create Document
+                // Step 1: Initialize document in A4 Landscape orientation
+                document = new Document(PageSize.A4.Rotate(), 20, 20, 20, 20);
 
-                // step 2: create a writer that listens to the document
-                PdfWriter.GetInstance(document, new FileStream(sFilePDF, FileMode.Create));
+                // Step 2: Get Writer Instance
+                PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(sFilePDF, FileMode.Create));
 
-                //open document
+                // Step 3: Open Document
                 document.Open();
 
-                //Add Header 
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating document header...", TAG));
                 AddDocHeader();
 
-                //Add Body
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating document body...", TAG));
                 AddDocBody();
 
-                //Add Footer
-                AddDocFooter(); 
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating document footer...", TAG));
+                AddDocFooter();
 
-                //close document
                 document.Close();
             }
             catch (DocumentException de)
             {
-                this.Message = de.Message;
+                Log.WriteToErrorLogFile(de);
             }
             catch (IOException ioe)
             {
-                this.Message = ioe.Message;
+                Log.WriteToErrorLogFile(ioe);
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
-            } 
+                Log.WriteToErrorLogFile(ex);
+            }
         }
 
-        //document header
         private void AddDocHeader()
         {
-
-            Table statementInfoTable = new Table(5);
+            PdfPTable statementInfoTable = new PdfPTable(5);
             statementInfoTable.WidthPercentage = 100;
-            statementInfoTable.Padding = 1;
-            statementInfoTable.Spacing = 1;
-            statementInfoTable.Border = Table.NO_BORDER;
 
-            Cell employernameCell = new Cell(new Phrase(_ViewModel.employername.ToUpper(), new Font(Font.TIMES_ROMAN, 12, Font.BOLD | Font.UNDERLINE, Color.BLACK)));
-            employernameCell.HorizontalAlignment = Cell.ALIGN_CENTER;
+            PdfPCell employernameCell = new PdfPCell(new Phrase(_ViewModel.employername.ToUpper(), new Font(Font.TIMES_ROMAN, 12, Font.BOLD | Font.UNDERLINE, Color.BLACK)));
+            employernameCell.HorizontalAlignment = Element.ALIGN_CENTER;
             employernameCell.Colspan = 5;
-            employernameCell.Border = Cell.NO_BORDER;
+            employernameCell.Border = Rectangle.NO_BORDER;
             statementInfoTable.AddCell(employernameCell);
 
-            Cell employeraddressCell = new Cell(new Phrase(_ViewModel.employeraddress, new Font(Font.TIMES_ROMAN, 10, Font.BOLD | Font.UNDERLINE, Color.BLACK)));
-            employeraddressCell.HorizontalAlignment = Cell.ALIGN_CENTER;
+            PdfPCell employeraddressCell = new PdfPCell(new Phrase(_ViewModel.employeraddress, new Font(Font.TIMES_ROMAN, 10, Font.BOLD | Font.UNDERLINE, Color.BLACK)));
+            employeraddressCell.HorizontalAlignment = Element.ALIGN_CENTER;
             employeraddressCell.Colspan = 5;
-            employeraddressCell.Border = Cell.NO_BORDER;
+            employeraddressCell.Border = Rectangle.NO_BORDER;
             statementInfoTable.AddCell(employeraddressCell);
 
-            Cell bCell = new Cell(new Phrase("STATEMENT FOR: ", hFont1));
-            bCell.HorizontalAlignment = Cell.ALIGN_CENTER;
+            PdfPCell bCell = new PdfPCell(new Phrase("STATEMENT FOR: ", hFont1));
+            bCell.HorizontalAlignment = Element.ALIGN_CENTER;
             bCell.Colspan = 5;
-            bCell.Border = Cell.NO_BORDER;
+            bCell.Border = Rectangle.NO_BORDER;
             statementInfoTable.AddCell(bCell);
 
-            Cell employeenameCell = new Cell(new Phrase(_ViewModel.employeename, hFont1));
-            employeenameCell.HorizontalAlignment = Cell.ALIGN_CENTER;
-            employeenameCell.Border = Cell.NO_BORDER;
+            PdfPCell employeenameCell = new PdfPCell(new Phrase(_ViewModel.employeename, hFont1));
+            employeenameCell.HorizontalAlignment = Element.ALIGN_CENTER;
             employeenameCell.Colspan = 5;
+            employeenameCell.Border = Rectangle.NO_BORDER;
             statementInfoTable.AddCell(employeenameCell);
 
-            Cell sidCell = new Cell(new Phrase(_ViewModel.itemid, hFont1));
-            sidCell.HorizontalAlignment = Cell.ALIGN_CENTER;
-            sidCell.Border = Cell.NO_BORDER;
+            PdfPCell sidCell = new PdfPCell(new Phrase(_ViewModel.itemid, hFont1));
+            sidCell.HorizontalAlignment = Element.ALIGN_CENTER;
             sidCell.Colspan = 5;
-            statementInfoTable.AddCell(sidCell);  
+            sidCell.Border = Rectangle.NO_BORDER;
+            statementInfoTable.AddCell(sidCell);
 
-            Cell PDCell = new Cell(new Phrase("Printed on: " + _ViewModel.PrintedOn.ToString("dd-dddd-MMMM-yyyy"), hFont2));
-            PDCell.HorizontalAlignment = Cell.ALIGN_LEFT;
+            PdfPCell PDCell = new PdfPCell(new Phrase("Printed on: " + _ViewModel.PrintedOn.ToString("dd-dddd-MMMM-yyyy"), hFont2));
+            PDCell.HorizontalAlignment = Element.ALIGN_LEFT;
             PDCell.Colspan = 4;
-            PDCell.Border = Cell.NO_BORDER;
+            PDCell.Border = Rectangle.NO_BORDER;
             statementInfoTable.AddCell(PDCell);
 
-            //create the logo
-            PDFGen pdfgen = new PDFGen();
+            // Create logo image
+            PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
             Image img0 = pdfgen.DoGetImageFile(_ViewModel.CompanyLogo);
             img0.Alignment = Image.ALIGN_MIDDLE;
-            Cell logoCell = new Cell(img0);
-            logoCell.HorizontalAlignment = Cell.ALIGN_LEFT;
-            logoCell.Border = Cell.NO_BORDER; 
-            logoCell.Add(new Phrase(_ViewModel.CompanySlogan, new Font(Font.HELVETICA, 8, Font.ITALIC, Color.BLACK)));
+
+            PdfPCell logoCell = new PdfPCell(img0);
+            logoCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            logoCell.Border = Rectangle.NO_BORDER;
+            logoCell.AddElement(new Phrase(_ViewModel.CompanySlogan, new Font(Font.HELVETICA, 8, Font.ITALIC, Color.BLACK)));
             statementInfoTable.AddCell(logoCell);
 
-            document.Add(statementInfoTable); 
-        } 
+            document.Add(statementInfoTable);
+        }
 
-        //document body
         private void AddDocBody()
         {
-            switch (_Itemid.ToString().Trim())
+            if (_Itemid.ToString().Trim().Equals("NSSF", StringComparison.OrdinalIgnoreCase))
             {
-                case "NSSF":
-                    AddNSSFTableBody();
-                    break;
-                default:
-                    AddTableBody();
-                    break;
+                AddNSSFTableBody();
+            }
+            else
+            {
+                AddTableBody();
             }
         }
 
         private void AddNSSFTableBody()
         {
+            PdfPTable statementInfoTable = new PdfPTable(5);
+            statementInfoTable.WidthPercentage = 100;
+            statementInfoTable.HeaderRows = 1; // Repeat Table Header on every page
 
-            AddNSSFTableHeaders();
+            // Add Header Row
+            statementInfoTable.AddCell(CreateHeaderCell("Post Date"));
+            statementInfoTable.AddCell(CreateHeaderCell("Amount\nKshs"));
+            statementInfoTable.AddCell(CreateHeaderCell("Balance\nKshs"));
+            statementInfoTable.AddCell(CreateHeaderCell("Employer's Contribution\nKshs"));
+            statementInfoTable.AddCell(CreateHeaderCell("Totals\nKshs"));
 
-            AddNSSFTableDetails();
+            // Add Data Rows
+            foreach (var item in _ViewModel._Statementlist)
+            {
+                statementInfoTable.AddCell(CreateDataCell(item.date.ToString("dd-MMM-yyyy"), Element.ALIGN_LEFT));
+                statementInfoTable.AddCell(CreateDataCell(item.Amountin.ToString("#,##0"), Element.ALIGN_RIGHT));
+                statementInfoTable.AddCell(CreateDataCell(item.Balance.ToString("#,##0"), Element.ALIGN_RIGHT));
+                statementInfoTable.AddCell(CreateDataCell(item.EmpNSSFContrib.ToString("#,##0"), Element.ALIGN_RIGHT));
+                statementInfoTable.AddCell(CreateDataCell(item.TotalContribs.ToString("#,##0"), Element.ALIGN_RIGHT));
+            }
 
-            AddNSSFTableTotals();
+            // Add Totals Row
+            PdfPCell totalsCell = new PdfPCell(new Phrase("TOTAL", tcFont1));
+            totalsCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            totalsCell.Colspan = 4;
+            statementInfoTable.AddCell(totalsCell);
 
+            PdfPCell totalContribCell = new PdfPCell(new Phrase(_ViewModel.totalContributions.ToString("#,##0"), tcFont1));
+            totalContribCell.HorizontalAlignment = Element.ALIGN_RIGHT;
+            statementInfoTable.AddCell(totalContribCell);
+
+            document.Add(statementInfoTable);
         }
+
         private void AddTableBody()
         {
-
-            AddTableHeaders();
-
-            AddTableDetails();
-
-            AddTableTotals();
-
-        }
-        //table headers
-        private void AddNSSFTableHeaders()
-        {
-            Table statementInfoTable = new Table(5);
+            PdfPTable statementInfoTable = new PdfPTable(3);
             statementInfoTable.WidthPercentage = 100;
-            statementInfoTable.Padding = 1;
-            statementInfoTable.Spacing = 1;  
+            statementInfoTable.HeaderRows = 1; // Repeat Table Header on every page
 
-            Chunk date = new Chunk("Post Date", tcFont1);
-            Cell statementdate = new Cell(date);
-            statementdate.Border = Cell.RECTANGLE;
-            statementdate.HorizontalAlignment = Cell.ALIGN_CENTER;
-            statementInfoTable.AddCell(statementdate); 
+            // Add Header Row
+            statementInfoTable.AddCell(CreateHeaderCell("Post Date"));
+            statementInfoTable.AddCell(CreateHeaderCell("Amount\nKshs"));
+            statementInfoTable.AddCell(CreateHeaderCell("Balance\nKshs"));
 
-            Chunk amountin = new Chunk("Amount\nKshs", tcFont1);
-            Cell statementamountin = new Cell(amountin);
-            statementamountin.Border = Cell.RECTANGLE;
-            statementamountin.HorizontalAlignment = Cell.ALIGN_CENTER;
-            statementInfoTable.AddCell(statementamountin);
-
-            Cell balance = new Cell(new Chunk("Balance\nKshs", tcFont1));
-            balance.Border = Cell.RECTANGLE;
-            balance.HorizontalAlignment = Cell.ALIGN_CENTER;
-            statementInfoTable.AddCell(balance); 
-
-            Chunk empContribChunk = new Chunk("Employer's Contribution\nKshs", tcFont1);
-            Cell empContribCell = new Cell(empContribChunk);
-            empContribCell.Border = Cell.RECTANGLE;
-            empContribCell.HorizontalAlignment = Cell.ALIGN_CENTER;
-            statementInfoTable.AddCell(empContribCell);
-
-            Chunk totalContribChunk = new Chunk("Totals\nKshs", tcFont1);
-            Cell totalContribCell = new Cell(totalContribChunk);
-            totalContribCell.Border = Cell.RECTANGLE;
-            totalContribCell.HorizontalAlignment = Cell.ALIGN_CENTER;
-            statementInfoTable.AddCell(totalContribCell);
-
-            document.Add(statementInfoTable);
-        } 
-        //table headers
-        private void AddTableHeaders()
-        {
-            Table statementInfoTable = new Table(3);
-            statementInfoTable.WidthPercentage = 100;
-            statementInfoTable.Padding = 1;
-            statementInfoTable.Spacing = 1;
-
-            Chunk date = new Chunk("Post Date", tcFont1);
-            Cell statementdate = new Cell(date);
-            statementdate.Border = Cell.RECTANGLE;
-            statementdate.HorizontalAlignment = Cell.ALIGN_CENTER;
-            statementInfoTable.AddCell(statementdate);
-             
-            Chunk amountin = new Chunk("Amount\nKshs", tcFont1);
-            Cell statementamountin = new Cell(amountin);
-            statementamountin.Border = Cell.RECTANGLE;
-            statementamountin.HorizontalAlignment = Cell.ALIGN_CENTER;
-            statementInfoTable.AddCell(statementamountin); 
-
-            Cell balance = new Cell(new Chunk("Balance\nKshs", tcFont1));
-            balance.Border = Cell.RECTANGLE;
-            balance.HorizontalAlignment = Cell.ALIGN_CENTER;
-            statementInfoTable.AddCell(balance); 
-
-            document.Add(statementInfoTable); 
-        } 
-        //table details
-        private void AddNSSFTableDetails()
-        {
-            Table statementInfoTable = new Table(5);
-            statementInfoTable.WidthPercentage = 100;
-            statementInfoTable.Padding = 1;
-            statementInfoTable.Spacing = 1;
-            statementInfoTable.Border = Table.RECTANGLE; 
-
+            // Add Data Rows
             foreach (var item in _ViewModel._Statementlist)
             {
-                AddNSSFTableBodyDetails(item, statementInfoTable);
+                statementInfoTable.AddCell(CreateDataCell(item.date.ToString("dd-MMM-yyyy"), Element.ALIGN_LEFT));
+                statementInfoTable.AddCell(CreateDataCell(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", item.Amountin), Element.ALIGN_RIGHT));
+
+                decimal _tbalance = decimal.Parse(item.Balance.ToString());
+                if (_tbalance < 0)
+                {
+                    _tbalance = _tbalance * -1;
+                }
+
+                statementInfoTable.AddCell(CreateDataCell(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _tbalance), Element.ALIGN_RIGHT));
             }
 
-            document.Add(statementInfoTable); 
-        } 
-        //table details
-        private void AddTableDetails()
-        {
-            Table statementInfoTable = new Table(3);
-            statementInfoTable.WidthPercentage = 100;
-            statementInfoTable.Padding = 1;
-            statementInfoTable.Spacing = 1;
-            statementInfoTable.Border = Table.RECTANGLE;
-
-            foreach (var item in _ViewModel._Statementlist)
-            {
-                AddTableBodyDetails(item, statementInfoTable);
-            }
-
-            document.Add(statementInfoTable);
-        } 
-        //table details
-        private void AddNSSFTableBodyDetails(StatementDTO det, Table statementInfoTable)
-        {
-            Cell A = new Cell(new Phrase(det.date.ToString("dd-MMM-yyyy"), tcFont));
-            A.HorizontalAlignment = Cell.ALIGN_LEFT;
-            statementInfoTable.AddCell(A);
- 
-            Cell C = new Cell(new Phrase( det.Amountin.ToString("#,##0"), tcFont));
-            C.HorizontalAlignment = Cell.ALIGN_RIGHT;
-            statementInfoTable.AddCell(C);
-            
-            Cell E = new Cell(new Phrase(det.Balance.ToString("#,##0"), tcFont));
-            E.HorizontalAlignment = Cell.ALIGN_RIGHT;
-            statementInfoTable.AddCell(E);
-             
-            Cell D = new Cell(new Phrase(det.EmpNSSFContrib.ToString("#,##0"), tcFont));
-            D.HorizontalAlignment = Cell.ALIGN_RIGHT;
-            statementInfoTable.AddCell(D);
-
-            Cell F = new Cell(new Phrase(det.TotalContribs.ToString("#,##0"), tcFont));
-            F.HorizontalAlignment = Cell.ALIGN_RIGHT;
-            statementInfoTable.AddCell(F);
-        } 
-        //table  details
-        private void AddTableBodyDetails(StatementDTO det, Table statementInfoTable)
-        {
-            Cell A = new Cell(new Phrase(det.date.ToString("dd-MMM-yyyy"), tcFont));
-            A.HorizontalAlignment = Cell.ALIGN_LEFT;
-            statementInfoTable.AddCell(A);
-             
-            Cell C = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", det.Amountin), tcFont));
-            C.HorizontalAlignment = Cell.ALIGN_RIGHT;
-            statementInfoTable.AddCell(C);
-
-            decimal _tbalance = decimal.Parse(det.Balance.ToString());
-            if (_tbalance < 0)
-            {
-                _tbalance = _tbalance * -1;
-            }
-            Cell E = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _tbalance), tcFont));
-            E.HorizontalAlignment = Cell.ALIGN_RIGHT;
-            statementInfoTable.AddCell(E);
-        } 
-        //table totals
-        private void AddNSSFTableTotals()
-        {
-            Table statementInfoTable = new Table(5);
-            statementInfoTable.WidthPercentage = 100;
-            statementInfoTable.Border = Table.RECTANGLE;
-            statementInfoTable.Padding = 1;
-            statementInfoTable.Spacing = 1;
-
-            Cell totalsCell = new Cell(new Phrase("TOTAL", tcFont1));
-            totalsCell.HorizontalAlignment = Cell.ALIGN_LEFT;
-            totalsCell.Colspan = 4;
-            statementInfoTable.AddCell(totalsCell); 
-
-            Cell totalContribCell = new Cell(new Phrase(_ViewModel.totalContributions.ToString("#,##0"), tcFont1));
-            totalContribCell.Border = Cell.RECTANGLE;
-            totalContribCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
-            statementInfoTable.AddCell(totalContribCell);
-
-            document.Add(statementInfoTable);
-
-        } 
-        //table totals
-        private void AddTableTotals()
-        {
-            Table statementInfoTable = new Table(3);
-            statementInfoTable.WidthPercentage = 100;
-            statementInfoTable.Border = Table.RECTANGLE;
-            statementInfoTable.Padding = 1;
-            statementInfoTable.Spacing = 1;
-
-            Cell total = new Cell(new Phrase("TOTAL", tcFont1));
-            total.HorizontalAlignment = Cell.ALIGN_LEFT; 
+            // Add Totals Row
+            PdfPCell total = new PdfPCell(new Phrase("TOTAL", tcFont1));
+            total.HorizontalAlignment = Element.ALIGN_LEFT;
+            total.Colspan = 2;
             statementInfoTable.AddCell(total);
 
-            Cell totalamountin = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.totalamountin), tcFont1));
-            totalamountin.Colspan = 1;
-            totalamountin.HorizontalAlignment = Cell.ALIGN_RIGHT;
-            statementInfoTable.AddCell(totalamountin);  
+            PdfPCell totalamountin = new PdfPCell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.totalamountin), tcFont1));
+            totalamountin.HorizontalAlignment = Element.ALIGN_RIGHT;
+            statementInfoTable.AddCell(totalamountin);
 
             document.Add(statementInfoTable);
+        }
 
-        } 
-        //document footer
+        private PdfPCell CreateHeaderCell(string title)
+        {
+            PdfPCell cell = new PdfPCell(new Phrase(title, tcFont1));
+            cell.HorizontalAlignment = Element.ALIGN_CENTER;
+            cell.Border = Rectangle.BOX;
+            return cell;
+        }
+
+        private PdfPCell CreateDataCell(string text, int alignment)
+        {
+            PdfPCell cell = new PdfPCell(new Phrase(text, tcFont));
+            cell.HorizontalAlignment = alignment;
+            cell.Border = Rectangle.BOX;
+            return cell;
+        }
+
         private void AddDocFooter()
         {
-
-            Table statementInfoTable = new Table(1);
+            PdfPTable statementInfoTable = new PdfPTable(1);
             statementInfoTable.WidthPercentage = 100;
-            statementInfoTable.Border = Table.NO_BORDER;
 
-            Cell sgCell = new Cell(new Phrase("Signature.....................................................................................................", rms10Normal));
-            sgCell.HorizontalAlignment = Cell.ALIGN_LEFT;
-            sgCell.Border = Cell.NO_BORDER;
+            PdfPCell sgCell = new PdfPCell(new Phrase("Signature.....................................................................................................", rms10Normal));
+            sgCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            sgCell.Border = Rectangle.NO_BORDER;
             statementInfoTable.AddCell(sgCell);
 
             document.Add(statementInfoTable);
-
         }
-         
-
     }
 }

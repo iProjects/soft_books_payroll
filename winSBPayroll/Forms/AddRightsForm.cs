@@ -55,7 +55,7 @@ namespace winSBPayroll.Forms
 
                     if (db.spAllowedRoleMenus.Any(i => i.RoleId == _right.RoleId && i.MenuItemId == _right.MenuItemId))
                     {
-                        MessageBox.Show("Right Exist!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Right Exist!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     if (!db.spAllowedRoleMenus.Any(i => i.RoleId == _right.RoleId && i.MenuItemId == _right.MenuItemId))
                     {

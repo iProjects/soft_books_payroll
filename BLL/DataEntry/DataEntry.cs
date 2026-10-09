@@ -82,27 +82,21 @@ namespace BLL.DataEntry
         {
             rep.DeleteEmployee(EmpNo);
         }
-
-
         #endregion
 
         #region Employee_Ext
-
         public void AddEmployeeCustomInfo(Employee_Ext employee_ext)
         {
             rep.AddEmployeeCustomInfo(employee_ext);
-
-
         }
-
         public List<Employee_Ext> GetAllEmployeeCustomInfo(string empno)
         {
-
             return rep.GetAllEmployeeCustomInfo(empno);
-
         }
-
-
+        public List<Employee_Ext> GetAllEmployeeCustomInfo(int EmployeeId)
+        {
+            return rep.GetAllEmployeeCustomInfo(EmployeeId);
+        }
         #endregion
 
         #region Bank
@@ -197,6 +191,10 @@ namespace BLL.DataEntry
         {
             return rep.GetEmpBenefits(empno);
         }
+        public IQueryable<EmpNonCashBenefit> GetEmpBenefits(int empno)
+        {
+            return rep.GetEmpBenefits(empno);
+        }
         public List<EditEmpNonCashBenefit> GetEditEmpBenefits(string empno)
         {
             return rep.GetEditEmpBenefits(empno);
@@ -224,6 +222,10 @@ namespace BLL.DataEntry
         {
             return rep.GetAllEmployers();
 
+        }
+        public List<Employer> GetAllActiveEmployers()
+        {
+            return rep.GetAllActiveEmployers();
         }
 
         public Employer GetEmployer(int empl)
@@ -527,6 +529,11 @@ namespace BLL.DataEntry
             return rep.WorkingCopyNotClosed(ref period, ref year);
         }
 
+        public bool Working_Copy_Not_Closed_for_employer(ref int period, ref int year, ref int employerid)
+        {
+            return rep.Working_Copy_Not_Closed_for_employer(ref period, ref year, ref employerid);
+        }
+
         public List<int> GetPayrollYears()
         {
             return rep.GetPayrollYears();
@@ -555,7 +562,6 @@ namespace BLL.DataEntry
             {
                 return rep.GetPayrolls(false, true);
             }
-
             else if (pstate == PayrollState.Open)
             {
                 return rep.GetOpenPayrolls(true);
@@ -593,10 +599,10 @@ namespace BLL.DataEntry
             rep.MarkPayrollAsProcessed(period, year);
         }
 
-        public void ClearPayroll(int payPeriod, int Year)
+        public void ClearPayroll(int payPeriod, int Year, int EmployerId)
         {
-            rep.ClearPayslipDet(payPeriod, Year);
-            rep.ClearPayslipMaster(payPeriod, Year);
+            rep.ClearPayslipDet(payPeriod, Year, EmployerId);
+            rep.ClearPayslipMaster(payPeriod, Year, EmployerId);
         }
 
         public void AddPayroll(int period, int year, int owner, DateTime daterun, string runby,
@@ -776,6 +782,10 @@ namespace BLL.DataEntry
         public List<HourlyPayment> GetHourlyPaymentsList(string empno)
         {
             return rep.GetHourlyPaymentsList(empno);
+        }
+        public List<HourlyPayment> GetHourlyPaymentsList(int EmployeeId)
+        {
+            return rep.GetHourlyPaymentsList(EmployeeId);
         }
 
         #endregion

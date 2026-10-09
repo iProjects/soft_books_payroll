@@ -23,8 +23,8 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("SBPayrollDBModel", "FK_Employees_Employers", "Employer", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DAL.Employer), "Employee", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DAL.Employee), true)]
 [assembly: EdmRelationshipAttribute("SBPayrollDBModel", "FK_PayrollItems_TaxTracking", "TaxTracking", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(DAL.TaxTracking), "PayrollItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DAL.PayrollItem), true)]
 [assembly: EdmRelationshipAttribute("SBPayrollDBModel", "FK_Settings_SettingsGroup", "SettingsGroup", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DAL.SettingsGroup), "Setting", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DAL.Setting), true)]
-[assembly: EdmRelationshipAttribute("SBPayrollDBModel", "FK_spAllowedReportsRolesMenus_spReportsMenuItems", "spReportsMenuItem", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DAL.spReportsMenuItem), "spAllowedReportsRolesMenu", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DAL.spAllowedReportsRolesMenu), true)]
-[assembly: EdmRelationshipAttribute("SBPayrollDBModel", "FK_spAllowedRoleMenus_spMenuItems", "spMenuItem", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DAL.spMenuItem), "spAllowedRoleMenu", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DAL.spAllowedRoleMenu), true)]
+[assembly: EdmRelationshipAttribute("SBPayrollDBModel", "FK_spAllowedReportsRolesMenus_spReportsMenuItem", "spReportsMenuItem", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DAL.spReportsMenuItem), "spAllowedReportsRolesMenu", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DAL.spAllowedReportsRolesMenu), true)]
+[assembly: EdmRelationshipAttribute("SBPayrollDBModel", "FK_spAllowedRoleMenus_spMenuItem", "spMenuItem", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(DAL.spMenuItem), "spAllowedRoleMenu", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(DAL.spAllowedRoleMenu), true)]
 
 #endregion
 
@@ -143,6 +143,22 @@ namespace DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<DeductionsTracker> DeductionsTrackers
+        {
+            get
+            {
+                if ((_DeductionsTrackers == null))
+                {
+                    _DeductionsTrackers = base.CreateObjectSet<DeductionsTracker>("DeductionsTrackers");
+                }
+                return _DeductionsTrackers;
+            }
+        }
+        private ObjectSet<DeductionsTracker> _DeductionsTrackers;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<Department> Departments
         {
             get
@@ -235,6 +251,38 @@ namespace DAL
             }
         }
         private ObjectSet<EmployeeTransaction> _EmployeeTransactions;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Employer_Authorized_Signatories> Employer_Authorized_Signatories
+        {
+            get
+            {
+                if ((_Employer_Authorized_Signatories == null))
+                {
+                    _Employer_Authorized_Signatories = base.CreateObjectSet<Employer_Authorized_Signatories>("Employer_Authorized_Signatories");
+                }
+                return _Employer_Authorized_Signatories;
+            }
+        }
+        private ObjectSet<Employer_Authorized_Signatories> _Employer_Authorized_Signatories;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Employer_Centers> Employer_Centers
+        {
+            get
+            {
+                if ((_Employer_Centers == null))
+                {
+                    _Employer_Centers = base.CreateObjectSet<Employer_Centers>("Employer_Centers");
+                }
+                return _Employer_Centers;
+            }
+        }
+        private ObjectSet<Employer_Centers> _Employer_Centers;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -671,6 +719,22 @@ namespace DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<sysdiagram> sysdiagrams
+        {
+            get
+            {
+                if ((_sysdiagrams == null))
+                {
+                    _sysdiagrams = base.CreateObjectSet<sysdiagram>("sysdiagrams");
+                }
+                return _sysdiagrams;
+            }
+        }
+        private ObjectSet<sysdiagram> _sysdiagrams;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<TaxTracking> TaxTrackings
         {
             get
@@ -683,6 +747,22 @@ namespace DAL
             }
         }
         private ObjectSet<TaxTracking> _TaxTrackings;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<tbl_LAS> tbl_LAS
+        {
+            get
+            {
+                if ((_tbl_LAS == null))
+                {
+                    _tbl_LAS = base.CreateObjectSet<tbl_LAS>("tbl_LAS");
+                }
+                return _tbl_LAS;
+            }
+        }
+        private ObjectSet<tbl_LAS> _tbl_LAS;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -961,6 +1041,14 @@ namespace DAL
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the DeductionsTrackers EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToDeductionsTrackers(DeductionsTracker deductionsTracker)
+        {
+            base.AddObject("DeductionsTrackers", deductionsTracker);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the Departments EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToDepartments(Department department)
@@ -1006,6 +1094,22 @@ namespace DAL
         public void AddToEmployeeTransactions(EmployeeTransaction employeeTransaction)
         {
             base.AddObject("EmployeeTransactions", employeeTransaction);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Employer_Authorized_Signatories EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToEmployer_Authorized_Signatories(Employer_Authorized_Signatories employer_Authorized_Signatories)
+        {
+            base.AddObject("Employer_Authorized_Signatories", employer_Authorized_Signatories);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Employer_Centers EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToEmployer_Centers(Employer_Centers employer_Centers)
+        {
+            base.AddObject("Employer_Centers", employer_Centers);
         }
     
         /// <summary>
@@ -1225,11 +1329,27 @@ namespace DAL
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the sysdiagrams EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddTosysdiagrams(sysdiagram sysdiagram)
+        {
+            base.AddObject("sysdiagrams", sysdiagram);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the TaxTrackings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToTaxTrackings(TaxTracking taxTracking)
         {
             base.AddObject("TaxTrackings", taxTracking);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the tbl_LAS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddTotbl_LAS(tbl_LAS tbl_LAS)
+        {
+            base.AddObject("tbl_LAS", tbl_LAS);
         }
     
         /// <summary>
@@ -1370,6 +1490,630 @@ namespace DAL
         public int CopyPayslipDet()
         {
             return base.ExecuteFunction("CopyPayslipDet");
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="pageIndex">No Metadata Documentation available.</param>
+        /// <param name="pageSize">No Metadata Documentation available.</param>
+        /// <param name="recordCount">No Metadata Documentation available.</param>
+        /// <param name="employerId">No Metadata Documentation available.</param>
+        /// <param name="year">No Metadata Documentation available.</param>
+        /// <param name="isOpen">No Metadata Documentation available.</param>
+        /// <param name="processed">No Metadata Documentation available.</param>
+        public int GetPayrollsPageWise(Nullable<global::System.Int32> pageIndex, Nullable<global::System.Int32> pageSize, ObjectParameter recordCount, Nullable<global::System.Int32> employerId, Nullable<global::System.Int32> year, Nullable<global::System.Boolean> isOpen, Nullable<global::System.Boolean> processed)
+        {
+            ObjectParameter pageIndexParameter;
+            if (pageIndex.HasValue)
+            {
+                pageIndexParameter = new ObjectParameter("PageIndex", pageIndex);
+            }
+            else
+            {
+                pageIndexParameter = new ObjectParameter("PageIndex", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter pageSizeParameter;
+            if (pageSize.HasValue)
+            {
+                pageSizeParameter = new ObjectParameter("PageSize", pageSize);
+            }
+            else
+            {
+                pageSizeParameter = new ObjectParameter("PageSize", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter employerIdParameter;
+            if (employerId.HasValue)
+            {
+                employerIdParameter = new ObjectParameter("EmployerId", employerId);
+            }
+            else
+            {
+                employerIdParameter = new ObjectParameter("EmployerId", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter yearParameter;
+            if (year.HasValue)
+            {
+                yearParameter = new ObjectParameter("Year", year);
+            }
+            else
+            {
+                yearParameter = new ObjectParameter("Year", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter isOpenParameter;
+            if (isOpen.HasValue)
+            {
+                isOpenParameter = new ObjectParameter("IsOpen", isOpen);
+            }
+            else
+            {
+                isOpenParameter = new ObjectParameter("IsOpen", typeof(global::System.Boolean));
+            }
+    
+            ObjectParameter processedParameter;
+            if (processed.HasValue)
+            {
+                processedParameter = new ObjectParameter("Processed", processed);
+            }
+            else
+            {
+                processedParameter = new ObjectParameter("Processed", typeof(global::System.Boolean));
+            }
+    
+            return base.ExecuteFunction("GetPayrollsPageWise", pageIndexParameter, pageSizeParameter, recordCount, employerIdParameter, yearParameter, isOpenParameter, processedParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="pageIndex">No Metadata Documentation available.</param>
+        /// <param name="pageSize">No Metadata Documentation available.</param>
+        /// <param name="empNo">No Metadata Documentation available.</param>
+        /// <param name="surname">No Metadata Documentation available.</param>
+        /// <param name="otherNames">No Metadata Documentation available.</param>
+        /// <param name="department">No Metadata Documentation available.</param>
+        /// <param name="employerId">No Metadata Documentation available.</param>
+        /// <param name="isActive">No Metadata Documentation available.</param>
+        /// <param name="recordCount">No Metadata Documentation available.</param>
+        public int GetEmployeesPageWise(Nullable<global::System.Int32> pageIndex, Nullable<global::System.Int32> pageSize, global::System.String empNo, global::System.String surname, global::System.String otherNames, global::System.String department, Nullable<global::System.Int32> employerId, Nullable<global::System.Boolean> isActive, ObjectParameter recordCount)
+        {
+            ObjectParameter pageIndexParameter;
+            if (pageIndex.HasValue)
+            {
+                pageIndexParameter = new ObjectParameter("PageIndex", pageIndex);
+            }
+            else
+            {
+                pageIndexParameter = new ObjectParameter("PageIndex", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter pageSizeParameter;
+            if (pageSize.HasValue)
+            {
+                pageSizeParameter = new ObjectParameter("PageSize", pageSize);
+            }
+            else
+            {
+                pageSizeParameter = new ObjectParameter("PageSize", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter empNoParameter;
+            if (empNo != null)
+            {
+                empNoParameter = new ObjectParameter("EmpNo", empNo);
+            }
+            else
+            {
+                empNoParameter = new ObjectParameter("EmpNo", typeof(global::System.String));
+            }
+    
+            ObjectParameter surnameParameter;
+            if (surname != null)
+            {
+                surnameParameter = new ObjectParameter("Surname", surname);
+            }
+            else
+            {
+                surnameParameter = new ObjectParameter("Surname", typeof(global::System.String));
+            }
+    
+            ObjectParameter otherNamesParameter;
+            if (otherNames != null)
+            {
+                otherNamesParameter = new ObjectParameter("OtherNames", otherNames);
+            }
+            else
+            {
+                otherNamesParameter = new ObjectParameter("OtherNames", typeof(global::System.String));
+            }
+    
+            ObjectParameter departmentParameter;
+            if (department != null)
+            {
+                departmentParameter = new ObjectParameter("Department", department);
+            }
+            else
+            {
+                departmentParameter = new ObjectParameter("Department", typeof(global::System.String));
+            }
+    
+            ObjectParameter employerIdParameter;
+            if (employerId.HasValue)
+            {
+                employerIdParameter = new ObjectParameter("EmployerId", employerId);
+            }
+            else
+            {
+                employerIdParameter = new ObjectParameter("EmployerId", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter isActiveParameter;
+            if (isActive.HasValue)
+            {
+                isActiveParameter = new ObjectParameter("IsActive", isActive);
+            }
+            else
+            {
+                isActiveParameter = new ObjectParameter("IsActive", typeof(global::System.Boolean));
+            }
+    
+            return base.ExecuteFunction("GetEmployeesPageWise", pageIndexParameter, pageSizeParameter, empNoParameter, surnameParameter, otherNamesParameter, departmentParameter, employerIdParameter, isActiveParameter, recordCount);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="pageIndex">No Metadata Documentation available.</param>
+        /// <param name="pageSize">No Metadata Documentation available.</param>
+        /// <param name="recordCount">No Metadata Documentation available.</param>
+        /// <param name="itemId">No Metadata Documentation available.</param>
+        /// <param name="empNo">No Metadata Documentation available.</param>
+        /// <param name="employerId">No Metadata Documentation available.</param>
+        public int GetEmployeesTransactionsPageWise(Nullable<global::System.Int32> pageIndex, Nullable<global::System.Int32> pageSize, ObjectParameter recordCount, global::System.String itemId, global::System.String empNo, Nullable<global::System.Int32> employerId)
+        {
+            ObjectParameter pageIndexParameter;
+            if (pageIndex.HasValue)
+            {
+                pageIndexParameter = new ObjectParameter("PageIndex", pageIndex);
+            }
+            else
+            {
+                pageIndexParameter = new ObjectParameter("PageIndex", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter pageSizeParameter;
+            if (pageSize.HasValue)
+            {
+                pageSizeParameter = new ObjectParameter("PageSize", pageSize);
+            }
+            else
+            {
+                pageSizeParameter = new ObjectParameter("PageSize", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter itemIdParameter;
+            if (itemId != null)
+            {
+                itemIdParameter = new ObjectParameter("ItemId", itemId);
+            }
+            else
+            {
+                itemIdParameter = new ObjectParameter("ItemId", typeof(global::System.String));
+            }
+    
+            ObjectParameter empNoParameter;
+            if (empNo != null)
+            {
+                empNoParameter = new ObjectParameter("EmpNo", empNo);
+            }
+            else
+            {
+                empNoParameter = new ObjectParameter("EmpNo", typeof(global::System.String));
+            }
+    
+            ObjectParameter employerIdParameter;
+            if (employerId.HasValue)
+            {
+                employerIdParameter = new ObjectParameter("EmployerId", employerId);
+            }
+            else
+            {
+                employerIdParameter = new ObjectParameter("EmployerId", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction("GetEmployeesTransactionsPageWise", pageIndexParameter, pageSizeParameter, recordCount, itemIdParameter, empNoParameter, employerIdParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="pageIndex">No Metadata Documentation available.</param>
+        /// <param name="pageSize">No Metadata Documentation available.</param>
+        /// <param name="recordCount">No Metadata Documentation available.</param>
+        /// <param name="compName">No Metadata Documentation available.</param>
+        /// <param name="empName">No Metadata Documentation available.</param>
+        /// <param name="empNo">No Metadata Documentation available.</param>
+        /// <param name="department">No Metadata Documentation available.</param>
+        /// <param name="period">No Metadata Documentation available.</param>
+        /// <param name="year">No Metadata Documentation available.</param>
+        public int GetPayslipMasterTempPageWise(Nullable<global::System.Int32> pageIndex, Nullable<global::System.Int32> pageSize, ObjectParameter recordCount, global::System.String compName, global::System.String empName, global::System.String empNo, global::System.String department, Nullable<global::System.Int32> period, Nullable<global::System.Int32> year)
+        {
+            ObjectParameter pageIndexParameter;
+            if (pageIndex.HasValue)
+            {
+                pageIndexParameter = new ObjectParameter("PageIndex", pageIndex);
+            }
+            else
+            {
+                pageIndexParameter = new ObjectParameter("PageIndex", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter pageSizeParameter;
+            if (pageSize.HasValue)
+            {
+                pageSizeParameter = new ObjectParameter("PageSize", pageSize);
+            }
+            else
+            {
+                pageSizeParameter = new ObjectParameter("PageSize", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter compNameParameter;
+            if (compName != null)
+            {
+                compNameParameter = new ObjectParameter("CompName", compName);
+            }
+            else
+            {
+                compNameParameter = new ObjectParameter("CompName", typeof(global::System.String));
+            }
+    
+            ObjectParameter empNameParameter;
+            if (empName != null)
+            {
+                empNameParameter = new ObjectParameter("EmpName", empName);
+            }
+            else
+            {
+                empNameParameter = new ObjectParameter("EmpName", typeof(global::System.String));
+            }
+    
+            ObjectParameter empNoParameter;
+            if (empNo != null)
+            {
+                empNoParameter = new ObjectParameter("EmpNo", empNo);
+            }
+            else
+            {
+                empNoParameter = new ObjectParameter("EmpNo", typeof(global::System.String));
+            }
+    
+            ObjectParameter departmentParameter;
+            if (department != null)
+            {
+                departmentParameter = new ObjectParameter("Department", department);
+            }
+            else
+            {
+                departmentParameter = new ObjectParameter("Department", typeof(global::System.String));
+            }
+    
+            ObjectParameter periodParameter;
+            if (period.HasValue)
+            {
+                periodParameter = new ObjectParameter("Period", period);
+            }
+            else
+            {
+                periodParameter = new ObjectParameter("Period", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter yearParameter;
+            if (year.HasValue)
+            {
+                yearParameter = new ObjectParameter("Year", year);
+            }
+            else
+            {
+                yearParameter = new ObjectParameter("Year", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction("GetPayslipMasterTempPageWise", pageIndexParameter, pageSizeParameter, recordCount, compNameParameter, empNameParameter, empNoParameter, departmentParameter, periodParameter, yearParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="pageIndex">No Metadata Documentation available.</param>
+        /// <param name="pageSize">No Metadata Documentation available.</param>
+        /// <param name="recordCount">No Metadata Documentation available.</param>
+        /// <param name="empNo">No Metadata Documentation available.</param>
+        /// <param name="year">No Metadata Documentation available.</param>
+        /// <param name="period">No Metadata Documentation available.</param>
+        /// <param name="description">No Metadata Documentation available.</param>
+        /// <param name="taxTracking">No Metadata Documentation available.</param>
+        /// <param name="isStatutory">No Metadata Documentation available.</param>
+        public int GetPayslipDetsPageWise(Nullable<global::System.Int32> pageIndex, Nullable<global::System.Int32> pageSize, ObjectParameter recordCount, global::System.String empNo, Nullable<global::System.Int32> year, Nullable<global::System.Int32> period, global::System.String description, global::System.String taxTracking, Nullable<global::System.Boolean> isStatutory)
+        {
+            ObjectParameter pageIndexParameter;
+            if (pageIndex.HasValue)
+            {
+                pageIndexParameter = new ObjectParameter("PageIndex", pageIndex);
+            }
+            else
+            {
+                pageIndexParameter = new ObjectParameter("PageIndex", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter pageSizeParameter;
+            if (pageSize.HasValue)
+            {
+                pageSizeParameter = new ObjectParameter("PageSize", pageSize);
+            }
+            else
+            {
+                pageSizeParameter = new ObjectParameter("PageSize", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter empNoParameter;
+            if (empNo != null)
+            {
+                empNoParameter = new ObjectParameter("EmpNo", empNo);
+            }
+            else
+            {
+                empNoParameter = new ObjectParameter("EmpNo", typeof(global::System.String));
+            }
+    
+            ObjectParameter yearParameter;
+            if (year.HasValue)
+            {
+                yearParameter = new ObjectParameter("Year", year);
+            }
+            else
+            {
+                yearParameter = new ObjectParameter("Year", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter periodParameter;
+            if (period.HasValue)
+            {
+                periodParameter = new ObjectParameter("Period", period);
+            }
+            else
+            {
+                periodParameter = new ObjectParameter("Period", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter descriptionParameter;
+            if (description != null)
+            {
+                descriptionParameter = new ObjectParameter("Description", description);
+            }
+            else
+            {
+                descriptionParameter = new ObjectParameter("Description", typeof(global::System.String));
+            }
+    
+            ObjectParameter taxTrackingParameter;
+            if (taxTracking != null)
+            {
+                taxTrackingParameter = new ObjectParameter("TaxTracking", taxTracking);
+            }
+            else
+            {
+                taxTrackingParameter = new ObjectParameter("TaxTracking", typeof(global::System.String));
+            }
+    
+            ObjectParameter isStatutoryParameter;
+            if (isStatutory.HasValue)
+            {
+                isStatutoryParameter = new ObjectParameter("IsStatutory", isStatutory);
+            }
+            else
+            {
+                isStatutoryParameter = new ObjectParameter("IsStatutory", typeof(global::System.Boolean));
+            }
+    
+            return base.ExecuteFunction("GetPayslipDetsPageWise", pageIndexParameter, pageSizeParameter, recordCount, empNoParameter, yearParameter, periodParameter, descriptionParameter, taxTrackingParameter, isStatutoryParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="pageIndex">No Metadata Documentation available.</param>
+        /// <param name="pageSize">No Metadata Documentation available.</param>
+        /// <param name="recordCount">No Metadata Documentation available.</param>
+        /// <param name="empNo">No Metadata Documentation available.</param>
+        /// <param name="year">No Metadata Documentation available.</param>
+        /// <param name="period">No Metadata Documentation available.</param>
+        /// <param name="description">No Metadata Documentation available.</param>
+        /// <param name="taxTracking">No Metadata Documentation available.</param>
+        /// <param name="isStatutory">No Metadata Documentation available.</param>
+        public int GetPayslipDetsTempPageWise(Nullable<global::System.Int32> pageIndex, Nullable<global::System.Int32> pageSize, ObjectParameter recordCount, global::System.String empNo, Nullable<global::System.Int32> year, Nullable<global::System.Int32> period, global::System.String description, global::System.String taxTracking, Nullable<global::System.Boolean> isStatutory)
+        {
+            ObjectParameter pageIndexParameter;
+            if (pageIndex.HasValue)
+            {
+                pageIndexParameter = new ObjectParameter("PageIndex", pageIndex);
+            }
+            else
+            {
+                pageIndexParameter = new ObjectParameter("PageIndex", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter pageSizeParameter;
+            if (pageSize.HasValue)
+            {
+                pageSizeParameter = new ObjectParameter("PageSize", pageSize);
+            }
+            else
+            {
+                pageSizeParameter = new ObjectParameter("PageSize", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter empNoParameter;
+            if (empNo != null)
+            {
+                empNoParameter = new ObjectParameter("EmpNo", empNo);
+            }
+            else
+            {
+                empNoParameter = new ObjectParameter("EmpNo", typeof(global::System.String));
+            }
+    
+            ObjectParameter yearParameter;
+            if (year.HasValue)
+            {
+                yearParameter = new ObjectParameter("Year", year);
+            }
+            else
+            {
+                yearParameter = new ObjectParameter("Year", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter periodParameter;
+            if (period.HasValue)
+            {
+                periodParameter = new ObjectParameter("Period", period);
+            }
+            else
+            {
+                periodParameter = new ObjectParameter("Period", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter descriptionParameter;
+            if (description != null)
+            {
+                descriptionParameter = new ObjectParameter("Description", description);
+            }
+            else
+            {
+                descriptionParameter = new ObjectParameter("Description", typeof(global::System.String));
+            }
+    
+            ObjectParameter taxTrackingParameter;
+            if (taxTracking != null)
+            {
+                taxTrackingParameter = new ObjectParameter("TaxTracking", taxTracking);
+            }
+            else
+            {
+                taxTrackingParameter = new ObjectParameter("TaxTracking", typeof(global::System.String));
+            }
+    
+            ObjectParameter isStatutoryParameter;
+            if (isStatutory.HasValue)
+            {
+                isStatutoryParameter = new ObjectParameter("IsStatutory", isStatutory);
+            }
+            else
+            {
+                isStatutoryParameter = new ObjectParameter("IsStatutory", typeof(global::System.Boolean));
+            }
+    
+            return base.ExecuteFunction("GetPayslipDetsTempPageWise", pageIndexParameter, pageSizeParameter, recordCount, empNoParameter, yearParameter, periodParameter, descriptionParameter, taxTrackingParameter, isStatutoryParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="pageIndex">No Metadata Documentation available.</param>
+        /// <param name="pageSize">No Metadata Documentation available.</param>
+        /// <param name="recordCount">No Metadata Documentation available.</param>
+        /// <param name="compName">No Metadata Documentation available.</param>
+        /// <param name="empName">No Metadata Documentation available.</param>
+        /// <param name="empNo">No Metadata Documentation available.</param>
+        /// <param name="department">No Metadata Documentation available.</param>
+        /// <param name="period">No Metadata Documentation available.</param>
+        /// <param name="year">No Metadata Documentation available.</param>
+        public int GetPayslipMasterPageWise(Nullable<global::System.Int32> pageIndex, Nullable<global::System.Int32> pageSize, ObjectParameter recordCount, global::System.String compName, global::System.String empName, global::System.String empNo, global::System.String department, Nullable<global::System.Int32> period, Nullable<global::System.Int32> year)
+        {
+            ObjectParameter pageIndexParameter;
+            if (pageIndex.HasValue)
+            {
+                pageIndexParameter = new ObjectParameter("PageIndex", pageIndex);
+            }
+            else
+            {
+                pageIndexParameter = new ObjectParameter("PageIndex", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter pageSizeParameter;
+            if (pageSize.HasValue)
+            {
+                pageSizeParameter = new ObjectParameter("PageSize", pageSize);
+            }
+            else
+            {
+                pageSizeParameter = new ObjectParameter("PageSize", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter compNameParameter;
+            if (compName != null)
+            {
+                compNameParameter = new ObjectParameter("CompName", compName);
+            }
+            else
+            {
+                compNameParameter = new ObjectParameter("CompName", typeof(global::System.String));
+            }
+    
+            ObjectParameter empNameParameter;
+            if (empName != null)
+            {
+                empNameParameter = new ObjectParameter("EmpName", empName);
+            }
+            else
+            {
+                empNameParameter = new ObjectParameter("EmpName", typeof(global::System.String));
+            }
+    
+            ObjectParameter empNoParameter;
+            if (empNo != null)
+            {
+                empNoParameter = new ObjectParameter("EmpNo", empNo);
+            }
+            else
+            {
+                empNoParameter = new ObjectParameter("EmpNo", typeof(global::System.String));
+            }
+    
+            ObjectParameter departmentParameter;
+            if (department != null)
+            {
+                departmentParameter = new ObjectParameter("Department", department);
+            }
+            else
+            {
+                departmentParameter = new ObjectParameter("Department", typeof(global::System.String));
+            }
+    
+            ObjectParameter periodParameter;
+            if (period.HasValue)
+            {
+                periodParameter = new ObjectParameter("Period", period);
+            }
+            else
+            {
+                periodParameter = new ObjectParameter("Period", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter yearParameter;
+            if (year.HasValue)
+            {
+                yearParameter = new ObjectParameter("Year", year);
+            }
+            else
+            {
+                yearParameter = new ObjectParameter("Year", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction("GetPayslipMasterPageWise", pageIndexParameter, pageSizeParameter, recordCount, compNameParameter, empNameParameter, empNoParameter, departmentParameter, periodParameter, yearParameter);
         }
 
         #endregion
@@ -1933,6 +2677,351 @@ namespace DAL
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="SBPayrollDBModel", Name="DeductionsTracker")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class DeductionsTracker : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new DeductionsTracker object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        public static DeductionsTracker CreateDeductionsTracker(global::System.Int32 id)
+        {
+            DeductionsTracker deductionsTracker = new DeductionsTracker();
+            deductionsTracker.Id = id;
+            return deductionsTracker;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PayrollItemId
+        {
+            get
+            {
+                return _PayrollItemId;
+            }
+            set
+            {
+                OnPayrollItemIdChanging(value);
+                ReportPropertyChanging("PayrollItemId");
+                _PayrollItemId = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("PayrollItemId");
+                OnPayrollItemIdChanged();
+            }
+        }
+        private global::System.String _PayrollItemId;
+        partial void OnPayrollItemIdChanging(global::System.String value);
+        partial void OnPayrollItemIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ItemTypeDescription
+        {
+            get
+            {
+                return _ItemTypeDescription;
+            }
+            set
+            {
+                OnItemTypeDescriptionChanging(value);
+                ReportPropertyChanging("ItemTypeDescription");
+                _ItemTypeDescription = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ItemTypeDescription");
+                OnItemTypeDescriptionChanged();
+            }
+        }
+        private global::System.String _ItemTypeDescription;
+        partial void OnItemTypeDescriptionChanging(global::System.String value);
+        partial void OnItemTypeDescriptionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> LoanYTD
+        {
+            get
+            {
+                return _LoanYTD;
+            }
+            set
+            {
+                OnLoanYTDChanging(value);
+                ReportPropertyChanging("LoanYTD");
+                _LoanYTD = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LoanYTD");
+                OnLoanYTDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _LoanYTD;
+        partial void OnLoanYTDChanging(Nullable<global::System.Decimal> value);
+        partial void OnLoanYTDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> SaccoYTD
+        {
+            get
+            {
+                return _SaccoYTD;
+            }
+            set
+            {
+                OnSaccoYTDChanging(value);
+                ReportPropertyChanging("SaccoYTD");
+                _SaccoYTD = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SaccoYTD");
+                OnSaccoYTDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _SaccoYTD;
+        partial void OnSaccoYTDChanging(Nullable<global::System.Decimal> value);
+        partial void OnSaccoYTDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> Amount
+        {
+            get
+            {
+                return _Amount;
+            }
+            set
+            {
+                OnAmountChanging(value);
+                ReportPropertyChanging("Amount");
+                _Amount = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Amount");
+                OnAmountChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _Amount;
+        partial void OnAmountChanging(Nullable<global::System.Decimal> value);
+        partial void OnAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String EmployeeName
+        {
+            get
+            {
+                return _EmployeeName;
+            }
+            set
+            {
+                OnEmployeeNameChanging(value);
+                ReportPropertyChanging("EmployeeName");
+                _EmployeeName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("EmployeeName");
+                OnEmployeeNameChanged();
+            }
+        }
+        private global::System.String _EmployeeName;
+        partial void OnEmployeeNameChanging(global::System.String value);
+        partial void OnEmployeeNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> EmployeeId
+        {
+            get
+            {
+                return _EmployeeId;
+            }
+            set
+            {
+                OnEmployeeIdChanging(value);
+                ReportPropertyChanging("EmployeeId");
+                _EmployeeId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EmployeeId");
+                OnEmployeeIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _EmployeeId;
+        partial void OnEmployeeIdChanging(Nullable<global::System.Int32> value);
+        partial void OnEmployeeIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> EmployeeTransactionId
+        {
+            get
+            {
+                return _EmployeeTransactionId;
+            }
+            set
+            {
+                OnEmployeeTransactionIdChanging(value);
+                ReportPropertyChanging("EmployeeTransactionId");
+                _EmployeeTransactionId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EmployeeTransactionId");
+                OnEmployeeTransactionIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _EmployeeTransactionId;
+        partial void OnEmployeeTransactionIdChanging(Nullable<global::System.Int32> value);
+        partial void OnEmployeeTransactionIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Year
+        {
+            get
+            {
+                return _Year;
+            }
+            set
+            {
+                OnYearChanging(value);
+                ReportPropertyChanging("Year");
+                _Year = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Year");
+                OnYearChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Year;
+        partial void OnYearChanging(Nullable<global::System.Int32> value);
+        partial void OnYearChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Term
+        {
+            get
+            {
+                return _Term;
+            }
+            set
+            {
+                OnTermChanging(value);
+                ReportPropertyChanging("Term");
+                _Term = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Term");
+                OnTermChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Term;
+        partial void OnTermChanging(Nullable<global::System.Int32> value);
+        partial void OnTermChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsProcessed
+        {
+            get
+            {
+                return _IsProcessed;
+            }
+            set
+            {
+                OnIsProcessedChanging(value);
+                ReportPropertyChanging("IsProcessed");
+                _IsProcessed = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsProcessed");
+                OnIsProcessedChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsProcessed;
+        partial void OnIsProcessedChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsProcessedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsClosed
+        {
+            get
+            {
+                return _IsClosed;
+            }
+            set
+            {
+                OnIsClosedChanging(value);
+                ReportPropertyChanging("IsClosed");
+                _IsClosed = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsClosed");
+                OnIsClosedChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsClosed;
+        partial void OnIsClosedChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsClosedChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="SBPayrollDBModel", Name="Department")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -2188,6 +3277,30 @@ namespace DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EmployerId
+        {
+            get
+            {
+                return _EmployerId;
+            }
+            set
+            {
+                OnEmployerIdChanging(value);
+                ReportPropertyChanging("EmployerId");
+                _EmployerId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EmployerId");
+                OnEmployerIdChanged();
+            }
+        }
+        private global::System.Int32 _EmployerId;
+        partial void OnEmployerIdChanging(global::System.Int32 value);
+        partial void OnEmployerIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String Email
@@ -2214,6 +3327,30 @@ namespace DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
+        public global::System.String PhoneNo
+        {
+            get
+            {
+                return _PhoneNo;
+            }
+            set
+            {
+                OnPhoneNoChanging(value);
+                ReportPropertyChanging("PhoneNo");
+                _PhoneNo = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("PhoneNo");
+                OnPhoneNoChanged();
+            }
+        }
+        private global::System.String _PhoneNo;
+        partial void OnPhoneNoChanging(global::System.String value);
+        partial void OnPhoneNoChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
         public Nullable<global::System.DateTime> DoB
         {
             get
@@ -2232,6 +3369,30 @@ namespace DAL
         private Nullable<global::System.DateTime> _DoB;
         partial void OnDoBChanging(Nullable<global::System.DateTime> value);
         partial void OnDoBChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> DepartmentId
+        {
+            get
+            {
+                return _DepartmentId;
+            }
+            set
+            {
+                OnDepartmentIdChanging(value);
+                ReportPropertyChanging("DepartmentId");
+                _DepartmentId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DepartmentId");
+                OnDepartmentIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _DepartmentId;
+        partial void OnDepartmentIdChanging(Nullable<global::System.Int32> value);
+        partial void OnDepartmentIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2544,54 +3705,6 @@ namespace DAL
         private global::System.String _PINNo;
         partial void OnPINNoChanging(global::System.String value);
         partial void OnPINNoChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> DepartmentId
-        {
-            get
-            {
-                return _DepartmentId;
-            }
-            set
-            {
-                OnDepartmentIdChanging(value);
-                ReportPropertyChanging("DepartmentId");
-                _DepartmentId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("DepartmentId");
-                OnDepartmentIdChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _DepartmentId;
-        partial void OnDepartmentIdChanging(Nullable<global::System.Int32> value);
-        partial void OnDepartmentIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 EmployerId
-        {
-            get
-            {
-                return _EmployerId;
-            }
-            set
-            {
-                OnEmployerIdChanging(value);
-                ReportPropertyChanging("EmployerId");
-                _EmployerId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("EmployerId");
-                OnEmployerIdChanged();
-            }
-        }
-        private global::System.Int32 _EmployerId;
-        partial void OnEmployerIdChanging(global::System.Int32 value);
-        partial void OnEmployerIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2976,6 +4089,54 @@ namespace DAL
         private global::System.String _SystemId;
         partial void OnSystemIdChanging(global::System.String value);
         partial void OnSystemIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsDisabled
+        {
+            get
+            {
+                return _IsDisabled;
+            }
+            set
+            {
+                OnIsDisabledChanging(value);
+                ReportPropertyChanging("IsDisabled");
+                _IsDisabled = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsDisabled");
+                OnIsDisabledChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsDisabled;
+        partial void OnIsDisabledChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsDisabledChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String MpesaReferenceNo
+        {
+            get
+            {
+                return _MpesaReferenceNo;
+            }
+            set
+            {
+                OnMpesaReferenceNoChanging(value);
+                ReportPropertyChanging("MpesaReferenceNo");
+                _MpesaReferenceNo = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("MpesaReferenceNo");
+                OnMpesaReferenceNoChanged();
+            }
+        }
+        private global::System.String _MpesaReferenceNo;
+        partial void OnMpesaReferenceNoChanging(global::System.String value);
+        partial void OnMpesaReferenceNoChanged();
 
         #endregion
 
@@ -3200,6 +4361,54 @@ namespace DAL
         private Nullable<global::System.Decimal> _ExFieldDecimal;
         partial void OnExFieldDecimalChanging(Nullable<global::System.Decimal> value);
         partial void OnExFieldDecimalChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> EmployeeId
+        {
+            get
+            {
+                return _EmployeeId;
+            }
+            set
+            {
+                OnEmployeeIdChanging(value);
+                ReportPropertyChanging("EmployeeId");
+                _EmployeeId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EmployeeId");
+                OnEmployeeIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _EmployeeId;
+        partial void OnEmployeeIdChanging(Nullable<global::System.Int32> value);
+        partial void OnEmployeeIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> EmployerId
+        {
+            get
+            {
+                return _EmployerId;
+            }
+            set
+            {
+                OnEmployerIdChanging(value);
+                ReportPropertyChanging("EmployerId");
+                _EmployerId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EmployerId");
+                OnEmployerIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _EmployerId;
+        partial void OnEmployerIdChanging(Nullable<global::System.Int32> value);
+        partial void OnEmployerIdChanged();
 
         #endregion
 
@@ -3509,21 +4718,21 @@ namespace DAL
         /// <param name="postDate">Initial value of the PostDate property.</param>
         /// <param name="empNo">Initial value of the EmpNo property.</param>
         /// <param name="employeeId">Initial value of the EmployeeId property.</param>
-        /// <param name="enabled">Initial value of the Enabled property.</param>
-        /// <param name="recurrent">Initial value of the Recurrent property.</param>
         /// <param name="itemId">Initial value of the ItemId property.</param>
         /// <param name="amount">Initial value of the Amount property.</param>
-        public static EmployeeTransaction CreateEmployeeTransaction(global::System.Int32 id, global::System.DateTime postDate, global::System.String empNo, global::System.Int32 employeeId, global::System.Boolean enabled, global::System.Boolean recurrent, global::System.String itemId, global::System.Decimal amount)
+        /// <param name="recurrent">Initial value of the Recurrent property.</param>
+        /// <param name="enabled">Initial value of the Enabled property.</param>
+        public static EmployeeTransaction CreateEmployeeTransaction(global::System.Int32 id, global::System.DateTime postDate, global::System.String empNo, global::System.Int32 employeeId, global::System.String itemId, global::System.Decimal amount, global::System.Boolean recurrent, global::System.Boolean enabled)
         {
             EmployeeTransaction employeeTransaction = new EmployeeTransaction();
             employeeTransaction.Id = id;
             employeeTransaction.PostDate = postDate;
             employeeTransaction.EmpNo = empNo;
             employeeTransaction.EmployeeId = employeeId;
-            employeeTransaction.Enabled = enabled;
-            employeeTransaction.Recurrent = recurrent;
             employeeTransaction.ItemId = itemId;
             employeeTransaction.Amount = amount;
+            employeeTransaction.Recurrent = recurrent;
+            employeeTransaction.Enabled = enabled;
             return employeeTransaction;
         }
 
@@ -3635,54 +4844,6 @@ namespace DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Boolean Enabled
-        {
-            get
-            {
-                return _Enabled;
-            }
-            set
-            {
-                OnEnabledChanging(value);
-                ReportPropertyChanging("Enabled");
-                _Enabled = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Enabled");
-                OnEnabledChanged();
-            }
-        }
-        private global::System.Boolean _Enabled;
-        partial void OnEnabledChanging(global::System.Boolean value);
-        partial void OnEnabledChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean Recurrent
-        {
-            get
-            {
-                return _Recurrent;
-            }
-            set
-            {
-                OnRecurrentChanging(value);
-                ReportPropertyChanging("Recurrent");
-                _Recurrent = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Recurrent");
-                OnRecurrentChanged();
-            }
-        }
-        private global::System.Boolean _Recurrent;
-        partial void OnRecurrentChanging(global::System.Boolean value);
-        partial void OnRecurrentChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
         public global::System.String ItemId
         {
             get
@@ -3755,6 +4916,30 @@ namespace DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> AccumulativePayment
+        {
+            get
+            {
+                return _AccumulativePayment;
+            }
+            set
+            {
+                OnAccumulativePaymentChanging(value);
+                ReportPropertyChanging("AccumulativePayment");
+                _AccumulativePayment = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AccumulativePayment");
+                OnAccumulativePaymentChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _AccumulativePayment;
+        partial void OnAccumulativePaymentChanging(Nullable<global::System.Decimal> value);
+        partial void OnAccumulativePaymentChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
         public Nullable<global::System.Decimal> InitialAmount
         {
             get
@@ -3773,6 +4958,54 @@ namespace DAL
         private Nullable<global::System.Decimal> _InitialAmount;
         partial void OnInitialAmountChanging(Nullable<global::System.Decimal> value);
         partial void OnInitialAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean Recurrent
+        {
+            get
+            {
+                return _Recurrent;
+            }
+            set
+            {
+                OnRecurrentChanging(value);
+                ReportPropertyChanging("Recurrent");
+                _Recurrent = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Recurrent");
+                OnRecurrentChanged();
+            }
+        }
+        private global::System.Boolean _Recurrent;
+        partial void OnRecurrentChanging(global::System.Boolean value);
+        partial void OnRecurrentChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean Enabled
+        {
+            get
+            {
+                return _Enabled;
+            }
+            set
+            {
+                OnEnabledChanging(value);
+                ReportPropertyChanging("Enabled");
+                _Enabled = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Enabled");
+                OnEnabledChanged();
+            }
+        }
+        private global::System.Boolean _Enabled;
+        partial void OnEnabledChanging(global::System.Boolean value);
+        partial void OnEnabledChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -3995,24 +5228,144 @@ namespace DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> AccumulativePayment
+        public Nullable<global::System.Boolean> IsDeleted
         {
             get
             {
-                return _AccumulativePayment;
+                return _IsDeleted;
             }
             set
             {
-                OnAccumulativePaymentChanging(value);
-                ReportPropertyChanging("AccumulativePayment");
-                _AccumulativePayment = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("AccumulativePayment");
-                OnAccumulativePaymentChanged();
+                OnIsDeletedChanging(value);
+                ReportPropertyChanging("IsDeleted");
+                _IsDeleted = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsDeleted");
+                OnIsDeletedChanged();
             }
         }
-        private Nullable<global::System.Decimal> _AccumulativePayment;
-        partial void OnAccumulativePaymentChanging(Nullable<global::System.Decimal> value);
-        partial void OnAccumulativePaymentChanged();
+        private Nullable<global::System.Boolean> _IsDeleted;
+        partial void OnIsDeletedChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsDeletedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsLoanRepaymentInFull
+        {
+            get
+            {
+                return _IsLoanRepaymentInFull;
+            }
+            set
+            {
+                OnIsLoanRepaymentInFullChanging(value);
+                ReportPropertyChanging("IsLoanRepaymentInFull");
+                _IsLoanRepaymentInFull = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsLoanRepaymentInFull");
+                OnIsLoanRepaymentInFullChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsLoanRepaymentInFull;
+        partial void OnIsLoanRepaymentInFullChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsLoanRepaymentInFullChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> LoanBeingRepayedId
+        {
+            get
+            {
+                return _LoanBeingRepayedId;
+            }
+            set
+            {
+                OnLoanBeingRepayedIdChanging(value);
+                ReportPropertyChanging("LoanBeingRepayedId");
+                _LoanBeingRepayedId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LoanBeingRepayedId");
+                OnLoanBeingRepayedIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _LoanBeingRepayedId;
+        partial void OnLoanBeingRepayedIdChanging(Nullable<global::System.Int32> value);
+        partial void OnLoanBeingRepayedIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> SaccoBeingRepayedId
+        {
+            get
+            {
+                return _SaccoBeingRepayedId;
+            }
+            set
+            {
+                OnSaccoBeingRepayedIdChanging(value);
+                ReportPropertyChanging("SaccoBeingRepayedId");
+                _SaccoBeingRepayedId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SaccoBeingRepayedId");
+                OnSaccoBeingRepayedIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _SaccoBeingRepayedId;
+        partial void OnSaccoBeingRepayedIdChanging(Nullable<global::System.Int32> value);
+        partial void OnSaccoBeingRepayedIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsLoanRepaymentInCash
+        {
+            get
+            {
+                return _IsLoanRepaymentInCash;
+            }
+            set
+            {
+                OnIsLoanRepaymentInCashChanging(value);
+                ReportPropertyChanging("IsLoanRepaymentInCash");
+                _IsLoanRepaymentInCash = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsLoanRepaymentInCash");
+                OnIsLoanRepaymentInCashChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsLoanRepaymentInCash;
+        partial void OnIsLoanRepaymentInCashChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsLoanRepaymentInCashChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsSharesRepaymentInCash
+        {
+            get
+            {
+                return _IsSharesRepaymentInCash;
+            }
+            set
+            {
+                OnIsSharesRepaymentInCashChanging(value);
+                ReportPropertyChanging("IsSharesRepaymentInCash");
+                _IsSharesRepaymentInCash = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsSharesRepaymentInCash");
+                OnIsSharesRepaymentInCashChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsSharesRepaymentInCash;
+        partial void OnIsSharesRepaymentInCashChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsSharesRepaymentInCashChanged();
 
         #endregion
 
@@ -4094,6 +5447,30 @@ namespace DAL
         private global::System.String _Name;
         partial void OnNameChanging(global::System.String value);
         partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Code
+        {
+            get
+            {
+                return _Code;
+            }
+            set
+            {
+                OnCodeChanging(value);
+                ReportPropertyChanging("Code");
+                _Code = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Code");
+                OnCodeChanged();
+            }
+        }
+        private global::System.String _Code;
+        partial void OnCodeChanging(global::System.String value);
+        partial void OnCodeChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -4316,6 +5693,30 @@ namespace DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
+        public Nullable<global::System.Int32> NoOfEmployees
+        {
+            get
+            {
+                return _NoOfEmployees;
+            }
+            set
+            {
+                OnNoOfEmployeesChanging(value);
+                ReportPropertyChanging("NoOfEmployees");
+                _NoOfEmployees = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NoOfEmployees");
+                OnNoOfEmployeesChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _NoOfEmployees;
+        partial void OnNoOfEmployeesChanging(Nullable<global::System.Int32> value);
+        partial void OnNoOfEmployeesChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
         public global::System.String BankBranchSortCode
         {
             get
@@ -4508,6 +5909,240 @@ namespace DAL
 
         #endregion
 
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="SBPayrollDBModel", Name="Employer_Authorized_Signatories")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Employer_Authorized_Signatories : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Employer_Authorized_Signatories object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        public static Employer_Authorized_Signatories CreateEmployer_Authorized_Signatories(global::System.Int32 id)
+        {
+            Employer_Authorized_Signatories employer_Authorized_Signatories = new Employer_Authorized_Signatories();
+            employer_Authorized_Signatories.Id = id;
+            return employer_Authorized_Signatories;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Designation
+        {
+            get
+            {
+                return _Designation;
+            }
+            set
+            {
+                OnDesignationChanging(value);
+                ReportPropertyChanging("Designation");
+                _Designation = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Designation");
+                OnDesignationChanged();
+            }
+        }
+        private global::System.String _Designation;
+        partial void OnDesignationChanging(global::System.String value);
+        partial void OnDesignationChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> EmployerId
+        {
+            get
+            {
+                return _EmployerId;
+            }
+            set
+            {
+                OnEmployerIdChanging(value);
+                ReportPropertyChanging("EmployerId");
+                _EmployerId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EmployerId");
+                OnEmployerIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _EmployerId;
+        partial void OnEmployerIdChanging(Nullable<global::System.Int32> value);
+        partial void OnEmployerIdChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="SBPayrollDBModel", Name="Employer_Centers")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Employer_Centers : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Employer_Centers object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        public static Employer_Centers CreateEmployer_Centers(global::System.Int32 id)
+        {
+            Employer_Centers employer_Centers = new Employer_Centers();
+            employer_Centers.Id = id;
+            return employer_Centers;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Description
+        {
+            get
+            {
+                return _Description;
+            }
+            set
+            {
+                OnDescriptionChanging(value);
+                ReportPropertyChanging("Description");
+                _Description = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Description");
+                OnDescriptionChanged();
+            }
+        }
+        private global::System.String _Description;
+        partial void OnDescriptionChanging(global::System.String value);
+        partial void OnDescriptionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> EmployerId
+        {
+            get
+            {
+                return _EmployerId;
+            }
+            set
+            {
+                OnEmployerIdChanging(value);
+                ReportPropertyChanging("EmployerId");
+                _EmployerId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EmployerId");
+                OnEmployerIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _EmployerId;
+        partial void OnEmployerIdChanging(Nullable<global::System.Int32> value);
+        partial void OnEmployerIdChanged();
+
+        #endregion
+
+    
     }
     
     /// <summary>
@@ -4888,22 +6523,22 @@ namespace DAL
         /// <summary>
         /// Create a new GetEmpTransaction object.
         /// </summary>
+        /// <param name="employeeId">Initial value of the EmployeeId property.</param>
         /// <param name="itemId">Initial value of the ItemId property.</param>
         /// <param name="amount">Initial value of the Amount property.</param>
         /// <param name="recurrent">Initial value of the Recurrent property.</param>
         /// <param name="enabled">Initial value of the Enabled property.</param>
         /// <param name="empTxnId">Initial value of the EmpTxnId property.</param>
-        /// <param name="employeeId">Initial value of the EmployeeId property.</param>
         /// <param name="postDate">Initial value of the PostDate property.</param>
-        public static GetEmpTransaction CreateGetEmpTransaction(global::System.String itemId, global::System.Decimal amount, global::System.Boolean recurrent, global::System.Boolean enabled, global::System.Int32 empTxnId, global::System.Int32 employeeId, global::System.DateTime postDate)
+        public static GetEmpTransaction CreateGetEmpTransaction(global::System.Int32 employeeId, global::System.String itemId, global::System.Decimal amount, global::System.Boolean recurrent, global::System.Boolean enabled, global::System.Int32 empTxnId, global::System.DateTime postDate)
         {
             GetEmpTransaction getEmpTransaction = new GetEmpTransaction();
+            getEmpTransaction.EmployeeId = employeeId;
             getEmpTransaction.ItemId = itemId;
             getEmpTransaction.Amount = amount;
             getEmpTransaction.Recurrent = recurrent;
             getEmpTransaction.Enabled = enabled;
             getEmpTransaction.EmpTxnId = empTxnId;
-            getEmpTransaction.EmployeeId = employeeId;
             getEmpTransaction.PostDate = postDate;
             return getEmpTransaction;
         }
@@ -4911,6 +6546,57 @@ namespace DAL
         #endregion
 
         #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String EmpNo
+        {
+            get
+            {
+                return _EmpNo;
+            }
+            set
+            {
+                OnEmpNoChanging(value);
+                ReportPropertyChanging("EmpNo");
+                _EmpNo = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("EmpNo");
+                OnEmpNoChanged();
+            }
+        }
+        private global::System.String _EmpNo;
+        partial void OnEmpNoChanging(global::System.String value);
+        partial void OnEmpNoChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EmployeeId
+        {
+            get
+            {
+                return _EmployeeId;
+            }
+            set
+            {
+                if (_EmployeeId != value)
+                {
+                    OnEmployeeIdChanging(value);
+                    ReportPropertyChanging("EmployeeId");
+                    _EmployeeId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("EmployeeId");
+                    OnEmployeeIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _EmployeeId;
+        partial void OnEmployeeIdChanging(global::System.Int32 value);
+        partial void OnEmployeeIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -4941,48 +6627,24 @@ namespace DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String MaritalStatus
+        public global::System.String OtherNames
         {
             get
             {
-                return _MaritalStatus;
+                return _OtherNames;
             }
             set
             {
-                OnMaritalStatusChanging(value);
-                ReportPropertyChanging("MaritalStatus");
-                _MaritalStatus = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("MaritalStatus");
-                OnMaritalStatusChanged();
+                OnOtherNamesChanging(value);
+                ReportPropertyChanging("OtherNames");
+                _OtherNames = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("OtherNames");
+                OnOtherNamesChanged();
             }
         }
-        private global::System.String _MaritalStatus;
-        partial void OnMaritalStatusChanging(global::System.String value);
-        partial void OnMaritalStatusChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> IsActive
-        {
-            get
-            {
-                return _IsActive;
-            }
-            set
-            {
-                OnIsActiveChanging(value);
-                ReportPropertyChanging("IsActive");
-                _IsActive = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("IsActive");
-                OnIsActiveChanged();
-            }
-        }
-        private Nullable<global::System.Boolean> _IsActive;
-        partial void OnIsActiveChanging(Nullable<global::System.Boolean> value);
-        partial void OnIsActiveChanged();
+        private global::System.String _OtherNames;
+        partial void OnOtherNamesChanging(global::System.String value);
+        partial void OnOtherNamesChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -5014,6 +6676,102 @@ namespace DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ItemTypeId
+        {
+            get
+            {
+                return _ItemTypeId;
+            }
+            set
+            {
+                OnItemTypeIdChanging(value);
+                ReportPropertyChanging("ItemTypeId");
+                _ItemTypeId = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ItemTypeId");
+                OnItemTypeIdChanged();
+            }
+        }
+        private global::System.String _ItemTypeId;
+        partial void OnItemTypeIdChanging(global::System.String value);
+        partial void OnItemTypeIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String TaxTrackingId
+        {
+            get
+            {
+                return _TaxTrackingId;
+            }
+            set
+            {
+                OnTaxTrackingIdChanging(value);
+                ReportPropertyChanging("TaxTrackingId");
+                _TaxTrackingId = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("TaxTrackingId");
+                OnTaxTrackingIdChanged();
+            }
+        }
+        private global::System.String _TaxTrackingId;
+        partial void OnTaxTrackingIdChanging(global::System.String value);
+        partial void OnTaxTrackingIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Parent
+        {
+            get
+            {
+                return _Parent;
+            }
+            set
+            {
+                OnParentChanging(value);
+                ReportPropertyChanging("Parent");
+                _Parent = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Parent");
+                OnParentChanged();
+            }
+        }
+        private global::System.String _Parent;
+        partial void OnParentChanging(global::System.String value);
+        partial void OnParentChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> BasicPay
+        {
+            get
+            {
+                return _BasicPay;
+            }
+            set
+            {
+                OnBasicPayChanging(value);
+                ReportPropertyChanging("BasicPay");
+                _BasicPay = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("BasicPay");
+                OnBasicPayChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _BasicPay;
+        partial void OnBasicPayChanging(Nullable<global::System.Decimal> value);
+        partial void OnBasicPayChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.Decimal Amount
@@ -5037,6 +6795,30 @@ namespace DAL
         private global::System.Decimal _Amount;
         partial void OnAmountChanging(global::System.Decimal value);
         partial void OnAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> Balance
+        {
+            get
+            {
+                return _Balance;
+            }
+            set
+            {
+                OnBalanceChanging(value);
+                ReportPropertyChanging("Balance");
+                _Balance = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Balance");
+                OnBalanceChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _Balance;
+        partial void OnBalanceChanging(Nullable<global::System.Decimal> value);
+        partial void OnBalanceChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -5091,30 +6873,6 @@ namespace DAL
         private global::System.Boolean _Enabled;
         partial void OnEnabledChanging(global::System.Boolean value);
         partial void OnEnabledChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> BasicPay
-        {
-            get
-            {
-                return _BasicPay;
-            }
-            set
-            {
-                OnBasicPayChanging(value);
-                ReportPropertyChanging("BasicPay");
-                _BasicPay = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("BasicPay");
-                OnBasicPayChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _BasicPay;
-        partial void OnBasicPayChanging(Nullable<global::System.Decimal> value);
-        partial void OnBasicPayChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -5187,78 +6945,6 @@ namespace DAL
         private Nullable<global::System.Boolean> _EmpTrack;
         partial void OnEmpTrackChanging(Nullable<global::System.Boolean> value);
         partial void OnEmpTrackChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> Balance
-        {
-            get
-            {
-                return _Balance;
-            }
-            set
-            {
-                OnBalanceChanging(value);
-                ReportPropertyChanging("Balance");
-                _Balance = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Balance");
-                OnBalanceChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _Balance;
-        partial void OnBalanceChanging(Nullable<global::System.Decimal> value);
-        partial void OnBalanceChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String ItemTypeId
-        {
-            get
-            {
-                return _ItemTypeId;
-            }
-            set
-            {
-                OnItemTypeIdChanging(value);
-                ReportPropertyChanging("ItemTypeId");
-                _ItemTypeId = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("ItemTypeId");
-                OnItemTypeIdChanged();
-            }
-        }
-        private global::System.String _ItemTypeId;
-        partial void OnItemTypeIdChanging(global::System.String value);
-        partial void OnItemTypeIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String TaxTrackingId
-        {
-            get
-            {
-                return _TaxTrackingId;
-            }
-            set
-            {
-                OnTaxTrackingIdChanging(value);
-                ReportPropertyChanging("TaxTrackingId");
-                _TaxTrackingId = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("TaxTrackingId");
-                OnTaxTrackingIdChanged();
-            }
-        }
-        private global::System.String _TaxTrackingId;
-        partial void OnTaxTrackingIdChanging(global::System.String value);
-        partial void OnTaxTrackingIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -5388,105 +7074,6 @@ namespace DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String Parent
-        {
-            get
-            {
-                return _Parent;
-            }
-            set
-            {
-                OnParentChanging(value);
-                ReportPropertyChanging("Parent");
-                _Parent = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Parent");
-                OnParentChanged();
-            }
-        }
-        private global::System.String _Parent;
-        partial void OnParentChanging(global::System.String value);
-        partial void OnParentChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String EmpNo
-        {
-            get
-            {
-                return _EmpNo;
-            }
-            set
-            {
-                OnEmpNoChanging(value);
-                ReportPropertyChanging("EmpNo");
-                _EmpNo = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("EmpNo");
-                OnEmpNoChanged();
-            }
-        }
-        private global::System.String _EmpNo;
-        partial void OnEmpNoChanging(global::System.String value);
-        partial void OnEmpNoChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 EmployeeId
-        {
-            get
-            {
-                return _EmployeeId;
-            }
-            set
-            {
-                if (_EmployeeId != value)
-                {
-                    OnEmployeeIdChanging(value);
-                    ReportPropertyChanging("EmployeeId");
-                    _EmployeeId = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("EmployeeId");
-                    OnEmployeeIdChanged();
-                }
-            }
-        }
-        private global::System.Int32 _EmployeeId;
-        partial void OnEmployeeIdChanging(global::System.Int32 value);
-        partial void OnEmployeeIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String OtherNames
-        {
-            get
-            {
-                return _OtherNames;
-            }
-            set
-            {
-                OnOtherNamesChanging(value);
-                ReportPropertyChanging("OtherNames");
-                _OtherNames = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("OtherNames");
-                OnOtherNamesChanged();
-            }
-        }
-        private global::System.String _OtherNames;
-        partial void OnOtherNamesChanging(global::System.String value);
-        partial void OnOtherNamesChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
         public Nullable<global::System.DateTime> DoB
         {
             get
@@ -5529,6 +7116,54 @@ namespace DAL
         private global::System.String _Gender;
         partial void OnGenderChanging(global::System.String value);
         partial void OnGenderChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String MaritalStatus
+        {
+            get
+            {
+                return _MaritalStatus;
+            }
+            set
+            {
+                OnMaritalStatusChanging(value);
+                ReportPropertyChanging("MaritalStatus");
+                _MaritalStatus = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("MaritalStatus");
+                OnMaritalStatusChanged();
+            }
+        }
+        private global::System.String _MaritalStatus;
+        partial void OnMaritalStatusChanging(global::System.String value);
+        partial void OnMaritalStatusChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsActive
+        {
+            get
+            {
+                return _IsActive;
+            }
+            set
+            {
+                OnIsActiveChanging(value);
+                ReportPropertyChanging("IsActive");
+                _IsActive = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsActive");
+                OnIsActiveChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsActive;
+        partial void OnIsActiveChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsActiveChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -5652,6 +7287,126 @@ namespace DAL
         private global::System.String _SystemId;
         partial void OnSystemIdChanging(global::System.String value);
         partial void OnSystemIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsLoanRepaymentInFull
+        {
+            get
+            {
+                return _IsLoanRepaymentInFull;
+            }
+            set
+            {
+                OnIsLoanRepaymentInFullChanging(value);
+                ReportPropertyChanging("IsLoanRepaymentInFull");
+                _IsLoanRepaymentInFull = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsLoanRepaymentInFull");
+                OnIsLoanRepaymentInFullChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsLoanRepaymentInFull;
+        partial void OnIsLoanRepaymentInFullChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsLoanRepaymentInFullChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> LoanBeingRepayedId
+        {
+            get
+            {
+                return _LoanBeingRepayedId;
+            }
+            set
+            {
+                OnLoanBeingRepayedIdChanging(value);
+                ReportPropertyChanging("LoanBeingRepayedId");
+                _LoanBeingRepayedId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LoanBeingRepayedId");
+                OnLoanBeingRepayedIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _LoanBeingRepayedId;
+        partial void OnLoanBeingRepayedIdChanging(Nullable<global::System.Int32> value);
+        partial void OnLoanBeingRepayedIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> SaccoBeingRepayedId
+        {
+            get
+            {
+                return _SaccoBeingRepayedId;
+            }
+            set
+            {
+                OnSaccoBeingRepayedIdChanging(value);
+                ReportPropertyChanging("SaccoBeingRepayedId");
+                _SaccoBeingRepayedId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SaccoBeingRepayedId");
+                OnSaccoBeingRepayedIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _SaccoBeingRepayedId;
+        partial void OnSaccoBeingRepayedIdChanging(Nullable<global::System.Int32> value);
+        partial void OnSaccoBeingRepayedIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsLoanRepaymentInCash
+        {
+            get
+            {
+                return _IsLoanRepaymentInCash;
+            }
+            set
+            {
+                OnIsLoanRepaymentInCashChanging(value);
+                ReportPropertyChanging("IsLoanRepaymentInCash");
+                _IsLoanRepaymentInCash = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsLoanRepaymentInCash");
+                OnIsLoanRepaymentInCashChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsLoanRepaymentInCash;
+        partial void OnIsLoanRepaymentInCashChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsLoanRepaymentInCashChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsSharesRepaymentInCash
+        {
+            get
+            {
+                return _IsSharesRepaymentInCash;
+            }
+            set
+            {
+                OnIsSharesRepaymentInCashChanging(value);
+                ReportPropertyChanging("IsSharesRepaymentInCash");
+                _IsSharesRepaymentInCash = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsSharesRepaymentInCash");
+                OnIsSharesRepaymentInCashChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsSharesRepaymentInCash;
+        partial void OnIsSharesRepaymentInCashChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsSharesRepaymentInCashChanged();
 
         #endregion
 
@@ -6495,13 +8250,15 @@ namespace DAL
         /// </summary>
         /// <param name="period">Initial value of the Period property.</param>
         /// <param name="year">Initial value of the Year property.</param>
+        /// <param name="employerId">Initial value of the EmployerId property.</param>
         /// <param name="isOpen">Initial value of the IsOpen property.</param>
         /// <param name="processed">Initial value of the Processed property.</param>
-        public static Payroll CreatePayroll(global::System.Int32 period, global::System.Int32 year, global::System.Boolean isOpen, global::System.Boolean processed)
+        public static Payroll CreatePayroll(global::System.Int32 period, global::System.Int32 year, global::System.Int32 employerId, global::System.Boolean isOpen, global::System.Boolean processed)
         {
             Payroll payroll = new Payroll();
             payroll.Period = period;
             payroll.Year = year;
+            payroll.EmployerId = employerId;
             payroll.IsOpen = isOpen;
             payroll.Processed = processed;
             return payroll;
@@ -6568,9 +8325,9 @@ namespace DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> EmployerId
+        public global::System.Int32 EmployerId
         {
             get
             {
@@ -6578,15 +8335,18 @@ namespace DAL
             }
             set
             {
-                OnEmployerIdChanging(value);
-                ReportPropertyChanging("EmployerId");
-                _EmployerId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("EmployerId");
-                OnEmployerIdChanged();
+                if (_EmployerId != value)
+                {
+                    OnEmployerIdChanging(value);
+                    ReportPropertyChanging("EmployerId");
+                    _EmployerId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("EmployerId");
+                    OnEmployerIdChanged();
+                }
             }
         }
-        private Nullable<global::System.Int32> _EmployerId;
-        partial void OnEmployerIdChanging(Nullable<global::System.Int32> value);
+        private global::System.Int32 _EmployerId;
+        partial void OnEmployerIdChanging(global::System.Int32 value);
         partial void OnEmployerIdChanged();
     
         /// <summary>
@@ -6732,6 +8492,54 @@ namespace DAL
         private global::System.Boolean _Processed;
         partial void OnProcessedChanging(global::System.Boolean value);
         partial void OnProcessedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ProcessedBy
+        {
+            get
+            {
+                return _ProcessedBy;
+            }
+            set
+            {
+                OnProcessedByChanging(value);
+                ReportPropertyChanging("ProcessedBy");
+                _ProcessedBy = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ProcessedBy");
+                OnProcessedByChanged();
+            }
+        }
+        private global::System.String _ProcessedBy;
+        partial void OnProcessedByChanging(global::System.String value);
+        partial void OnProcessedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String TimeRun
+        {
+            get
+            {
+                return _TimeRun;
+            }
+            set
+            {
+                OnTimeRunChanging(value);
+                ReportPropertyChanging("TimeRun");
+                _TimeRun = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("TimeRun");
+                OnTimeRunChanged();
+            }
+        }
+        private global::System.String _TimeRun;
+        partial void OnTimeRunChanging(global::System.String value);
+        partial void OnTimeRunChanged();
 
         #endregion
 
@@ -7200,6 +9008,54 @@ namespace DAL
         private global::System.String _Description;
         partial void OnDescriptionChanging(global::System.String value);
         partial void OnDescriptionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Status
+        {
+            get
+            {
+                return _Status;
+            }
+            set
+            {
+                OnStatusChanging(value);
+                ReportPropertyChanging("Status");
+                _Status = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Status");
+                OnStatusChanged();
+            }
+        }
+        private global::System.String _Status;
+        partial void OnStatusChanging(global::System.String value);
+        partial void OnStatusChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsDefault
+        {
+            get
+            {
+                return _IsDefault;
+            }
+            set
+            {
+                OnIsDefaultChanging(value);
+                ReportPropertyChanging("IsDefault");
+                _IsDefault = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsDefault");
+                OnIsDefaultChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsDefault;
+        partial void OnIsDefaultChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsDefaultChanged();
 
         #endregion
 
@@ -7432,6 +9288,30 @@ namespace DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> EmployerId
+        {
+            get
+            {
+                return _EmployerId;
+            }
+            set
+            {
+                OnEmployerIdChanging(value);
+                ReportPropertyChanging("EmployerId");
+                _EmployerId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EmployerId");
+                OnEmployerIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _EmployerId;
+        partial void OnEmployerIdChanging(Nullable<global::System.Int32> value);
+        partial void OnEmployerIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.Int32 EmpTxnId
@@ -7668,6 +9548,54 @@ namespace DAL
         private Nullable<global::System.Decimal> _YTD;
         partial void OnYTDChanging(Nullable<global::System.Decimal> value);
         partial void OnYTDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsLoanRepaymentInCash
+        {
+            get
+            {
+                return _IsLoanRepaymentInCash;
+            }
+            set
+            {
+                OnIsLoanRepaymentInCashChanging(value);
+                ReportPropertyChanging("IsLoanRepaymentInCash");
+                _IsLoanRepaymentInCash = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsLoanRepaymentInCash");
+                OnIsLoanRepaymentInCashChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsLoanRepaymentInCash;
+        partial void OnIsLoanRepaymentInCashChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsLoanRepaymentInCashChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsSharesRepaymentInCash
+        {
+            get
+            {
+                return _IsSharesRepaymentInCash;
+            }
+            set
+            {
+                OnIsSharesRepaymentInCashChanging(value);
+                ReportPropertyChanging("IsSharesRepaymentInCash");
+                _IsSharesRepaymentInCash = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsSharesRepaymentInCash");
+                OnIsSharesRepaymentInCashChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsSharesRepaymentInCash;
+        partial void OnIsSharesRepaymentInCashChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsSharesRepaymentInCashChanged();
 
         #endregion
 
@@ -7697,13 +9625,12 @@ namespace DAL
         /// <param name="amount">Initial value of the Amount property.</param>
         /// <param name="dEType">Initial value of the DEType property.</param>
         /// <param name="isStatutory">Initial value of the IsStatutory property.</param>
-        public static PayslipDet_Temp CreatePayslipDet_Temp(global::System.Int32 id, global::System.String empNo, global::System.Int32 employeeId, global::System.Int32 employerId, global::System.Int32 empTxnId, global::System.Int32 period, global::System.String description, global::System.String taxTracking, global::System.Decimal amount, global::System.String dEType, global::System.Boolean isStatutory)
+        public static PayslipDet_Temp CreatePayslipDet_Temp(global::System.Int32 id, global::System.String empNo, global::System.Int32 employeeId, global::System.Int32 empTxnId, global::System.Int32 period, global::System.String description, global::System.String taxTracking, global::System.Decimal amount, global::System.String dEType, global::System.Boolean isStatutory)
         {
             PayslipDet_Temp payslipDet_Temp = new PayslipDet_Temp();
             payslipDet_Temp.Id = id;
             payslipDet_Temp.EmpNo = empNo;
             payslipDet_Temp.EmployeeId = employeeId;
-            payslipDet_Temp.EmployerId = employerId;
             payslipDet_Temp.EmpTxnId = empTxnId;
             payslipDet_Temp.Period = period;
             payslipDet_Temp.Description = description;
@@ -7792,15 +9719,13 @@ namespace DAL
         private global::System.Int32 _EmployeeId;
         partial void OnEmployeeIdChanging(global::System.Int32 value);
         partial void OnEmployeeIdChanged();
-
-
-
+    
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int32 EmployerId
+        public Nullable<global::System.Int32> EmployerId
         {
             get
             {
@@ -7808,18 +9733,17 @@ namespace DAL
             }
             set
             {
-                OnEmployeeIdChanging(value);
+                OnEmployerIdChanging(value);
                 ReportPropertyChanging("EmployerId");
                 _EmployerId = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("EmployerId");
-                OnEmployeeIdChanged();
+                OnEmployerIdChanged();
             }
         }
-        private global::System.Int32 _EmployerId;
-        partial void OnEmployerIdChanging(global::System.Int32 value);
+        private Nullable<global::System.Int32> _EmployerId;
+        partial void OnEmployerIdChanging(Nullable<global::System.Int32> value);
         partial void OnEmployerIdChanged();
     
-
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -8059,6 +9983,54 @@ namespace DAL
         private Nullable<global::System.Decimal> _YTD;
         partial void OnYTDChanging(Nullable<global::System.Decimal> value);
         partial void OnYTDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsLoanRepaymentInCash
+        {
+            get
+            {
+                return _IsLoanRepaymentInCash;
+            }
+            set
+            {
+                OnIsLoanRepaymentInCashChanging(value);
+                ReportPropertyChanging("IsLoanRepaymentInCash");
+                _IsLoanRepaymentInCash = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsLoanRepaymentInCash");
+                OnIsLoanRepaymentInCashChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsLoanRepaymentInCash;
+        partial void OnIsLoanRepaymentInCashChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsLoanRepaymentInCashChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsSharesRepaymentInCash
+        {
+            get
+            {
+                return _IsSharesRepaymentInCash;
+            }
+            set
+            {
+                OnIsSharesRepaymentInCashChanging(value);
+                ReportPropertyChanging("IsSharesRepaymentInCash");
+                _IsSharesRepaymentInCash = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsSharesRepaymentInCash");
+                OnIsSharesRepaymentInCashChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsSharesRepaymentInCash;
+        partial void OnIsSharesRepaymentInCashChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsSharesRepaymentInCashChanged();
 
         #endregion
 
@@ -8103,14 +10075,13 @@ namespace DAL
         /// <param name="nSSF">Initial value of the NSSF property.</param>
         /// <param name="nHIF">Initial value of the NHIF property.</param>
         /// <param name="netPay">Initial value of the NetPay property.</param>
-        public static PayslipMaster CreatePayslipMaster(global::System.Int32 period, global::System.Int32 year, global::System.String empNo, global::System.Int32 employeeId, global::System.Int32 employerId, global::System.DateTime paymentDate, global::System.String printedBy, global::System.DateTime printedOn, global::System.String empName, global::System.Decimal payeTax, global::System.Decimal basicPay, global::System.Decimal benefits, global::System.Decimal variables, global::System.Decimal otherDeductions, global::System.Decimal grossTaxableEarnings, global::System.Decimal netTaxableEarnings, global::System.Decimal mortgageRelief, global::System.Decimal insuranceRelief, global::System.Decimal grossTax, global::System.Decimal personalRelief, global::System.Decimal pensionEmployer, global::System.Decimal employerNSSF, global::System.Decimal pensionEmployee, global::System.Decimal nSSF, global::System.Decimal nHIF, global::System.Decimal netPay)
+        public static PayslipMaster CreatePayslipMaster(global::System.Int32 period, global::System.Int32 year, global::System.String empNo, global::System.Int32 employeeId, global::System.DateTime paymentDate, global::System.String printedBy, global::System.DateTime printedOn, global::System.String empName, global::System.Decimal payeTax, global::System.Decimal basicPay, global::System.Decimal benefits, global::System.Decimal variables, global::System.Decimal otherDeductions, global::System.Decimal grossTaxableEarnings, global::System.Decimal netTaxableEarnings, global::System.Decimal mortgageRelief, global::System.Decimal insuranceRelief, global::System.Decimal grossTax, global::System.Decimal personalRelief, global::System.Decimal pensionEmployer, global::System.Decimal employerNSSF, global::System.Decimal pensionEmployee, global::System.Decimal nSSF, global::System.Decimal nHIF, global::System.Decimal netPay)
         {
             PayslipMaster payslipMaster = new PayslipMaster();
             payslipMaster.Period = period;
             payslipMaster.Year = year;
             payslipMaster.EmpNo = empNo;
             payslipMaster.EmployeeId = employeeId;
-            payslipMaster.EmployerId = employerId;
             payslipMaster.PaymentDate = paymentDate;
             payslipMaster.PrintedBy = printedBy;
             payslipMaster.PrintedOn = printedOn;
@@ -8243,15 +10214,13 @@ namespace DAL
         private global::System.Int32 _EmployeeId;
         partial void OnEmployeeIdChanging(global::System.Int32 value);
         partial void OnEmployeeIdChanged();
-
-
-
+    
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int32 EmployerId
+        public Nullable<global::System.Int32> EmployerId
         {
             get
             {
@@ -8263,15 +10232,13 @@ namespace DAL
                 ReportPropertyChanging("EmployerId");
                 _EmployerId = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("EmployerId");
-                OnEmployeeIdChanged();
+                OnEmployerIdChanged();
             }
         }
-        private global::System.Int32 _EmployerId;
-        partial void OnEmployerIdChanging(global::System.Int32 value);
+        private Nullable<global::System.Int32> _EmployerId;
+        partial void OnEmployerIdChanging(Nullable<global::System.Int32> value);
         partial void OnEmployerIdChanged();
     
-
-
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -9063,6 +11030,78 @@ namespace DAL
         private global::System.Decimal _NetPay;
         partial void OnNetPayChanging(global::System.Decimal value);
         partial void OnNetPayChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> SHIF
+        {
+            get
+            {
+                return _SHIF;
+            }
+            set
+            {
+                OnSHIFChanging(value);
+                ReportPropertyChanging("SHIF");
+                _SHIF = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SHIF");
+                OnSHIFChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _SHIF;
+        partial void OnSHIFChanging(Nullable<global::System.Decimal> value);
+        partial void OnSHIFChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> AHL
+        {
+            get
+            {
+                return _AHL;
+            }
+            set
+            {
+                OnAHLChanging(value);
+                ReportPropertyChanging("AHL");
+                _AHL = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AHL");
+                OnAHLChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _AHL;
+        partial void OnAHLChanging(Nullable<global::System.Decimal> value);
+        partial void OnAHLChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String IDNo
+        {
+            get
+            {
+                return _IDNo;
+            }
+            set
+            {
+                OnIDNoChanging(value);
+                ReportPropertyChanging("IDNo");
+                _IDNo = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("IDNo");
+                OnIDNoChanged();
+            }
+        }
+        private global::System.String _IDNo;
+        partial void OnIDNoChanging(global::System.String value);
+        partial void OnIDNoChanged();
 
         #endregion
 
@@ -9107,14 +11146,13 @@ namespace DAL
         /// <param name="nSSF">Initial value of the NSSF property.</param>
         /// <param name="nHIF">Initial value of the NHIF property.</param>
         /// <param name="netPay">Initial value of the NetPay property.</param>
-        public static PayslipMaster_Temp CreatePayslipMaster_Temp(global::System.Int32 period, global::System.Int32 year, global::System.String empNo, global::System.Int32 employeeId, global::System.Int32 employerId, global::System.DateTime paymentDate, global::System.String printedBy, global::System.DateTime printedOn, global::System.String empName, global::System.Decimal payeTax, global::System.Decimal basicPay, global::System.Decimal benefits, global::System.Decimal variables, global::System.Decimal otherDeductions, global::System.Decimal grossTaxableEarnings, global::System.Decimal netTaxableEarnings, global::System.Decimal mortgageRelief, global::System.Decimal insuranceRelief, global::System.Decimal grossTax, global::System.Decimal personalRelief, global::System.Decimal pensionEmployer, global::System.Decimal employerNSSF, global::System.Decimal pensionEmployee, global::System.Decimal nSSF, global::System.Decimal nHIF, global::System.Decimal netPay)
+        public static PayslipMaster_Temp CreatePayslipMaster_Temp(global::System.Int32 period, global::System.Int32 year, global::System.String empNo, global::System.Int32 employeeId, global::System.DateTime paymentDate, global::System.String printedBy, global::System.DateTime printedOn, global::System.String empName, global::System.Decimal payeTax, global::System.Decimal basicPay, global::System.Decimal benefits, global::System.Decimal variables, global::System.Decimal otherDeductions, global::System.Decimal grossTaxableEarnings, global::System.Decimal netTaxableEarnings, global::System.Decimal mortgageRelief, global::System.Decimal insuranceRelief, global::System.Decimal grossTax, global::System.Decimal personalRelief, global::System.Decimal pensionEmployer, global::System.Decimal employerNSSF, global::System.Decimal pensionEmployee, global::System.Decimal nSSF, global::System.Decimal nHIF, global::System.Decimal netPay)
         {
             PayslipMaster_Temp payslipMaster_Temp = new PayslipMaster_Temp();
             payslipMaster_Temp.Period = period;
             payslipMaster_Temp.Year = year;
             payslipMaster_Temp.EmpNo = empNo;
             payslipMaster_Temp.EmployeeId = employeeId;
-            payslipMaster_Temp.EmployerId = employerId;
             payslipMaster_Temp.PaymentDate = paymentDate;
             payslipMaster_Temp.PrintedBy = printedBy;
             payslipMaster_Temp.PrintedOn = printedOn;
@@ -9251,6 +11289,30 @@ namespace DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> EmployerId
+        {
+            get
+            {
+                return _EmployerId;
+            }
+            set
+            {
+                OnEmployerIdChanging(value);
+                ReportPropertyChanging("EmployerId");
+                _EmployerId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EmployerId");
+                OnEmployerIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _EmployerId;
+        partial void OnEmployerIdChanging(Nullable<global::System.Int32> value);
+        partial void OnEmployerIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.DateTime PaymentDate
@@ -10039,12 +12101,82 @@ namespace DAL
         private global::System.Decimal _NetPay;
         partial void OnNetPayChanging(global::System.Decimal value);
         partial void OnNetPayChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> SHIF
+        {
+            get
+            {
+                return _SHIF;
+            }
+            set
+            {
+                OnSHIFChanging(value);
+                ReportPropertyChanging("SHIF");
+                _SHIF = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SHIF");
+                OnSHIFChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _SHIF;
+        partial void OnSHIFChanging(Nullable<global::System.Decimal> value);
+        partial void OnSHIFChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> AHL
+        {
+            get
+            {
+                return _AHL;
+            }
+            set
+            {
+                OnAHLChanging(value);
+                ReportPropertyChanging("AHL");
+                _AHL = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AHL");
+                OnAHLChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _AHL;
+        partial void OnAHLChanging(Nullable<global::System.Decimal> value);
+        partial void OnAHLChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String IDNo
+        {
+            get
+            {
+                return _IDNo;
+            }
+            set
+            {
+                OnIDNoChanging(value);
+                ReportPropertyChanging("IDNo");
+                _IDNo = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("IDNo");
+                OnIDNoChanged();
+            }
+        }
+        private global::System.String _IDNo;
+        partial void OnIDNoChanging(global::System.String value);
+        partial void OnIDNoChanged();
 
         #endregion
 
-
-
-        public int EmployerId { get; set; }
+    
     }
     
     /// <summary>
@@ -10552,16 +12684,16 @@ namespace DAL
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SBPayrollDBModel", "FK_spAllowedReportsRolesMenus_spReportsMenuItems", "spReportsMenuItem")]
+        [EdmRelationshipNavigationPropertyAttribute("SBPayrollDBModel", "FK_spAllowedReportsRolesMenus_spReportsMenuItem", "spReportsMenuItem")]
         public spReportsMenuItem spReportsMenuItem
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<spReportsMenuItem>("SBPayrollDBModel.FK_spAllowedReportsRolesMenus_spReportsMenuItems", "spReportsMenuItem").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<spReportsMenuItem>("SBPayrollDBModel.FK_spAllowedReportsRolesMenus_spReportsMenuItem", "spReportsMenuItem").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<spReportsMenuItem>("SBPayrollDBModel.FK_spAllowedReportsRolesMenus_spReportsMenuItems", "spReportsMenuItem").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<spReportsMenuItem>("SBPayrollDBModel.FK_spAllowedReportsRolesMenus_spReportsMenuItem", "spReportsMenuItem").Value = value;
             }
         }
         /// <summary>
@@ -10573,13 +12705,13 @@ namespace DAL
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<spReportsMenuItem>("SBPayrollDBModel.FK_spAllowedReportsRolesMenus_spReportsMenuItems", "spReportsMenuItem");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<spReportsMenuItem>("SBPayrollDBModel.FK_spAllowedReportsRolesMenus_spReportsMenuItem", "spReportsMenuItem");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<spReportsMenuItem>("SBPayrollDBModel.FK_spAllowedReportsRolesMenus_spReportsMenuItems", "spReportsMenuItem", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<spReportsMenuItem>("SBPayrollDBModel.FK_spAllowedReportsRolesMenus_spReportsMenuItem", "spReportsMenuItem", value);
                 }
             }
         }
@@ -10729,16 +12861,16 @@ namespace DAL
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SBPayrollDBModel", "FK_spAllowedRoleMenus_spMenuItems", "spMenuItem")]
+        [EdmRelationshipNavigationPropertyAttribute("SBPayrollDBModel", "FK_spAllowedRoleMenus_spMenuItem", "spMenuItem")]
         public spMenuItem spMenuItem
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<spMenuItem>("SBPayrollDBModel.FK_spAllowedRoleMenus_spMenuItems", "spMenuItem").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<spMenuItem>("SBPayrollDBModel.FK_spAllowedRoleMenus_spMenuItem", "spMenuItem").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<spMenuItem>("SBPayrollDBModel.FK_spAllowedRoleMenus_spMenuItems", "spMenuItem").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<spMenuItem>("SBPayrollDBModel.FK_spAllowedRoleMenus_spMenuItem", "spMenuItem").Value = value;
             }
         }
         /// <summary>
@@ -10750,13 +12882,13 @@ namespace DAL
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<spMenuItem>("SBPayrollDBModel.FK_spAllowedRoleMenus_spMenuItems", "spMenuItem");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<spMenuItem>("SBPayrollDBModel.FK_spAllowedRoleMenus_spMenuItem", "spMenuItem");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<spMenuItem>("SBPayrollDBModel.FK_spAllowedRoleMenus_spMenuItems", "spMenuItem", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<spMenuItem>("SBPayrollDBModel.FK_spAllowedRoleMenus_spMenuItem", "spMenuItem", value);
                 }
             }
         }
@@ -11114,18 +13246,18 @@ namespace DAL
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SBPayrollDBModel", "FK_spAllowedRoleMenus_spMenuItems", "spAllowedRoleMenu")]
+        [EdmRelationshipNavigationPropertyAttribute("SBPayrollDBModel", "FK_spAllowedRoleMenus_spMenuItem", "spAllowedRoleMenu")]
         public EntityCollection<spAllowedRoleMenu> spAllowedRoleMenus
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<spAllowedRoleMenu>("SBPayrollDBModel.FK_spAllowedRoleMenus_spMenuItems", "spAllowedRoleMenu");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<spAllowedRoleMenu>("SBPayrollDBModel.FK_spAllowedRoleMenus_spMenuItem", "spAllowedRoleMenu");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<spAllowedRoleMenu>("SBPayrollDBModel.FK_spAllowedRoleMenus_spMenuItems", "spAllowedRoleMenu", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<spAllowedRoleMenu>("SBPayrollDBModel.FK_spAllowedRoleMenus_spMenuItem", "spAllowedRoleMenu", value);
                 }
             }
         }
@@ -11249,18 +13381,18 @@ namespace DAL
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SBPayrollDBModel", "FK_spAllowedReportsRolesMenus_spReportsMenuItems", "spAllowedReportsRolesMenu")]
+        [EdmRelationshipNavigationPropertyAttribute("SBPayrollDBModel", "FK_spAllowedReportsRolesMenus_spReportsMenuItem", "spAllowedReportsRolesMenu")]
         public EntityCollection<spAllowedReportsRolesMenu> spAllowedReportsRolesMenus
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<spAllowedReportsRolesMenu>("SBPayrollDBModel.FK_spAllowedReportsRolesMenus_spReportsMenuItems", "spAllowedReportsRolesMenu");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<spAllowedReportsRolesMenu>("SBPayrollDBModel.FK_spAllowedReportsRolesMenus_spReportsMenuItem", "spAllowedReportsRolesMenu");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<spAllowedReportsRolesMenu>("SBPayrollDBModel.FK_spAllowedReportsRolesMenus_spReportsMenuItems", "spAllowedReportsRolesMenu", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<spAllowedReportsRolesMenu>("SBPayrollDBModel.FK_spAllowedReportsRolesMenus_spReportsMenuItem", "spAllowedReportsRolesMenu", value);
                 }
             }
         }
@@ -11421,21 +13553,21 @@ namespace DAL
         /// <param name="roleId">Initial value of the RoleId property.</param>
         /// <param name="userName">Initial value of the UserName property.</param>
         /// <param name="password">Initial value of the Password property.</param>
+        /// <param name="systemId">Initial value of the SystemId property.</param>
         /// <param name="status">Initial value of the Status property.</param>
         /// <param name="locked">Initial value of the Locked property.</param>
         /// <param name="isDeleted">Initial value of the IsDeleted property.</param>
-        /// <param name="systemId">Initial value of the SystemId property.</param>
-        public static spUser CreatespUser(global::System.Int32 id, global::System.Int32 roleId, global::System.String userName, global::System.String password, global::System.String status, global::System.Boolean locked, global::System.Boolean isDeleted, global::System.String systemId)
+        public static spUser CreatespUser(global::System.Int32 id, global::System.Int32 roleId, global::System.String userName, global::System.String password, global::System.String systemId, global::System.String status, global::System.Boolean locked, global::System.Boolean isDeleted)
         {
             spUser spUser = new spUser();
             spUser.Id = id;
             spUser.RoleId = roleId;
             spUser.UserName = userName;
             spUser.Password = password;
+            spUser.SystemId = systemId;
             spUser.Status = status;
             spUser.Locked = locked;
             spUser.IsDeleted = isDeleted;
-            spUser.SystemId = systemId;
             return spUser;
         }
 
@@ -11545,98 +13677,50 @@ namespace DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String Status
+        public global::System.String password_hash
         {
             get
             {
-                return _Status;
+                return _password_hash;
             }
             set
             {
-                OnStatusChanging(value);
-                ReportPropertyChanging("Status");
-                _Status = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Status");
-                OnStatusChanged();
+                Onpassword_hashChanging(value);
+                ReportPropertyChanging("password_hash");
+                _password_hash = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("password_hash");
+                Onpassword_hashChanged();
             }
         }
-        private global::System.String _Status;
-        partial void OnStatusChanging(global::System.String value);
-        partial void OnStatusChanged();
+        private global::System.String _password_hash;
+        partial void Onpassword_hashChanging(global::System.String value);
+        partial void Onpassword_hashChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Boolean Locked
+        public global::System.String password_salt
         {
             get
             {
-                return _Locked;
+                return _password_salt;
             }
             set
             {
-                OnLockedChanging(value);
-                ReportPropertyChanging("Locked");
-                _Locked = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Locked");
-                OnLockedChanged();
+                Onpassword_saltChanging(value);
+                ReportPropertyChanging("password_salt");
+                _password_salt = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("password_salt");
+                Onpassword_saltChanged();
             }
         }
-        private global::System.Boolean _Locked;
-        partial void OnLockedChanging(global::System.Boolean value);
-        partial void OnLockedChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean IsDeleted
-        {
-            get
-            {
-                return _IsDeleted;
-            }
-            set
-            {
-                OnIsDeletedChanging(value);
-                ReportPropertyChanging("IsDeleted");
-                _IsDeleted = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("IsDeleted");
-                OnIsDeletedChanged();
-            }
-        }
-        private global::System.Boolean _IsDeleted;
-        partial void OnIsDeletedChanging(global::System.Boolean value);
-        partial void OnIsDeletedChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String SystemId
-        {
-            get
-            {
-                return _SystemId;
-            }
-            set
-            {
-                OnSystemIdChanging(value);
-                ReportPropertyChanging("SystemId");
-                _SystemId = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("SystemId");
-                OnSystemIdChanged();
-            }
-        }
-        private global::System.String _SystemId;
-        partial void OnSystemIdChanging(global::System.String value);
-        partial void OnSystemIdChanged();
+        private global::System.String _password_salt;
+        partial void Onpassword_saltChanging(global::System.String value);
+        partial void Onpassword_saltChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -11877,6 +13961,102 @@ namespace DAL
         private global::System.String _Photo;
         partial void OnPhotoChanging(global::System.String value);
         partial void OnPhotoChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String SystemId
+        {
+            get
+            {
+                return _SystemId;
+            }
+            set
+            {
+                OnSystemIdChanging(value);
+                ReportPropertyChanging("SystemId");
+                _SystemId = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("SystemId");
+                OnSystemIdChanged();
+            }
+        }
+        private global::System.String _SystemId;
+        partial void OnSystemIdChanging(global::System.String value);
+        partial void OnSystemIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Status
+        {
+            get
+            {
+                return _Status;
+            }
+            set
+            {
+                OnStatusChanging(value);
+                ReportPropertyChanging("Status");
+                _Status = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Status");
+                OnStatusChanged();
+            }
+        }
+        private global::System.String _Status;
+        partial void OnStatusChanging(global::System.String value);
+        partial void OnStatusChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean Locked
+        {
+            get
+            {
+                return _Locked;
+            }
+            set
+            {
+                OnLockedChanging(value);
+                ReportPropertyChanging("Locked");
+                _Locked = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Locked");
+                OnLockedChanged();
+            }
+        }
+        private global::System.Boolean _Locked;
+        partial void OnLockedChanging(global::System.Boolean value);
+        partial void OnLockedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsDeleted
+        {
+            get
+            {
+                return _IsDeleted;
+            }
+            set
+            {
+                OnIsDeletedChanging(value);
+                ReportPropertyChanging("IsDeleted");
+                _IsDeleted = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsDeleted");
+                OnIsDeletedChanged();
+            }
+        }
+        private global::System.Boolean _IsDeleted;
+        partial void OnIsDeletedChanging(global::System.Boolean value);
+        partial void OnIsDeletedChanged();
 
         #endregion
 
@@ -11972,6 +14152,163 @@ namespace DAL
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="SBPayrollDBModel", Name="sysdiagram")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class sysdiagram : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new sysdiagram object.
+        /// </summary>
+        /// <param name="name">Initial value of the name property.</param>
+        /// <param name="principal_id">Initial value of the principal_id property.</param>
+        /// <param name="diagram_id">Initial value of the diagram_id property.</param>
+        public static sysdiagram Createsysdiagram(global::System.String name, global::System.Int32 principal_id, global::System.Int32 diagram_id)
+        {
+            sysdiagram sysdiagram = new sysdiagram();
+            sysdiagram.name = name;
+            sysdiagram.principal_id = principal_id;
+            sysdiagram.diagram_id = diagram_id;
+            return sysdiagram;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                OnnameChanging(value);
+                ReportPropertyChanging("name");
+                _name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("name");
+                OnnameChanged();
+            }
+        }
+        private global::System.String _name;
+        partial void OnnameChanging(global::System.String value);
+        partial void OnnameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 principal_id
+        {
+            get
+            {
+                return _principal_id;
+            }
+            set
+            {
+                Onprincipal_idChanging(value);
+                ReportPropertyChanging("principal_id");
+                _principal_id = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("principal_id");
+                Onprincipal_idChanged();
+            }
+        }
+        private global::System.Int32 _principal_id;
+        partial void Onprincipal_idChanging(global::System.Int32 value);
+        partial void Onprincipal_idChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 diagram_id
+        {
+            get
+            {
+                return _diagram_id;
+            }
+            set
+            {
+                if (_diagram_id != value)
+                {
+                    Ondiagram_idChanging(value);
+                    ReportPropertyChanging("diagram_id");
+                    _diagram_id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("diagram_id");
+                    Ondiagram_idChanged();
+                }
+            }
+        }
+        private global::System.Int32 _diagram_id;
+        partial void Ondiagram_idChanging(global::System.Int32 value);
+        partial void Ondiagram_idChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> version
+        {
+            get
+            {
+                return _version;
+            }
+            set
+            {
+                OnversionChanging(value);
+                ReportPropertyChanging("version");
+                _version = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("version");
+                OnversionChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _version;
+        partial void OnversionChanging(Nullable<global::System.Int32> value);
+        partial void OnversionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.Byte[] definition
+        {
+            get
+            {
+                return StructuralObject.GetValidValue(_definition);
+            }
+            set
+            {
+                OndefinitionChanging(value);
+                ReportPropertyChanging("definition");
+                _definition = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("definition");
+                OndefinitionChanged();
+            }
+        }
+        private global::System.Byte[] _definition;
+        partial void OndefinitionChanging(global::System.Byte[] value);
+        partial void OndefinitionChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="SBPayrollDBModel", Name="TaxTracking")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -12044,6 +14381,54 @@ namespace DAL
         private global::System.String _Description;
         partial void OnDescriptionChanging(global::System.String value);
         partial void OnDescriptionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Status
+        {
+            get
+            {
+                return _Status;
+            }
+            set
+            {
+                OnStatusChanging(value);
+                ReportPropertyChanging("Status");
+                _Status = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Status");
+                OnStatusChanged();
+            }
+        }
+        private global::System.String _Status;
+        partial void OnStatusChanging(global::System.String value);
+        partial void OnStatusChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsDefault
+        {
+            get
+            {
+                return _IsDefault;
+            }
+            set
+            {
+                OnIsDefaultChanging(value);
+                ReportPropertyChanging("IsDefault");
+                _IsDefault = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsDefault");
+                OnIsDefaultChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsDefault;
+        partial void OnIsDefaultChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsDefaultChanged();
 
         #endregion
 
@@ -12074,6 +14459,207 @@ namespace DAL
 
         #endregion
 
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="SBPayrollDBModel", Name="tbl_LAS")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class tbl_LAS : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new tbl_LAS object.
+        /// </summary>
+        /// <param name="las_id">Initial value of the las_id property.</param>
+        public static tbl_LAS Createtbl_LAS(global::System.Int32 las_id)
+        {
+            tbl_LAS tbl_LAS = new tbl_LAS();
+            tbl_LAS.las_id = las_id;
+            return tbl_LAS;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 las_id
+        {
+            get
+            {
+                return _las_id;
+            }
+            set
+            {
+                if (_las_id != value)
+                {
+                    Onlas_idChanging(value);
+                    ReportPropertyChanging("las_id");
+                    _las_id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("las_id");
+                    Onlas_idChanged();
+                }
+            }
+        }
+        private global::System.Int32 _las_id;
+        partial void Onlas_idChanging(global::System.Int32 value);
+        partial void Onlas_idChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String mac_address
+        {
+            get
+            {
+                return _mac_address;
+            }
+            set
+            {
+                Onmac_addressChanging(value);
+                ReportPropertyChanging("mac_address");
+                _mac_address = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("mac_address");
+                Onmac_addressChanged();
+            }
+        }
+        private global::System.String _mac_address;
+        partial void Onmac_addressChanging(global::System.String value);
+        partial void Onmac_addressChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String computer_name
+        {
+            get
+            {
+                return _computer_name;
+            }
+            set
+            {
+                Oncomputer_nameChanging(value);
+                ReportPropertyChanging("computer_name");
+                _computer_name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("computer_name");
+                Oncomputer_nameChanged();
+            }
+        }
+        private global::System.String _computer_name;
+        partial void Oncomputer_nameChanging(global::System.String value);
+        partial void Oncomputer_nameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String activation_key
+        {
+            get
+            {
+                return _activation_key;
+            }
+            set
+            {
+                Onactivation_keyChanging(value);
+                ReportPropertyChanging("activation_key");
+                _activation_key = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("activation_key");
+                Onactivation_keyChanged();
+            }
+        }
+        private global::System.String _activation_key;
+        partial void Onactivation_keyChanging(global::System.String value);
+        partial void Onactivation_keyChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String date_activated
+        {
+            get
+            {
+                return _date_activated;
+            }
+            set
+            {
+                Ondate_activatedChanging(value);
+                ReportPropertyChanging("date_activated");
+                _date_activated = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("date_activated");
+                Ondate_activatedChanged();
+            }
+        }
+        private global::System.String _date_activated;
+        partial void Ondate_activatedChanging(global::System.String value);
+        partial void Ondate_activatedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String next_expiry_date
+        {
+            get
+            {
+                return _next_expiry_date;
+            }
+            set
+            {
+                Onnext_expiry_dateChanging(value);
+                ReportPropertyChanging("next_expiry_date");
+                _next_expiry_date = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("next_expiry_date");
+                Onnext_expiry_dateChanged();
+            }
+        }
+        private global::System.String _next_expiry_date;
+        partial void Onnext_expiry_dateChanging(global::System.String value);
+        partial void Onnext_expiry_dateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String days_for_expiry
+        {
+            get
+            {
+                return _days_for_expiry;
+            }
+            set
+            {
+                Ondays_for_expiryChanging(value);
+                ReportPropertyChanging("days_for_expiry");
+                _days_for_expiry = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("days_for_expiry");
+                Ondays_for_expiryChanged();
+            }
+        }
+        private global::System.String _days_for_expiry;
+        partial void Ondays_for_expiryChanging(global::System.String value);
+        partial void Ondays_for_expiryChanged();
+
+        #endregion
+
+    
     }
     
     /// <summary>
@@ -14306,6 +16892,54 @@ namespace DAL
         private global::System.Int32 _EmployerId;
         partial void OnEmployerIdChanging(global::System.Int32 value);
         partial void OnEmployerIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> SHIF
+        {
+            get
+            {
+                return _SHIF;
+            }
+            set
+            {
+                OnSHIFChanging(value);
+                ReportPropertyChanging("SHIF");
+                _SHIF = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SHIF");
+                OnSHIFChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _SHIF;
+        partial void OnSHIFChanging(Nullable<global::System.Decimal> value);
+        partial void OnSHIFChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> AHL
+        {
+            get
+            {
+                return _AHL;
+            }
+            set
+            {
+                OnAHLChanging(value);
+                ReportPropertyChanging("AHL");
+                _AHL = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AHL");
+                OnAHLChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _AHL;
+        partial void OnAHLChanging(Nullable<global::System.Decimal> value);
+        partial void OnAHLChanged();
 
         #endregion
 
@@ -14325,11 +16959,6 @@ namespace DAL
         /// <summary>
         /// Create a new vwPayrollMaster_Temp object.
         /// </summary>
-        /// <param name="bankName">Initial value of the BankName property.</param>
-        /// <param name="branchName">Initial value of the BranchName property.</param>
-        /// <param name="branchCode">Initial value of the BranchCode property.</param>
-        /// <param name="bankSortCode">Initial value of the BankSortCode property.</param>
-        /// <param name="bankCode">Initial value of the BankCode property.</param>
         /// <param name="period">Initial value of the Period property.</param>
         /// <param name="year">Initial value of the Year property.</param>
         /// <param name="paymentDate">Initial value of the PaymentDate property.</param>
@@ -14355,14 +16984,9 @@ namespace DAL
         /// <param name="insuranceRelief">Initial value of the InsuranceRelief property.</param>
         /// <param name="employeeId">Initial value of the EmployeeId property.</param>
         /// <param name="employerId">Initial value of the EmployerId property.</param>
-        public static vwPayrollMaster_Temp CreatevwPayrollMaster_Temp(global::System.String bankName, global::System.String branchName, global::System.String branchCode, global::System.String bankSortCode, global::System.String bankCode, global::System.Int32 period, global::System.Int32 year, global::System.DateTime paymentDate, global::System.String printedBy, global::System.DateTime printedOn, global::System.String empName, global::System.Decimal payeTax, global::System.Decimal basicPay, global::System.Decimal benefits, global::System.Decimal otherDeductions, global::System.Decimal grossTaxableEarnings, global::System.Decimal netTaxableEarnings, global::System.Decimal grossTax, global::System.Decimal employerNSSF, global::System.Decimal pensionEmployee, global::System.Decimal nSSF, global::System.Decimal nHIF, global::System.Decimal netPay, global::System.Decimal variables, global::System.Decimal mortgageRelief, global::System.Decimal personalRelief, global::System.Decimal pensionEmployer, global::System.Decimal insuranceRelief, global::System.Int32 employeeId, global::System.Int32 employerId)
+        public static vwPayrollMaster_Temp CreatevwPayrollMaster_Temp(global::System.Int32 period, global::System.Int32 year, global::System.DateTime paymentDate, global::System.String printedBy, global::System.DateTime printedOn, global::System.String empName, global::System.Decimal payeTax, global::System.Decimal basicPay, global::System.Decimal benefits, global::System.Decimal otherDeductions, global::System.Decimal grossTaxableEarnings, global::System.Decimal netTaxableEarnings, global::System.Decimal grossTax, global::System.Decimal employerNSSF, global::System.Decimal pensionEmployee, global::System.Decimal nSSF, global::System.Decimal nHIF, global::System.Decimal netPay, global::System.Decimal variables, global::System.Decimal mortgageRelief, global::System.Decimal personalRelief, global::System.Decimal pensionEmployer, global::System.Decimal insuranceRelief, global::System.Int32 employeeId, global::System.Int32 employerId)
         {
             vwPayrollMaster_Temp vwPayrollMaster_Temp = new vwPayrollMaster_Temp();
-            vwPayrollMaster_Temp.BankName = bankName;
-            vwPayrollMaster_Temp.BranchName = branchName;
-            vwPayrollMaster_Temp.BranchCode = branchCode;
-            vwPayrollMaster_Temp.BankSortCode = bankSortCode;
-            vwPayrollMaster_Temp.BankCode = bankCode;
             vwPayrollMaster_Temp.Period = period;
             vwPayrollMaster_Temp.Year = year;
             vwPayrollMaster_Temp.PaymentDate = paymentDate;
@@ -14398,7 +17022,7 @@ namespace DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String BankName
         {
@@ -14408,14 +17032,11 @@ namespace DAL
             }
             set
             {
-                if (_BankName != value)
-                {
-                    OnBankNameChanging(value);
-                    ReportPropertyChanging("BankName");
-                    _BankName = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("BankName");
-                    OnBankNameChanged();
-                }
+                OnBankNameChanging(value);
+                ReportPropertyChanging("BankName");
+                _BankName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("BankName");
+                OnBankNameChanged();
             }
         }
         private global::System.String _BankName;
@@ -14425,7 +17046,7 @@ namespace DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String BranchName
         {
@@ -14435,14 +17056,11 @@ namespace DAL
             }
             set
             {
-                if (_BranchName != value)
-                {
-                    OnBranchNameChanging(value);
-                    ReportPropertyChanging("BranchName");
-                    _BranchName = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("BranchName");
-                    OnBranchNameChanged();
-                }
+                OnBranchNameChanging(value);
+                ReportPropertyChanging("BranchName");
+                _BranchName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("BranchName");
+                OnBranchNameChanged();
             }
         }
         private global::System.String _BranchName;
@@ -14500,7 +17118,7 @@ namespace DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String BranchCode
         {
@@ -14510,14 +17128,11 @@ namespace DAL
             }
             set
             {
-                if (_BranchCode != value)
-                {
-                    OnBranchCodeChanging(value);
-                    ReportPropertyChanging("BranchCode");
-                    _BranchCode = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("BranchCode");
-                    OnBranchCodeChanged();
-                }
+                OnBranchCodeChanging(value);
+                ReportPropertyChanging("BranchCode");
+                _BranchCode = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("BranchCode");
+                OnBranchCodeChanged();
             }
         }
         private global::System.String _BranchCode;
@@ -14527,7 +17142,7 @@ namespace DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String BankSortCode
         {
@@ -14537,14 +17152,11 @@ namespace DAL
             }
             set
             {
-                if (_BankSortCode != value)
-                {
-                    OnBankSortCodeChanging(value);
-                    ReportPropertyChanging("BankSortCode");
-                    _BankSortCode = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("BankSortCode");
-                    OnBankSortCodeChanged();
-                }
+                OnBankSortCodeChanging(value);
+                ReportPropertyChanging("BankSortCode");
+                _BankSortCode = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("BankSortCode");
+                OnBankSortCodeChanged();
             }
         }
         private global::System.String _BankSortCode;
@@ -14650,7 +17262,7 @@ namespace DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String BankCode
         {
@@ -14660,14 +17272,11 @@ namespace DAL
             }
             set
             {
-                if (_BankCode != value)
-                {
-                    OnBankCodeChanging(value);
-                    ReportPropertyChanging("BankCode");
-                    _BankCode = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("BankCode");
-                    OnBankCodeChanged();
-                }
+                OnBankCodeChanging(value);
+                ReportPropertyChanging("BankCode");
+                _BankCode = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("BankCode");
+                OnBankCodeChanged();
             }
         }
         private global::System.String _BankCode;
@@ -15660,6 +18269,54 @@ namespace DAL
         private global::System.Int32 _EmployerId;
         partial void OnEmployerIdChanging(global::System.Int32 value);
         partial void OnEmployerIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> AHL
+        {
+            get
+            {
+                return _AHL;
+            }
+            set
+            {
+                OnAHLChanging(value);
+                ReportPropertyChanging("AHL");
+                _AHL = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AHL");
+                OnAHLChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _AHL;
+        partial void OnAHLChanging(Nullable<global::System.Decimal> value);
+        partial void OnAHLChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> SHIF
+        {
+            get
+            {
+                return _SHIF;
+            }
+            set
+            {
+                OnSHIFChanging(value);
+                ReportPropertyChanging("SHIF");
+                _SHIF = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SHIF");
+                OnSHIFChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _SHIF;
+        partial void OnSHIFChanging(Nullable<global::System.Decimal> value);
+        partial void OnSHIFChanged();
 
         #endregion
 
@@ -16521,6 +19178,102 @@ namespace DAL
         private global::System.String _SystemId;
         partial void OnSystemIdChanging(global::System.String value);
         partial void OnSystemIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> AccumulativePayment
+        {
+            get
+            {
+                return _AccumulativePayment;
+            }
+            set
+            {
+                OnAccumulativePaymentChanging(value);
+                ReportPropertyChanging("AccumulativePayment");
+                _AccumulativePayment = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AccumulativePayment");
+                OnAccumulativePaymentChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _AccumulativePayment;
+        partial void OnAccumulativePaymentChanging(Nullable<global::System.Decimal> value);
+        partial void OnAccumulativePaymentChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsLoanRepaymentInFull
+        {
+            get
+            {
+                return _IsLoanRepaymentInFull;
+            }
+            set
+            {
+                OnIsLoanRepaymentInFullChanging(value);
+                ReportPropertyChanging("IsLoanRepaymentInFull");
+                _IsLoanRepaymentInFull = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsLoanRepaymentInFull");
+                OnIsLoanRepaymentInFullChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsLoanRepaymentInFull;
+        partial void OnIsLoanRepaymentInFullChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsLoanRepaymentInFullChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsSharesRepaymentInCash
+        {
+            get
+            {
+                return _IsSharesRepaymentInCash;
+            }
+            set
+            {
+                OnIsSharesRepaymentInCashChanging(value);
+                ReportPropertyChanging("IsSharesRepaymentInCash");
+                _IsSharesRepaymentInCash = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsSharesRepaymentInCash");
+                OnIsSharesRepaymentInCashChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsSharesRepaymentInCash;
+        partial void OnIsSharesRepaymentInCashChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsSharesRepaymentInCashChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsLoanRepaymentInCash
+        {
+            get
+            {
+                return _IsLoanRepaymentInCash;
+            }
+            set
+            {
+                OnIsLoanRepaymentInCashChanging(value);
+                ReportPropertyChanging("IsLoanRepaymentInCash");
+                _IsLoanRepaymentInCash = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsLoanRepaymentInCash");
+                OnIsLoanRepaymentInCashChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsLoanRepaymentInCash;
+        partial void OnIsLoanRepaymentInCashChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsLoanRepaymentInCashChanged();
 
         #endregion
 
@@ -16543,28 +19296,28 @@ namespace DAL
         /// <param name="employeeId">Initial value of the EmployeeId property.</param>
         /// <param name="itemId">Initial value of the ItemId property.</param>
         /// <param name="repayAmount">Initial value of the RepayAmount property.</param>
+        /// <param name="amount">Initial value of the Amount property.</param>
+        /// <param name="description">Initial value of the Description property.</param>
+        /// <param name="taxTracking">Initial value of the TaxTracking property.</param>
+        /// <param name="dEType">Initial value of the DEType property.</param>
         /// <param name="postDate">Initial value of the PostDate property.</param>
         /// <param name="empTxnId">Initial value of the EmpTxnId property.</param>
         /// <param name="period">Initial value of the Period property.</param>
-        /// <param name="description">Initial value of the Description property.</param>
-        /// <param name="taxTracking">Initial value of the TaxTracking property.</param>
-        /// <param name="amount">Initial value of the Amount property.</param>
-        /// <param name="dEType">Initial value of the DEType property.</param>
         /// <param name="isStatutory">Initial value of the IsStatutory property.</param>
         /// <param name="employerId">Initial value of the EmployerId property.</param>
-        public static vwPayslipDet_Temp CreatevwPayslipDet_Temp(global::System.Int32 employeeId, global::System.String itemId, global::System.Decimal repayAmount, global::System.DateTime postDate, global::System.Int32 empTxnId, global::System.Int32 period, global::System.String description, global::System.String taxTracking, global::System.Decimal amount, global::System.String dEType, global::System.Boolean isStatutory, global::System.Int32 employerId)
+        public static vwPayslipDet_Temp CreatevwPayslipDet_Temp(global::System.Int32 employeeId, global::System.String itemId, global::System.Decimal repayAmount, global::System.Decimal amount, global::System.String description, global::System.String taxTracking, global::System.String dEType, global::System.DateTime postDate, global::System.Int32 empTxnId, global::System.Int32 period, global::System.Boolean isStatutory, global::System.Int32 employerId)
         {
             vwPayslipDet_Temp vwPayslipDet_Temp = new vwPayslipDet_Temp();
             vwPayslipDet_Temp.EmployeeId = employeeId;
             vwPayslipDet_Temp.ItemId = itemId;
             vwPayslipDet_Temp.RepayAmount = repayAmount;
+            vwPayslipDet_Temp.Amount = amount;
+            vwPayslipDet_Temp.Description = description;
+            vwPayslipDet_Temp.TaxTracking = taxTracking;
+            vwPayslipDet_Temp.DEType = dEType;
             vwPayslipDet_Temp.PostDate = postDate;
             vwPayslipDet_Temp.EmpTxnId = empTxnId;
             vwPayslipDet_Temp.Period = period;
-            vwPayslipDet_Temp.Description = description;
-            vwPayslipDet_Temp.TaxTracking = taxTracking;
-            vwPayslipDet_Temp.Amount = amount;
-            vwPayslipDet_Temp.DEType = dEType;
             vwPayslipDet_Temp.IsStatutory = isStatutory;
             vwPayslipDet_Temp.EmployerId = employerId;
             return vwPayslipDet_Temp;
@@ -16727,6 +19480,213 @@ namespace DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal RepayAmount
+        {
+            get
+            {
+                return _RepayAmount;
+            }
+            set
+            {
+                if (_RepayAmount != value)
+                {
+                    OnRepayAmountChanging(value);
+                    ReportPropertyChanging("RepayAmount");
+                    _RepayAmount = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("RepayAmount");
+                    OnRepayAmountChanged();
+                }
+            }
+        }
+        private global::System.Decimal _RepayAmount;
+        partial void OnRepayAmountChanging(global::System.Decimal value);
+        partial void OnRepayAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> InitialAmount
+        {
+            get
+            {
+                return _InitialAmount;
+            }
+            set
+            {
+                OnInitialAmountChanging(value);
+                ReportPropertyChanging("InitialAmount");
+                _InitialAmount = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("InitialAmount");
+                OnInitialAmountChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _InitialAmount;
+        partial void OnInitialAmountChanging(Nullable<global::System.Decimal> value);
+        partial void OnInitialAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal Amount
+        {
+            get
+            {
+                return _Amount;
+            }
+            set
+            {
+                if (_Amount != value)
+                {
+                    OnAmountChanging(value);
+                    ReportPropertyChanging("Amount");
+                    _Amount = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Amount");
+                    OnAmountChanged();
+                }
+            }
+        }
+        private global::System.Decimal _Amount;
+        partial void OnAmountChanging(global::System.Decimal value);
+        partial void OnAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> YTD
+        {
+            get
+            {
+                return _YTD;
+            }
+            set
+            {
+                OnYTDChanging(value);
+                ReportPropertyChanging("YTD");
+                _YTD = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("YTD");
+                OnYTDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _YTD;
+        partial void OnYTDChanging(Nullable<global::System.Decimal> value);
+        partial void OnYTDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> AccumulativePayment
+        {
+            get
+            {
+                return _AccumulativePayment;
+            }
+            set
+            {
+                OnAccumulativePaymentChanging(value);
+                ReportPropertyChanging("AccumulativePayment");
+                _AccumulativePayment = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AccumulativePayment");
+                OnAccumulativePaymentChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _AccumulativePayment;
+        partial void OnAccumulativePaymentChanging(Nullable<global::System.Decimal> value);
+        partial void OnAccumulativePaymentChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Description
+        {
+            get
+            {
+                return _Description;
+            }
+            set
+            {
+                if (_Description != value)
+                {
+                    OnDescriptionChanging(value);
+                    ReportPropertyChanging("Description");
+                    _Description = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("Description");
+                    OnDescriptionChanged();
+                }
+            }
+        }
+        private global::System.String _Description;
+        partial void OnDescriptionChanging(global::System.String value);
+        partial void OnDescriptionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String TaxTracking
+        {
+            get
+            {
+                return _TaxTracking;
+            }
+            set
+            {
+                if (_TaxTracking != value)
+                {
+                    OnTaxTrackingChanging(value);
+                    ReportPropertyChanging("TaxTracking");
+                    _TaxTracking = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("TaxTracking");
+                    OnTaxTrackingChanged();
+                }
+            }
+        }
+        private global::System.String _TaxTracking;
+        partial void OnTaxTrackingChanging(global::System.String value);
+        partial void OnTaxTrackingChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String DEType
+        {
+            get
+            {
+                return _DEType;
+            }
+            set
+            {
+                if (_DEType != value)
+                {
+                    OnDETypeChanging(value);
+                    ReportPropertyChanging("DEType");
+                    _DEType = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("DEType");
+                    OnDETypeChanged();
+                }
+            }
+        }
+        private global::System.String _DEType;
+        partial void OnDETypeChanging(global::System.String value);
+        partial void OnDETypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public Nullable<global::System.DateTime> TxnDate
@@ -16777,33 +19737,6 @@ namespace DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Decimal RepayAmount
-        {
-            get
-            {
-                return _RepayAmount;
-            }
-            set
-            {
-                if (_RepayAmount != value)
-                {
-                    OnRepayAmountChanging(value);
-                    ReportPropertyChanging("RepayAmount");
-                    _RepayAmount = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("RepayAmount");
-                    OnRepayAmountChanged();
-                }
-            }
-        }
-        private global::System.Decimal _RepayAmount;
-        partial void OnRepayAmountChanging(global::System.Decimal value);
-        partial void OnRepayAmountChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
         public global::System.DateTime PostDate
         {
             get
@@ -16825,30 +19758,6 @@ namespace DAL
         private global::System.DateTime _PostDate;
         partial void OnPostDateChanging(global::System.DateTime value);
         partial void OnPostDateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> InitialAmount
-        {
-            get
-            {
-                return _InitialAmount;
-            }
-            set
-            {
-                OnInitialAmountChanging(value);
-                ReportPropertyChanging("InitialAmount");
-                _InitialAmount = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("InitialAmount");
-                OnInitialAmountChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _InitialAmount;
-        partial void OnInitialAmountChanging(Nullable<global::System.Decimal> value);
-        partial void OnInitialAmountChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -17077,114 +19986,6 @@ namespace DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String Description
-        {
-            get
-            {
-                return _Description;
-            }
-            set
-            {
-                if (_Description != value)
-                {
-                    OnDescriptionChanging(value);
-                    ReportPropertyChanging("Description");
-                    _Description = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("Description");
-                    OnDescriptionChanged();
-                }
-            }
-        }
-        private global::System.String _Description;
-        partial void OnDescriptionChanging(global::System.String value);
-        partial void OnDescriptionChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String TaxTracking
-        {
-            get
-            {
-                return _TaxTracking;
-            }
-            set
-            {
-                if (_TaxTracking != value)
-                {
-                    OnTaxTrackingChanging(value);
-                    ReportPropertyChanging("TaxTracking");
-                    _TaxTracking = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("TaxTracking");
-                    OnTaxTrackingChanged();
-                }
-            }
-        }
-        private global::System.String _TaxTracking;
-        partial void OnTaxTrackingChanging(global::System.String value);
-        partial void OnTaxTrackingChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Decimal Amount
-        {
-            get
-            {
-                return _Amount;
-            }
-            set
-            {
-                if (_Amount != value)
-                {
-                    OnAmountChanging(value);
-                    ReportPropertyChanging("Amount");
-                    _Amount = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("Amount");
-                    OnAmountChanged();
-                }
-            }
-        }
-        private global::System.Decimal _Amount;
-        partial void OnAmountChanging(global::System.Decimal value);
-        partial void OnAmountChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String DEType
-        {
-            get
-            {
-                return _DEType;
-            }
-            set
-            {
-                if (_DEType != value)
-                {
-                    OnDETypeChanging(value);
-                    ReportPropertyChanging("DEType");
-                    _DEType = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("DEType");
-                    OnDETypeChanged();
-                }
-            }
-        }
-        private global::System.String _DEType;
-        partial void OnDETypeChanging(global::System.String value);
-        partial void OnDETypeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
         public global::System.Boolean IsStatutory
         {
             get
@@ -17230,30 +20031,6 @@ namespace DAL
         private Nullable<global::System.Boolean> _ShowInPayslip;
         partial void OnShowInPayslipChanging(Nullable<global::System.Boolean> value);
         partial void OnShowInPayslipChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> YTD
-        {
-            get
-            {
-                return _YTD;
-            }
-            set
-            {
-                OnYTDChanging(value);
-                ReportPropertyChanging("YTD");
-                _YTD = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("YTD");
-                OnYTDChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _YTD;
-        partial void OnYTDChanging(Nullable<global::System.Decimal> value);
-        partial void OnYTDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -17353,6 +20130,78 @@ namespace DAL
         private global::System.String _SystemId;
         partial void OnSystemIdChanging(global::System.String value);
         partial void OnSystemIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsLoanRepaymentInFull
+        {
+            get
+            {
+                return _IsLoanRepaymentInFull;
+            }
+            set
+            {
+                OnIsLoanRepaymentInFullChanging(value);
+                ReportPropertyChanging("IsLoanRepaymentInFull");
+                _IsLoanRepaymentInFull = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsLoanRepaymentInFull");
+                OnIsLoanRepaymentInFullChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsLoanRepaymentInFull;
+        partial void OnIsLoanRepaymentInFullChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsLoanRepaymentInFullChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsSharesRepaymentInCash
+        {
+            get
+            {
+                return _IsSharesRepaymentInCash;
+            }
+            set
+            {
+                OnIsSharesRepaymentInCashChanging(value);
+                ReportPropertyChanging("IsSharesRepaymentInCash");
+                _IsSharesRepaymentInCash = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsSharesRepaymentInCash");
+                OnIsSharesRepaymentInCashChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsSharesRepaymentInCash;
+        partial void OnIsSharesRepaymentInCashChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsSharesRepaymentInCashChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsLoanRepaymentInCash
+        {
+            get
+            {
+                return _IsLoanRepaymentInCash;
+            }
+            set
+            {
+                OnIsLoanRepaymentInCashChanging(value);
+                ReportPropertyChanging("IsLoanRepaymentInCash");
+                _IsLoanRepaymentInCash = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsLoanRepaymentInCash");
+                OnIsLoanRepaymentInCashChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsLoanRepaymentInCash;
+        partial void OnIsLoanRepaymentInCashChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsLoanRepaymentInCashChanged();
 
         #endregion
 

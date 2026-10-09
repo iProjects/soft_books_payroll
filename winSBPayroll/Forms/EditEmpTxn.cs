@@ -45,11 +45,7 @@ namespace winSBPayroll.Forms
             if (IsEmployeeTransactionValid())
             {
                 try
-                {
-                    if (cbItemId.SelectedIndex != -1)
-                    {
-                        _empTxn.ItemId = cbItemId.SelectedValue.ToString();
-                    }
+                { 
                     decimal _amount;
                     if (!string.IsNullOrEmpty(txtAmount.Text) && decimal.TryParse(txtAmount.Text, out _amount))
                     {
@@ -59,24 +55,18 @@ namespace winSBPayroll.Forms
                     if (!string.IsNullOrEmpty(txtYTDAmount.Text) && decimal.TryParse(txtYTDAmount.Text, out _YTDAmount))
                     {
                         _empTxn.Balance = _YTDAmount;
-                    }
-                    _empTxn.PostDate = DateTime.Today;
-                    _empTxn.EmpNo = _empTxn.EmpNo;
+                    }  
                     _empTxn.Recurrent = chkRecurrent.Checked;
                     _empTxn.Enabled = chkEnabled.Checked;
-                    _empTxn.TrackYTD = chkTrackYTD.Checked;
-                    _empTxn.CreatedBy = _empTxn.CreatedBy;
+                    _empTxn.TrackYTD = chkTrackYTD.Checked; 
                     _empTxn.LastChangeDate = DateTime.Today;
-                    _empTxn.LastChangedBy = _User;
-                    _empTxn.AuthorizedBy = _empTxn.AuthorizedBy;
-                    _empTxn.AuthorizeDate = _empTxn.AuthorizeDate.GetValueOrDefault();
+                    _empTxn.LastChangedBy = _User;  
                     _empTxn.ShowYTDInPayslip = chkShowYTDinPayslip.Checked;
-
 
                     rep.UpdateEmpTxn(_empTxn);
 
                     EditEmployee f = (EditEmployee)this.Owner;
-                    f.GridRefresh();
+                    f.refresh_emptxn_grid();
                     this.Close();
                 }
                 catch (Exception ex)

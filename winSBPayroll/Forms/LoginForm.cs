@@ -1,29 +1,14 @@
-﻿using System; 
-using System.Collections;
-using System.Collections.Generic; 
-using System.ComponentModel;
-using System.Configuration; 
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.IO; 
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.NetworkInformation;
-using System.Net.Sockets;
-using System.Reflection; 
-using System.Runtime;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
-using System.Windows.Forms; 
-using System.Xml; 
+using System.Reflection;
+using System.Windows.Forms;
+using System.Xml;
 using System.Xml.Linq;
-using BLL.DataEntry;
-using CommonLib; 
-using DAL; 
-using Microsoft.Win32;
+using CommonLib;
+using DAL;
 using Splash;
 
 namespace winSBPayroll.Forms
@@ -150,7 +135,7 @@ namespace winSBPayroll.Forms
 
                 if (mainForm == null)
                 {
-                    mainForm = new MainForm(this, this.ConnectionString, this.SelectedSystem);
+                    //mainForm = new MainForm(this, this.ConnectionString, this.SelectedSystem);
                 }
 
                 mainForm.LogIn();
@@ -186,12 +171,11 @@ namespace winSBPayroll.Forms
         {
             try
             {
-                AboutBox ab = new AboutBox();
                 groupBoxServerLogin.Visible = false;
-                string AssemblyProduct = ab.AssemblyProduct;
-                string AssemblyVersion = ab.AssemblyVersion;
-                string AssemblyCopyright = ab.AssemblyCopyright;
-                string AssemblyCompany = ab.AssemblyCompany;
+                string AssemblyProduct = app_assembly_info.AssemblyProduct;
+                string AssemblyVersion = app_assembly_info.AssemblyVersion;
+                string AssemblyCopyright = app_assembly_info.AssemblyCopyright;
+                string AssemblyCompany = app_assembly_info.AssemblyCompany;
                 this.Text = AssemblyProduct;
                 this.lblcopyright.Text = "Copyright ©  " + DateTime.Now.Year.ToString() + "  " + AssemblyCompany + " - All Rights Reserved";
 
@@ -448,14 +432,17 @@ namespace winSBPayroll.Forms
         #region Main & Splash Screen
         const string SystemsConfigFile = "Security/Systems.xml";
         [STAThread]
-        static void Main()
+        static void Main_reloded()
         {
             Application.EnableVisualStyles();
+
             Application.SetCompatibleTextRenderingDefault(false);
             try
             {
                 SplashScreen.ShowSplashScreen();
+
                 Application.DoEvents();
+
                 SplashScreen.SetStatus("Checking for [ " + SystemsConfigFile + " ] ...");
                 if (!File.Exists(SystemsConfigFile))
                     throw new FileNotFoundException("SB Payroll cannot locate configuration file " + SystemsConfigFile);
@@ -479,12 +466,12 @@ namespace winSBPayroll.Forms
                 if (!dbver.Equals(sysver))
                     throw new ArgumentException("Database and System Version do not match; the Database may not be usable. Use a Database Migration Tool", "version");
 
-
                 SplashScreen.SetStatus("Checking Defaults Tables are populated...");
                 System.Threading.Thread.Sleep(400);
 
                 SplashScreen.SetStatus("Checking for a valid License...");
                 System.Threading.Thread.Sleep(2000);
+
                 SplashScreen.CloseForm();
                 Application.Run(new Forms.LoginForm(defSys));
             }
@@ -515,10 +502,10 @@ namespace winSBPayroll.Forms
 
                     msg += "\n\n " + msgex;
 
-                    if (DialogResult.Yes == MessageBox.Show(msg, "SB Payroll", MessageBoxButtons.YesNo, MessageBoxIcon.Information))
+                    if (DialogResult.Yes == MessageBox.Show(msg, Utils.APP_NAME, MessageBoxButtons.YesNo, MessageBoxIcon.Information))
                     {
-                        Forms.DatabaseControlPanelForm f = new DatabaseControlPanelForm();
-                        f.ShowDialog();
+                        //Forms.DatabaseControlPanelForm f = new DatabaseControlPanelForm();
+                        //f.ShowDialog();
                     }
                 }
             }
@@ -530,10 +517,10 @@ namespace winSBPayroll.Forms
                     msg += "\n" + smoex.InnerException.Message
                         + "\n\n " + "Do you want to Administer Servers and Databases ?";
 
-                if (DialogResult.Yes == MessageBox.Show(msg, "SB Payroll", MessageBoxButtons.YesNo, MessageBoxIcon.Information))
+                if (DialogResult.Yes == MessageBox.Show(msg, Utils.APP_NAME, MessageBoxButtons.YesNo, MessageBoxIcon.Information))
                 {
-                    Forms.DatabaseControlPanelForm f = new DatabaseControlPanelForm();
-                    f.ShowDialog();
+                    //Forms.DatabaseControlPanelForm f = new DatabaseControlPanelForm();
+                    //f.ShowDialog();
                 }
             }
             catch (Exception ex)
@@ -543,10 +530,10 @@ namespace winSBPayroll.Forms
                     msg += "\n" + ex.InnerException.Message
                         + "\n\n " + "Do you want to Administer Servers and Databases ?";
 
-                if (DialogResult.Yes == MessageBox.Show(msg, "SB Payroll", MessageBoxButtons.YesNo, MessageBoxIcon.Information))
+                if (DialogResult.Yes == MessageBox.Show(msg, Utils.APP_NAME, MessageBoxButtons.YesNo, MessageBoxIcon.Information))
                 {
-                    Forms.DatabaseControlPanelForm f = new DatabaseControlPanelForm();
-                    f.ShowDialog();
+                    //Forms.DatabaseControlPanelForm f = new DatabaseControlPanelForm();
+                    //f.ShowDialog();
                 }
             }
         }

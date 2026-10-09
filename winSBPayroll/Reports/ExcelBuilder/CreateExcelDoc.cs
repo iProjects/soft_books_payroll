@@ -10,7 +10,7 @@ using DAL;
 
 namespace winSBPayroll.Reports.Excel
 {
-   public  class CreateExcelDoc
+    public class CreateExcelDoc
     {
         private Microsoft.Office.Interop.Excel.Application appExcel = null;
         private Workbook workbook = null;
@@ -128,14 +128,14 @@ namespace winSBPayroll.Reports.Excel
             }
         }
 
-        
+
         public void Save(string filename)
         {
             //if (appExcel != null) appExcel.SaveWorkspace(filename);
             if (workbook != null) workbook.SaveAs(filename);
         }
 
-        
+
         public void createHeaders(int row, int col, string htext, string cell1, string cell2, int mergeColumns, string color, bool font, int size, string fcolor)
         {
             worksheet.Cells[row, col] = htext;
@@ -162,11 +162,11 @@ namespace winSBPayroll.Reports.Excel
                     workSheet_range.Interior.Color = System.Drawing.Color.White.ToArgb();
                     break;
                 default:
-                      workSheet_range.Interior.Color = System.Drawing.Color.White.ToArgb();
+                    workSheet_range.Interior.Color = System.Drawing.Color.White.ToArgb();
                     break;
 
             }
-             
+
             workSheet_range.Borders.Color = System.Drawing.Color.White.ToArgb();
             workSheet_range.Borders.LineStyle = XlLineStyle.xlLineStyleNone;
             workSheet_range.Font.Bold = font;
@@ -178,7 +178,7 @@ namespace winSBPayroll.Reports.Excel
             else
             {
                 workSheet_range.Font.Color = System.Drawing.Color.Black.ToArgb();
-            } 
+            }
         }
 
         public void addData(int row, int col, string data, string cell1, string cell2, string format)
@@ -195,8 +195,8 @@ namespace winSBPayroll.Reports.Excel
         {
             return alpha[i];
         }
+
+
+
     }
-
-
-
 }

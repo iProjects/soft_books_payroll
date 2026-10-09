@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Software Providers")]
 [assembly: AssemblyProduct("Soft Books Payroll")]
-[assembly: AssemblyCopyright("Copyright ©  2015 - 2030")]
+[assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("Soft Books Suite")]
 [assembly: AssemblyCulture("")]
 

@@ -12,10 +12,14 @@
     <AssemblyName>CommonLib</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,6 +44,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -49,10 +54,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BulkCopy.cs" />
+    <Compile Include="connectionstringdto.cs" />
+    <Compile Include="DBContract.cs" />
     <Compile Include="Extensions\DataExtensions.cs" />
     <Compile Include="Log.cs" />
+    <Compile Include="mssqlapisingleton.cs" />
+    <Compile Include="mssqlconnectionstringdto.cs" />
+    <Compile Include="notificationdto.cs" />
+    <Compile Include="notificationmessageEventArgs.cs" />
+    <Compile Include="PrinterHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="responsedto.cs" />
+    <Compile Include="SBSystem.cs" />
     <Compile Include="Utils.cs" />
+    <Compile Include="utilzsingleton.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="utilities\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -37,6 +37,7 @@
             this.tabControlDBPanel = new System.Windows.Forms.TabControl();
             this.tabPageServerSettings = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnrefreshdatabases = new System.Windows.Forms.LinkLabel();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.listViewDatabaseList = new System.Windows.Forms.ListView();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -52,9 +53,11 @@
             this.btnBackUp = new System.Windows.Forms.LinkLabel();
             this.lblDatabaseNo = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btn_upload_default_tables = new System.Windows.Forms.LinkLabel();
+            this.btn_truncate_non_default_tables = new System.Windows.Forms.LinkLabel();
             this.btnLaunchApp = new System.Windows.Forms.LinkLabel();
             this.lblMsg = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.progressBar_settings = new System.Windows.Forms.ProgressBar();
             this.btnQuitDatabaseManagement = new System.Windows.Forms.LinkLabel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnChangeServer = new System.Windows.Forms.LinkLabel();
@@ -62,6 +65,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabPageServerConnection = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.progressBar_connect = new System.Windows.Forms.ProgressBar();
             this.btnWebsite = new System.Windows.Forms.LinkLabel();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.contextMenuStripCopyEmail = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -69,23 +73,25 @@
             this.btnConnect = new System.Windows.Forms.LinkLabel();
             this.btnQuitChangeSever = new System.Windows.Forms.LinkLabel();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.btnload_log_file = new System.Windows.Forms.LinkLabel();
             this.btnLoginAssistance = new System.Windows.Forms.LinkLabel();
             this.btnSQLServerInstallation = new System.Windows.Forms.LinkLabel();
             this.chkRememberServerName = new System.Windows.Forms.CheckBox();
             this.groupBoxLoginCreds = new System.Windows.Forms.GroupBox();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
             this.chkRemeberUserName = new System.Windows.Forms.CheckBox();
-            this.txtServerLoginUserName = new System.Windows.Forms.TextBox();
+            this.txtusername = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.groupBox14 = new System.Windows.Forms.GroupBox();
+            this.chkshowpassword = new System.Windows.Forms.CheckBox();
             this.chkRememberPassword = new System.Windows.Forms.CheckBox();
-            this.txtServerLoginPassword = new System.Windows.Forms.TextBox();
+            this.txtpassword = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.txtConnectionLoginErrors = new System.Windows.Forms.TextBox();
-            this.chkIntegratedSec = new System.Windows.Forms.CheckBox();
+            this.chkIntegratedSecurity = new System.Windows.Forms.CheckBox();
             this.btnGetServerList = new System.Windows.Forms.LinkLabel();
-            this.cboServerName = new System.Windows.Forms.ComboBox();
+            this.cboserver = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -102,9 +108,12 @@
             this.txtSQLDatabaseStructure = new System.Windows.Forms.TextBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.btnDatabaseSettingsQuit = new System.Windows.Forms.LinkLabel();
+            this.tabPagelogs = new System.Windows.Forms.TabPage();
+            this.groupBox15 = new System.Windows.Forms.GroupBox();
+            this.txtlogs = new System.Windows.Forms.TextBox();
             this.bindingSourceServerName = new System.Windows.Forms.BindingSource(this.components);
             this.bindingSourceDatabases = new System.Windows.Forms.BindingSource(this.components);
-            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
@@ -139,9 +148,11 @@
             this.groupBox11.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.groupBox10.SuspendLayout();
+            this.tabPagelogs.SuspendLayout();
+            this.groupBox15.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceServerName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceDatabases)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.contextMenuStripSystemNotification.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -187,9 +198,10 @@
             // 
             // tabControlDBPanel
             // 
-            this.tabControlDBPanel.Controls.Add(this.tabPageServerSettings);
             this.tabControlDBPanel.Controls.Add(this.tabPageServerConnection);
+            this.tabControlDBPanel.Controls.Add(this.tabPageServerSettings);
             this.tabControlDBPanel.Controls.Add(this.tabPageDatabaseSettings);
+            this.tabControlDBPanel.Controls.Add(this.tabPagelogs);
             this.tabControlDBPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlDBPanel.Location = new System.Drawing.Point(0, 0);
             this.tabControlDBPanel.Name = "tabControlDBPanel";
@@ -213,6 +225,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.btnrefreshdatabases);
             this.groupBox3.Controls.Add(this.groupBox5);
             this.groupBox3.Controls.Add(this.groupBox4);
             this.groupBox3.Controls.Add(this.lblDatabaseNo);
@@ -223,6 +236,20 @@
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Database Management";
+            // 
+            // btnrefreshdatabases
+            // 
+            this.btnrefreshdatabases.AutoSize = true;
+            this.btnrefreshdatabases.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnrefreshdatabases.LinkColor = System.Drawing.Color.Yellow;
+            this.btnrefreshdatabases.Location = new System.Drawing.Point(220, 20);
+            this.btnrefreshdatabases.Name = "btnrefreshdatabases";
+            this.btnrefreshdatabases.Size = new System.Drawing.Size(165, 20);
+            this.btnrefreshdatabases.TabIndex = 19;
+            this.btnrefreshdatabases.TabStop = true;
+            this.btnrefreshdatabases.Text = "Refresh Databases";
+            this.toolTip1.SetToolTip(this.btnrefreshdatabases, "refresh databases");
+            this.btnrefreshdatabases.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btnrefreshdatabases_LinkClicked);
             // 
             // groupBox5
             // 
@@ -248,7 +275,7 @@
             this.listViewDatabaseList.Size = new System.Drawing.Size(479, 234);
             this.listViewDatabaseList.TabIndex = 0;
             this.toolTip1.SetToolTip(this.listViewDatabaseList, "A list of Databases found in the Server\r\nwhose  Structure conform to the software" +
-                    "\'s version.\r\n");
+        "\'s version.\r\n");
             this.listViewDatabaseList.UseCompatibleStateImageBehavior = false;
             this.listViewDatabaseList.View = System.Windows.Forms.View.Details;
             // 
@@ -266,7 +293,7 @@
             this.groupBox4.Location = new System.Drawing.Point(488, 16);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(324, 284);
-            this.groupBox4.TabIndex = 3;
+            this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             // 
             // btnCreateLoginUser
@@ -281,7 +308,7 @@
             this.btnCreateLoginUser.TabStop = true;
             this.btnCreateLoginUser.Text = "Create Database User";
             this.toolTip1.SetToolTip(this.btnCreateLoginUser, "Create a Database User.\r\n This User is able to login in to the database,\r\nwith a " +
-                    "UserName and a Password.\r\n\r\n\r\n");
+        "UserName and a Password.\r\n\r\n\r\n");
             this.btnCreateLoginUser.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btnCreateLoginUser_LinkClicked);
             // 
             // gbRestore
@@ -291,7 +318,7 @@
             this.gbRestore.Location = new System.Drawing.Point(9, 120);
             this.gbRestore.Name = "gbRestore";
             this.gbRestore.Size = new System.Drawing.Size(297, 69);
-            this.gbRestore.TabIndex = 25;
+            this.gbRestore.TabIndex = 0;
             this.gbRestore.TabStop = false;
             this.gbRestore.Text = "Change Name To";
             this.gbRestore.Visible = false;
@@ -310,12 +337,12 @@
             this.btnRestoreNow.AutoSize = true;
             this.btnRestoreNow.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRestoreNow.LinkColor = System.Drawing.Color.Yellow;
-            this.btnRestoreNow.Location = new System.Drawing.Point(166, 44);
+            this.btnRestoreNow.Location = new System.Drawing.Point(19, 44);
             this.btnRestoreNow.Name = "btnRestoreNow";
-            this.btnRestoreNow.Size = new System.Drawing.Size(97, 16);
+            this.btnRestoreNow.Size = new System.Drawing.Size(159, 16);
             this.btnRestoreNow.TabIndex = 19;
             this.btnRestoreNow.TabStop = true;
-            this.btnRestoreNow.Text = "Restore Now";
+            this.btnRestoreNow.Text = "Select Back up Media";
             this.toolTip1.SetToolTip(this.btnRestoreNow, "Select a location to Restore from.\r\nThis location is where the Back up media is.");
             this.btnRestoreNow.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btnRestoreNow_LinkClicked);
             // 
@@ -401,7 +428,7 @@
             this.btnBackUp.TabStop = true;
             this.btnBackUp.Text = "Back Up";
             this.toolTip1.SetToolTip(this.btnBackUp, "Back up a Database to a location,\r\nwhere you can Restore the database again later" +
-                    ".");
+        ".");
             this.btnBackUp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btnBackUp_LinkClicked);
             // 
             // lblDatabaseNo
@@ -417,9 +444,11 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btn_upload_default_tables);
+            this.groupBox2.Controls.Add(this.btn_truncate_non_default_tables);
             this.groupBox2.Controls.Add(this.btnLaunchApp);
             this.groupBox2.Controls.Add(this.lblMsg);
-            this.groupBox2.Controls.Add(this.progressBar1);
+            this.groupBox2.Controls.Add(this.progressBar_settings);
             this.groupBox2.Controls.Add(this.btnQuitDatabaseManagement);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.groupBox2.Location = new System.Drawing.Point(3, 356);
@@ -428,15 +457,43 @@
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             // 
+            // btn_upload_default_tables
+            // 
+            this.btn_upload_default_tables.AutoSize = true;
+            this.btn_upload_default_tables.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_upload_default_tables.LinkColor = System.Drawing.Color.Yellow;
+            this.btn_upload_default_tables.Location = new System.Drawing.Point(101, 20);
+            this.btn_upload_default_tables.Name = "btn_upload_default_tables";
+            this.btn_upload_default_tables.Size = new System.Drawing.Size(178, 20);
+            this.btn_upload_default_tables.TabIndex = 22;
+            this.btn_upload_default_tables.TabStop = true;
+            this.btn_upload_default_tables.Text = "upload default tables";
+            this.toolTip1.SetToolTip(this.btn_upload_default_tables, "Truncate non default tables");
+            this.btn_upload_default_tables.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btn_upload_default_tables_LinkClicked);
+            // 
+            // btn_truncate_non_default_tables
+            // 
+            this.btn_truncate_non_default_tables.AutoSize = true;
+            this.btn_truncate_non_default_tables.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_truncate_non_default_tables.LinkColor = System.Drawing.Color.Yellow;
+            this.btn_truncate_non_default_tables.Location = new System.Drawing.Point(359, 19);
+            this.btn_truncate_non_default_tables.Name = "btn_truncate_non_default_tables";
+            this.btn_truncate_non_default_tables.Size = new System.Drawing.Size(230, 20);
+            this.btn_truncate_non_default_tables.TabIndex = 18;
+            this.btn_truncate_non_default_tables.TabStop = true;
+            this.btn_truncate_non_default_tables.Text = "Truncate non default tables";
+            this.toolTip1.SetToolTip(this.btn_truncate_non_default_tables, "Truncate non default tables");
+            this.btn_truncate_non_default_tables.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btn_truncate_non_default_tables_LinkClicked);
+            // 
             // btnLaunchApp
             // 
             this.btnLaunchApp.AutoSize = true;
             this.btnLaunchApp.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLaunchApp.LinkColor = System.Drawing.Color.Yellow;
-            this.btnLaunchApp.Location = new System.Drawing.Point(409, 41);
+            this.btnLaunchApp.Location = new System.Drawing.Point(653, 16);
             this.btnLaunchApp.Name = "btnLaunchApp";
             this.btnLaunchApp.Size = new System.Drawing.Size(79, 24);
-            this.btnLaunchApp.TabIndex = 23;
+            this.btnLaunchApp.TabIndex = 0;
             this.btnLaunchApp.TabStop = true;
             this.btnLaunchApp.Text = "Launch";
             this.toolTip1.SetToolTip(this.btnLaunchApp, "Restart Soft Books Payroll\r\n");
@@ -451,23 +508,24 @@
             this.lblMsg.TabIndex = 21;
             this.lblMsg.Text = "Ready";
             // 
-            // progressBar1
+            // progressBar_settings
             // 
-            this.progressBar1.Location = new System.Drawing.Point(20, 43);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(275, 23);
-            this.progressBar1.TabIndex = 20;
-            this.progressBar1.Visible = false;
+            this.progressBar_settings.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.progressBar_settings.Location = new System.Drawing.Point(3, 46);
+            this.progressBar_settings.Name = "progressBar_settings";
+            this.progressBar_settings.Size = new System.Drawing.Size(809, 23);
+            this.progressBar_settings.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.progressBar_settings.TabIndex = 20;
             // 
             // btnQuitDatabaseManagement
             // 
             this.btnQuitDatabaseManagement.AutoSize = true;
-            this.btnQuitDatabaseManagement.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnQuitDatabaseManagement.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
             this.btnQuitDatabaseManagement.LinkColor = System.Drawing.Color.Yellow;
-            this.btnQuitDatabaseManagement.Location = new System.Drawing.Point(746, 41);
+            this.btnQuitDatabaseManagement.Location = new System.Drawing.Point(746, 16);
             this.btnQuitDatabaseManagement.Name = "btnQuitDatabaseManagement";
             this.btnQuitDatabaseManagement.Size = new System.Drawing.Size(48, 24);
-            this.btnQuitDatabaseManagement.TabIndex = 18;
+            this.btnQuitDatabaseManagement.TabIndex = 1;
             this.btnQuitDatabaseManagement.TabStop = true;
             this.btnQuitDatabaseManagement.Text = "Quit";
             this.toolTip1.SetToolTip(this.btnQuitDatabaseManagement, "Exit");
@@ -491,7 +549,7 @@
             this.btnChangeServer.AutoSize = true;
             this.btnChangeServer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnChangeServer.LinkColor = System.Drawing.Color.Yellow;
-            this.btnChangeServer.Location = new System.Drawing.Point(592, 24);
+            this.btnChangeServer.Location = new System.Drawing.Point(592, 19);
             this.btnChangeServer.Name = "btnChangeServer";
             this.btnChangeServer.Size = new System.Drawing.Size(71, 20);
             this.btnChangeServer.TabIndex = 17;
@@ -504,7 +562,7 @@
             // 
             this.lblSrvSttServerName.AutoSize = true;
             this.lblSrvSttServerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSrvSttServerName.Location = new System.Drawing.Point(73, 27);
+            this.lblSrvSttServerName.Location = new System.Drawing.Point(73, 24);
             this.lblSrvSttServerName.Name = "lblSrvSttServerName";
             this.lblSrvSttServerName.Size = new System.Drawing.Size(19, 13);
             this.lblSrvSttServerName.TabIndex = 1;
@@ -514,7 +572,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 27);
+            this.label1.Location = new System.Drawing.Point(26, 24);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 13);
             this.label1.TabIndex = 0;
@@ -534,6 +592,7 @@
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.progressBar_connect);
             this.groupBox7.Controls.Add(this.btnWebsite);
             this.groupBox7.Controls.Add(this.txtEmail);
             this.groupBox7.Controls.Add(this.btnConnect);
@@ -545,15 +604,24 @@
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
             // 
+            // progressBar_connect
+            // 
+            this.progressBar_connect.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.progressBar_connect.Location = new System.Drawing.Point(3, 56);
+            this.progressBar_connect.Name = "progressBar_connect";
+            this.progressBar_connect.Size = new System.Drawing.Size(809, 23);
+            this.progressBar_connect.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.progressBar_connect.TabIndex = 4;
+            // 
             // btnWebsite
             // 
             this.btnWebsite.AutoSize = true;
             this.btnWebsite.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.btnWebsite.LinkColor = System.Drawing.Color.Yellow;
-            this.btnWebsite.Location = new System.Drawing.Point(238, 22);
+            this.btnWebsite.Location = new System.Drawing.Point(6, 21);
             this.btnWebsite.Name = "btnWebsite";
             this.btnWebsite.Size = new System.Drawing.Size(147, 13);
-            this.btnWebsite.TabIndex = 1;
+            this.btnWebsite.TabIndex = 3;
             this.btnWebsite.TabStop = true;
             this.btnWebsite.Text = "www.softwareproviders.co.ke";
             this.toolTip1.SetToolTip(this.btnWebsite, "Our Website.\r\n");
@@ -563,11 +631,11 @@
             // 
             this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtEmail.ContextMenuStrip = this.contextMenuStripCopyEmail;
-            this.txtEmail.Location = new System.Drawing.Point(237, 44);
+            this.txtEmail.Location = new System.Drawing.Point(173, 19);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(155, 20);
+            this.txtEmail.Size = new System.Drawing.Size(219, 20);
             this.txtEmail.TabIndex = 2;
-            this.txtEmail.Text = "info@softwareproviders.co.ke";
+            this.txtEmail.Text = "softwareproviders254@gmail.com";
             this.toolTip1.SetToolTip(this.txtEmail, "Our Email.\r\n\r\n");
             this.txtEmail.Click += new System.EventHandler(this.txtEmail_Click);
             this.txtEmail.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtEmail_KeyPress);
@@ -577,12 +645,12 @@
             this.contextMenuStripCopyEmail.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.copyEmailToolStripMenuItem});
             this.contextMenuStripCopyEmail.Name = "contextMenuStripCopyEmail";
-            this.contextMenuStripCopyEmail.Size = new System.Drawing.Size(100, 26);
+            this.contextMenuStripCopyEmail.Size = new System.Drawing.Size(103, 26);
             // 
             // copyEmailToolStripMenuItem
             // 
             this.copyEmailToolStripMenuItem.Name = "copyEmailToolStripMenuItem";
-            this.copyEmailToolStripMenuItem.Size = new System.Drawing.Size(99, 22);
+            this.copyEmailToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
             this.copyEmailToolStripMenuItem.Text = "Copy";
             this.copyEmailToolStripMenuItem.Click += new System.EventHandler(this.copyEmailToolStripMenuItem_Click);
             // 
@@ -591,7 +659,7 @@
             this.btnConnect.AutoSize = true;
             this.btnConnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnConnect.LinkColor = System.Drawing.Color.Yellow;
-            this.btnConnect.Location = new System.Drawing.Point(524, 30);
+            this.btnConnect.Location = new System.Drawing.Point(628, 16);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(88, 24);
             this.btnConnect.TabIndex = 0;
@@ -605,10 +673,10 @@
             this.btnQuitChangeSever.AutoSize = true;
             this.btnQuitChangeSever.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnQuitChangeSever.LinkColor = System.Drawing.Color.Yellow;
-            this.btnQuitChangeSever.Location = new System.Drawing.Point(39, 30);
+            this.btnQuitChangeSever.Location = new System.Drawing.Point(738, 16);
             this.btnQuitChangeSever.Name = "btnQuitChangeSever";
             this.btnQuitChangeSever.Size = new System.Drawing.Size(48, 24);
-            this.btnQuitChangeSever.TabIndex = 3;
+            this.btnQuitChangeSever.TabIndex = 1;
             this.btnQuitChangeSever.TabStop = true;
             this.btnQuitChangeSever.Text = "Quit";
             this.toolTip1.SetToolTip(this.btnQuitChangeSever, "Exit Application.\r\n");
@@ -616,14 +684,15 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.btnload_log_file);
             this.groupBox6.Controls.Add(this.btnLoginAssistance);
             this.groupBox6.Controls.Add(this.btnSQLServerInstallation);
             this.groupBox6.Controls.Add(this.chkRememberServerName);
             this.groupBox6.Controls.Add(this.groupBoxLoginCreds);
             this.groupBox6.Controls.Add(this.groupBox12);
-            this.groupBox6.Controls.Add(this.chkIntegratedSec);
+            this.groupBox6.Controls.Add(this.chkIntegratedSecurity);
             this.groupBox6.Controls.Add(this.btnGetServerList);
-            this.groupBox6.Controls.Add(this.cboServerName);
+            this.groupBox6.Controls.Add(this.cboserver);
             this.groupBox6.Controls.Add(this.label8);
             this.groupBox6.Controls.Add(this.label11);
             this.groupBox6.Controls.Add(this.label12);
@@ -633,6 +702,20 @@
             this.groupBox6.Size = new System.Drawing.Size(815, 343);
             this.groupBox6.TabIndex = 0;
             this.groupBox6.TabStop = false;
+            // 
+            // btnload_log_file
+            // 
+            this.btnload_log_file.AutoSize = true;
+            this.btnload_log_file.BackColor = System.Drawing.Color.Transparent;
+            this.btnload_log_file.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.btnload_log_file.LinkColor = System.Drawing.Color.Yellow;
+            this.btnload_log_file.Location = new System.Drawing.Point(709, 81);
+            this.btnload_log_file.Name = "btnload_log_file";
+            this.btnload_log_file.Size = new System.Drawing.Size(60, 13);
+            this.btnload_log_file.TabIndex = 6;
+            this.btnload_log_file.TabStop = true;
+            this.btnload_log_file.Text = "load log file";
+            this.btnload_log_file.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btnload_log_file_LinkClicked);
             // 
             // btnLoginAssistance
             // 
@@ -674,7 +757,7 @@
             this.chkRememberServerName.TabIndex = 1;
             this.chkRememberServerName.Text = "Remember Server Name";
             this.toolTip1.SetToolTip(this.chkRememberServerName, "Enables the application to remember the last logged in server \r\nso you do not nee" +
-                    "d to type the name or search again next\r\ntime when the application starts.\r\n");
+        "d to type the name or search again next\r\ntime when the application starts.\r\n");
             this.chkRememberServerName.UseVisualStyleBackColor = true;
             // 
             // groupBoxLoginCreds
@@ -691,7 +774,7 @@
             // groupBox13
             // 
             this.groupBox13.Controls.Add(this.chkRemeberUserName);
-            this.groupBox13.Controls.Add(this.txtServerLoginUserName);
+            this.groupBox13.Controls.Add(this.txtusername);
             this.groupBox13.Controls.Add(this.label9);
             this.groupBox13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox13.Location = new System.Drawing.Point(3, 16);
@@ -710,17 +793,17 @@
             this.chkRemeberUserName.TabIndex = 1;
             this.chkRemeberUserName.Text = "Remember User Name";
             this.toolTip1.SetToolTip(this.chkRemeberUserName, "Enables the application to remember the last logged in\r\n User Name so you do not " +
-                    "need to type the name again\r\n next time you need to login.");
+        "need to type the name again\r\n next time you need to login.");
             this.chkRemeberUserName.UseVisualStyleBackColor = true;
             // 
-            // txtServerLoginUserName
+            // txtusername
             // 
-            this.txtServerLoginUserName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtServerLoginUserName.Location = new System.Drawing.Point(91, 16);
-            this.txtServerLoginUserName.Name = "txtServerLoginUserName";
-            this.txtServerLoginUserName.Size = new System.Drawing.Size(204, 20);
-            this.txtServerLoginUserName.TabIndex = 0;
-            this.toolTip1.SetToolTip(this.txtServerLoginUserName, "Type the Login/User Name here.\r\n\r\n");
+            this.txtusername.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtusername.Location = new System.Drawing.Point(91, 16);
+            this.txtusername.Name = "txtusername";
+            this.txtusername.Size = new System.Drawing.Size(204, 20);
+            this.txtusername.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.txtusername, "Type the Login/User Name here.\r\n\r\n");
             // 
             // label9
             // 
@@ -734,15 +817,29 @@
             // 
             // groupBox14
             // 
+            this.groupBox14.Controls.Add(this.chkshowpassword);
             this.groupBox14.Controls.Add(this.chkRememberPassword);
-            this.groupBox14.Controls.Add(this.txtServerLoginPassword);
+            this.groupBox14.Controls.Add(this.txtpassword);
             this.groupBox14.Controls.Add(this.label10);
             this.groupBox14.Dock = System.Windows.Forms.DockStyle.Right;
             this.groupBox14.Location = new System.Drawing.Point(452, 16);
             this.groupBox14.Name = "groupBox14";
             this.groupBox14.Size = new System.Drawing.Size(354, 69);
-            this.groupBox14.TabIndex = 0;
+            this.groupBox14.TabIndex = 1;
             this.groupBox14.TabStop = false;
+            // 
+            // chkshowpassword
+            // 
+            this.chkshowpassword.AutoSize = true;
+            this.chkshowpassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkshowpassword.Location = new System.Drawing.Point(222, 44);
+            this.chkshowpassword.Name = "chkshowpassword";
+            this.chkshowpassword.Size = new System.Drawing.Size(99, 17);
+            this.chkshowpassword.TabIndex = 24;
+            this.chkshowpassword.Text = "Show Password";
+            this.toolTip1.SetToolTip(this.chkshowpassword, "Show Password");
+            this.chkshowpassword.UseVisualStyleBackColor = true;
+            this.chkshowpassword.CheckedChanged += new System.EventHandler(this.chkshowpassword_CheckedChanged);
             // 
             // chkRememberPassword
             // 
@@ -754,19 +851,20 @@
             this.chkRememberPassword.TabIndex = 1;
             this.chkRememberPassword.Text = "Remember Password";
             this.toolTip1.SetToolTip(this.chkRememberPassword, "Enables the application to remember the last logged in\r\n Password so you do not n" +
-                    "eed to type the Password again\r\n next time you need to login.Tick this check box" +
-                    " with caution!\r\n");
+        "eed to type the Password again\r\n next time you need to login.Tick this check box" +
+        " with caution!\r\n");
             this.chkRememberPassword.UseVisualStyleBackColor = true;
+            this.chkRememberPassword.CheckedChanged += new System.EventHandler(this.chkRememberPassword_CheckedChanged);
             // 
-            // txtServerLoginPassword
+            // txtpassword
             // 
-            this.txtServerLoginPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtServerLoginPassword.Location = new System.Drawing.Point(85, 18);
-            this.txtServerLoginPassword.Name = "txtServerLoginPassword";
-            this.txtServerLoginPassword.PasswordChar = '*';
-            this.txtServerLoginPassword.Size = new System.Drawing.Size(204, 20);
-            this.txtServerLoginPassword.TabIndex = 0;
-            this.toolTip1.SetToolTip(this.txtServerLoginPassword, "Type the Password here.\r\n");
+            this.txtpassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtpassword.Location = new System.Drawing.Point(85, 18);
+            this.txtpassword.Name = "txtpassword";
+            this.txtpassword.PasswordChar = '*';
+            this.txtpassword.Size = new System.Drawing.Size(204, 20);
+            this.txtpassword.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.txtpassword, "Type the Password here.\r\n");
             // 
             // label10
             // 
@@ -791,7 +889,7 @@
             // txtConnectionLoginErrors
             // 
             this.txtConnectionLoginErrors.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtConnectionLoginErrors.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtConnectionLoginErrors.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.txtConnectionLoginErrors.HideSelection = false;
             this.txtConnectionLoginErrors.Location = new System.Drawing.Point(3, 16);
             this.txtConnectionLoginErrors.Multiline = true;
@@ -802,18 +900,18 @@
             this.toolTip1.SetToolTip(this.txtConnectionLoginErrors, "Connection Errors.\r\n");
             this.txtConnectionLoginErrors.Visible = false;
             // 
-            // chkIntegratedSec
+            // chkIntegratedSecurity
             // 
-            this.chkIntegratedSec.AutoSize = true;
-            this.chkIntegratedSec.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.chkIntegratedSec.Location = new System.Drawing.Point(105, 137);
-            this.chkIntegratedSec.Name = "chkIntegratedSec";
-            this.chkIntegratedSec.Size = new System.Drawing.Size(131, 17);
-            this.chkIntegratedSec.TabIndex = 3;
-            this.chkIntegratedSec.Text = "Use integrated security";
-            this.toolTip1.SetToolTip(this.chkIntegratedSec, resources.GetString("chkIntegratedSec.ToolTip"));
-            this.chkIntegratedSec.UseVisualStyleBackColor = true;
-            this.chkIntegratedSec.CheckedChanged += new System.EventHandler(this.chkIntegratedSec_CheckedChanged);
+            this.chkIntegratedSecurity.AutoSize = true;
+            this.chkIntegratedSecurity.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chkIntegratedSecurity.Location = new System.Drawing.Point(105, 137);
+            this.chkIntegratedSecurity.Name = "chkIntegratedSecurity";
+            this.chkIntegratedSecurity.Size = new System.Drawing.Size(131, 17);
+            this.chkIntegratedSecurity.TabIndex = 3;
+            this.chkIntegratedSecurity.Text = "Use integrated security";
+            this.toolTip1.SetToolTip(this.chkIntegratedSecurity, resources.GetString("chkIntegratedSecurity.ToolTip"));
+            this.chkIntegratedSecurity.UseVisualStyleBackColor = true;
+            this.chkIntegratedSecurity.CheckedChanged += new System.EventHandler(this.chkIntegratedSecurity_CheckedChanged);
             // 
             // btnGetServerList
             // 
@@ -827,25 +925,25 @@
             this.btnGetServerList.TabStop = true;
             this.btnGetServerList.Text = "Get Server List";
             this.toolTip1.SetToolTip(this.btnGetServerList, "Enumerates a list of available instances of SQL Server that are installed on the " +
-                    "network.\r\n");
+        "network.\r\n");
             this.btnGetServerList.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btnGetServerList_LinkClicked);
             // 
-            // cboServerName
+            // cboserver
             // 
-            this.cboServerName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cboServerName.FormattingEnabled = true;
-            this.cboServerName.Location = new System.Drawing.Point(97, 73);
-            this.cboServerName.Name = "cboServerName";
-            this.cboServerName.Size = new System.Drawing.Size(295, 21);
-            this.cboServerName.TabIndex = 0;
-            this.toolTip1.SetToolTip(this.cboServerName, "Type or select the server here.\r\nTypically in the form ComputerName\\InstanceName." +
-                    "\r\n");
-            this.cboServerName.SelectedIndexChanged += new System.EventHandler(this.cboServerName_SelectedIndexChanged);
+            this.cboserver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cboserver.FormattingEnabled = true;
+            this.cboserver.Location = new System.Drawing.Point(97, 73);
+            this.cboserver.Name = "cboserver";
+            this.cboserver.Size = new System.Drawing.Size(295, 21);
+            this.cboserver.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.cboserver, "Type or select the server here.\r\nTypically in the form ComputerName\\InstanceName." +
+        "\r\n");
+            this.cboserver.SelectedIndexChanged += new System.EventHandler(this.cboServerName_SelectedIndexChanged);
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(94, 57);
+            this.label8.Location = new System.Drawing.Point(94, 52);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(347, 13);
             this.label8.TabIndex = 24;
@@ -871,7 +969,7 @@
             this.label12.Size = new System.Drawing.Size(764, 16);
             this.label12.TabIndex = 20;
             this.label12.Text = "SB Payroll  needs to know where to find  the Database. Please enter in the detail" +
-                "s below and click on Connect.";
+    "s below and click on Connect.";
             // 
             // tabPageDatabaseSettings
             // 
@@ -1029,9 +1127,44 @@
             this.btnDatabaseSettingsQuit.Text = "Quit";
             this.btnDatabaseSettingsQuit.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btnDatabaseSettingsQuit_LinkClicked);
             // 
-            // errorProvider1
+            // tabPagelogs
             // 
-            this.errorProvider1.ContainerControl = this;
+            this.tabPagelogs.BackColor = System.Drawing.Color.LimeGreen;
+            this.tabPagelogs.Controls.Add(this.groupBox15);
+            this.tabPagelogs.Location = new System.Drawing.Point(4, 22);
+            this.tabPagelogs.Name = "tabPagelogs";
+            this.tabPagelogs.Size = new System.Drawing.Size(821, 431);
+            this.tabPagelogs.TabIndex = 4;
+            this.tabPagelogs.Text = "Logs";
+            // 
+            // groupBox15
+            // 
+            this.groupBox15.Controls.Add(this.txtlogs);
+            this.groupBox15.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox15.Location = new System.Drawing.Point(0, 0);
+            this.groupBox15.Name = "groupBox15";
+            this.groupBox15.Size = new System.Drawing.Size(821, 431);
+            this.groupBox15.TabIndex = 0;
+            this.groupBox15.TabStop = false;
+            // 
+            // txtlogs
+            // 
+            this.txtlogs.BackColor = System.Drawing.Color.Black;
+            this.txtlogs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtlogs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtlogs.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtlogs.ForeColor = System.Drawing.Color.Lime;
+            this.txtlogs.HideSelection = false;
+            this.txtlogs.Location = new System.Drawing.Point(3, 16);
+            this.txtlogs.Multiline = true;
+            this.txtlogs.Name = "txtlogs";
+            this.txtlogs.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtlogs.Size = new System.Drawing.Size(815, 412);
+            this.txtlogs.TabIndex = 2;
+            // 
+            // errorProvider
+            // 
+            this.errorProvider.ContainerControl = this;
             // 
             // openFileDialog
             // 
@@ -1044,24 +1177,24 @@
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
             this.contextMenuStripSystemNotification.Name = "contextMenuStripSystemNotification";
-            this.contextMenuStripSystemNotification.Size = new System.Drawing.Size(102, 54);
+            this.contextMenuStripSystemNotification.Size = new System.Drawing.Size(108, 54);
             // 
             // homeToolStripMenuItem
             // 
             this.homeToolStripMenuItem.Name = "homeToolStripMenuItem";
-            this.homeToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
+            this.homeToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.homeToolStripMenuItem.Text = "Home";
             this.homeToolStripMenuItem.Click += new System.EventHandler(this.homeToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(98, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(104, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -1146,9 +1279,12 @@
             this.groupBox9.PerformLayout();
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
+            this.tabPagelogs.ResumeLayout(false);
+            this.groupBox15.ResumeLayout(false);
+            this.groupBox15.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceServerName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceDatabases)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.contextMenuStripSystemNotification.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -1182,9 +1318,9 @@
         private System.Windows.Forms.LinkLabel btnQuitChangeSever;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.LinkLabel btnGetServerList;
-        private System.Windows.Forms.TextBox txtServerLoginPassword;
-        private System.Windows.Forms.TextBox txtServerLoginUserName;
-        private System.Windows.Forms.ComboBox cboServerName;
+        private System.Windows.Forms.TextBox txtpassword;
+        private System.Windows.Forms.TextBox txtusername;
+        private System.Windows.Forms.ComboBox cboserver;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
@@ -1209,16 +1345,16 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.TextBox txtConnectionLoginErrors;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar progressBar_settings;
         private System.Windows.Forms.Label lblMsg;
         private System.Windows.Forms.PageSetupDialog pageSetupDialog1;
         private System.Windows.Forms.LinkLabel linkLabel1;
-        private System.Windows.Forms.CheckBox chkIntegratedSec;
+        private System.Windows.Forms.CheckBox chkIntegratedSecurity;
         private System.Windows.Forms.LinkLabel btnCreateDBScripts;
         private System.Windows.Forms.GroupBox gbRestore;
         private System.Windows.Forms.TextBox txtNewDatabaseName;
@@ -1244,5 +1380,14 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStripCopyEmail;
         private System.Windows.Forms.ToolStripMenuItem copyEmailToolStripMenuItem;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.LinkLabel btnload_log_file;
+        private System.Windows.Forms.ProgressBar progressBar_connect;
+        private System.Windows.Forms.CheckBox chkshowpassword;
+        private System.Windows.Forms.LinkLabel btnrefreshdatabases;
+        private System.Windows.Forms.TabPage tabPagelogs;
+        private System.Windows.Forms.GroupBox groupBox15;
+        private System.Windows.Forms.TextBox txtlogs;
+        private System.Windows.Forms.LinkLabel btn_truncate_non_default_tables;
+        private System.Windows.Forms.LinkLabel btn_upload_default_tables;
     }
 }

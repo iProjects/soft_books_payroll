@@ -22,8 +22,12 @@ namespace winSBPayroll.Forms
         List<EmployerBanksModel> _employerbanks = new List<EmployerBanksModel>();
         // Boolean flag used to determine when a character other than a number is entered.
         private bool nonNumberEntered = false;
+        public string TAG;
+        //Event declaration:
+        //event for publishing messages to output
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
 
-        public EditEmployer(DAL.Employer employer, string Conn)
+        public EditEmployer(DAL.Employer employer, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             InitializeComponent();
 
@@ -36,75 +40,37 @@ namespace winSBPayroll.Forms
             rep = new Repository(connection);
 
             _employer = employer;
+
+            TAG = this.GetType().Name;
+
+            //Subscribing to the event: 
+            //Dynamically:
+            //EventName += HandlerName;
+            _notificationmessageEventname = notificationmessageEventname;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("finished EditEmployer initialization", TAG));
+
         }
 
-        private void InitializeControls()
-        {
-            if (_employer.Name != null)
-            {
-                txtName.Text = _employer.Name.Trim();
-            }
-            if (_employer.Address1 != null)
-            {
-                txtAddress1.Text = _employer.Address1.Trim();
-            }
-            if (_employer.Address2 != null)
-            {
-                txtAddress2.Text = _employer.Address2.Trim();
-            }
-            if (_employer.Telephone != null)
-            {
-                txtTelephone.Text = _employer.Telephone.Trim();
-            }
-            if (_employer.PIN != null)
-            {
-                txtPIN.Text = _employer.PIN.Trim();
-            }
-            if (_employer.Email != null)
-            {
-                txtEmail.Text = _employer.Email.Trim();
-            }
-            if (_employer.NHIF != null)
-            {
-                txtNHIF.Text = _employer.NHIF.Trim();
-            }
-            if (_employer.NSSF != null)
-            {
-                txtNSSF.Text = _employer.NSSF.Trim();
-            }
-            if (_employer.Logo != null)
-            {
-                txtLogo.Text = _employer.Logo.Trim();
-            }
-            if (_employer.Slogan != null)
-            {
-                txtSlogan.Text = _employer.Slogan.Trim();
-            }
-            if (_employer.BankBranchSortCode != null)
-            {
-                //txtBankSortCode.Text = _employer.BankBranchSortCode.Trim();
-            }
-            if (_employer.AccountName != null)
-            {
-                txtAccountName.Text = _employer.AccountName.Trim();
-            }
-            if (_employer.AccountNo != null)
-            {
-                txtAccountNo.Text = _employer.AccountNo.Trim();
-            }
-            if (_employer.AuthorizedSignatory != null)
-            {
-                txtAuthSign.Text = _employer.AuthorizedSignatory.Trim();
-            }
-            if (_employer.IsActive != null)
-            {
-                chkIsActive.Checked = _employer.IsActive.Value;
-            }
-        }
         private void EditEmployer_Load(object sender, EventArgs e)
         {
             try
             {
+                //dataGridView_banks.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                //dataGridView_banks.MultiSelect = false;
+                //dataGridView_banks.ReadOnly = true;
+                //dataGridView_banks.AutoGenerateColumns = false;
+
+                //dataGridView_signatories.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                //dataGridView_signatories.MultiSelect = false;
+                //dataGridView_signatories.ReadOnly = true;
+                //dataGridView_signatories.AutoGenerateColumns = false;
+
+                //dataGridView_centers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                //dataGridView_centers.MultiSelect = false;
+                //dataGridView_centers.ReadOnly = true;
+                //dataGridView_centers.AutoGenerateColumns = false;
+
                 txtLogo.Enabled = false;
 
                 var _banksquery = from rl in rep.GetBankBranches()
@@ -168,6 +134,9 @@ namespace winSBPayroll.Forms
                     AutoCompleteMode.SuggestAppend;
                 txtAuthSign.AutoCompleteSource =
                      AutoCompleteSource.CustomSource;
+
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("finished EditEmployer load", TAG));
+
             }
             catch (Exception ex)
             {
@@ -178,6 +147,7 @@ namespace winSBPayroll.Forms
                 CheckForDefaultBank();
             }
         }
+
         private string[] AutoComplete_BankSortCodes()
         {
             try
@@ -234,12 +204,88 @@ namespace winSBPayroll.Forms
                 return null;
             }
         }
+
+        private void InitializeControls()
+        {
+            if (_employer.Name != null)
+            {
+                txtName.Text = _employer.Name.Trim();
+            }
+            if (_employer.Id != null)
+            {
+                groupBox2.Text = _employer.Id.ToString();
+            }
+            if (_employer.Address1 != null)
+            {
+                txtAddress1.Text = _employer.Address1.Trim();
+            }
+            if (_employer.Address2 != null)
+            {
+                txtAddress2.Text = _employer.Address2.Trim();
+            }
+            if (_employer.Telephone != null)
+            {
+                txtTelephone.Text = _employer.Telephone.Trim();
+            }
+            if (_employer.PIN != null)
+            {
+                txtPIN.Text = _employer.PIN.Trim();
+            }
+            if (_employer.Email != null)
+            {
+                txtEmail.Text = _employer.Email.Trim();
+            }
+            if (_employer.NHIF != null)
+            {
+                txtNHIF.Text = _employer.NHIF.Trim();
+            }
+            if (_employer.NSSF != null)
+            {
+                txtNSSF.Text = _employer.NSSF.Trim();
+            }
+            if (_employer.Logo != null)
+            {
+                txtLogo.Text = _employer.Logo.Trim();
+                pbPhoto.ImageLocation = _employer.Logo.Trim();
+            }
+            if (_employer.Slogan != null)
+            {
+                txtSlogan.Text = _employer.Slogan.Trim();
+            }
+            if (_employer.Code != null)
+            {
+                txtcode.Text = _employer.Code.Trim();
+            }
+            if (_employer.BankBranchSortCode != null)
+            {
+                //txtBankSortCode.Text = _employer.BankBranchSortCode.Trim();
+            }
+            if (_employer.AccountName != null)
+            {
+                txtAccountName.Text = _employer.AccountName.Trim();
+            }
+            if (_employer.AccountNo != null)
+            {
+                txtAccountNo.Text = _employer.AccountNo.Trim();
+            }
+            if (_employer.AuthorizedSignatory != null)
+            {
+                txtAuthSign.Text = _employer.AuthorizedSignatory.Trim();
+            }
+            if (_employer.IsActive != null)
+            {
+                chkIsActive.Checked = _employer.IsActive.Value;
+            }
+        }
+
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
         private void btnUpdate_Click(object sender, EventArgs e)
         {
+            errorProvider.Clear();
             if (IsEmployerValid())
             {
                 try
@@ -284,6 +330,10 @@ namespace winSBPayroll.Forms
                     {
                         _employer.Slogan = Utils.ConvertFirstLetterToUpper(txtSlogan.Text.ToString().Trim());
                     }
+                    if (!string.IsNullOrEmpty(txtcode.Text))
+                    {
+                        _employer.Code = Utils.ConvertFirstLetterToUpper(txtcode.Text.ToString().Trim().ToUpper());
+                    }
                     int banksortcode;
                     if (!string.IsNullOrEmpty(txtBankSortCode.Text) && int.TryParse(txtBankSortCode.Text, out banksortcode))
                     {
@@ -307,8 +357,8 @@ namespace winSBPayroll.Forms
 
                     SaveEmployerBank(_employerbanks);
 
-                    Employer f = (Employer)this.Owner;
-                    f.RefreshGrid();
+                    EmployerForm f = (EmployerForm)this.Owner;
+                    f.RefreshGrid(1);
                     this.Close();
                 }
                 catch (Exception ex)
@@ -316,86 +366,87 @@ namespace winSBPayroll.Forms
                     Utils.ShowError(ex);
                 }
             }
+            else
+            {
+                MessageBox.Show("There are errors in the Form. \nCheck all tabs for missing data.", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
         private bool IsEmployerValid()
         {
             bool no_error = true;
             if (string.IsNullOrEmpty(txtName.Text))
-            {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtName, "Employer name cannot be null!");
-                return false;
+            { 
+                errorProvider.SetError(txtName, "Employer name cannot be null!");
+                no_error = false;
             }
             if (string.IsNullOrEmpty(txtAddress1.Text))
-            {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtAddress1, "Address cannot be null!");
-                return false;
+            { 
+                errorProvider.SetError(txtAddress1, "Address cannot be null!");
+                no_error = false;
             }
             if (string.IsNullOrEmpty(txtTelephone.Text))
-            {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtTelephone, "Telephone cannot be null!");
-                return false;
+            { 
+                errorProvider.SetError(txtTelephone, "Telephone cannot be null!");
+                no_error = false;
             }
             if (string.IsNullOrEmpty(txtPIN.Text))
-            {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtPIN, "PIN cannot be null!");
-                return false;
+            { 
+                errorProvider.SetError(txtPIN, "PIN cannot be null!");
+                no_error= false;
             }
             if (string.IsNullOrEmpty(txtEmail.Text))
-            {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtEmail, "Email cannot be null!");
-                return false;
+            { 
+                errorProvider.SetError(txtEmail, "Email cannot be null!");
+                no_error= false;
             }
             if (string.IsNullOrEmpty(txtNHIF.Text))
-            {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtNHIF, "NHIF cannot be null!");
-                return false;
+            { 
+                errorProvider.SetError(txtNHIF, "NHIF cannot be null!");
+                no_error= false;
             }
             if (string.IsNullOrEmpty(txtNSSF.Text))
-            {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtNSSF, "NSSF cannot be null!");
-                return false;
+            { 
+                errorProvider.SetError(txtNSSF, "NSSF cannot be null!");
+                no_error= false;
             }
             if (string.IsNullOrEmpty(txtLogo.Text))
-            {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtLogo, "Logo cannot be null!");
-                return false;
+            { 
+                errorProvider.SetError(txtLogo, "Logo cannot be null!");
+                no_error= false;
             }
             if (string.IsNullOrEmpty(txtSlogan.Text))
-            {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtSlogan, "Slogan cannot be null!");
-                return false;
+            { 
+                errorProvider.SetError(txtSlogan, "Slogan cannot be null!");
+                no_error= false;
+            }
+            if (string.IsNullOrEmpty(txtcode.Text))
+            { 
+                errorProvider.SetError(txtcode, "Code cannot be null!");
+                no_error= false;
+            
             }
             if (dataGridViewEmployerBank.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Must have atleast one Bank!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return false;
+                MessageBox.Show("Must have atleast one Bank!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                no_error= false;
             }
             return no_error;
         }
+
         private bool IsEmployerBankValid()
         {
             bool no_error = true;
             if (string.IsNullOrEmpty(txtBankSortCode.Text))
-            {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtBankSortCode, "Bank Sort Code cannot be null!");
-                return false;
+            { 
+                errorProvider.SetError(txtBankSortCode, "Bank Sort Code cannot be null!");
+                no_error= false;
             }
             int banksortcode;
             if (!int.TryParse(txtBankSortCode.Text, out banksortcode))
-            {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtBankSortCode, "Bank Sort Code must be integer!");
-                return false;
+            { 
+                errorProvider.SetError(txtBankSortCode, "Bank Sort Code must be integer!");
+                no_error= false;
             }
             string _banksortcode = txtBankSortCode.Text.Trim();
             var _branchquery = (from bb in rep.GetAllBranches()
@@ -403,31 +454,28 @@ namespace winSBPayroll.Forms
                                 select bb).FirstOrDefault();
             BankBranch _branch = _branchquery;
             if (_branch == null)
-            {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtBankSortCode, "Bank Sort Code does not exist!");
-                return false;
+            { 
+                errorProvider.SetError(txtBankSortCode, "Bank Sort Code does not exist!");
+                no_error= false;
             }
             if (string.IsNullOrEmpty(txtAccountName.Text))
-            {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtAccountName, "Account Name cannot be null!");
-                return false;
+            { 
+                errorProvider.SetError(txtAccountName, "Account Name cannot be null!");
+                no_error= false;
             }
             if (string.IsNullOrEmpty(txtAccountNo.Text))
-            {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtAccountNo, "Account No cannot be null!");
-                return false;
+            { 
+                errorProvider.SetError(txtAccountNo, "Account No cannot be null!");
+                no_error= false;
             }
             if (string.IsNullOrEmpty(txtAuthSign.Text))
-            {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtAuthSign, "Authorizing Signatory cannot be null!");
-                return false;
+            { 
+                errorProvider.SetError(txtAuthSign, "Authorizing Signatory cannot be null!");
+                no_error= false;
             }
             return no_error;
         }
+
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             try
@@ -440,6 +488,29 @@ namespace winSBPayroll.Forms
                 // Process open file dialog box results
                 if (result == true)
                 {
+                    string strFileName = ofd.FileName;
+                    string strFileType = System.IO.Path.GetExtension(strFileName).ToString().ToLower();
+
+                    //Check file type
+                    if (strFileType != ".jpg" && strFileType != ".gif" && strFileType != ".png")
+                    {
+                        throw new Exception("File Type not Image");
+
+                    }
+                    //display  image
+                    if (strFileType.Trim() == ".jpg")
+                    {
+                        pbPhoto.ImageLocation = strFileName;
+                    }
+                    else if (strFileType.Trim() == ".gif")
+                    {
+                        pbPhoto.ImageLocation = strFileName;
+                    }
+                    else if (strFileType.Trim() == ".png")
+                    {
+                        pbPhoto.ImageLocation = strFileName;
+                    }
+
                     txtLogo.Text = ofd.FileName.ToString().Trim();
                 }
             }
@@ -597,7 +668,7 @@ namespace winSBPayroll.Forms
 
                     if (_employerbanks.Any(i => i.EmployerId == _bank.EmployerId && i.BankSortCode == _bank.BankSortCode))
                     {
-                        MessageBox.Show("Bank Exist!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Bank Exist!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     if (!_employerbanks.Any(i => i.EmployerId == _bank.EmployerId && i.BankSortCode == _bank.BankSortCode))
                     {
@@ -693,9 +764,7 @@ namespace winSBPayroll.Forms
                     rowid++;
                 }
 
-                bindingSourceEmployerBank.DataSource = _employerbanks;
-                dataGridViewEmployerBank.AutoGenerateColumns = false;
-                this.dataGridViewEmployerBank.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                bindingSourceEmployerBank.DataSource = _employerbanks; 
                 dataGridViewEmployerBank.DataSource = bindingSourceEmployerBank;
                 groupBox3.Text = bindingSourceEmployerBank.Count.ToString();
                 foreach (DataGridViewRow row in dataGridViewEmployerBank.Rows)
@@ -767,7 +836,7 @@ namespace winSBPayroll.Forms
                 {
                     if (!ValidFeesStructure())
                     {
-                        MessageBox.Show("No default Bank is set!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("No default Bank is set!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         e.Cancel = true;
                     }
                 }
@@ -817,7 +886,14 @@ namespace winSBPayroll.Forms
             {
                 Utils.ShowError(ex);
             }
-        } 
+        }
+
+        private void txtcode_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+         
+         
 
 
 

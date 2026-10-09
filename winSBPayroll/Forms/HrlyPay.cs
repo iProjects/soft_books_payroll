@@ -94,7 +94,7 @@ namespace winSBPayroll.Forms
             {
                 //save to the database
                 db.SaveChanges();
-                MessageBox.Show("Save Successfull!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Save Successfull!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 ComputeTotal();
 
@@ -107,7 +107,7 @@ namespace winSBPayroll.Forms
                 if (this.Owner is EditEmployee)
                 {
                     EditEmployee f = (EditEmployee)this.Owner;
-                    f.GridRefresh();
+                    f.refresh_emptxn_grid();
                     this.Close();
                 }
                 else if (this.Owner is AddEmpTxn)

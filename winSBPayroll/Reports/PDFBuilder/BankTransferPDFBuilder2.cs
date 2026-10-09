@@ -24,22 +24,37 @@ namespace winSBPayroll.Reports.PDF
         //DEFINED fONTS
         Font hFont1 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
         Font hfont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
-        Font bfont1 = new Font(Font.TIMES_ROMAN, 10, Font.NORMAL);//BODY
-        Font tHfont1 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);//TABLE HEADER
+        Font hFont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font bfont1 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);//body
+        Font bFont2 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);//body
+        Font bFont3 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);//body
+        Font tHFont = new Font(Font.TIMES_ROMAN, 9, Font.BOLD); //table Header
+        Font tHfont1 = new Font(Font.TIMES_ROMAN, 11, Font.BOLD); //table Header
         Font tcFont = new Font(Font.HELVETICA, 8, Font.NORMAL);//table cell
-        Font rms6Normal = new Font(Font.TIMES_ROMAN, 6, Font.NORMAL);
-        Font rms8Normal = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL);
-        Font rms6Bold = new Font(Font.TIMES_ROMAN, 6, Font.BOLD);
-        Font rms8Bold = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);
+        Font rms6Normal = new Font(Font.TIMES_ROMAN, 9, Font.NORMAL);
+        Font rms10Bold = new Font(Font.HELVETICA, 10, Font.BOLD);
+        Font rms6Bold = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font rms8Bold = new Font(Font.HELVETICA, 8, Font.BOLD);
+        Font rms9Bold = new Font(Font.HELVETICA, 9, Font.BOLD);
+        Font rms10Normal = new Font(Font.HELVETICA, 10, Font.NORMAL);
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
         //constructor
-        public BankTransferPDFBuilder2(BankTransferReportModel2 bbtransfermodel, string FileName)
+        public BankTransferPDFBuilder2(BankTransferReportModel2 bbtransfermodel, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (bbtransfermodel == null)
                 throw new ArgumentNullException("BankTransferModel is null");
             _ViewModel = bbtransfermodel;
 
+            TAG = this.GetType().Name;
+
+            _notificationmessageEventname = notificationmessageEventname;
+
             sFilePDF = FileName;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed BankTransferPDFBuilder2", TAG));
+
         }
 
         public string GetPDF()
@@ -68,15 +83,15 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (DocumentException de)
             {
-                this.Message = de.Message;
+                Log.WriteToErrorLogFile(de);
             }
             catch (IOException ioe)
             {
-                this.Message = ioe.Message;
+                Log.WriteToErrorLogFile(ioe);
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
         }
         private void AddBankTransfers()
@@ -141,7 +156,7 @@ namespace winSBPayroll.Reports.PDF
                 bankTransferTable.AddCell(reportdateCell);
 
                 //create the logo
-                PDFGen pdfgen = new PDFGen();
+                PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
                 Image img0 = pdfgen.DoGetImageFile(_ViewModel.CompanyLogo);
                 img0.Alignment = Image.ALIGN_MIDDLE;
                 Cell logoCell = new Cell(img0);
@@ -283,7 +298,7 @@ namespace winSBPayroll.Reports.PDF
                 E.HorizontalAlignment = Cell.ALIGN_LEFT;
                 atable.AddCell(E);
 
-                Cell F = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", det.Amount), tcFont));
+                Cell F = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", det.Amount), tcFont));
                 F.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 atable.AddCell(F);
             }
@@ -302,7 +317,7 @@ namespace winSBPayroll.Reports.PDF
                 E.Colspan = 4;
                 atable.AddCell(E);
 
-                Cell F = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", bti.Total), tcFont));
+                Cell F = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", bti.Total), tcFont));
                 F.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 atable.AddCell(F);
             }
@@ -327,7 +342,7 @@ namespace winSBPayroll.Reports.PDF
                 G.Colspan = 5;
                 bankTransferTable.AddCell(G);
 
-                Cell H = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.GrandTotal), hfont2));
+                Cell H = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.GrandTotal), hfont2));
                 H.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 bankTransferTable.AddCell(H);
 

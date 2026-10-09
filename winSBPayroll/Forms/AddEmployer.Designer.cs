@@ -29,24 +29,23 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddEmployer));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddEmployer));
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
-            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageGeneralDetails = new System.Windows.Forms.TabPage();
+            this.txtcode = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.txtSlogan = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.btnBrowse = new System.Windows.Forms.Button();
-            this.txtLogo = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.txtAddress1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -63,19 +62,19 @@
             this.NSSF = new System.Windows.Forms.Label();
             this.txtAddress2 = new System.Windows.Forms.TextBox();
             this.txtName = new System.Windows.Forms.TextBox();
+            this.tabPagephoto = new System.Windows.Forms.TabPage();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.pbPhoto = new System.Windows.Forms.PictureBox();
+            this.btnBrowse = new System.Windows.Forms.Button();
+            this.txtLogo = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.tabPageBankingDetails = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.dataGridViewEmployerBank = new System.Windows.Forms.DataGridView();
-            this.ColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EmpEmail = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EmpNHIF = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EmpNSSF = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnIsDefault = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dataGridView_banks = new System.Windows.Forms.DataGridView();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.chkIsDefault = new System.Windows.Forms.CheckBox();
             this.btnAddBank = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.txtBankSortCode = new System.Windows.Forms.TextBox();
             this.lblBankDetails = new System.Windows.Forms.Label();
@@ -83,25 +82,66 @@
             this.label9 = new System.Windows.Forms.Label();
             this.txtAccountName = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.txtAuthSign = new System.Windows.Forms.TextBox();
             this.txtAccountNo = new System.Windows.Forms.TextBox();
+            this.tabPageSignatories = new System.Windows.Forms.TabPage();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.dataGridView_signatories = new System.Windows.Forms.DataGridView();
+            this.ColumnSignatoryId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnDesignation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.txt_designation = new System.Windows.Forms.TextBox();
+            this.btn_add_authorized_sinatory = new System.Windows.Forms.Button();
+            this.btn_delete_authorized_sinatory = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txt_authorized_signatory = new System.Windows.Forms.TextBox();
+            this.tabPageCenters = new System.Windows.Forms.TabPage();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.dataGridView_centers = new System.Windows.Forms.DataGridView();
+            this.ColumnCentersId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.btn_add_center = new System.Windows.Forms.Button();
+            this.btn_delete_center = new System.Windows.Forms.Button();
+            this.label14 = new System.Windows.Forms.Label();
+            this.txt_center_description = new System.Windows.Forms.TextBox();
             this.bindingSourceBank = new System.Windows.Forms.BindingSource(this.components);
-            this.bindingSourceEmployerBank = new System.Windows.Forms.BindingSource(this.components);
+            this.bindingSource_banks = new System.Windows.Forms.BindingSource(this.components);
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            this.bindingSource_centers = new System.Windows.Forms.BindingSource(this.components);
+            this.bindingSource_signatories = new System.Windows.Forms.BindingSource(this.components);
+            this.ColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnAccountName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnAccountNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnIsDefault = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPageGeneralDetails.SuspendLayout();
+            this.tabPagephoto.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbPhoto)).BeginInit();
             this.tabPageBankingDetails.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEmployerBank)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_banks)).BeginInit();
             this.groupBox4.SuspendLayout();
+            this.tabPageSignatories.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_signatories)).BeginInit();
+            this.groupBox6.SuspendLayout();
+            this.tabPageCenters.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_centers)).BeginInit();
+            this.groupBox9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceBank)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEmployerBank)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource_banks)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource_centers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource_signatories)).BeginInit();
             this.SuspendLayout();
             // 
             // btnAdd
@@ -129,13 +169,16 @@
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // errorProvider1
+            // errorProvider
             // 
-            this.errorProvider1.ContainerControl = this;
+            this.errorProvider.ContainerControl = this;
             // 
-            // openFileDialog1
+            // openFileDialog
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog.FileName = "Image File (*.jpg)|*.jpg|Image File (*.gif)|*.gif|Image File (*.png)|*.png|All fi" +
+    "les (*.*)|*.*";
+            this.openFileDialog.Filter = "Image File (*.jpg)|*.jpg|Image File (*.gif)|*.gif|Image File (*.png)|*.png|All fi" +
+    "les (*.*)|*.*";
             // 
             // groupBox1
             // 
@@ -162,7 +205,10 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPageGeneralDetails);
+            this.tabControl1.Controls.Add(this.tabPagephoto);
             this.tabControl1.Controls.Add(this.tabPageBankingDetails);
+            this.tabControl1.Controls.Add(this.tabPageSignatories);
+            this.tabControl1.Controls.Add(this.tabPageCenters);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(3, 16);
             this.tabControl1.Name = "tabControl1";
@@ -173,11 +219,10 @@
             // tabPageGeneralDetails
             // 
             this.tabPageGeneralDetails.BackColor = System.Drawing.Color.LimeGreen;
+            this.tabPageGeneralDetails.Controls.Add(this.txtcode);
+            this.tabPageGeneralDetails.Controls.Add(this.label13);
             this.tabPageGeneralDetails.Controls.Add(this.txtSlogan);
             this.tabPageGeneralDetails.Controls.Add(this.label12);
-            this.tabPageGeneralDetails.Controls.Add(this.btnBrowse);
-            this.tabPageGeneralDetails.Controls.Add(this.txtLogo);
-            this.tabPageGeneralDetails.Controls.Add(this.label7);
             this.tabPageGeneralDetails.Controls.Add(this.txtAddress1);
             this.tabPageGeneralDetails.Controls.Add(this.label1);
             this.tabPageGeneralDetails.Controls.Add(this.label2);
@@ -201,54 +246,42 @@
             this.tabPageGeneralDetails.TabIndex = 0;
             this.tabPageGeneralDetails.Text = "General";
             // 
+            // txtcode
+            // 
+            this.txtcode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtcode.Location = new System.Drawing.Point(91, 319);
+            this.txtcode.MaxLength = 200;
+            this.txtcode.Name = "txtcode";
+            this.txtcode.Size = new System.Drawing.Size(307, 20);
+            this.txtcode.TabIndex = 11;
+            this.txtcode.TextChanged += new System.EventHandler(this.txtcode_TextChanged);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(53, 323);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(36, 13);
+            this.label13.TabIndex = 15;
+            this.label13.Text = "Code*";
+            // 
             // txtSlogan
             // 
             this.txtSlogan.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSlogan.Location = new System.Drawing.Point(91, 329);
+            this.txtSlogan.Location = new System.Drawing.Point(91, 283);
             this.txtSlogan.MaxLength = 200;
             this.txtSlogan.Name = "txtSlogan";
             this.txtSlogan.Size = new System.Drawing.Size(307, 20);
-            this.txtSlogan.TabIndex = 12;
+            this.txtSlogan.TabIndex = 10;
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(45, 332);
+            this.label12.Location = new System.Drawing.Point(45, 286);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(44, 13);
             this.label12.TabIndex = 13;
             this.label12.Text = "Slogan*";
-            // 
-            // btnBrowse
-            // 
-            this.btnBrowse.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.btnBrowse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBrowse.Location = new System.Drawing.Point(362, 279);
-            this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(36, 23);
-            this.btnBrowse.TabIndex = 11;
-            this.btnBrowse.Text = ":::";
-            this.btnBrowse.UseVisualStyleBackColor = false;
-            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
-            // 
-            // txtLogo
-            // 
-            this.txtLogo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtLogo.Location = new System.Drawing.Point(91, 273);
-            this.txtLogo.MaxLength = 200;
-            this.txtLogo.Multiline = true;
-            this.txtLogo.Name = "txtLogo";
-            this.txtLogo.Size = new System.Drawing.Size(251, 50);
-            this.txtLogo.TabIndex = 10;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(54, 283);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(35, 13);
-            this.label7.TabIndex = 10;
-            this.label7.Text = "Logo*";
             // 
             // txtAddress1
             // 
@@ -354,9 +387,9 @@
             this.NHIF.AutoSize = true;
             this.NHIF.Location = new System.Drawing.Point(36, 218);
             this.NHIF.Name = "NHIF";
-            this.NHIF.Size = new System.Drawing.Size(53, 13);
+            this.NHIF.Size = new System.Drawing.Size(52, 13);
             this.NHIF.TabIndex = 7;
-            this.NHIF.Text = "NHIF No*";
+            this.NHIF.Text = "SHIF No*";
             // 
             // txtTelephone
             // 
@@ -393,6 +426,72 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(307, 20);
             this.txtName.TabIndex = 0;
+            this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
+            // 
+            // tabPagephoto
+            // 
+            this.tabPagephoto.BackColor = System.Drawing.Color.LimeGreen;
+            this.tabPagephoto.Controls.Add(this.groupBox5);
+            this.tabPagephoto.Location = new System.Drawing.Point(4, 22);
+            this.tabPagephoto.Name = "tabPagephoto";
+            this.tabPagephoto.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPagephoto.Size = new System.Drawing.Size(486, 374);
+            this.tabPagephoto.TabIndex = 2;
+            this.tabPagephoto.Text = "Photo";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.pbPhoto);
+            this.groupBox5.Controls.Add(this.btnBrowse);
+            this.groupBox5.Controls.Add(this.txtLogo);
+            this.groupBox5.Controls.Add(this.label7);
+            this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox5.Location = new System.Drawing.Point(3, 3);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(480, 368);
+            this.groupBox5.TabIndex = 0;
+            this.groupBox5.TabStop = false;
+            // 
+            // pbPhoto
+            // 
+            this.pbPhoto.ErrorImage = ((System.Drawing.Image)(resources.GetObject("pbPhoto.ErrorImage")));
+            this.pbPhoto.Location = new System.Drawing.Point(50, 75);
+            this.pbPhoto.Name = "pbPhoto";
+            this.pbPhoto.Size = new System.Drawing.Size(251, 161);
+            this.pbPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbPhoto.TabIndex = 15;
+            this.pbPhoto.TabStop = false;
+            // 
+            // btnBrowse
+            // 
+            this.btnBrowse.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btnBrowse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBrowse.Location = new System.Drawing.Point(321, 25);
+            this.btnBrowse.Name = "btnBrowse";
+            this.btnBrowse.Size = new System.Drawing.Size(36, 23);
+            this.btnBrowse.TabIndex = 1;
+            this.btnBrowse.Text = ":::";
+            this.btnBrowse.UseVisualStyleBackColor = false;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
+            // 
+            // txtLogo
+            // 
+            this.txtLogo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLogo.Location = new System.Drawing.Point(50, 19);
+            this.txtLogo.MaxLength = 200;
+            this.txtLogo.Multiline = true;
+            this.txtLogo.Name = "txtLogo";
+            this.txtLogo.Size = new System.Drawing.Size(251, 50);
+            this.txtLogo.TabIndex = 0;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(13, 29);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(35, 13);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Logo*";
             // 
             // tabPageBankingDetails
             // 
@@ -408,7 +507,7 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.dataGridViewEmployerBank);
+            this.groupBox3.Controls.Add(this.dataGridView_banks);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(3, 202);
             this.groupBox3.Name = "groupBox3";
@@ -416,13 +515,13 @@
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             // 
-            // dataGridViewEmployerBank
+            // dataGridView_banks
             // 
-            this.dataGridViewEmployerBank.AllowUserToAddRows = false;
-            this.dataGridViewEmployerBank.AllowUserToDeleteRows = false;
+            this.dataGridView_banks.AllowUserToAddRows = false;
+            this.dataGridView_banks.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.dataGridViewEmployerBank.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridViewEmployerBank.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.dataGridView_banks.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridView_banks.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -430,13 +529,12 @@
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewEmployerBank.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridViewEmployerBank.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewEmployerBank.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridView_banks.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridView_banks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_banks.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnId,
-            this.EmpEmail,
-            this.EmpNHIF,
-            this.EmpNSSF,
+            this.ColumnAccountName,
+            this.ColumnAccountNo,
             this.ColumnIsDefault});
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
@@ -445,11 +543,11 @@
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewEmployerBank.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dataGridViewEmployerBank.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridViewEmployerBank.Location = new System.Drawing.Point(3, 16);
-            this.dataGridViewEmployerBank.Name = "dataGridViewEmployerBank";
-            this.dataGridViewEmployerBank.ReadOnly = true;
+            this.dataGridView_banks.DefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridView_banks.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView_banks.Location = new System.Drawing.Point(3, 16);
+            this.dataGridView_banks.Name = "dataGridView_banks";
+            this.dataGridView_banks.ReadOnly = true;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -457,63 +555,16 @@
             dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewEmployerBank.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.dataGridViewEmployerBank.Size = new System.Drawing.Size(474, 150);
-            this.dataGridViewEmployerBank.TabIndex = 0;
-            this.dataGridViewEmployerBank.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewEmployerBank_DataError);
-            // 
-            // ColumnId
-            // 
-            this.ColumnId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ColumnId.DataPropertyName = "EmployerBankId";
-            this.ColumnId.HeaderText = "Id";
-            this.ColumnId.Name = "ColumnId";
-            this.ColumnId.ReadOnly = true;
-            this.ColumnId.Width = 20;
-            // 
-            // EmpEmail
-            // 
-            this.EmpEmail.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.EmpEmail.DataPropertyName = "AccountName";
-            this.EmpEmail.HeaderText = "Account_Name";
-            this.EmpEmail.Name = "EmpEmail";
-            this.EmpEmail.ReadOnly = true;
-            // 
-            // EmpNHIF
-            // 
-            this.EmpNHIF.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.EmpNHIF.DataPropertyName = "AccountNo";
-            this.EmpNHIF.HeaderText = "Account_No";
-            this.EmpNHIF.Name = "EmpNHIF";
-            this.EmpNHIF.ReadOnly = true;
-            this.EmpNHIF.Width = 80;
-            // 
-            // EmpNSSF
-            // 
-            this.EmpNSSF.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.EmpNSSF.DataPropertyName = "Signatory";
-            this.EmpNSSF.HeaderText = "Signatory";
-            this.EmpNSSF.Name = "EmpNSSF";
-            this.EmpNSSF.ReadOnly = true;
-            this.EmpNSSF.Width = 80;
-            // 
-            // ColumnIsDefault
-            // 
-            this.ColumnIsDefault.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ColumnIsDefault.DataPropertyName = "IsDefault";
-            this.ColumnIsDefault.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ColumnIsDefault.HeaderText = "IsDefault";
-            this.ColumnIsDefault.Name = "ColumnIsDefault";
-            this.ColumnIsDefault.ReadOnly = true;
-            this.ColumnIsDefault.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColumnIsDefault.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dataGridView_banks.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            this.dataGridView_banks.Size = new System.Drawing.Size(474, 150);
+            this.dataGridView_banks.TabIndex = 0;
+            this.dataGridView_banks.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewEmployerBank_DataError);
             // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.chkIsDefault);
             this.groupBox4.Controls.Add(this.btnAddBank);
             this.groupBox4.Controls.Add(this.btnDelete);
-            this.groupBox4.Controls.Add(this.label11);
             this.groupBox4.Controls.Add(this.label10);
             this.groupBox4.Controls.Add(this.txtBankSortCode);
             this.groupBox4.Controls.Add(this.lblBankDetails);
@@ -521,7 +572,6 @@
             this.groupBox4.Controls.Add(this.label9);
             this.groupBox4.Controls.Add(this.txtAccountName);
             this.groupBox4.Controls.Add(this.label8);
-            this.groupBox4.Controls.Add(this.txtAuthSign);
             this.groupBox4.Controls.Add(this.txtAccountNo);
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox4.Location = new System.Drawing.Point(3, 3);
@@ -534,7 +584,7 @@
             // 
             this.chkIsDefault.AutoSize = true;
             this.chkIsDefault.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.chkIsDefault.Location = new System.Drawing.Point(120, 146);
+            this.chkIsDefault.Location = new System.Drawing.Point(120, 121);
             this.chkIsDefault.Name = "chkIsDefault";
             this.chkIsDefault.Size = new System.Drawing.Size(57, 17);
             this.chkIsDefault.TabIndex = 56;
@@ -564,15 +614,6 @@
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(10, 124);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(108, 13);
-            this.label11.TabIndex = 11;
-            this.label11.Text = "Authorized Signatory*";
             // 
             // label10
             // 
@@ -646,15 +687,6 @@
             this.label8.TabIndex = 53;
             this.label8.Text = "Bank Sort Code*";
             // 
-            // txtAuthSign
-            // 
-            this.txtAuthSign.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtAuthSign.Location = new System.Drawing.Point(120, 121);
-            this.txtAuthSign.MaxLength = 200;
-            this.txtAuthSign.Name = "txtAuthSign";
-            this.txtAuthSign.Size = new System.Drawing.Size(270, 20);
-            this.txtAuthSign.TabIndex = 3;
-            // 
             // txtAccountNo
             // 
             this.txtAccountNo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -663,6 +695,255 @@
             this.txtAccountNo.Name = "txtAccountNo";
             this.txtAccountNo.Size = new System.Drawing.Size(270, 20);
             this.txtAccountNo.TabIndex = 2;
+            // 
+            // tabPageSignatories
+            // 
+            this.tabPageSignatories.BackColor = System.Drawing.Color.LimeGreen;
+            this.tabPageSignatories.Controls.Add(this.groupBox7);
+            this.tabPageSignatories.Controls.Add(this.groupBox6);
+            this.tabPageSignatories.Location = new System.Drawing.Point(4, 22);
+            this.tabPageSignatories.Name = "tabPageSignatories";
+            this.tabPageSignatories.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageSignatories.Size = new System.Drawing.Size(486, 374);
+            this.tabPageSignatories.TabIndex = 3;
+            this.tabPageSignatories.Text = "Signatories";
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.dataGridView_signatories);
+            this.groupBox7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox7.Location = new System.Drawing.Point(3, 142);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(480, 229);
+            this.groupBox7.TabIndex = 1;
+            this.groupBox7.TabStop = false;
+            // 
+            // dataGridView_signatories
+            // 
+            this.dataGridView_signatories.AllowUserToAddRows = false;
+            this.dataGridView_signatories.AllowUserToDeleteRows = false;
+            this.dataGridView_signatories.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_signatories.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnSignatoryId,
+            this.ColumnName,
+            this.ColumnDesignation});
+            this.dataGridView_signatories.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView_signatories.Location = new System.Drawing.Point(3, 16);
+            this.dataGridView_signatories.Name = "dataGridView_signatories";
+            this.dataGridView_signatories.ReadOnly = true;
+            this.dataGridView_signatories.Size = new System.Drawing.Size(474, 210);
+            this.dataGridView_signatories.TabIndex = 0;
+            this.dataGridView_signatories.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridView_signatories_DataError);
+            // 
+            // ColumnSignatoryId
+            // 
+            this.ColumnSignatoryId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ColumnSignatoryId.DataPropertyName = "Id";
+            this.ColumnSignatoryId.HeaderText = "Id";
+            this.ColumnSignatoryId.Name = "ColumnSignatoryId";
+            this.ColumnSignatoryId.ReadOnly = true;
+            this.ColumnSignatoryId.Width = 50;
+            // 
+            // ColumnName
+            // 
+            this.ColumnName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ColumnName.DataPropertyName = "Name";
+            this.ColumnName.HeaderText = "Name";
+            this.ColumnName.Name = "ColumnName";
+            this.ColumnName.ReadOnly = true;
+            this.ColumnName.Width = 200;
+            // 
+            // ColumnDesignation
+            // 
+            this.ColumnDesignation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ColumnDesignation.DataPropertyName = "Designation";
+            this.ColumnDesignation.HeaderText = "Designation";
+            this.ColumnDesignation.Name = "ColumnDesignation";
+            this.ColumnDesignation.ReadOnly = true;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.label15);
+            this.groupBox6.Controls.Add(this.txt_designation);
+            this.groupBox6.Controls.Add(this.btn_add_authorized_sinatory);
+            this.groupBox6.Controls.Add(this.btn_delete_authorized_sinatory);
+            this.groupBox6.Controls.Add(this.label11);
+            this.groupBox6.Controls.Add(this.txt_authorized_signatory);
+            this.groupBox6.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox6.Location = new System.Drawing.Point(3, 3);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(480, 139);
+            this.groupBox6.TabIndex = 0;
+            this.groupBox6.TabStop = false;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(59, 67);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(67, 13);
+            this.label15.TabIndex = 15;
+            this.label15.Text = "Designation*";
+            // 
+            // txt_designation
+            // 
+            this.txt_designation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txt_designation.Location = new System.Drawing.Point(128, 64);
+            this.txt_designation.MaxLength = 200;
+            this.txt_designation.Name = "txt_designation";
+            this.txt_designation.Size = new System.Drawing.Size(270, 20);
+            this.txt_designation.TabIndex = 1;
+            // 
+            // btn_add_authorized_sinatory
+            // 
+            this.btn_add_authorized_sinatory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btn_add_authorized_sinatory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_add_authorized_sinatory.Location = new System.Drawing.Point(160, 99);
+            this.btn_add_authorized_sinatory.Name = "btn_add_authorized_sinatory";
+            this.btn_add_authorized_sinatory.Size = new System.Drawing.Size(59, 23);
+            this.btn_add_authorized_sinatory.TabIndex = 2;
+            this.btn_add_authorized_sinatory.Text = "Add";
+            this.btn_add_authorized_sinatory.UseVisualStyleBackColor = false;
+            this.btn_add_authorized_sinatory.Click += new System.EventHandler(this.btn_add_authorized_sinatory_Click);
+            // 
+            // btn_delete_authorized_sinatory
+            // 
+            this.btn_delete_authorized_sinatory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btn_delete_authorized_sinatory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_delete_authorized_sinatory.Location = new System.Drawing.Point(248, 99);
+            this.btn_delete_authorized_sinatory.Name = "btn_delete_authorized_sinatory";
+            this.btn_delete_authorized_sinatory.Size = new System.Drawing.Size(59, 23);
+            this.btn_delete_authorized_sinatory.TabIndex = 3;
+            this.btn_delete_authorized_sinatory.Text = "Delete";
+            this.btn_delete_authorized_sinatory.UseVisualStyleBackColor = false;
+            this.btn_delete_authorized_sinatory.Click += new System.EventHandler(this.btn_delete_authorized_sinatory_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(18, 31);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(108, 13);
+            this.label11.TabIndex = 13;
+            this.label11.Text = "Authorized Signatory*";
+            // 
+            // txt_authorized_signatory
+            // 
+            this.txt_authorized_signatory.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txt_authorized_signatory.Location = new System.Drawing.Point(128, 28);
+            this.txt_authorized_signatory.MaxLength = 200;
+            this.txt_authorized_signatory.Name = "txt_authorized_signatory";
+            this.txt_authorized_signatory.Size = new System.Drawing.Size(270, 20);
+            this.txt_authorized_signatory.TabIndex = 0;
+            // 
+            // tabPageCenters
+            // 
+            this.tabPageCenters.BackColor = System.Drawing.Color.LimeGreen;
+            this.tabPageCenters.Controls.Add(this.groupBox8);
+            this.tabPageCenters.Controls.Add(this.groupBox9);
+            this.tabPageCenters.Location = new System.Drawing.Point(4, 22);
+            this.tabPageCenters.Name = "tabPageCenters";
+            this.tabPageCenters.Size = new System.Drawing.Size(486, 374);
+            this.tabPageCenters.TabIndex = 4;
+            this.tabPageCenters.Text = "Centers";
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.dataGridView_centers);
+            this.groupBox8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox8.Location = new System.Drawing.Point(0, 100);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(486, 274);
+            this.groupBox8.TabIndex = 3;
+            this.groupBox8.TabStop = false;
+            // 
+            // dataGridView_centers
+            // 
+            this.dataGridView_centers.AllowUserToAddRows = false;
+            this.dataGridView_centers.AllowUserToDeleteRows = false;
+            this.dataGridView_centers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_centers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnCentersId,
+            this.ColumnDescription});
+            this.dataGridView_centers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView_centers.Location = new System.Drawing.Point(3, 16);
+            this.dataGridView_centers.Name = "dataGridView_centers";
+            this.dataGridView_centers.ReadOnly = true;
+            this.dataGridView_centers.Size = new System.Drawing.Size(480, 255);
+            this.dataGridView_centers.TabIndex = 0;
+            this.dataGridView_centers.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridView_centers_DataError);
+            // 
+            // ColumnCentersId
+            // 
+            this.ColumnCentersId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ColumnCentersId.DataPropertyName = "Id";
+            this.ColumnCentersId.HeaderText = "Id";
+            this.ColumnCentersId.Name = "ColumnCentersId";
+            this.ColumnCentersId.ReadOnly = true;
+            this.ColumnCentersId.Width = 50;
+            // 
+            // ColumnDescription
+            // 
+            this.ColumnDescription.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ColumnDescription.DataPropertyName = "Description";
+            this.ColumnDescription.HeaderText = "Description";
+            this.ColumnDescription.Name = "ColumnDescription";
+            this.ColumnDescription.ReadOnly = true;
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.btn_add_center);
+            this.groupBox9.Controls.Add(this.btn_delete_center);
+            this.groupBox9.Controls.Add(this.label14);
+            this.groupBox9.Controls.Add(this.txt_center_description);
+            this.groupBox9.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox9.Location = new System.Drawing.Point(0, 0);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(486, 100);
+            this.groupBox9.TabIndex = 2;
+            this.groupBox9.TabStop = false;
+            // 
+            // btn_add_center
+            // 
+            this.btn_add_center.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btn_add_center.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_add_center.Location = new System.Drawing.Point(97, 58);
+            this.btn_add_center.Name = "btn_add_center";
+            this.btn_add_center.Size = new System.Drawing.Size(59, 23);
+            this.btn_add_center.TabIndex = 1;
+            this.btn_add_center.Text = "Add";
+            this.btn_add_center.UseVisualStyleBackColor = false;
+            this.btn_add_center.Click += new System.EventHandler(this.btn_add_center_Click);
+            // 
+            // btn_delete_center
+            // 
+            this.btn_delete_center.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btn_delete_center.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_delete_center.Location = new System.Drawing.Point(185, 58);
+            this.btn_delete_center.Name = "btn_delete_center";
+            this.btn_delete_center.Size = new System.Drawing.Size(59, 23);
+            this.btn_delete_center.TabIndex = 3;
+            this.btn_delete_center.Text = "Delete";
+            this.btn_delete_center.UseVisualStyleBackColor = false;
+            this.btn_delete_center.Click += new System.EventHandler(this.btn_delete_center_Click);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(37, 30);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(42, 13);
+            this.label14.TabIndex = 17;
+            this.label14.Text = "Center*";
+            // 
+            // txt_center_description
+            // 
+            this.txt_center_description.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txt_center_description.Location = new System.Drawing.Point(81, 26);
+            this.txt_center_description.MaxLength = 200;
+            this.txt_center_description.Name = "txt_center_description";
+            this.txt_center_description.Size = new System.Drawing.Size(270, 20);
+            this.txt_center_description.TabIndex = 0;
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -697,6 +978,43 @@
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             this.dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
+            // ColumnId
+            // 
+            this.ColumnId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ColumnId.DataPropertyName = "Id";
+            this.ColumnId.HeaderText = "Id";
+            this.ColumnId.Name = "ColumnId";
+            this.ColumnId.ReadOnly = true;
+            this.ColumnId.Width = 20;
+            // 
+            // ColumnAccountName
+            // 
+            this.ColumnAccountName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ColumnAccountName.DataPropertyName = "AccountName";
+            this.ColumnAccountName.HeaderText = "Account Name";
+            this.ColumnAccountName.Name = "ColumnAccountName";
+            this.ColumnAccountName.ReadOnly = true;
+            // 
+            // ColumnAccountNo
+            // 
+            this.ColumnAccountNo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ColumnAccountNo.DataPropertyName = "AccountNo";
+            this.ColumnAccountNo.HeaderText = "Account No";
+            this.ColumnAccountNo.Name = "ColumnAccountNo";
+            this.ColumnAccountNo.ReadOnly = true;
+            this.ColumnAccountNo.Width = 80;
+            // 
+            // ColumnIsDefault
+            // 
+            this.ColumnIsDefault.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ColumnIsDefault.DataPropertyName = "IsDefault";
+            this.ColumnIsDefault.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ColumnIsDefault.HeaderText = "IsDefault";
+            this.ColumnIsDefault.Name = "ColumnIsDefault";
+            this.ColumnIsDefault.ReadOnly = true;
+            this.ColumnIsDefault.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColumnIsDefault.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
             // AddEmployer
             // 
             this.AcceptButton = this.btnAdd;
@@ -712,19 +1030,35 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Add  Employer";
             this.Load += new System.EventHandler(this.AddEmployer_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPageGeneralDetails.ResumeLayout(false);
             this.tabPageGeneralDetails.PerformLayout();
+            this.tabPagephoto.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbPhoto)).EndInit();
             this.tabPageBankingDetails.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEmployerBank)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_banks)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.tabPageSignatories.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_signatories)).EndInit();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.tabPageCenters.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_centers)).EndInit();
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceBank)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEmployerBank)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource_banks)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource_centers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource_signatories)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -733,9 +1067,9 @@
 
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.BindingSource bindingSourceBank;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TabControl tabControl1;
@@ -758,11 +1092,10 @@
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.TabPage tabPageBankingDetails;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.DataGridView dataGridViewEmployerBank;
+        private System.Windows.Forms.DataGridView dataGridView_banks;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button btnAddBank;
         private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtBankSortCode;
         private System.Windows.Forms.Label lblBankDetails;
@@ -770,23 +1103,51 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtAccountName;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtAuthSign;
         private System.Windows.Forms.TextBox txtAccountNo;
-        private System.Windows.Forms.BindingSource bindingSourceEmployerBank;
+        private System.Windows.Forms.BindingSource bindingSource_banks;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private System.Windows.Forms.TextBox txtLogo;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button btnBrowse;
         private System.Windows.Forms.CheckBox chkIsDefault;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn EmpEmail;
-        private System.Windows.Forms.DataGridViewTextBoxColumn EmpNHIF;
-        private System.Windows.Forms.DataGridViewTextBoxColumn EmpNSSF;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnIsDefault;
         private System.Windows.Forms.TextBox txtSlogan;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TabPage tabPagephoto;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.PictureBox pbPhoto;
+        private System.Windows.Forms.Button btnBrowse;
+        private System.Windows.Forms.TextBox txtLogo;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtcode;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TabPage tabPageSignatories;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.DataGridView dataGridView_signatories;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button btn_add_authorized_sinatory;
+        private System.Windows.Forms.Button btn_delete_authorized_sinatory;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox txt_authorized_signatory;
+        private System.Windows.Forms.TabPage tabPageCenters;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.DataGridView dataGridView_centers;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.Button btn_add_center;
+        private System.Windows.Forms.Button btn_delete_center;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox txt_center_description;
+        private System.Windows.Forms.BindingSource bindingSource_centers;
+        private System.Windows.Forms.BindingSource bindingSource_signatories;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnSignatoryId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDesignation;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnCentersId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDescription;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox txt_designation;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnAccountName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnAccountNo;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnIsDefault;
     }
 }

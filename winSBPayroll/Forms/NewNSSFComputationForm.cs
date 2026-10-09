@@ -1,13 +1,13 @@
-﻿using System; 
-using System.Collections.Generic; 
+﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.EntityClient;
 using System.Data.Objects;
-using System.Data.OleDb; 
+using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Windows.Forms;
-using BLL.DataEntry; 
+using BLL.DataEntry;
 using CommonLib;
 using DAL;
 using DAL.Criteria;
@@ -21,8 +21,12 @@ namespace winSBPayroll.Forms
         Repository rep;
         string connection;
         string _User;
+        public string TAG;
+        //Event declaration:
+        //event for publishing messages to output
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
 
-        public NewNSSFComputationForm(string user, string Conn)
+        public NewNSSFComputationForm(string user, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             InitializeComponent();
 
@@ -35,17 +39,31 @@ namespace winSBPayroll.Forms
             rep = new Repository(connection);
 
             _User = user;
+
+            TAG = this.GetType().Name;
+
+            //Subscribing to the event: 
+            //Dynamically:
+            //EventName += HandlerName;
+            _notificationmessageEventname = notificationmessageEventname;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("finished NewNSSFComputationForm initialization", TAG));
         }
 
         private void NewNSSFComputationForm_Load(object sender, EventArgs e)
         {
             try
             {
-                btnPrint.Visible = false;
+                dataGridViewNssfContributions.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dataGridViewNssfContributions.MultiSelect = false;
+                dataGridViewNssfContributions.ReadOnly = true;
+                dataGridViewNssfContributions.AutoGenerateColumns = false;
+
+                btnPrint.Visible = true;
 
                 var _employeesurnamequery = from dp in rep.GetAllActiveEmployees()
                                             where dp.IsDeleted == false
-                                            where dp.IsActive == true 
+                                            where dp.IsActive == true
                                             select dp;
                 List<Employee> _EmployeeSurname = _employeesurnamequery.ToList();
                 DataGridViewComboBoxColumn colCboxSurname = new DataGridViewComboBoxColumn();
@@ -73,7 +91,7 @@ namespace winSBPayroll.Forms
 
                 var _employeeothernamesquery = from dp in rep.GetAllActiveEmployees()
                                                where dp.IsDeleted == false
-                                               where dp.IsActive == true 
+                                               where dp.IsActive == true
                                                select dp;
                 List<Employee> _EmployeeOtherNames = _employeeothernamesquery.ToList();
                 DataGridViewComboBoxColumn colCboxOtherNames = new DataGridViewComboBoxColumn();
@@ -99,15 +117,34 @@ namespace winSBPayroll.Forms
                     //dataGridViewNssfContributions.Columns.Add(colCboxOtherNames);
                 }
 
+                RefreshGrid();
+
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("finished NewNSSFComputationForm load", TAG));
+
+            }
+            catch (Exception ex)
+            {
+                Utils.ShowError(ex);
+            }
+        }
+
+        public void RefreshGrid()
+        {
+            try
+            {
                 List<NssfContributionsDTO> _nssfContributions = new List<NssfContributionsDTO>();
+
                 var _employeesquery = from ep in rep.GetAllActiveEmployees()
                                       where ep.IsActive == true
-                                      where ep.IsDeleted == false 
+                                      where ep.IsDeleted == false
                                       select ep;
+
                 List<Employee> _employees = _employeesquery.ToList();
+
                 foreach (var emp in _employees)
                 {
                     NssfContributionsDTO _nssfcontribution = new NssfContributionsDTO();
+
                     _nssfcontribution = rep.ComputeNssfContributions(emp.Id);
 
                     if (!_nssfContributions.Any(i => i.EmployeeId == _nssfcontribution.EmployeeId))
@@ -123,62 +160,58 @@ namespace winSBPayroll.Forms
                     counter++;
                 }
 
-                dataGridViewNssfContributions.AutoGenerateColumns = false;
-                this.dataGridViewNssfContributions.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                bindingSourceNewNSSFComputation.DataSource = _nssfContributions;
-                dataGridViewNssfContributions.DataSource = bindingSourceNewNSSFComputation;
-                groupBox2.Text = bindingSourceNewNSSFComputation.Count.ToString();
-            }
-            catch (Exception ex)
-            {
-                Utils.ShowError(ex);
-            }
-        }
-        public void RefreshGrid()
-        {
-            try
-            {
                 //set the datasource to null
                 bindingSourceNewNSSFComputation.DataSource = null;
                 //set the datasource to a method
-                bindingSourceNewNSSFComputation.DataSource = de.GetPayeeRates();
+                bindingSourceNewNSSFComputation.DataSource = _nssfContributions;
+                dataGridViewNssfContributions.DataSource = bindingSourceNewNSSFComputation;
+                //groupBox2.Text = bindingSourceNewNSSFComputation.Count.ToString() + "/" + recordCount;
+                foreach (DataGridViewRow row in dataGridViewNssfContributions.Rows)
+                {
+                    dataGridViewNssfContributions.Rows[dataGridViewNssfContributions.Rows.Count - 1].Selected = true;
+                    int nRowIndex = dataGridViewNssfContributions.Rows.Count - 1;
+                    bindingSourceNewNSSFComputation.Position = nRowIndex;
+                }
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("fetched [ " + _nssfContributions.ToList().Count + " ] records.", TAG));
             }
             catch (Exception ex)
             {
                 Utils.ShowError(ex);
             }
         }
+
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
         private void btnImport_Click(object sender, EventArgs e)
         {
-            openFileDialog1.Title = "select an excel file";
+            openFileDialog.Title = "select an excel file";
             //openFileDialog1.FileName = "";
             //"Text files (*.txt)|*.txt|All files (*.*)|*.*"
-            openFileDialog1.Filter = "Excel Files|*.xls|Excel Files |*.xlsx";
+            openFileDialog.Filter = "Excel Files|*.xls|Excel Files |*.xlsx";
 
-            openFileDialog1.ShowDialog();
+            openFileDialog.ShowDialog();
 
-            string strFileName = openFileDialog1.FileName;
+            string strFileName = openFileDialog.FileName;
 
             // use bulkcopy method of upload
             try
             {
                 //clear or backup the destination
-                UploadPayeeRates(true, strFileName, _User);
+                upload_new_nssf(true, strFileName, _User);
                 MessageBox.Show("Upload completed successfully");
             }
             catch (Exception ex)
             {
                 MessageBox.Show("There was an error during upload. Error details are  " + ex.Message);
-
                 MessageBox.Show("Upload incomplete");
                 return;
             }
         }
-        private void UploadPayeeRates(bool Overwrite, string strFileName, string User)
+
+        private void upload_new_nssf(bool Overwrite, string strFileName, string User)
         {
             string query = null;
             string SourceConnectionString = "";
@@ -188,7 +221,6 @@ namespace winSBPayroll.Forms
             if (strFileType != ".xls" && strFileType != ".xlsx")
             {
                 throw new Exception("File Type not Excel");
-
             }
 
             //Connection String to Excel Workbook
@@ -255,6 +287,7 @@ namespace winSBPayroll.Forms
                 }
             }
         }
+
         //Add data to repository 
         public string GetConnectionString(string str)
         {
@@ -274,17 +307,18 @@ namespace winSBPayroll.Forms
             //return the value
             return conn;
         }
+
         private void btnDownload_Click(object sender, EventArgs e)
         {
-            saveFileDialog1.Title = "Select an excel file";
+            saveFileDialog.Title = "Select an excel file";
             //openFileDialog1.FileName = "";
             //"Text files (*.txt)|*.txt|All files (*.*)|*.*"
-            saveFileDialog1.Filter = "Excel Files|*.xls|Excel Files |*.xlsx";
+            saveFileDialog.Filter = "Excel Files|*.xls|Excel Files |*.xlsx";
 
 
-            saveFileDialog1.ShowDialog();
+            saveFileDialog.ShowDialog();
 
-            string strFileName = saveFileDialog1.FileName;
+            string strFileName = saveFileDialog.FileName;
 
             // use bulkcopy method of upload
             try
@@ -301,6 +335,7 @@ namespace winSBPayroll.Forms
                 return;
             }
         }
+
         private void Download(string strFileName, string User)
         {
             Reports.Excel.CreateExcelDoc excell_app = new Reports.Excel.CreateExcelDoc();
@@ -340,13 +375,14 @@ namespace winSBPayroll.Forms
                 row++;
             }
         }
+
         private void btnPrint_Click(object sender, EventArgs e)
         {
             try
             {
                 List<NssfContributionsDTO> _nssfcomputations = (List<NssfContributionsDTO>)bindingSourceNewNSSFComputation.List;
                 PDFViewer _viewer = new PDFViewer(_nssfcomputations, _User, connection);
-                _viewer.WindowState = FormWindowState.Normal;
+                _viewer.WindowState = FormWindowState.Maximized;
                 _viewer.StartPosition = FormStartPosition.CenterScreen;
                 _viewer.Show();
             }
@@ -356,15 +392,7 @@ namespace winSBPayroll.Forms
             }
         }
 
-
-
-
-
-
-
-
-
-
+        
 
 
 

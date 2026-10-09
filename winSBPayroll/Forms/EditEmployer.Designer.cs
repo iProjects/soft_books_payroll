@@ -29,23 +29,22 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditEmployer));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditEmployer));
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
-            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPageGeneral = new System.Windows.Forms.TabPage();
+            this.txtcode = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.chkIsActive = new System.Windows.Forms.CheckBox();
             this.txtSlogan = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.btnBrowse = new System.Windows.Forms.Button();
-            this.txtLogo = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.txtAddress1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -62,7 +61,13 @@
             this.NSSF = new System.Windows.Forms.Label();
             this.txtAddress2 = new System.Windows.Forms.TextBox();
             this.txtName = new System.Windows.Forms.TextBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPagePhoto = new System.Windows.Forms.TabPage();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.pbPhoto = new System.Windows.Forms.PictureBox();
+            this.btnBrowse = new System.Windows.Forms.Button();
+            this.txtLogo = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tabPageBanking = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dataGridViewEmployerBank = new System.Windows.Forms.DataGridView();
             this.ColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -92,10 +97,13 @@
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.tabPageGeneral.SuspendLayout();
+            this.tabPagePhoto.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbPhoto)).BeginInit();
+            this.tabPageBanking.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEmployerBank)).BeginInit();
             this.groupBox4.SuspendLayout();
@@ -109,7 +117,7 @@
             // 
             this.btnUpdate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.btnUpdate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnUpdate.Location = new System.Drawing.Point(147, 9);
+            this.btnUpdate.Location = new System.Drawing.Point(147, 13);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(75, 23);
             this.btnUpdate.TabIndex = 0;
@@ -122,27 +130,30 @@
             this.btnClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Location = new System.Drawing.Point(269, 9);
+            this.btnClose.Location = new System.Drawing.Point(269, 13);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 1;
-            this.btnClose.Text = "Close";
+            this.btnClose.Text = "&Close";
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // errorProvider1
+            // errorProvider
             // 
-            this.errorProvider1.ContainerControl = this;
+            this.errorProvider.ContainerControl = this;
             // 
-            // openFileDialog1
+            // openFileDialog
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.Filter = "Picture Files|*.JPG";
+            this.openFileDialog.FileName = "Image File (*.jpg)|*.jpg|Image File (*.gif)|*.gif|Image File (*.png)|*.png|All fi" +
+    "les (*.*)|*.*";
+            this.openFileDialog.Filter = "Image File (*.jpg)|*.jpg|Image File (*.gif)|*.gif|Image File (*.png)|*.png|All fi" +
+    "les (*.*)|*.*";
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPageGeneral);
+            this.tabControl1.Controls.Add(this.tabPagePhoto);
+            this.tabControl1.Controls.Add(this.tabPageBanking);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(3, 16);
             this.tabControl1.Name = "tabControl1";
@@ -150,37 +161,55 @@
             this.tabControl1.Size = new System.Drawing.Size(494, 400);
             this.tabControl1.TabIndex = 0;
             // 
-            // tabPage1
+            // tabPageGeneral
             // 
-            this.tabPage1.BackColor = System.Drawing.Color.LimeGreen;
-            this.tabPage1.Controls.Add(this.chkIsActive);
-            this.tabPage1.Controls.Add(this.txtSlogan);
-            this.tabPage1.Controls.Add(this.label12);
-            this.tabPage1.Controls.Add(this.btnBrowse);
-            this.tabPage1.Controls.Add(this.txtLogo);
-            this.tabPage1.Controls.Add(this.label7);
-            this.tabPage1.Controls.Add(this.txtAddress1);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.txtNSSF);
-            this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.txtNHIF);
-            this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.label6);
-            this.tabPage1.Controls.Add(this.txtEmail);
-            this.tabPage1.Controls.Add(this.txtPIN);
-            this.tabPage1.Controls.Add(this.NHIF);
-            this.tabPage1.Controls.Add(this.txtTelephone);
-            this.tabPage1.Controls.Add(this.NSSF);
-            this.tabPage1.Controls.Add(this.txtAddress2);
-            this.tabPage1.Controls.Add(this.txtName);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(486, 374);
-            this.tabPage1.TabIndex = 2;
-            this.tabPage1.Text = "General";
+            this.tabPageGeneral.BackColor = System.Drawing.Color.LimeGreen;
+            this.tabPageGeneral.Controls.Add(this.txtcode);
+            this.tabPageGeneral.Controls.Add(this.label13);
+            this.tabPageGeneral.Controls.Add(this.chkIsActive);
+            this.tabPageGeneral.Controls.Add(this.txtSlogan);
+            this.tabPageGeneral.Controls.Add(this.label12);
+            this.tabPageGeneral.Controls.Add(this.txtAddress1);
+            this.tabPageGeneral.Controls.Add(this.label1);
+            this.tabPageGeneral.Controls.Add(this.label2);
+            this.tabPageGeneral.Controls.Add(this.label3);
+            this.tabPageGeneral.Controls.Add(this.txtNSSF);
+            this.tabPageGeneral.Controls.Add(this.label4);
+            this.tabPageGeneral.Controls.Add(this.txtNHIF);
+            this.tabPageGeneral.Controls.Add(this.label5);
+            this.tabPageGeneral.Controls.Add(this.label6);
+            this.tabPageGeneral.Controls.Add(this.txtEmail);
+            this.tabPageGeneral.Controls.Add(this.txtPIN);
+            this.tabPageGeneral.Controls.Add(this.NHIF);
+            this.tabPageGeneral.Controls.Add(this.txtTelephone);
+            this.tabPageGeneral.Controls.Add(this.NSSF);
+            this.tabPageGeneral.Controls.Add(this.txtAddress2);
+            this.tabPageGeneral.Controls.Add(this.txtName);
+            this.tabPageGeneral.Location = new System.Drawing.Point(4, 22);
+            this.tabPageGeneral.Name = "tabPageGeneral";
+            this.tabPageGeneral.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageGeneral.Size = new System.Drawing.Size(486, 374);
+            this.tabPageGeneral.TabIndex = 2;
+            this.tabPageGeneral.Text = "General";
+            // 
+            // txtcode
+            // 
+            this.txtcode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtcode.Location = new System.Drawing.Point(92, 317);
+            this.txtcode.MaxLength = 200;
+            this.txtcode.Name = "txtcode";
+            this.txtcode.Size = new System.Drawing.Size(307, 20);
+            this.txtcode.TabIndex = 13;
+            this.txtcode.TextChanged += new System.EventHandler(this.txtcode_TextChanged);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(54, 321);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(36, 13);
+            this.label13.TabIndex = 17;
+            this.label13.Text = "Code*";
             // 
             // chkIsActive
             // 
@@ -190,14 +219,14 @@
             this.chkIsActive.Location = new System.Drawing.Point(92, 347);
             this.chkIsActive.Name = "chkIsActive";
             this.chkIsActive.Size = new System.Drawing.Size(64, 17);
-            this.chkIsActive.TabIndex = 13;
+            this.chkIsActive.TabIndex = 14;
             this.chkIsActive.Text = "Is Active";
             this.chkIsActive.UseVisualStyleBackColor = true;
             // 
             // txtSlogan
             // 
             this.txtSlogan.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSlogan.Location = new System.Drawing.Point(91, 322);
+            this.txtSlogan.Location = new System.Drawing.Point(91, 284);
             this.txtSlogan.MaxLength = 200;
             this.txtSlogan.Name = "txtSlogan";
             this.txtSlogan.Size = new System.Drawing.Size(307, 20);
@@ -206,42 +235,11 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(45, 325);
+            this.label12.Location = new System.Drawing.Point(45, 287);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(44, 13);
             this.label12.TabIndex = 15;
             this.label12.Text = "Slogan*";
-            // 
-            // btnBrowse
-            // 
-            this.btnBrowse.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.btnBrowse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBrowse.Location = new System.Drawing.Point(362, 276);
-            this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(36, 23);
-            this.btnBrowse.TabIndex = 11;
-            this.btnBrowse.Text = ":::";
-            this.btnBrowse.UseVisualStyleBackColor = false;
-            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
-            // 
-            // txtLogo
-            // 
-            this.txtLogo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtLogo.Location = new System.Drawing.Point(91, 273);
-            this.txtLogo.MaxLength = 200;
-            this.txtLogo.Multiline = true;
-            this.txtLogo.Name = "txtLogo";
-            this.txtLogo.Size = new System.Drawing.Size(246, 43);
-            this.txtLogo.TabIndex = 10;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(54, 281);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(35, 13);
-            this.label7.TabIndex = 10;
-            this.label7.Text = "Logo*";
             // 
             // txtAddress1
             // 
@@ -387,17 +385,82 @@
             this.txtName.Size = new System.Drawing.Size(307, 20);
             this.txtName.TabIndex = 0;
             // 
-            // tabPage2
+            // tabPagePhoto
             // 
-            this.tabPage2.BackColor = System.Drawing.Color.LimeGreen;
-            this.tabPage2.Controls.Add(this.groupBox3);
-            this.tabPage2.Controls.Add(this.groupBox4);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(486, 369);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Banking";
+            this.tabPagePhoto.Controls.Add(this.groupBox5);
+            this.tabPagePhoto.Location = new System.Drawing.Point(4, 22);
+            this.tabPagePhoto.Name = "tabPagePhoto";
+            this.tabPagePhoto.Size = new System.Drawing.Size(486, 374);
+            this.tabPagePhoto.TabIndex = 3;
+            this.tabPagePhoto.Text = "Photo";
+            this.tabPagePhoto.UseVisualStyleBackColor = true;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.BackColor = System.Drawing.Color.LimeGreen;
+            this.groupBox5.Controls.Add(this.pbPhoto);
+            this.groupBox5.Controls.Add(this.btnBrowse);
+            this.groupBox5.Controls.Add(this.txtLogo);
+            this.groupBox5.Controls.Add(this.label7);
+            this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox5.Location = new System.Drawing.Point(0, 0);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(486, 374);
+            this.groupBox5.TabIndex = 0;
+            this.groupBox5.TabStop = false;
+            // 
+            // pbPhoto
+            // 
+            this.pbPhoto.ErrorImage = ((System.Drawing.Image)(resources.GetObject("pbPhoto.ErrorImage")));
+            this.pbPhoto.Location = new System.Drawing.Point(69, 78);
+            this.pbPhoto.Name = "pbPhoto";
+            this.pbPhoto.Size = new System.Drawing.Size(246, 161);
+            this.pbPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbPhoto.TabIndex = 16;
+            this.pbPhoto.TabStop = false;
+            // 
+            // btnBrowse
+            // 
+            this.btnBrowse.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btnBrowse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBrowse.Location = new System.Drawing.Point(340, 32);
+            this.btnBrowse.Name = "btnBrowse";
+            this.btnBrowse.Size = new System.Drawing.Size(36, 23);
+            this.btnBrowse.TabIndex = 14;
+            this.btnBrowse.Text = ":::";
+            this.btnBrowse.UseVisualStyleBackColor = false;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
+            // 
+            // txtLogo
+            // 
+            this.txtLogo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLogo.Location = new System.Drawing.Point(69, 29);
+            this.txtLogo.MaxLength = 200;
+            this.txtLogo.Multiline = true;
+            this.txtLogo.Name = "txtLogo";
+            this.txtLogo.Size = new System.Drawing.Size(246, 43);
+            this.txtLogo.TabIndex = 13;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(32, 37);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(35, 13);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Logo*";
+            // 
+            // tabPageBanking
+            // 
+            this.tabPageBanking.BackColor = System.Drawing.Color.LimeGreen;
+            this.tabPageBanking.Controls.Add(this.groupBox3);
+            this.tabPageBanking.Controls.Add(this.groupBox4);
+            this.tabPageBanking.Location = new System.Drawing.Point(4, 22);
+            this.tabPageBanking.Name = "tabPageBanking";
+            this.tabPageBanking.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageBanking.Size = new System.Drawing.Size(486, 374);
+            this.tabPageBanking.TabIndex = 1;
+            this.tabPageBanking.Text = "Banking";
             // 
             // groupBox3
             // 
@@ -405,7 +468,7 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(3, 203);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(480, 163);
+            this.groupBox3.Size = new System.Drawing.Size(480, 168);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             // 
@@ -451,7 +514,7 @@
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewEmployerBank.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.dataGridViewEmployerBank.Size = new System.Drawing.Size(474, 144);
+            this.dataGridViewEmployerBank.Size = new System.Drawing.Size(474, 149);
             this.dataGridViewEmployerBank.TabIndex = 0;
             this.dataGridViewEmployerBank.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewEmployerBank_DataError);
             // 
@@ -726,11 +789,15 @@
             this.Name = "EditEmployer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.EditEmployer_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
+            this.tabPageGeneral.ResumeLayout(false);
+            this.tabPageGeneral.PerformLayout();
+            this.tabPagePhoto.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbPhoto)).EndInit();
+            this.tabPageBanking.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEmployerBank)).EndInit();
             this.groupBox4.ResumeLayout(false);
@@ -747,10 +814,10 @@
 
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.ErrorProvider errorProvider1;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.ErrorProvider errorProvider;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPageBanking;
         private System.Windows.Forms.TextBox txtAccountName;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
@@ -774,9 +841,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TextBox txtLogo;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TabPage tabPageGeneral;
         private System.Windows.Forms.TextBox txtAddress1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
@@ -793,7 +858,6 @@
         private System.Windows.Forms.Label NSSF;
         private System.Windows.Forms.TextBox txtAddress2;
         private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.Button btnBrowse;
         private System.Windows.Forms.CheckBox chkIsDefault;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnId;
         private System.Windows.Forms.DataGridViewTextBoxColumn EmpEmail;
@@ -803,5 +867,13 @@
         private System.Windows.Forms.TextBox txtSlogan;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.CheckBox chkIsActive;
+        private System.Windows.Forms.TabPage tabPagePhoto;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Button btnBrowse;
+        private System.Windows.Forms.TextBox txtLogo;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.PictureBox pbPhoto;
+        private System.Windows.Forms.TextBox txtcode;
+        private System.Windows.Forms.Label label13;
     }
 }

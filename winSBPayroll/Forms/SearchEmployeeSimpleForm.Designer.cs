@@ -51,10 +51,13 @@
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.panelPager = new System.Windows.Forms.Panel();
             this.groupBox1.SuspendLayout();
             this.groupBoxResults.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEmployees)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEmployees)).BeginInit();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -182,11 +185,11 @@
             // 
             // groupBoxResults
             // 
-            this.groupBoxResults.Controls.Add(this.dataGridViewEmployees);
-            this.groupBoxResults.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxResults.Location = new System.Drawing.Point(0, 88);
+            this.groupBoxResults.Controls.Add(this.panelPager);
+            this.groupBoxResults.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.groupBoxResults.Location = new System.Drawing.Point(0, 543);
             this.groupBoxResults.Name = "groupBoxResults";
-            this.groupBoxResults.Size = new System.Drawing.Size(841, 285);
+            this.groupBoxResults.Size = new System.Drawing.Size(841, 72);
             this.groupBoxResults.TabIndex = 4;
             this.groupBoxResults.TabStop = false;
             // 
@@ -206,7 +209,7 @@
             this.dataGridViewEmployees.MultiSelect = false;
             this.dataGridViewEmployees.Name = "dataGridViewEmployees";
             this.dataGridViewEmployees.ReadOnly = true;
-            this.dataGridViewEmployees.Size = new System.Drawing.Size(835, 266);
+            this.dataGridViewEmployees.Size = new System.Drawing.Size(835, 436);
             this.dataGridViewEmployees.TabIndex = 2;
             this.dataGridViewEmployees.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewEmployees_CellContentDoubleClick);
             this.dataGridViewEmployees.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewEmployees_DataError);
@@ -261,12 +264,32 @@
             this.dataGridViewTextBoxColumn3.ReadOnly = true;
             this.dataGridViewTextBoxColumn3.Width = 150;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.dataGridViewEmployees);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox2.Location = new System.Drawing.Point(0, 88);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(841, 455);
+            this.groupBox2.TabIndex = 5;
+            this.groupBox2.TabStop = false;
+            // 
+            // panelPager
+            // 
+            this.panelPager.BackColor = System.Drawing.Color.LightYellow;
+            this.panelPager.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelPager.Location = new System.Drawing.Point(3, 16);
+            this.panelPager.Name = "panelPager";
+            this.panelPager.Size = new System.Drawing.Size(835, 53);
+            this.panelPager.TabIndex = 2;
+            // 
             // SearchEmployeeSimpleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LimeGreen;
-            this.ClientSize = new System.Drawing.Size(841, 373);
+            this.ClientSize = new System.Drawing.Size(841, 615);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBoxResults);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -279,6 +302,7 @@
             this.groupBoxResults.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEmployees)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEmployees)).EndInit();
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -305,5 +329,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtDepartment;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Panel panelPager;
     }
 }

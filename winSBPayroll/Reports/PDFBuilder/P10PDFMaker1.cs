@@ -13,7 +13,6 @@ namespace winSBPayroll.Reports.PDF
 {
     public class P10PDFMaker1
     {
-
         public P10ReportModel _ViewModel;
         Document document;
         string sFilePDF;
@@ -31,16 +30,25 @@ namespace winSBPayroll.Reports.PDF
         Font rms8Normal = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL);
         Font rms6Bold = new Font(Font.TIMES_ROMAN, 6, Font.BOLD);
         Font rms8Bold = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
-
-        public P10PDFMaker1(string ResourcePath, P10ReportModel p10Model, string filename)
+        public P10PDFMaker1(string ResourcePath, P10ReportModel p10Model, string filename, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (p10Model == null)
                 throw new ArgumentNullException("P10ReportModel is null");
             _ViewModel = p10Model;
 
+            TAG = this.GetType().Name;
+
+            _notificationmessageEventname = notificationmessageEventname;
+
             sFilePDF = filename;
+
             _resourcePath = ResourcePath;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed P10PDFMaker1", TAG));
+
         }
 
         public string GetP10PDF()
@@ -66,9 +74,9 @@ namespace winSBPayroll.Reports.PDF
 
                 document.Open();
 
-                PDFGen pdfgen = new PDFGen();
-                Image img0 = pdfgen.DoGetImageFile(_resourcePath + "kra2.jpg");
-                img0.Alignment = Image.ALIGN_CENTER; 
+                PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
+                Image img0 = pdfgen.DoGetImageFile(Path.Combine(_resourcePath, "kra2.jpg"));
+                img0.Alignment = Image.ALIGN_CENTER;
 
                 Table empInfoTable = new Table(3, 3);
                 empInfoTable.WidthPercentage = 100;
@@ -155,17 +163,17 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (DocumentException de)
             {
-                this.Message = de.Message;
+                Log.WriteToErrorLogFile(de);
             }
             catch (IOException ioe)
             {
-                this.Message = ioe.Message;
+                Log.WriteToErrorLogFile(ioe);
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
-        } 
+        }
         private void AddTableHeaders(Table aTable)
         {
             aTable.AddCell(new Phrase("Month", tHFont));  //Col 0
@@ -173,7 +181,7 @@ namespace winSBPayroll.Reports.PDF
             aTable.AddCell(new Phrase("AUDIT TAX,INTEREST/PENALTY\nKshs", tHFont)); //Col 2
             aTable.AddCell(new Phrase("FRINGE BENEFIT TAX\nKshs", tHFont)); //Col 3
             aTable.AddCell(new Phrase("DATE PAID(PER RECEIVING BANK STAMP)", tHFont)); //Col 4
-        } 
+        }
         private void AddTableRow(int Month, Table aTable, P10TaxRecord monthRecs)
         {
             try
@@ -183,16 +191,16 @@ namespace winSBPayroll.Reports.PDF
                     //Totals
                     aTable.AddCell(new Phrase(monthRecs.Month, tcFont));  //Col 0
 
-                    Cell A = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", monthRecs.PAYETax), tcFont));
+                    Cell A = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", monthRecs.PAYETax), tcFont));
                     A.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     aTable.AddCell(A);//Col 1
 
 
-                    Cell dCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", monthRecs.AuditTax), tcFont));
+                    Cell dCell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", monthRecs.AuditTax), tcFont));
                     dCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     aTable.AddCell(dCell);
 
-                    Cell C = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", monthRecs.FringeBenefitTax), tcFont));
+                    Cell C = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", monthRecs.FringeBenefitTax), tcFont));
                     C.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     aTable.AddCell(C);
 
@@ -202,8 +210,8 @@ namespace winSBPayroll.Reports.PDF
             catch (Exception ex)
             {
                 Utils.ShowError(ex);
-            } 
-        } 
+            }
+        }
         private void AddTotals(Table aTable)
         {
             try
@@ -211,7 +219,7 @@ namespace winSBPayroll.Reports.PDF
                 //Totals
                 aTable.AddCell(new Phrase("TOTAL TAX KSHS.", tHFont));  //Col 0
 
-                Cell d1Cell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.TotalPAYETax), tHFont));
+                Cell d1Cell = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.TotalPAYETax), tHFont));
                 d1Cell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                 aTable.AddCell(d1Cell);
 
@@ -232,7 +240,7 @@ namespace winSBPayroll.Reports.PDF
             {
                 Utils.ShowError(ex);
             }
-        } 
+        }
         private void AddFooter()
         {
             Table aTable = new Table(2);

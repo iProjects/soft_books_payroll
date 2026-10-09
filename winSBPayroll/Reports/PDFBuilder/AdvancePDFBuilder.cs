@@ -32,16 +32,23 @@ namespace winSBPayroll.Reports.PDFBuilder
         Font rms6Bold = new Font(Font.TIMES_ROMAN, 6, Font.BOLD);
         Font rms8Bold = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);
         Font rms10Normal = new Font(Font.HELVETICA, 10, Font.NORMAL);
-
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
         //constructor
-        public AdvancePDFBuilder(AdvanceReportModel advancereport, string FileName)
+        public AdvancePDFBuilder(AdvanceReportModel advancereport, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (advancereport == null)
                 throw new ArgumentNullException("AdvanceReportModel is null");
             _ViewModel = advancereport;
 
+            TAG = this.GetType().Name;
+
+            _notificationmessageEventname = notificationmessageEventname;
+
             sFilePDF = FileName;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed AdvancePDFBuilder", TAG));
         }
 
         public string GetPDF()
@@ -56,7 +63,8 @@ namespace winSBPayroll.Reports.PDFBuilder
             try
             {
                 //step 1 creation of the document
-                document = new Document(PageSize.A4);
+                // Step 1: Initialize document in A4 Landscape orientation
+                document = new Document(PageSize.A4.Rotate(), 20, 20, 20, 20);
 
                 // step 2:create a writer that listens to the document
                 PdfWriter.GetInstance(document, new FileStream(sFilePDF, FileMode.Create));
@@ -64,13 +72,19 @@ namespace winSBPayroll.Reports.PDFBuilder
                 //open document
                 document.Open();
 
-                //document header
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating document header...", TAG));
+
+                //add header
                 AddDocHeader();
 
-                //document body
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating document body...", TAG));
+
+                //add body
                 AddDocBody();
 
-                //document footer
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating document footer...", TAG));
+
+                //add footer
                 AddDocFooter();
 
                 //close document
@@ -78,178 +92,153 @@ namespace winSBPayroll.Reports.PDFBuilder
             }
             catch (DocumentException de)
             {
-                this.Message = de.Message;
+                Log.WriteToErrorLogFile(de);
             }
             catch (IOException ioe)
             {
-                this.Message = ioe.Message;
+                Log.WriteToErrorLogFile(ioe);
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
-            } 
+                Log.WriteToErrorLogFile(ex);
+            }
         }
-
 
         //document header
         private void AddDocHeader()
         {
-
-            Table advanceTable = new Table(5);
+            PdfPTable advanceTable = new PdfPTable(5);
             advanceTable.WidthPercentage = 100;
-            advanceTable.Padding = 1;
-            advanceTable.Spacing = 1;
-            advanceTable.Border = Table.NO_BORDER;
 
-            Cell employernameCell = new Cell(new Phrase(_ViewModel.employername.ToUpper(), new Font(Font.TIMES_ROMAN, 12, Font.BOLD | Font.UNDERLINE, Color.BLACK)));
-            employernameCell.HorizontalAlignment = Cell.ALIGN_CENTER;
+            PdfPCell employernameCell = new PdfPCell(new Phrase(_ViewModel.employername.ToUpper(), new Font(Font.TIMES_ROMAN, 12, Font.BOLD | Font.UNDERLINE, Color.BLACK)));
+            employernameCell.HorizontalAlignment = Element.ALIGN_CENTER;
             employernameCell.Colspan = 5;
-            employernameCell.Border = Cell.NO_BORDER;
+            employernameCell.Border = Rectangle.NO_BORDER;
             advanceTable.AddCell(employernameCell);
 
-            Cell employeraddressCell = new Cell(new Phrase(_ViewModel.employeraddress, new Font(Font.TIMES_ROMAN, 10, Font.BOLD | Font.UNDERLINE, Color.BLACK)));
-            employeraddressCell.HorizontalAlignment = Cell.ALIGN_CENTER;
+            PdfPCell employeraddressCell = new PdfPCell(new Phrase(_ViewModel.employeraddress, new Font(Font.TIMES_ROMAN, 10, Font.BOLD | Font.UNDERLINE, Color.BLACK)));
+            employeraddressCell.HorizontalAlignment = Element.ALIGN_CENTER;
             employeraddressCell.Colspan = 5;
-            employeraddressCell.Border = Cell.NO_BORDER;
+            employeraddressCell.Border = Rectangle.NO_BORDER;
             advanceTable.AddCell(employeraddressCell);
 
-            Cell bCell = new Cell(new Phrase("ADVANCE", hFont1));
-            bCell.HorizontalAlignment = Cell.ALIGN_CENTER;
+            PdfPCell bCell = new PdfPCell(new Phrase("ADVANCE", hFont1));
+            bCell.HorizontalAlignment = Element.ALIGN_CENTER;
             bCell.Colspan = 5;
-            bCell.Border = Cell.NO_BORDER;
+            bCell.Border = Rectangle.NO_BORDER;
             advanceTable.AddCell(bCell);
 
-            Cell reportNameCell = new Cell(new Phrase(_ViewModel.ReportName, hFont2));
-            reportNameCell.HorizontalAlignment = Cell.ALIGN_CENTER;
+            PdfPCell reportNameCell = new PdfPCell(new Phrase(_ViewModel.ReportName, hFont2));
+            reportNameCell.HorizontalAlignment = Element.ALIGN_CENTER;
             reportNameCell.Colspan = 5;
-            reportNameCell.Border = Cell.NO_BORDER;
+            reportNameCell.Border = Rectangle.NO_BORDER;
             advanceTable.AddCell(reportNameCell);
 
-            Cell PrintedonCell = new Cell(new Phrase("Printed on: " + _ViewModel.PrintedOn.ToString("dd-dddd-MMMM-yyyy"), hFont2));
-            PrintedonCell.HorizontalAlignment = Cell.ALIGN_LEFT;
+            PdfPCell PrintedonCell = new PdfPCell(new Phrase("Printed on: " + _ViewModel.PrintedOn.ToString("dd-dddd-MMMM-yyyy"), hFont2));
+            PrintedonCell.HorizontalAlignment = Element.ALIGN_LEFT;
             PrintedonCell.Colspan = 4;
-            PrintedonCell.Border = Cell.NO_BORDER;
+            PrintedonCell.Border = Rectangle.NO_BORDER;
             advanceTable.AddCell(PrintedonCell);
 
             //create the logo
-            PDFGen pdfgen = new PDFGen();
+            PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
             Image img0 = pdfgen.DoGetImageFile(_ViewModel.CompanyLogo);
             img0.Alignment = Image.ALIGN_MIDDLE;
-            Cell logoCell = new Cell(img0);
-            logoCell.HorizontalAlignment = Cell.ALIGN_LEFT;
-            logoCell.Border = Cell.NO_BORDER;
-            logoCell.Add(new Phrase(_ViewModel.CompanySlogan, new Font(Font.HELVETICA, 8, Font.ITALIC, Color.BLACK)));
+            PdfPCell logoCell = new PdfPCell();
+            logoCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            logoCell.Border = Rectangle.NO_BORDER;
+            logoCell.AddElement(img0);
+            logoCell.AddElement(new Phrase(_ViewModel.CompanySlogan, new Font(Font.HELVETICA, 8, Font.ITALIC, Color.BLACK)));
             advanceTable.AddCell(logoCell);
 
             document.Add(advanceTable);
-
         }
 
         //document body
         private void AddDocBody()
         {
+            PdfPTable mainTable = new PdfPTable(3);
+            mainTable.WidthPercentage = 100;
 
-            //Add table headers
-            AddTableHeaders();
+            // Ensures header repeats on top of each page
+            mainTable.HeaderRows = 1;
 
-            //Add table details  
+            // 1. Add table headers
+            AddTableHeaders(mainTable);
+
+            // 2. Add table details  
             foreach (var d in _ViewModel.EmployeAadvanceList)
             {
-                AddTableDetails(d);
+                AddTableDetails(mainTable, d);
             }
 
-            //Add table totals
-            AddTableTotals();
+            // 3. Add table totals
+            AddTableTotals(mainTable);
 
+            document.Add(mainTable);
         }
 
         //table headers
-        private void AddTableHeaders()
+        private void AddTableHeaders(PdfPTable table)
         {
-            Table advancetable = new Table(3);
-            advancetable.WidthPercentage = 100;
-            advancetable.Spacing = 1;
-            advancetable.Padding = 1;
+            string[] headers = new string[] { "No", "Name", "Amount\nKshs" };
 
-            Cell employeenumber = new Cell(new Phrase("No", tHfont1));
-            employeenumber.Border = Cell.RECTANGLE;
-            employeenumber.HorizontalAlignment = Cell.ALIGN_CENTER;
-            advancetable.AddCell(employeenumber);
-
-            Cell employeename = new Cell(new Phrase("Name", tHfont1));
-            employeename.Border = Cell.RECTANGLE;
-            employeename.HorizontalAlignment = Cell.ALIGN_CENTER;
-            advancetable.AddCell(employeename);
-
-            Cell amount = new Cell(new Phrase("Amount\nKshs", tHfont1));
-            amount.Border = Cell.RECTANGLE;
-            amount.HorizontalAlignment = Cell.ALIGN_CENTER;
-            advancetable.AddCell(amount);
-
-            document.Add(advancetable);
-
+            foreach (string header in headers)
+            {
+                PdfPCell cell = new PdfPCell(new Phrase(header, tHfont1));
+                cell.Border = Rectangle.BOX;
+                cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                cell.Padding = 3;
+                table.AddCell(cell);
+            }
         }
 
         //table details 
-        private void AddTableDetails(advance adv)
+        private void AddTableDetails(PdfPTable table, advance adv)
         {
-            Table advancetable = new Table(3);
-            advancetable.WidthPercentage = 100;
-            advancetable.Spacing = 1;
-            advancetable.Padding = 1;
+            PdfPCell empno = new PdfPCell(new Phrase(adv.employeeno.ToString().Trim().ToUpper(), bfont1));
+            empno.Border = Rectangle.BOX;
+            empno.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(empno);
 
-            Cell empno = new Cell(new Phrase(adv.employeeno.ToString().Trim().ToUpper(), bfont1));
-            empno.HorizontalAlignment = Cell.ALIGN_LEFT;
-            advancetable.AddCell(empno);
+            PdfPCell empname = new PdfPCell(new Phrase(adv.employeename.ToString().ToUpper().Trim(), bfont1));
+            empname.Border = Rectangle.BOX;
+            empname.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(empname);
 
-            Cell empname = new Cell(new Phrase(adv.employeename.ToString().ToUpper().Trim(), bfont1));
-            empname.HorizontalAlignment = Cell.ALIGN_LEFT;
-            advancetable.AddCell(empname);
-
-            Cell adamount = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", adv.advanceamount), bfont1));
-            adamount.HorizontalAlignment = Cell.ALIGN_RIGHT;
-            advancetable.AddCell(adamount);
-
-            document.Add(advancetable);
+            PdfPCell adamount = new PdfPCell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", adv.advanceamount), bfont1));
+            adamount.Border = Rectangle.BOX;
+            adamount.HorizontalAlignment = Element.ALIGN_RIGHT;
+            table.AddCell(adamount);
         }
 
         //table totals
-        private void AddTableTotals()
+        private void AddTableTotals(PdfPTable table)
         {
-            Table advancetable = new Table(3);
-            advancetable.WidthPercentage = 100;
-            advancetable.Spacing = 1;
-            advancetable.Padding = 1;
-
-            Cell total = new Cell(new Phrase("TOTAL", rms8Normal));
-            total.HorizontalAlignment = Cell.ALIGN_LEFT;
+            PdfPCell total = new PdfPCell(new Phrase("TOTAL", rms8Normal));
+            total.Border = Rectangle.BOX;
+            total.HorizontalAlignment = Element.ALIGN_LEFT;
             total.Colspan = 2;
-            advancetable.AddCell(total);
+            table.AddCell(total);
 
-            Cell totalamount = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel._totalAdvance), rms8Normal));
-            totalamount.HorizontalAlignment = Cell.ALIGN_RIGHT;
-            advancetable.AddCell(totalamount);
-
-            document.Add(advancetable);
+            PdfPCell totalamount = new PdfPCell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel._totalAdvance), rms8Normal));
+            totalamount.Border = Rectangle.BOX;
+            totalamount.HorizontalAlignment = Element.ALIGN_RIGHT;
+            table.AddCell(totalamount);
         }
 
         //document footer
         private void AddDocFooter()
         {
-
-            Table advanceTable = new Table(1);
+            PdfPTable advanceTable = new PdfPTable(1);
             advanceTable.WidthPercentage = 100;
-            advanceTable.Border = Table.NO_BORDER; 
 
-            Cell sgCell = new Cell(new Phrase("Signature.....................................................................................................", rms10Normal));
-            sgCell.HorizontalAlignment = Cell.ALIGN_LEFT;
-            sgCell.Border = Cell.NO_BORDER;
+            PdfPCell sgCell = new PdfPCell(new Phrase("Signature.....................................................................................................", rms10Normal));
+            sgCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            sgCell.Border = Rectangle.NO_BORDER;
             advanceTable.AddCell(sgCell);
 
             document.Add(advanceTable);
-
         }
-
-
     }
 }

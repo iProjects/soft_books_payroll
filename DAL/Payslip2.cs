@@ -14,8 +14,10 @@ namespace DAL
             _Payslip = payslip;
         }
 
-        public string PayrollMonth {
-            get {
+        public string PayrollMonth
+        {
+            get
+            {
                 return _Payslip.PayPeriod.ToString("MMMM");
             }
         }
@@ -43,24 +45,64 @@ namespace DAL
                 return _Payslip.GrossTaxableEarnings;
             }
         }
-        public PAYEDEATIL PayeDetail 
+
+        public PAYEDEATIL PayeDetail
         {
             get
             {
-               return new PAYEDEATIL
-                {
-                    PersonalRelief = _Payslip.PersonalRelief,
-                    TaxablePay = _Payslip.NetTaxableEarnings,
-                    TaxDue = _Payslip.GrossTax,
-                };
+                return new PAYEDEATIL
+                 {
+                     TaxablePay = _Payslip.NetTaxableEarnings,
+                     GrossTax = _Payslip.GrossTax,
+                     TaxDue = _Payslip.NetTax,// paye after relief
+                     PersonalRelief = _Payslip.PersonalRelief,
+                     InsuranceRelief = _Payslip.InsuranceRelief,
+                     MortgageRelief = _Payslip.MortgageRelief
+                 };
             }
         }
 
-        public List<EarningsDeductions> Payments { get { return _Payslip.Earnings; } }
+        public List<EarningsDeductions> Payments
+        {
+            get
+            {
+                return _Payslip.Earnings;
+            }
+        }
 
         //public List<NonCashBenefits> Benefits { get { return _Payslip.Benefits; } }
 
-        public List<EarningsDeductions> Deductions { get { return _Payslip.AllDeductions; } }
+        public List<EarningsDeductions> statutory_deductions_exclude_payee
+        {
+            get
+            {
+                return _Payslip.statutory_deductions_exclude_payee;
+            }
+        }
+
+        public decimal total_statutory_deductions_exclude_payee
+        {
+            get
+            {
+                return _Payslip.total_statutory_deductions_exclude_payee;
+            }
+        }
+
+        public decimal TotalStatutoryDeductions
+        {
+            get
+            {
+                return _Payslip.TotalStatutoryDeductions;
+            }
+        }
+
+        public List<EarningsDeductions> Deductions
+        {
+            get
+            {
+                return _Payslip.AllDeductions;
+            }
+        }
 
         public decimal TotalPayments
         {
@@ -70,17 +112,31 @@ namespace DAL
                     Payments.Sum(p => p.Amount);
             }
         }
-        public decimal TotalDeductions { get { return _Payslip.TotalDeductions; } }
-        public decimal NetPay { get { return 
-            this.TotalPayments-this.TotalDeductions; } }
 
-        public List<EarningsDeductions> OtherPayments {
+        public decimal TotalDeductions
+        {
             get
             {
-                return _Payslip.Earnings.Where(e => e.TaxTracking.Trim().Equals("EARNING"))
-                    .Where((e => e.ItemType.Trim() != "SALARY")).ToList(); 
-            } 
+                return _Payslip.TotalDeductions;
+            }
         }
+
+        public decimal NetPay
+        {
+            get
+            {
+                return this.TotalPayments - this.TotalDeductions;
+            }
+        }
+
+        public List<EarningsDeductions> OtherPayments
+        {
+            get
+            {
+                return _Payslip.Earnings.Where(e => e.TaxTracking.Trim().Equals("EARNING")).Where((e => e.ItemType.Trim() != "SALARY")).ToList();
+            }
+        }
+
         public decimal TotalOtherPayments
         {
             get
@@ -97,10 +153,13 @@ namespace DAL
             }
         }
 
-        public List<EarningsDeductions> OtherDeductions { 
-            get {
-                return _Payslip.AllDeductions.Where(d => d.ItemType.Trim().Equals("DEDUCTION")).ToList(); 
-            } }
+        public List<EarningsDeductions> OtherDeductions
+        {
+            get
+            {
+                return _Payslip.AllDeductions.Where(d => d.ItemType.Trim().Equals("DEDUCTION")).ToList();
+            }
+        }
 
         public List<EarningsDeductions> Loans
         {
@@ -109,6 +168,7 @@ namespace DAL
                 return _Payslip.AllDeductions.Where(d => d.ItemType.Trim().Equals("LOAN")).ToList();
             }
         }
+
         public decimal TotalAmountLoansAmount
         {
             get
@@ -151,5 +211,5 @@ namespace DAL
     }
 
 
-   
+
 }

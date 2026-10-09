@@ -32,15 +32,26 @@ namespace winSBPayroll.Reports.PDF
         Font tcFont2 = new Font(Font.TIMES_ROMAN, 7, Font.NORMAL);
 
         string _resourcePath;
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
+
         //constructor
-        public P11PDFBuilder(string ResourcePath, P11ReportModel P11Model, string FileName)
+        public P11PDFBuilder(string ResourcePath, P11ReportModel P11Model, string FileName, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (P11Model == null)
                 throw new ArgumentNullException("P11ReportModel is null");
             _ViewModel = P11Model;
 
+            TAG = this.GetType().Name;
+
+            _notificationmessageEventname = notificationmessageEventname;
+
             sFilePDF = FileName;
+
             _resourcePath = ResourcePath;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed P11PDFBuilder", TAG));
+
         }
 
         public string GetP11PDF()
@@ -62,13 +73,22 @@ namespace winSBPayroll.Reports.PDF
                 //open document
                 document.Open();
 
-                //Add Header 
+                //open the document
+                document.Open();
+
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating document header...", TAG));
+
+                //add header
                 AddDocHeader();
 
-                //Add Body
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating document body...", TAG));
+
+                //add body
                 AddDocBody();
 
-                //add Footer
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating document footer...", TAG));
+
+                //add footer
                 AddDocFooter();
 
                 //close document
@@ -76,24 +96,24 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (DocumentException de)
             {
-                this.Message = de.Message;
+                Log.WriteToErrorLogFile(de);
             }
             catch (IOException ioe)
             {
-                this.Message = ioe.Message;
+                Log.WriteToErrorLogFile(ioe);
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
         }
         //document header
         private void AddDocHeader()
         {
 
-            PDFGen pdfgen = new PDFGen();
+            PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
 
-            Image img0 = pdfgen.DoGetImageFile(_resourcePath + "kra2.jpg");
+            Image img0 = pdfgen.DoGetImageFile(Path.Combine(_resourcePath, "kra2.jpg"));
             img0.Alignment = Image.ALIGN_CENTER;
 
 
@@ -498,7 +518,7 @@ namespace winSBPayroll.Reports.PDF
             p11notescoins.HorizontalAlignment = Cell.ALIGN_LEFT;
             p11taxInfoTable.AddCell(p11notescoins, new System.Drawing.Point(1, 1));
 
-            Chunk payeetaxtotal = new Chunk(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.totalpayee), bFont1);
+            Chunk payeetaxtotal = new Chunk(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.totalpayee), bFont1);
             Cell p11payeetaxtotal = new Cell(payeetaxtotal);
             p11payeetaxtotal.HorizontalAlignment = Cell.ALIGN_CENTER;
             p11taxInfoTable.AddCell(p11payeetaxtotal, new System.Drawing.Point(1, 2));

@@ -62,7 +62,7 @@ namespace winSBPayroll.Forms
 
                     if (db.Banks.Any(c => c.BankCode == _Bank.BankCode))
                     {
-                        MessageBox.Show("Bank Code Exist!", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Bank Code Exist!", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     if (!db.Banks.Any(c => c.BankCode == _Bank.BankCode))
                     {

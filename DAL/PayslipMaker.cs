@@ -134,7 +134,7 @@ namespace DAL
             payslip.PrintedBy = "System";
             payslip.PrintedOn = DateTime.Today;
 
-            //emp info
+            //employee info
             payslip.EmpName = "System";
             payslip.EmpNo = "System";
             payslip.EmployeeId = -1;
@@ -146,17 +146,17 @@ namespace DAL
             payslip.Period = DateTime.Today.Month;
             payslip.Year = DateTime.Today.Year;
 
-            //employerbank info    
+            //employer info    
+            payslip.EmployerId = -1;
             payslip.EmployerName = "System";
             payslip.EmployerAddress = "System";
             payslip.EmployerTelephone = "System";
-
 
             //Payslip
             payslip.BasicPay = 0;
 
             //payslip.Benefits = null;
-            payslip.Variables = 0;
+            payslip.Non_Taxable_Earnings = 0;
             //payslip.StatutoryDeductions = new List<EarningsDeductions>();
             //payslip.OtherDeductions = 0;
             payslip.Earnings = new List<EarningsDeductions>();
@@ -216,13 +216,12 @@ namespace DAL
                 payslip.Period = _PaymentPeriod;
                 payslip.Year = _Year;
 
-                //employerbank info    
+                //employer info    
                 payslip.EmployerName = employer.Name;
+                payslip.EmployerId = employer.Id;
                 payslip.EmployerAddress = employer.Address1 + ", " + employer.Address2;
                 payslip.EmployerTelephone = employer.Telephone;
                 payslip.EmployerEmail = employer.Email;
-                //added employer id value to payslip
-                payslip.EmployerId = employee.EmployerId;
 
                 //Payment
                 payslip.BankBranch = employee.BankCode;
@@ -253,6 +252,7 @@ namespace DAL
 
                 empAmt3 = empAmt1 + empAmt2;
                 emplAmt3 = emplAmt1 + emplAmt2;
+
                 switch (pensionSchemeFlag)
                 {
                     case "1":
@@ -288,6 +288,7 @@ namespace DAL
                         break;
 
                 }
+
                 payslip.PensionEmployer = employercontribution;
                 payslip.PensionEmployee = employeeContribution;
 
@@ -365,17 +366,15 @@ namespace DAL
 
                 payslip.BasicPay = this.Basic + rep.Allowances(_EmployeeId);
 
-                payslip.TotalBenefits = this.NonCashBenefits();
-                payslip.Variables = this.rep.NonTaxableEarnings(_EmployeeId); //these are nontaxable allowances
+                payslip.Total_Non_Cash_Benefits = this.NonCashBenefits();
+                payslip.Non_Taxable_Earnings = this.rep.NonTaxableEarnings(_EmployeeId); //these are nontaxable allowances
                 payslip.Earnings = this.Earnings();
-
 
                 //Payslip summary
                 //Tax Details
-                payslip.GrossTaxableEarnings = payslip.BasicPay + payslip.TotalBenefits;
+                payslip.GrossTaxableEarnings = payslip.BasicPay + payslip.Total_Non_Cash_Benefits;
 
-
-                //must have computed grosstabale earning and allowable deductions
+                //must have computed gross taxable earning and allowable deductions
                 //Nettaxable requires pension to have been added
                 payslip.GrossTax = this.GrossTax(payslip.NetTaxableEarnings);
 
@@ -406,7 +405,7 @@ namespace DAL
         {
             /*This adds all deductions in employee transactions including
              *1. zero place holders for  PENSION, PAYE 
-             *2. actual values for NSSF, NHIF
+             *2. actual values for NSSF, NHIF,SHIF, AHL
              */
             try
             {
@@ -439,22 +438,24 @@ namespace DAL
                 if (!anonymous)
                 {
                     employee = rep.GetEmployee(_EmployeeId);
+
                     _MaritalStatus = employee.MaritalStatus;
 
                     decimal _HourlyPay = rep.GetHourlyPay(_EmployeeId);
+
                     if (this.employee.BasicComputation.Equals("H"))
                     {
                         _Basic = _HourlyPay;
                     }
                     else if (this.employee.BasicComputation.Equals("X"))
                     {
+                        _Basic = employee.BasicPay ?? 0;
                         _Basic += _HourlyPay;
                     }
                     else
                     {
                         _Basic = employee.BasicPay ?? 0;
                     }
-
 
                     //Employer Record
                     employer = rep.GetEmployeeEmployer(employee.EmployerId);
@@ -511,7 +512,8 @@ namespace DAL
             if (taxable < minPaye) { return 0; }
 
             //Lets lookup payee
-            decimal payee = 0.0M; decimal amtTaxed;
+            decimal payee = 0.0M;
+            decimal amtTaxed;
             List<PayeeRate> taxTable = rep.PayeeRates();
             int bracketId = 0;
             bool cont = true;
@@ -578,7 +580,7 @@ namespace DAL
             decimal emprelief = rep.PersonalRelief(_EmployeeId);
             if (emprelief != 0) return emprelief;
 
-            //emprelief is 0 or not set, return defaault according to marital status;
+            //emprelief is 0 or not set, return default according to marital status;
             if (_MaritalStatus.ToUpper().Equals("S"))
             {
                 emprelief = _defaultRelief_Single;
@@ -625,10 +627,10 @@ namespace DAL
                 case "NEW":
                     int lowerearninglimit = int.Parse(rep.SettingLookup("NSSFMINLOWEREARNINGLIMIT"));
                     int upperearninglimit = int.Parse(rep.SettingLookup("NSSFMAXUPPEREARNINGLIMIT"));
-                    decimal _employeecontributionpecentage = int.Parse(rep.SettingLookup("NSSFEMPLOYEECONTRIBUTIONPERCENTAGE"));
-                    decimal _employercontributionpercentage = int.Parse(rep.SettingLookup("NSSFEMPLOYERCONTRIBUTIONPERCENTAGE"));
-                    NssfContributionsDTO _NssfContributionsDTO = rep.ComputeNssfContributions(this._EmployeeId);
-                    _nssf = _NssfContributionsDTO.TotalPensionContribution;
+                    decimal _employee_contribution_percentage = int.Parse(rep.SettingLookup("NSSFEMPLOYEECONTRIBUTIONPERCENTAGE"));
+                    decimal _employer_contribution_percentage = int.Parse(rep.SettingLookup("NSSFEMPLOYERCONTRIBUTIONPERCENTAGE"));
+                    NssfContributionsDTO _nssf_contributions_dto = rep.ComputeNssfContributions(this._EmployeeId);
+                    _nssf = _nssf_contributions_dto.TotalPensionContribution;
                     break;
             }
             return _nssf;
@@ -661,14 +663,118 @@ namespace DAL
             {
                 if ("NSSF".Equals(d.Description.Trim()))
                 {
-                    d.Amount = this.NSSF();
-                    d.IsStatutory = true;
+                    decimal nssf_from_txn = (from etxn in rep.get_all_employee_transactions()
+                                             where etxn.EmployeeId.Equals(_EmployeeId)
+                                             where etxn.ItemId.Equals("NSSF")
+                                             select etxn.Amount).FirstOrDefault();
+
+                    if (employee.BasicComputation.Equals("H") && nssf_from_txn == 0.0M)
+                    {
+                        d.Amount = 0.0M;
+                        d.IsStatutory = true;
+                    }
+                    else if (employee.BasicComputation.Equals("X") && nssf_from_txn == 0.0M)
+                    {
+                        d.Amount = 0.0M;
+                        d.IsStatutory = true;
+                    }
+                    else if (employee.BasicComputation.Equals("B") && nssf_from_txn == 0.0M)
+                    {
+                        d.Amount = 0.0M;
+                        d.IsStatutory = true;
+                    }
+                    else
+                    {
+                        d.Amount = this.NSSF();
+                        d.IsStatutory = true;
+                    }
                 }
                 else if ("NHIF".Equals(d.Description.Trim()))
                 {
-                    d.Amount = this.NHIF();
-                    d.IsStatutory = true;
+                    decimal nhif_from_txn = (from etxn in rep.get_all_employee_transactions()
+                                             where etxn.EmployeeId.Equals(_EmployeeId)
+                                             where etxn.ItemId.Equals("NHIF")
+                                             select etxn.Amount).FirstOrDefault();
+
+                    if (employee.BasicComputation.Equals("H") && nhif_from_txn == 0.0M)
+                    {
+                        d.Amount = 0.0M;
+                        d.IsStatutory = true;
+                    }
+                    else if (employee.BasicComputation.Equals("X") && nhif_from_txn == 0.0M)
+                    {
+                        d.Amount = 0.0M;
+                        d.IsStatutory = true;
+                    }
+                    else if (employee.BasicComputation.Equals("B") && nhif_from_txn == 0.0M)
+                    {
+                        d.Amount = 0.0M;
+                        d.IsStatutory = true;
+                    }
+                    else
+                    {
+                        d.Amount = this.NHIF();
+                        d.IsStatutory = true;
+                    }
                 }
+                else if ("SHIF".Equals(d.Description.Trim()))
+                {
+                    decimal shif_from_txn = (from etxn in rep.get_all_employee_transactions()
+                                             where etxn.EmployeeId.Equals(_EmployeeId)
+                                             where etxn.ItemId.Equals("SHIF")
+                                             select etxn.Amount).FirstOrDefault();
+
+                    if (employee.BasicComputation.Equals("H") && shif_from_txn == 0.0M)
+                    {
+                        d.Amount = 0.0M;
+                        d.IsStatutory = true;
+                    }
+                    else if (employee.BasicComputation.Equals("X") && shif_from_txn == 0.0M)
+                    {
+                        d.Amount = 0.0M;
+                        d.IsStatutory = true;
+                    }
+                    else if (employee.BasicComputation.Equals("B") && shif_from_txn == 0.0M)
+                    {
+                        d.Amount = 0.0M;
+                        d.IsStatutory = true;
+                    }
+                    else
+                    {
+                        d.Amount = this.SHIF();
+                        d.IsStatutory = true;
+                    }
+                }
+                else if ("AHL".Equals(d.Description.Trim()))
+                {
+                    decimal alh_from_txn = (from etxn in rep.get_all_employee_transactions()
+                                            where etxn.EmployeeId.Equals(_EmployeeId)
+                                            where etxn.ItemId.Equals("AHL")
+                                            select etxn.Amount).FirstOrDefault();
+
+                    if (employee.BasicComputation.Equals("H") && alh_from_txn == 0.0M)
+                    {
+                        d.Amount = 0.0M;
+                        d.IsStatutory = true;
+                    }
+                    else if (employee.BasicComputation.Equals("X") && alh_from_txn == 0.0M)
+                    {
+                        d.Amount = 0.0M;
+                        d.IsStatutory = true;
+                    }
+                    else if (employee.BasicComputation.Equals("B") && alh_from_txn == 0.0M)
+                    {
+                        d.Amount = 0.0M;
+                        d.IsStatutory = true;
+                    }
+                    else
+                    {
+                        d.Amount = this.AHL();
+                        d.IsStatutory = true;
+                    }
+                }
+
+
 
             }
             return alld;
@@ -678,6 +784,28 @@ namespace DAL
             List<NonCashBenefits> alld = rep.GetNonCashBenefitsList(_EmployeeId);
 
             return alld;
+        }
+
+        //Social Health Insurance Fund
+        private decimal SHIF()
+        {
+            decimal sha_rate = decimal.Parse(rep.SettingLookup("SHIF_RATE"));  //0.0275m; //2.75% int.Parse(rep.SettingLookup("SHIF_RATE"));
+            decimal sha_minimum_contribution = decimal.Parse(rep.SettingLookup("SHIFMINIMUMCONTRIBUTION")); //300m; //int.Parse(rep.SettingLookup("SHIFMINIMUMCONTRIBUTION"));
+
+            decimal sha_amount = _Basic * sha_rate / 100M;
+            decimal shif = Math.Max(sha_amount, sha_minimum_contribution);
+
+            return shif;
+        }
+
+        //Affordable Housing Levy
+        private decimal AHL()
+        {
+            decimal ahl_rate = decimal.Parse(rep.SettingLookup("AFFORDABLEHOUSINGLEVYRATE")); //0.015m; // int.Parse(rep.SettingLookup("AFFORDABLEHOUSINGLEVYRATE"));
+
+            decimal ahl_amount = _Basic * ahl_rate / 100M;
+
+            return ahl_amount;
         }
         #endregion
 

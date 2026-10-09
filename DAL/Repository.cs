@@ -59,7 +59,7 @@ namespace DAL
             catch (Exception ex)
             {
                 ///TODO Log error
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 db = null;
                 return false;
             }
@@ -78,7 +78,7 @@ namespace DAL
             catch (Exception ex)
             {
                 ///TODO Log error
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 db = null;
                 return false;
             }
@@ -127,6 +127,115 @@ namespace DAL
                 metaData);
             return entityBuilder.ToString();
         }
+
+        #endregion "Database and Connection"
+        #region "Login"
+        public bool Register(string username, string Pwd, int roleid)
+        {
+            try
+            {
+                spUser user = new spUser();
+
+                user.UserName = username;
+                user.Password = Pwd;
+                user.RoleId = roleid;
+                db.AddTospUsers(user);
+
+                db.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return false;
+            }
+
+        }
+        public bool CheckUserExists(string username, string Pwd)
+        {
+            try
+            {
+                var us = from users in db.spUsers
+                         where users.UserName == username
+                         where users.Password == Pwd
+                         select users;
+                return (us.Count() > 0);
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return false;
+            }
+        }
+        public bool IsUserLocked(string username)
+        {
+            try
+            {
+                var us = from users in db.spUsers
+                         where users.UserName == username
+                         where users.Locked == true
+                         select users;
+                return (us.Count() > 0);
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return false;
+            }
+        }
+        public void LockUser(string username)
+        {
+            spUser user;
+            try
+            {
+                var us = from users in db.spUsers
+                         where users.UserName == username
+                         select users;
+                user = us.Single();
+                user.Locked = true;
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+            }
+        }
+        public spUser GetUserbyUserName(string username)
+        {
+            try
+            {
+                var us = from users in db.spUsers
+                         where users.UserName == username
+                         select users;
+                return us.Single();
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
+            }
+        }
+        public bool ChangePassword(string username, string Pwd)
+        {
+            try
+            {
+                var us = (from users in db.spUsers
+                          where users.UserName == username
+                          select users).Single();
+                us.Password = Pwd;
+                db.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return false;
+            }
+        }
+        #endregion "Login"
+        #region "Users"
         public void GetUsers(Action<IList<UserModel>> callback)
         {
             callback(GetUserList());
@@ -168,123 +277,14 @@ namespace DAL
         {
             try
             {
-
                 db.SaveChanges();
             }
             catch (Exception ex)
             {
 
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
-        #endregion "Database and Connection"
-        #region "Login"
-        public bool Register(string username, string Pwd, int roleid)
-        {
-            try
-            {
-                spUser user = new spUser();
-
-                user.UserName = username;
-                user.Password = Pwd;
-                user.RoleId = roleid;
-                db.AddTospUsers(user);
-
-                db.SaveChanges();
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Log.WriteToErrorLogFile(ex);
-                return false;
-            }
-
-        }
-        public bool CheckUserExists(string username, string Pwd)
-        {
-            try
-            {
-                var us = from users in db.spUsers
-                         where users.UserName == username
-                         where users.Password == Pwd
-                         select users;
-                return (us.Count() > 0);
-            }
-            catch (Exception ex)
-            {
-                Log.WriteToErrorLogFile(ex);
-                return false;
-            }
-        }
-        public bool IsUserLocked(string username)
-        {
-            try
-            {
-                var us = from users in db.spUsers
-                         where users.UserName == username
-                         where users.Locked == true
-                         select users;
-                return (us.Count() > 0);
-            }
-            catch (Exception ex)
-            {
-                Log.WriteToErrorLogFile(ex);
-                return false;
-            }
-        }
-        public void LockUser(string username)
-        {
-            spUser user;
-            try
-            {
-                var us = from users in db.spUsers
-                         where users.UserName == username
-                         select users;
-                user = us.Single();
-                user.Locked = true;
-                db.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                Log.WriteToErrorLogFile(ex);
-            }
-        }
-        public spUser GetUserbyUserName(string username)
-        {
-            try
-            {
-                var us = from users in db.spUsers
-                         where users.UserName == username
-                         select users;
-                return us.Single();
-            }
-            catch (Exception ex)
-            {
-                Log.WriteToErrorLogFile(ex);
-                return null;
-            }
-        }
-        public bool ChangePassword(string username, string Pwd)
-        {
-            try
-            {
-                var us = (from users in db.spUsers
-                          where users.UserName == username
-                          select users).Single();
-                us.Password = Pwd;
-                db.SaveChanges();
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Log.WriteToErrorLogFile(ex);
-                return false;
-            }
-        }
-        #endregion "Login"
-        #region "Users"
         public List<spUser> GetUsers()
         {
             try
@@ -294,7 +294,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
 
@@ -315,7 +315,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
 
         }
@@ -341,13 +341,15 @@ namespace DAL
                 _user.SystemId = user.SystemId;
                 _user.Status = user.Status;
                 _user.DateJoined = user.DateJoined;
+                _user.password_hash = user.password_hash;
+                _user.password_salt = user.password_salt;
 
-                db.AddTospUsers(user);
+                db.AddTospUsers(_user);
                 db.SaveChanges();
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void UpdateUser(DAL.spUser user)
@@ -372,12 +374,14 @@ namespace DAL
                 _user.SystemId = user.SystemId;
                 _user.Status = user.Status;
                 _user.DateJoined = user.DateJoined;
+                _user.password_hash = user.password_hash;
+                _user.password_salt = user.password_salt;
 
                 db.SaveChanges(SaveOptions.AcceptAllChangesAfterSave);
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
 
             }
         }
@@ -396,7 +400,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
 
             }
         }
@@ -407,7 +411,10 @@ namespace DAL
                 var _user = (from us in db.spUsers
                              where us.Id == user.UserId
                              select us).Single();
+
                 _user.Password = user.Password;
+                _user.password_hash = user.password_hash;
+                _user.password_salt = user.password_salt;
 
                 db.SaveChanges(SaveOptions.AcceptAllChangesAfterSave);
 
@@ -416,7 +423,7 @@ namespace DAL
 
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return false;
             }
         }
@@ -451,18 +458,15 @@ namespace DAL
         {
             try
             {
-
                 spRole c = new spRole();
                 c = role;
 
                 db.spRoles.AddObject(c);
                 db.SaveChanges();
-
-
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void UpdateRole(spRole role)
@@ -477,7 +481,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void DeleteRole(spRole role)
@@ -491,7 +495,7 @@ namespace DAL
 
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
 
         }
@@ -504,7 +508,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -523,7 +527,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void UpdateReportsRight(spAllowedReportsRolesMenu right)
@@ -539,7 +543,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         #endregion "Rights"
@@ -556,7 +560,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -578,7 +582,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
         }
@@ -591,7 +595,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
         }
@@ -610,7 +614,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
 
         }
@@ -620,87 +624,76 @@ namespace DAL
         {
             try
             {
-                Employee _Employee = new Employee();
-                var _employeequery = this.GetEmployee(EmployeeId);
-                if (_employeequery != null)
+                Employee employee = this.GetEmployee(EmployeeId);
+                if (employee == null)
                 {
-                    _Employee = _employeequery;
-                }
-                decimal Amount = _Employee.BasicPay ?? 0;
-                NssfContributionsDTO _NssfContributionsDTO = new NssfContributionsDTO();
-                decimal lowerearninglimit = int.Parse(this.SettingLookup("NSSFMINLOWEREARNINGLIMIT"));
-                decimal upperearninglimit = int.Parse(this.SettingLookup("NSSFMAXUPPEREARNINGLIMIT"));
-                int _employeecontributionpecentage = int.Parse(this.SettingLookup("NSSFEMPLOYEECONTRIBUTIONPERCENTAGE"));
-                int _employercontributionpercentage = int.Parse(this.SettingLookup("NSSFEMPLOYERCONTRIBUTIONPERCENTAGE"));
-
-                if (Amount <= lowerearninglimit)
-                {
-                    _NssfContributionsDTO = new NssfContributionsDTO();
-                    _NssfContributionsDTO.EmpNo = _Employee.EmpNo;
-                    _NssfContributionsDTO.EmployeeId = _Employee.Id;
-                    _NssfContributionsDTO.EmployeeEarnings = Amount;
-                    _NssfContributionsDTO.PensionableEarnings = _NssfContributionsDTO.EmployeeEarnings;
-                    //tier1
-                    _NssfContributionsDTO.Tier1PensionableEarnings = _NssfContributionsDTO.PensionableEarnings;
-                    _NssfContributionsDTO.Tier1EmployeeDeduction = (_NssfContributionsDTO.Tier1PensionableEarnings * _employeecontributionpecentage) / 100;
-                    _NssfContributionsDTO.Tier1EmployerContribution = _NssfContributionsDTO.Tier1EmployeeDeduction;
-                    _NssfContributionsDTO.Tier1TotalContribution = _NssfContributionsDTO.Tier1EmployeeDeduction + _NssfContributionsDTO.Tier1EmployerContribution;
-                    //tier2
-                    _NssfContributionsDTO.Tier2PensionableEarnings = _NssfContributionsDTO.PensionableEarnings - _NssfContributionsDTO.Tier1PensionableEarnings;
-                    _NssfContributionsDTO.Tier2EmployeeDeduction = (_NssfContributionsDTO.Tier2PensionableEarnings * _employeecontributionpecentage) / 100;
-                    _NssfContributionsDTO.Tier2EmployerContribution = _NssfContributionsDTO.Tier2EmployeeDeduction;
-                    _NssfContributionsDTO.Tier2TotalContribution = _NssfContributionsDTO.Tier2EmployeeDeduction + _NssfContributionsDTO.Tier2EmployerContribution;
-                    //total
-                    _NssfContributionsDTO.TotalPensionContribution = _NssfContributionsDTO.Tier1TotalContribution + _NssfContributionsDTO.Tier2TotalContribution;
+                    return null;
                 }
 
-                if (Amount > lowerearninglimit && Amount < upperearninglimit)
+                // BasicPay handling (compatible with C# 4.0 nullable types)
+                decimal amount = employee.BasicPay.HasValue ? employee.BasicPay.Value : 0M;
+
+                // Safely parse settings to decimal
+                decimal lowerEarningLimit = 0M;
+                if (!decimal.TryParse(this.SettingLookup("NSSFMINLOWEREARNINGLIMIT"), out lowerEarningLimit))
                 {
-                    _NssfContributionsDTO = new NssfContributionsDTO();
-                    _NssfContributionsDTO.EmpNo = _Employee.EmpNo;
-                    _NssfContributionsDTO.EmployeeId = _Employee.Id;
-                    _NssfContributionsDTO.EmployeeEarnings = Amount;
-                    _NssfContributionsDTO.PensionableEarnings = _NssfContributionsDTO.EmployeeEarnings;
-                    //tier1
-                    _NssfContributionsDTO.Tier1PensionableEarnings = lowerearninglimit;
-                    _NssfContributionsDTO.Tier1EmployeeDeduction = (_NssfContributionsDTO.Tier1PensionableEarnings * _employeecontributionpecentage) / 100;
-                    _NssfContributionsDTO.Tier1EmployerContribution = _NssfContributionsDTO.Tier1EmployeeDeduction;
-                    _NssfContributionsDTO.Tier1TotalContribution = _NssfContributionsDTO.Tier1EmployeeDeduction + _NssfContributionsDTO.Tier1EmployerContribution;
-                    //tier2
-                    _NssfContributionsDTO.Tier2PensionableEarnings = _NssfContributionsDTO.PensionableEarnings - _NssfContributionsDTO.Tier1PensionableEarnings;
-                    _NssfContributionsDTO.Tier2EmployeeDeduction = (_NssfContributionsDTO.Tier2PensionableEarnings * _employeecontributionpecentage) / 100;
-                    _NssfContributionsDTO.Tier2EmployerContribution = _NssfContributionsDTO.Tier2EmployeeDeduction;
-                    _NssfContributionsDTO.Tier2TotalContribution = _NssfContributionsDTO.Tier2EmployeeDeduction + _NssfContributionsDTO.Tier2EmployerContribution;
-                    //total
-                    _NssfContributionsDTO.TotalPensionContribution = _NssfContributionsDTO.Tier1TotalContribution + _NssfContributionsDTO.Tier2TotalContribution;
+                    lowerEarningLimit = 0M;
                 }
 
-                if (Amount >= upperearninglimit)
+                decimal upperEarningLimit = 0M;
+                if (!decimal.TryParse(this.SettingLookup("NSSFMAXUPPEREARNINGLIMIT"), out upperEarningLimit))
                 {
-                    _NssfContributionsDTO = new NssfContributionsDTO();
-                    _NssfContributionsDTO.EmpNo = _Employee.EmpNo;
-                    _NssfContributionsDTO.EmployeeId = _Employee.Id;
-                    _NssfContributionsDTO.EmployeeEarnings = Amount;
-                    _NssfContributionsDTO.PensionableEarnings = upperearninglimit;
-                    //tier1
-                    _NssfContributionsDTO.Tier1PensionableEarnings = lowerearninglimit;
-                    _NssfContributionsDTO.Tier1EmployeeDeduction = (_NssfContributionsDTO.Tier1PensionableEarnings * _employeecontributionpecentage) / 100;
-                    _NssfContributionsDTO.Tier1EmployerContribution = _NssfContributionsDTO.Tier1EmployeeDeduction;
-                    _NssfContributionsDTO.Tier1TotalContribution = _NssfContributionsDTO.Tier1EmployeeDeduction + _NssfContributionsDTO.Tier1EmployerContribution;
-                    //tier2
-                    _NssfContributionsDTO.Tier2PensionableEarnings = _NssfContributionsDTO.PensionableEarnings - _NssfContributionsDTO.Tier1PensionableEarnings;
-                    _NssfContributionsDTO.Tier2EmployeeDeduction = (_NssfContributionsDTO.Tier2PensionableEarnings * _employeecontributionpecentage) / 100;
-                    _NssfContributionsDTO.Tier2EmployerContribution = _NssfContributionsDTO.Tier2EmployeeDeduction;
-                    _NssfContributionsDTO.Tier2TotalContribution = _NssfContributionsDTO.Tier2EmployeeDeduction + _NssfContributionsDTO.Tier2EmployerContribution;
-                    //total
-                    _NssfContributionsDTO.TotalPensionContribution = _NssfContributionsDTO.Tier1TotalContribution + _NssfContributionsDTO.Tier2TotalContribution;
+                    upperEarningLimit = 0M;
                 }
 
-                return _NssfContributionsDTO;
+                decimal employeeContribPercent = 0M;
+                if (!decimal.TryParse(this.SettingLookup("NSSFEMPLOYEECONTRIBUTIONPERCENTAGE"), out employeeContribPercent))
+                {
+                    employeeContribPercent = 0M;
+                }
+
+                decimal employerContribPercent = 0M;
+                if (!decimal.TryParse(this.SettingLookup("NSSFEMPLOYERCONTRIBUTIONPERCENTAGE"), out employerContribPercent))
+                {
+                    employerContribPercent = 0M;
+                }
+
+                NssfContributionsDTO dto = new NssfContributionsDTO
+                {
+                    EmpNo = employee.EmpNo,
+                    EmployeeId = employee.Id,
+                    EmployeeEarnings = amount
+                };
+
+                // Determine total pensionable earnings capped at upper earning limit
+                dto.PensionableEarnings = Math.Min(amount, upperEarningLimit);
+
+                // Tier 1 calculation: capped at lower earning limit
+                dto.Tier1PensionableEarnings = Math.Min(amount, lowerEarningLimit);
+                dto.Tier1EmployeeDeduction = (dto.Tier1PensionableEarnings * employeeContribPercent) / 100M;
+                dto.Tier1EmployerContribution = (dto.Tier1PensionableEarnings * employerContribPercent) / 100M;
+                dto.Tier1TotalContribution = dto.Tier1EmployeeDeduction + dto.Tier1EmployerContribution;
+
+                // Tier 2 calculation: earnings between lower and upper limits
+                dto.Tier2PensionableEarnings = Math.Max(0M, dto.PensionableEarnings - dto.Tier1PensionableEarnings);
+                dto.Tier2EmployeeDeduction = (dto.Tier2PensionableEarnings * employeeContribPercent) / 100M;
+                dto.Tier2EmployerContribution = (dto.Tier2PensionableEarnings * employerContribPercent) / 100M;
+                dto.Tier2TotalContribution = dto.Tier2EmployeeDeduction + dto.Tier2EmployerContribution;
+
+                // Total employee contribution sum
+                dto.TotalEmployeeContribution = dto.Tier1EmployeeDeduction + dto.Tier2EmployeeDeduction;
+
+                // Total employer contribution sum
+                dto.TotalEmployerContribution = dto.Tier1EmployerContribution + dto.Tier2EmployerContribution;
+
+                // Total pension contribution sum
+                dto.TotalPensionContribution = dto.Tier1TotalContribution + dto.Tier2TotalContribution;
+
+                return dto;
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -714,7 +707,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -726,7 +719,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -746,7 +739,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void UpdateBenefit(DAL.Benefit benefit, string name, decimal rate)
@@ -761,7 +754,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void UpdateBenefit(DAL.Benefit benefit)
@@ -776,7 +769,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void DeleteBenefit(int benefitid)
@@ -790,7 +783,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void DeleteBenefit(Benefit benefit)
@@ -804,7 +797,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         #endregion  "Benefits"
@@ -818,7 +811,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void EditEmpBenefit(EmpNonCashBenefit b)
@@ -831,7 +824,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void DeleteEmpBenefit(EmpNonCashBenefit b)
@@ -845,7 +838,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void DeleteEmpNonCashBenefit(EmpNonCashBenefit b)
@@ -859,7 +852,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public IQueryable<DAL.EmpNonCashBenefit> GetEmpBenefits(string empno)
@@ -874,7 +867,23 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
+            }
+        }
+        public IQueryable<DAL.EmpNonCashBenefit> GetEmpBenefits(int EmployeeId)
+        {
+            try
+            {
+
+                var ret = (from b in db.EmpNonCashBenefits
+                           where b.EmployeeId == EmployeeId
+                           select b);
+                return ret;
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -894,7 +903,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -915,7 +924,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -939,7 +948,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -966,7 +975,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         #endregion "emp Benefits"
@@ -984,7 +993,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -997,7 +1006,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -1014,7 +1023,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
 
         }
@@ -1027,9 +1036,28 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
+        }
+        public string get_setting_value_given_key(string sskey)
+        {
+            try
+            {
+                Setting _setting = db.Settings.First(s => s.SSKey == sskey);
+                if (_setting != null)
+                {
+                    return _setting.SSValue;
+                }
+                else { return null; }
+
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
+            }
+
         }
         #endregion "Setting"
         #region "Employee_Ext"
@@ -1037,12 +1065,11 @@ namespace DAL
         {
             try
             {
-
                 return this.GetAllActiveEmployees().ToList();
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -1050,8 +1077,8 @@ namespace DAL
         {
             try
             {
-
                 Employee_Ext _employee_ext = new Employee_Ext();
+                _employee_ext.EmployeeId = employee_ext.EmployeeId;
                 _employee_ext.EmpNo = employee_ext.EmpNo;
                 _employee_ext.ExFieldName = employee_ext.ExFieldName;
                 _employee_ext.ExFieldStr = employee_ext.ExFieldStr;
@@ -1065,19 +1092,30 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public List<Employee_Ext> GetAllEmployeeCustomInfo(string empno)
         {
             try
             {
-
                 return db.Employee_Ext.Where(e => e.EmpNo == empno).ToList();
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
+            }
+        }
+        public List<Employee_Ext> GetAllEmployeeCustomInfo(int EmployeeId)
+        {
+            try
+            {
+                return db.Employee_Ext.Where(e => e.EmployeeId == EmployeeId).ToList();
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -1097,6 +1135,7 @@ namespace DAL
                 employer.Email = _employer.Email;
                 employer.Logo = _employer.Logo;
                 employer.Slogan = _employer.Slogan;
+                employer.Code = _employer.Code;
                 employer.NHIF = _employer.NHIF;
                 employer.NSSF = _employer.NSSF;
                 employer.BankBranchSortCode = _employer.BankBranchSortCode;
@@ -1115,7 +1154,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return id;
             }
         }
@@ -1132,6 +1171,7 @@ namespace DAL
                 employer.Email = _employer.Email;
                 employer.Logo = _employer.Logo;
                 employer.Slogan = _employer.Slogan;
+                employer.Code = _employer.Code;
                 employer.NHIF = _employer.NHIF;
                 employer.NSSF = _employer.NSSF;
                 employer.BankBranchSortCode = _employer.BankBranchSortCode;
@@ -1144,7 +1184,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void DeleteEmployer(Employer _employer)
@@ -1154,11 +1194,12 @@ namespace DAL
                 Employer employer = db.Employers.Where(p => p.Id == _employer.Id).Single();
                 employer.IsDeleted = true;
 
+                db.DeleteObject(employer);
                 db.SaveChanges(SaveOptions.AcceptAllChangesAfterSave);
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public Employer GetEmployer()
@@ -1169,7 +1210,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -1181,7 +1222,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -1197,7 +1238,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -1213,7 +1254,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -1229,7 +1270,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -1246,7 +1287,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -1260,7 +1301,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
         }
@@ -1272,7 +1313,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -1284,12 +1325,13 @@ namespace DAL
                                       where em.EmployerId == _employerid
                                       where em.IsActive == true
                                       where em.IsDeleted == false
+                                      orderby em.EmpNo ascending
                                       select em;
                 return _employeesquery.ToList();
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -1301,7 +1343,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -1317,7 +1359,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -1335,7 +1377,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -1353,7 +1395,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -1369,7 +1411,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -1385,7 +1427,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -1401,7 +1443,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -1417,7 +1459,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -1433,7 +1475,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -1450,7 +1492,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public Employee GetEmployee(int EmployeeId)
@@ -1461,7 +1503,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -1474,7 +1516,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return false;
             }
         }
@@ -1488,7 +1530,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -1509,7 +1551,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
         }
@@ -1529,7 +1571,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
         }
@@ -1547,7 +1589,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
         }
@@ -1562,7 +1604,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
         }
@@ -1582,7 +1624,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
         }
@@ -1597,7 +1639,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
         }
@@ -1625,7 +1667,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
         }
@@ -1653,7 +1695,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
         }
@@ -1675,7 +1717,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
         }
@@ -1783,13 +1825,11 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
-        public void SaveEmployee(String Empno, string Surname, string Bank, string Account,
-            int Dept,
-            int Employer)
+        public void SaveEmployee(String Empno, string Surname, string Bank, string Account, int Dept, int Employer)
         {
             try
             {
@@ -1805,7 +1845,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public Employee CreateEmployee(Employee _employee)
@@ -1821,6 +1861,7 @@ namespace DAL
                 employee.MaritalStatus = _employee.MaritalStatus;
                 employee.Gender = _employee.Gender;
                 employee.Photo = _employee.Photo;
+                employee.PhoneNo = _employee.PhoneNo;
                 employee.DoE = _employee.DoE;
                 employee.BasicComputation = _employee.BasicComputation;
                 employee.BasicPay = _employee.BasicPay;
@@ -1875,6 +1916,7 @@ namespace DAL
                 employee.MaritalStatus = _employee.MaritalStatus;
                 employee.Gender = _employee.Gender;
                 employee.Photo = _employee.Photo;
+                employee.PhoneNo = _employee.PhoneNo;
                 employee.DoE = _employee.DoE;
                 employee.BasicComputation = _employee.BasicComputation;
                 employee.BasicPay = _employee.BasicPay;
@@ -1939,6 +1981,7 @@ namespace DAL
                 employee.EmpNo = _employee.EmpNo;
                 employee.Email = _employee.Email;
                 employee.Gender = _employee.Gender;
+                employee.PhoneNo = _employee.PhoneNo;
                 employee.IDNo = _employee.IDNo;
                 employee.IsActive = _employee.IsActive;
                 employee.MaritalStatus = _employee.MaritalStatus;
@@ -1963,7 +2006,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public decimal TaxableEarnings(int EmployeeId)
@@ -1978,7 +2021,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
         }
@@ -2016,14 +2059,117 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
 
         }
+
+        public List<EarningsDeductions> Taxable_Cash_Allowances_Minus_Benefits(int EmployeeId)
+        {
+            try
+            {
+                List<string> itemtypes = new List<string>() { "ADDITION" };
+                List<string> taxtrackings = new List<string>() { "EARNING" };
+                List<string> items = new List<string>() { "NON_CASH_BENEFIT", "BASIC" };
+
+                var Earnings = (from d in db.GetEmpTransactions
+                                where d.EmployeeId == EmployeeId
+                                where itemtypes.Contains(d.ItemTypeId.Trim())
+                                where taxtrackings.Contains(d.TaxTrackingId.Trim())
+                                where !items.Contains(d.ItemId.Trim())
+                                where d.Enabled == true
+                                select new EarningsDeductions
+                                {
+                                    DEType = "E",
+                                    ShowInPayslip = d.ShowYTDInPayslip ?? false,
+                                    TrackYTD = d.EmpTrack ?? false,
+                                    YTD = (d.EmpTrack ?? false) ? (d.Amount + d.Balance ?? 0) : 0,
+                                    Description = d.ItemId.Trim(),
+                                    EmpTxnId = d.EmpTxnId,
+                                    TaxTracking = d.TaxTrackingId.Trim(),
+                                    Amount = d.Amount,
+                                    ItemType = d.ItemTypeId.Trim()
+                                });
+                return Earnings.ToList();
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
+            }
+        }
+
+        public List<EarningsDeductions> Non_Taxable_Earnings_Only(int EmployeeId)
+        {
+            try
+            {
+                List<string> itemtypes = new List<string>() { "ADDITION" };
+                List<string> taxtrackings = new List<string>() { "NONE" };
+                List<string> items = new List<string>() { "NON_CASH_BENEFIT", "BASIC" };
+
+                var Earnings = (from d in db.GetEmpTransactions
+                                where d.EmployeeId == EmployeeId
+                                where itemtypes.Contains(d.ItemTypeId.Trim())
+                                where taxtrackings.Contains(d.TaxTrackingId.Trim())
+                                where !items.Contains(d.ItemId.Trim())
+                                where d.Enabled == true
+                                select new EarningsDeductions
+                                {
+                                    DEType = "E",
+                                    ShowInPayslip = d.ShowYTDInPayslip ?? false,
+                                    TrackYTD = d.EmpTrack ?? false,
+                                    YTD = (d.EmpTrack ?? false) ? (d.Amount + d.Balance ?? 0) : 0,
+                                    Description = d.ItemId.Trim(),
+                                    EmpTxnId = d.EmpTxnId,
+                                    TaxTracking = d.TaxTrackingId.Trim(),
+                                    Amount = d.Amount,
+                                    ItemType = d.ItemTypeId.Trim()
+                                });
+                return Earnings.ToList();
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
+            }
+        }
+
+        public List<EarningsDeductions> All_Other_earnings(int EmployeeId)
+        {
+            try
+            {
+                //This included taxable and non-taxable earnings
+                List<string> earningTypes = new List<string>() { "ADDITION" };
+                List<string> e_Types = new List<string>() { "NON_CASH_BENEFIT", "BASIC" };
+                var Earnings = (from d in db.GetEmpTransactions
+                                where d.EmployeeId == EmployeeId
+                                where earningTypes.Contains(d.ItemTypeId.Trim())
+                                where !e_Types.Contains(d.ItemId.Trim())
+                                where d.Enabled == true
+                                select new EarningsDeductions
+                                {
+                                    DEType = "E",
+                                    ShowInPayslip = d.ShowYTDInPayslip ?? false,
+                                    TrackYTD = d.EmpTrack ?? false,
+                                    YTD = (d.EmpTrack ?? false) ? (d.Amount + d.Balance ?? 0) : 0,
+                                    Description = d.ItemId.Trim(),
+                                    EmpTxnId = d.EmpTxnId,
+                                    TaxTracking = d.TaxTrackingId.Trim(),
+                                    Amount = d.Amount,
+                                    ItemType = d.ItemTypeId.Trim()
+                                });
+                return Earnings.ToList();
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
+            }
+        }
+
         public List<EarningsDeductions> EmployeeEarnings(int EmployeeId)
         {
-
             try
             {
                 //This included taxable and non-taxable earnings
@@ -2039,20 +2185,21 @@ namespace DAL
                                     ShowInPayslip = d.ShowYTDInPayslip ?? false,
                                     TrackYTD = d.EmpTrack ?? false,
                                     YTD = (d.EmpTrack ?? false) ? (d.Amount + d.Balance ?? 0) : 0,
-                                    Description = d.ItemId,
+                                    Description = d.ItemId.Trim(),
                                     EmpTxnId = d.EmpTxnId,
-                                    TaxTracking = d.TaxTrackingId,
+                                    TaxTracking = d.TaxTrackingId.Trim(),
                                     Amount = d.Amount,
-                                    ItemType = d.ItemTypeId
+                                    ItemType = d.ItemTypeId.Trim()
                                 });
                 return Earnings.ToList();
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
+
         public List<EarningsDeductions> GetAllEarnings()
         {
 
@@ -2070,17 +2217,17 @@ namespace DAL
                                     ShowInPayslip = d.ShowYTDInPayslip ?? false,
                                     TrackYTD = d.EmpTrack ?? false,
                                     YTD = (d.EmpTrack ?? false) ? (d.Amount + d.Balance ?? 0) : 0,
-                                    Description = d.ItemId,
+                                    Description = d.ItemId.Trim(),
                                     EmpTxnId = d.EmpTxnId,
-                                    TaxTracking = d.TaxTrackingId,
+                                    TaxTracking = d.TaxTrackingId.Trim(),
                                     Amount = d.Amount,
-                                    ItemType = d.ItemTypeId
+                                    ItemType = d.ItemTypeId.Trim()
                                 });
                 return Earnings.ToList();
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -2098,7 +2245,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -2115,7 +2262,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -2132,7 +2279,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
         }
@@ -2159,11 +2306,13 @@ namespace DAL
                                       ItemType = d.ItemTypeId
                                   });
 
+                var _ded_lst = Deductions.ToList();
+
                 return Deductions.ToList();
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -2193,7 +2342,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -2223,7 +2372,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -2257,7 +2406,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -2290,7 +2439,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -2302,8 +2451,39 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
+            }
+        }
+        public List<EmployeeTransaction> get_all_employee_transactions()
+        {
+            try
+            {
+                return db.EmployeeTransactions.ToList();
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
+            }
+        }
+        public void Update_Employee_Transactions(Employee employee)
+        {
+            try
+            {
+                var _emp_txn = (from emptxn in db.EmployeeTransactions
+                                where emptxn.EmployeeId.Equals(employee.Id)
+                                select emptxn).ToList();
+                foreach (var txn in _emp_txn)
+                {
+                    txn.EmpNo = employee.EmpNo;
+                }
+
+                db.SaveChanges(SaveOptions.AcceptAllChangesAfterSave);
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         #endregion  "Employee"
@@ -2321,7 +2501,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
 
@@ -2339,7 +2519,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
 
@@ -2356,7 +2536,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public List<PayslipMaster> GetPaySlipFromMaster(string Emp)
@@ -2368,7 +2548,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -2381,7 +2561,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -2427,13 +2607,16 @@ namespace DAL
                         PINNo = v.PIN,
                         NHIFNo = v.NHIFNo,
                         NSSFNo = v.NSSFNo,
-                        Benefits = v.Benefits
+                        Benefits = v.Benefits,
+                        PaymentMode = v.PaymentMode,
+                        SHIF = v.SHIF ?? 0,
+                        AHL = v.AHL ?? 0
                     }).OrderBy(i => i.BankCode).ToList();
                 return pm.ToList();
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -2469,14 +2652,17 @@ namespace DAL
                              PINNo = v.PIN,
                              NHIFNo = v.NHIFNo,
                              NSSFNo = v.NSSFNo,
-                             Benefits = v.Benefits
+                             Benefits = v.Benefits,
+                             PaymentMode = v.PaymentMode,
+                             SHIF = v.SHIF ?? 0,
+                             AHL = v.AHL ?? 0
                          }).OrderBy(i => i.BankCode).ToList();
 
                 return pm.ToList();
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -2510,6 +2696,7 @@ namespace DAL
                     _payroll.BranchCode = v.BranchCode;
                     _payroll.BranchName = v.BranchName;
                     _payroll.EmpNo = v.EmpNo;
+                    _payroll.EmployeeId = v.EmployeeId;
                     _payroll.Surname = v.Surname;
                     _payroll.OtherDeductions = v.OtherDeductions;
                     _payroll.OtherNames = v.OtherNames;
@@ -2525,6 +2712,7 @@ namespace DAL
                     _payroll.EmployerNSSF = v.EmployerNSSF;
                     _payroll.PayeTax = v.PayeTax;
                     _payroll.PensionEmployee = v.PensionEmployee;
+                    _payroll.PaymentMode = v.PaymentMode;
                     _payroll.Period = v.Period;
                     _payroll.Year = v.Year;
                     _payroll.IDNo = v.IDNo;
@@ -2534,6 +2722,8 @@ namespace DAL
                     _payroll.Benefits = v.Benefits;
                     _payroll.EmployeeDeductions = this.EmployeeDeductions(v.EmployeeId);
                     _payroll.EmployeeEarnings = this.EmployeeEarnings(v.EmployeeId);
+                    _payroll.SHIF = v.SHIF ?? 0;
+                    _payroll.AHL = v.AHL ?? 0;
 
                     psuedovwPayrollMasters.Add(_payroll);
                 }
@@ -2542,7 +2732,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -2565,6 +2755,7 @@ namespace DAL
                     _payroll.BranchCode = v.BranchCode;
                     _payroll.BranchName = v.BranchName;
                     _payroll.EmpNo = v.EmpNo;
+                    _payroll.EmployeeId = v.EmployeeId;
                     _payroll.Surname = v.Surname;
                     _payroll.OtherDeductions = v.OtherDeductions;
                     _payroll.OtherNames = v.OtherNames;
@@ -2580,6 +2771,7 @@ namespace DAL
                     _payroll.EmployerNSSF = v.EmployerNSSF;
                     _payroll.PayeTax = v.PayeTax;
                     _payroll.PensionEmployee = v.PensionEmployee;
+                    _payroll.PaymentMode = v.PaymentMode;
                     _payroll.Period = v.Period;
                     _payroll.Year = v.Year;
                     _payroll.IDNo = v.IDNo;
@@ -2589,6 +2781,8 @@ namespace DAL
                     _payroll.Benefits = v.Benefits;
                     _payroll.EmployeeDeductions = this.EmployeeDeductions(v.EmployeeId);
                     _payroll.EmployeeEarnings = this.EmployeeEarnings(v.EmployeeId);
+                    _payroll.SHIF = v.SHIF ?? 0;
+                    _payroll.AHL = v.AHL ?? 0;
 
                     psuedovwPayrollMasters.Add(_payroll);
                 }
@@ -2597,7 +2791,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -2637,7 +2831,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -2669,7 +2863,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -2709,7 +2903,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -2740,7 +2934,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -2762,7 +2956,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void AddBankBranch(string branchsortcode, string branchcode, string bankCode, string branchname)
@@ -2783,7 +2977,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
 
         }
@@ -2798,7 +2992,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void UpdateBank(string bankcode, string bankname)
@@ -2812,7 +3006,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void UpdateBankBranch(string banksortcode, string branchcode, string bank, string branchname)
@@ -2827,7 +3021,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void UpdateBranch(BankBranch branch)
@@ -2842,7 +3036,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void DeleteBank(string bankcode)
@@ -2855,7 +3049,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void DeleteBankBranch(string banksortcode, string bank)
@@ -2869,7 +3063,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void DeleteAllBankBranches(string bank)
@@ -2887,7 +3081,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
 
             }
         }
@@ -2899,7 +3093,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -2911,7 +3105,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -2925,7 +3119,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -3027,7 +3221,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -3040,7 +3234,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -3063,7 +3257,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return false;
             }
         }
@@ -3088,7 +3282,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -3113,7 +3307,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -3138,7 +3332,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -3163,7 +3357,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -3176,7 +3370,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -3191,7 +3385,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -3206,7 +3400,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -3221,7 +3415,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -3236,7 +3430,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -3250,7 +3444,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -3262,7 +3456,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -3282,7 +3476,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void DeleteDepartment(string code)
@@ -3295,7 +3489,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void DeleteDepartment(Department _dt)
@@ -3309,7 +3503,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void UpdateDepartment(string code, string description)
@@ -3323,7 +3517,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void UpdateDepartment(Department _department)
@@ -3338,7 +3532,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         #endregion "Department"
@@ -3347,19 +3541,46 @@ namespace DAL
         {
             try
             {
-
                 var payroll = (from p in db.Payrolls
                                where p.Period == period
                                where p.Year == year
                                select p).SingleOrDefault();
-                if (payroll != null) payroll.Processed = true;
+
+                if (payroll != null)
+                    payroll.Processed = true;
+
                 EmployeeTransaction emptrans = new EmployeeTransaction();
                 emptrans.Processed = true;
-                db.SaveChanges();
+
+                db.SaveChanges(SaveOptions.AcceptAllChangesAfterSave);
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+
+            }
+        }
+        public void MarkPayroll_for_employer_AsProcessed(int period, int year, int employer)
+        {
+            try
+            {
+                var payroll = (from p in db.Payrolls
+                               where p.Period == period
+                               where p.Year == year
+                               where p.EmployerId == employer
+                               select p).SingleOrDefault();
+
+                if (payroll != null)
+                    payroll.Processed = true;
+
+                EmployeeTransaction emptrans = new EmployeeTransaction();
+                emptrans.Processed = true;
+
+                db.SaveChanges(SaveOptions.AcceptAllChangesAfterSave);
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
 
             }
         }
@@ -3368,59 +3589,108 @@ namespace DAL
             try
             {
                 Payroll pi = db.Payrolls.Where(i => i.Period == payroll.Period && i.Year == payroll.Year).Single();
+
                 pi.DateRun = payroll.DateRun;
+                pi.TimeRun = payroll.TimeRun;
+                pi.RunBy = payroll.RunBy;
+                pi.ProcessedBy = payroll.RunBy;
+                pi.ApprovedBy = payroll.RunBy;
 
                 db.SaveChanges(SaveOptions.AcceptAllChangesAfterSave);
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+            }
+        }
+        public void UpdatePayroll_for_employer_DateRun(Payroll payroll)
+        {
+            try
+            {
+                Payroll pi = db.Payrolls.Where(i => i.Period == payroll.Period && i.Year == payroll.Year && i.EmployerId == payroll.EmployerId).Single();
+
+                pi.DateRun = payroll.DateRun;
+                pi.TimeRun = payroll.TimeRun;
+                pi.RunBy = payroll.RunBy;
+                pi.ProcessedBy = payroll.RunBy;
+                pi.ApprovedBy = payroll.RunBy;
+
+                db.SaveChanges(SaveOptions.AcceptAllChangesAfterSave);
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+            }
+        }
+        public void mark_payroll_for_employer_as_closed(int period, int year, int employer)
+        {
+            try
+            {
+                var payroll = (from p in db.Payrolls
+                               where p.Period == period
+                               where p.Year == year
+                               where p.EmployerId == employer
+                               select p).SingleOrDefault();
+
+                if (payroll != null)
+                    payroll.IsOpen = false;
+
+                payroll.Processed = true;
+
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void MarkPayrollAsClosed(int period, int year)
         {
             try
             {
-
                 var payroll = (from p in db.Payrolls
                                where p.Period == period
                                where p.Year == year
                                select p).SingleOrDefault();
-                if (payroll != null) payroll.IsOpen = false;
+
+                if (payroll != null)
+                    payroll.IsOpen = false;
+
                 payroll.Processed = true;
-                db.SaveChanges();
+
+                db.SaveChanges(SaveOptions.AcceptAllChangesAfterSave);
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
-
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void ReOpenPayroll(int period, int year)
         {
             try
             {
-
                 var payroll = (from p in db.Payrolls
                                where p.Period == period
                                where p.Year == year
                                select p).SingleOrDefault();
-                if (payroll != null) payroll.IsOpen = true;
-                db.SaveChanges();
+
+                if (payroll != null)
+                    payroll.IsOpen = true;
+
+                db.SaveChanges(SaveOptions.AcceptAllChangesAfterSave);
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
-
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void ClosePayroll()
-        { }
+        {
+        }
         public List<Payroll> GetProcessedPayroll(bool procFlag)
         {
             try
             {
-
                 var payroll = (from p in db.Payrolls
                                where p.Processed == procFlag
                                select p);
@@ -3429,27 +3699,23 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
-
             }
         }
         public List<Payroll> GetOpenPayroll(bool procFlag)
         {
             try
             {
-
                 var payroll = (from p in db.Payrolls
                                where p.IsOpen == procFlag
                                select p);
                 return payroll.ToList();
-
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
-
             }
         }
         public void AddPayroll(int period, int year, int owner, DateTime daterun, string runby,
@@ -3507,6 +3773,34 @@ namespace DAL
                 return;
             }
         }
+        public void AddPayroll_for_employer(Payroll _payroll)
+        {
+            try
+            {
+                Payroll payroll = new Payroll();
+                payroll.Period = _payroll.Period;
+                payroll.Year = _payroll.Year;
+                payroll.EmployerId = _payroll.EmployerId;
+                payroll.DateRun = _payroll.DateRun;
+                payroll.RunBy = _payroll.RunBy;
+                payroll.Approved = _payroll.Approved;
+                payroll.ApprovedBy = _payroll.ApprovedBy;
+                payroll.IsOpen = _payroll.IsOpen;
+                payroll.Processed = _payroll.Processed;
+                payroll.ProcessedBy = _payroll.ProcessedBy;
+
+                if (!db.Payrolls.Any(i => i.Period == payroll.Period && i.Year == payroll.Year && i.EmployerId == payroll.EmployerId))
+                {
+                    db.Payrolls.AddObject(payroll);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                Log.WriteToErrorLogFile(e);
+                return;
+            }
+        }
         public List<Payroll> GetPayrolls()
         {
             try
@@ -3515,7 +3809,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -3527,7 +3821,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -3537,7 +3831,6 @@ namespace DAL
         {
             try
             {
-
                 var pm = (from p in db.vwPayslipDets
                           where p.EmployeeId == EmployeeId
                           where p.Period == PaymentPeriod
@@ -3548,7 +3841,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -3566,7 +3859,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -3585,7 +3878,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -3593,7 +3886,6 @@ namespace DAL
         {
             try
             {
-
                 var pm = (from p in db.PayslipMasters
                           where p.Period == PaymentPeriod
                           where p.Year == year
@@ -3604,7 +3896,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -3612,7 +3904,6 @@ namespace DAL
         {
             try
             {
-
                 var pm = (from p in db.PayslipMaster_Temp
                           where p.Period == PaymentPeriod
                           where p.Year == year
@@ -3623,7 +3914,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -3636,6 +3927,113 @@ namespace DAL
             else
             {
                 return RetrievePayslip(EmployeeId, EmpNo, PaymentPeriod, year);
+            }
+        }
+        public Payslip RetrievePayslip_Temp(int EmployeeId, string EmpNo, int PaymentPeriod, int year)
+        {
+            try
+            {
+
+                Payslip ps = new Payslip();
+                PayslipMaster_Temp pm = GetPayslipFromMaster_Temp(EmployeeId, EmpNo, PaymentPeriod, year);
+
+                if (pm == null) return null;
+
+                //populate from payslipmaster and payslipdet
+
+                ps.Period = pm.Period;
+                ps.Year = pm.Year;
+                ps.EmployeeId = pm.EmployeeId;
+                ps.EmpNo = pm.EmpNo;
+                ps.PaymentDate = pm.PaymentDate;
+                ps.PrintedBy = pm.PrintedBy;
+                ps.PrintedOn = pm.PrintedOn;
+                ps.EmpName = pm.EmpName;
+                ps.PayPoint = pm.PayPoint;
+                ps.PINNo = pm.PIN;
+                ps.Department = pm.Department;
+                ps.NHIFNO = pm.NHIFNo;
+                ps.NSSFNO = pm.NSSFNo;
+                ps.EmpGroup = pm.EmpGroup;
+                ps.EmpPayroll = pm.EmpPayroll;
+                ps.EmployerName = pm.CompName;
+                ps.EmployerAddress = pm.CompAddr;
+                ps.EmployerTelephone = pm.CompTel;
+                ps.GrossTax = pm.GrossTax;
+                ps.BasicPay = pm.BasicPay;
+                ps.Non_Taxable_Earnings = pm.Variables;
+                ps.GrossTaxableEarnings = pm.GrossTaxableEarnings;
+                ps.MortgageRelief = pm.MortgageRelief;
+                ps.InsuranceRelief = pm.InsuranceRelief;
+                ps.GrossTax = pm.GrossTax;
+                ps.PersonalRelief = pm.PersonalRelief;
+                ps.PensionEmployer = pm.PensionEmployer;
+                ps.PensionEmployee = pm.PensionEmployee;
+                ps.BankBranch = pm.BankBranch;
+                ps.Account = pm.Account;
+                ps.NSSFEmployer = pm.EmployerNSSF;
+
+
+                List<EarningsDeductions> Earning = new List<EarningsDeductions>();
+                List<EarningsDeductions> deductions = new List<EarningsDeductions>();
+                List<EarningsDeductions> statutorydeductions = new List<EarningsDeductions>();
+                List<NonCashBenefits> NonCashPayments = new List<NonCashBenefits>();
+
+                foreach (var nc in GetNonCashBenefitsList(EmployeeId))
+                {
+                    NonCashPayments.Add(new NonCashBenefits
+                    {
+                        BenefitId = nc.BenefitId,
+                        Description = nc.Description,
+                        EmpNo = nc.EmpNo,
+                        Quantity = nc.Quantity,
+                        Rate = nc.Rate
+                    });
+                }
+
+                foreach (var ed in GetEarningsAndDeductionsFromDb_Temp(EmployeeId, EmpNo, PaymentPeriod, year))
+                {
+                    if (ed.DEType == "D")
+                    {
+                        deductions.Add(new EarningsDeductions(
+                            ed.EmpTxnId,
+                            ed.ItemTypeId,
+                            ed.DEType,
+                            ed.Description,
+                            ed.TaxTracking,
+                            ed.Amount,
+                            ed.ShowInPayslip ?? true,
+                            true,
+                            ed.YTD ?? 0,
+                            ed.IsStatutory));
+
+                    }
+                    else if (ed.DEType == "E")
+                    {
+                        Earning.Add(new EarningsDeductions(
+                            ed.EmpTxnId,
+                            ed.ItemTypeId,
+                            ed.DEType,
+                            ed.Description,
+                            ed.TaxTracking,
+                            ed.Amount,
+                            ed.ShowInPayslip ?? true,
+                            true,
+                            ed.YTD ?? 0,
+                            false));
+                    }
+                }
+
+                ps.NonCashPayments = NonCashPayments;
+                ps.Earnings = Earning;
+                ps.AllDeductions = deductions; //this is actually other deductions
+
+                return ps;
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
             }
         }
         public Payslip RetrievePayslip(int EmployeeId, string EmpNo, int PaymentPeriod, int year)
@@ -3651,15 +4049,17 @@ namespace DAL
                 //emp info
                 //populate from payslipmaster and payslipdet
                 if (pm == null) return null;
-                //Payment
-                ps.BankBranch = employee.BankCode;
-                ps.Account = employee.BankAccount;
-                ps.EmpName = pm.EmpName;
+
+                ps.EmployeeId = pm.EmployeeId;
                 ps.EmpNo = pm.EmpNo;
                 ps.PINNo = pm.PIN;
                 ps.Department = pm.Department;
                 ps.NHIFNO = pm.NHIFNo;
                 ps.NSSFNO = pm.NSSFNo;
+                //Payment
+                ps.BankBranch = employee.BankCode;
+                ps.Account = employee.BankAccount;
+                ps.EmpName = pm.EmpName;
                 ps.Period = pm.Period;
                 ps.Year = pm.Year;
                 ps.PaymentDate = pm.PaymentDate;
@@ -3675,7 +4075,7 @@ namespace DAL
                 ps.PayPoint = pm.PayPoint;
                 ps.GrossTax = pm.GrossTax;
                 ps.BasicPay = pm.BasicPay;
-                ps.Variables = pm.Variables;
+                ps.Non_Taxable_Earnings = pm.Variables;
                 ps.GrossTaxableEarnings = pm.GrossTaxableEarnings;
                 ps.MortgageRelief = pm.MortgageRelief;
                 ps.InsuranceRelief = pm.InsuranceRelief;
@@ -3742,118 +4142,12 @@ namespace DAL
                 ps.AllDeductions = deductions; //this is actually other deductions
 
 
-                return ps;
-            }
-            catch (Exception ex)
-            {
-                Log.WriteToErrorLogFile(ex);
-                return null;
-            }
-        }
-        public Payslip RetrievePayslip_Temp(int EmployeeId, string EmpNo, int PaymentPeriod, int year)
-        {
-            try
-            {
-
-                Payslip ps = new Payslip();
-                PayslipMaster_Temp pm = GetPayslipFromMaster_Temp(EmployeeId, EmpNo, PaymentPeriod, year);
-
-                if (pm == null) return null;
-
-                //populate from payslipmaster and payslipdet
-
-                ps.Period = pm.Period;
-                ps.Year = pm.Year;
-                ps.EmpNo = pm.EmpNo;
-                ps.PaymentDate = pm.PaymentDate;
-                ps.PrintedBy = pm.PrintedBy;
-                ps.PrintedOn = pm.PrintedOn;
-                ps.EmpName = pm.EmpName;
-                ps.PayPoint = pm.PayPoint;
-                ps.PINNo = pm.PIN;
-                ps.Department = pm.Department;
-                ps.NHIFNO = pm.NHIFNo;
-                ps.NSSFNO = pm.NSSFNo;
-                ps.EmpGroup = pm.EmpGroup;
-                ps.EmpPayroll = pm.EmpPayroll;
-                ps.EmployerName = pm.CompName;
-                ps.EmployerAddress = pm.CompAddr;
-                ps.EmployerTelephone = pm.CompTel;
-                ps.GrossTax = pm.GrossTax;
-                ps.BasicPay = pm.BasicPay;
-                ps.Variables = pm.Variables;
-                ps.GrossTaxableEarnings = pm.GrossTaxableEarnings;
-                ps.MortgageRelief = pm.MortgageRelief;
-                ps.InsuranceRelief = pm.InsuranceRelief;
-                ps.GrossTax = pm.GrossTax;
-                ps.PersonalRelief = pm.PersonalRelief;
-                ps.PensionEmployer = pm.PensionEmployer;
-                ps.PensionEmployee = pm.PensionEmployee;
-                ps.BankBranch = pm.BankBranch;
-                ps.Account = pm.Account;
-                ps.NSSFEmployer = pm.EmployerNSSF;
-
-
-                List<EarningsDeductions> Earning = new List<EarningsDeductions>();
-                List<EarningsDeductions> deductions = new List<EarningsDeductions>();
-                List<EarningsDeductions> statutorydeductions = new List<EarningsDeductions>();
-                List<NonCashBenefits> NonCashPayments = new List<NonCashBenefits>();
-
-                foreach (var nc in GetNonCashBenefitsList(EmployeeId))
-                {
-                    NonCashPayments.Add(new NonCashBenefits
-                    {
-                        BenefitId = nc.BenefitId,
-                        Description = nc.Description,
-                        EmpNo = nc.EmpNo,
-                        Quantity = nc.Quantity,
-                        Rate = nc.Rate
-                    });
-                }
-
-                foreach (var ed in GetEarningsAndDeductionsFromDb_Temp(EmployeeId, EmpNo, PaymentPeriod, year))
-                {
-                    if (ed.DEType == "D")
-                    {
-                        deductions.Add(new EarningsDeductions(
-                            ed.EmpTxnId,
-                            ed.ItemTypeId,
-                            ed.DEType,
-                            ed.Description,
-                            ed.TaxTracking,
-                            ed.Amount,
-                            ed.ShowInPayslip ?? true,
-                            true,
-                            ed.YTD ?? 0,
-                            ed.IsStatutory));
-
-                    }
-                    else if (ed.DEType == "E")
-                    {
-                        Earning.Add(new EarningsDeductions(
-                            ed.EmpTxnId,
-                            ed.ItemTypeId,
-                            ed.DEType,
-                            ed.Description,
-                            ed.TaxTracking,
-                            ed.Amount,
-
-                            ed.ShowInPayslip ?? true,
-                            true,
-                            ed.YTD ?? 0,
-                            false));
-                    }
-                }
-
-                ps.NonCashPayments = NonCashPayments;
-                ps.Earnings = Earning;
-                ps.AllDeductions = deductions; //this is actually other deductions
 
                 return ps;
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -3892,6 +4186,10 @@ namespace DAL
                     {
                         pm.PIN = payslip.PINNo;
                     }
+                    if (payslip.IDNo != null)
+                    {
+                        pm.IDNo = payslip.IDNo;
+                    }
                     if (payslip.NSSFNO != null)
                     {
                         pm.NSSFNo = payslip.NSSFNO;
@@ -3912,6 +4210,10 @@ namespace DAL
                     {
                         pm.CompName = payslip.EmployerName;
                     }
+                    if (payslip.EmployerId != null)
+                    {
+                        pm.EmployerId = payslip.EmployerId;
+                    }
                     if (payslip.EmployerAddress != null)
                     {
                         pm.CompAddr = payslip.EmployerAddress;
@@ -3922,7 +4224,7 @@ namespace DAL
                     }
                     pm.PayeTax = payslip.NetTax;
                     pm.BasicPay = payslip.BasicPay;
-                    pm.Variables = payslip.Variables;
+                    pm.Variables = payslip.Non_Taxable_Earnings;
                     pm.OtherDeductions = payslip.OtherDeductions;
                     pm.GrossTaxableEarnings = payslip.GrossTaxableEarnings;
                     pm.NetTaxableEarnings = payslip.NetTaxableEarnings;
@@ -3940,9 +4242,11 @@ namespace DAL
                     }
                     pm.EmployerNSSF = payslip.NSSFEmployer;
                     pm.NetPay = payslip.NetSalary;
-                    pm.NHIF = payslip.AllDeductions.Where(e => e.Description.Trim().ToUpper().Equals("NHIF")).Single().Amount;
+                    //pm.NHIF = payslip.AllDeductions.Where(e => e.Description.Trim().ToUpper().Equals("NHIF")).Single().Amount;
                     pm.NSSF = nssf;
-                    pm.EmployerId = payslip.EmployerId;
+
+                    pm.SHIF = payslip.AllDeductions.Where(e => e.Description.Trim().ToUpper().Equals("SHIF")).Single().Amount;
+                    pm.AHL = payslip.AllDeductions.Where(e => e.Description.Trim().ToUpper().Equals("AHL")).Single().Amount;
 
                     db.PayslipMaster_Temp.AddObject(pm);
                     db.SaveChanges();
@@ -3951,13 +4255,18 @@ namespace DAL
                 {
                     string msg = "Error in payslip [" + payslip.EmpNo.Trim() + "]";
                     Exception ex = new Exception(msg, e);
-                    Log.WriteToErrorLogFile(ex);
+                    Log.WriteToErrorLogFile_and_EventViewer(ex);
                     return;
                 }
 
                 //deductions
                 foreach (var d in payslip.AllDeductions)
                 {
+                    //if (d.Description.Equals("NHIF"))
+                    //{
+                    //    return;
+                    //}
+
                     PayslipDet_Temp pd = new PayslipDet_Temp();
                     pd.EmpNo = payslip.EmpNo;
                     pd.EmployeeId = payslip.EmployeeId;
@@ -3972,7 +4281,9 @@ namespace DAL
                     pd.ShowInPayslip = d.ShowInPayslip;
                     pd.YTD = d.YTD;
                     pd.EmpTxnId = d.EmpTxnId;
-                     
+                    pd.IsLoanRepaymentInCash = false;
+                    pd.IsSharesRepaymentInCash = false;
+
                     //update YTD if we are not in simulation mode
                     if (!Simulate)
                     {
@@ -4000,6 +4311,9 @@ namespace DAL
                     pd.ShowInPayslip = d.ShowInPayslip;
                     pd.YTD = d.YTD;
                     pd.EmpTxnId = d.EmpTxnId;
+                    pd.IsLoanRepaymentInCash = false;
+                    pd.IsSharesRepaymentInCash = false;
+
                     //update YTD
                     if (!Simulate)
                     {
@@ -4014,7 +4328,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
 
             }
         }
@@ -4032,7 +4346,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         //private static void TestBulkInsert4()
@@ -4077,7 +4391,33 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return false;
+            }
+        }
+        public bool Working_Copy_Not_Closed_for_employer(ref int period, ref int year, ref int employerid)
+        {
+            try
+            {
+                var cnt = db.PayslipMaster_Temp.Count();
+                if (cnt > 0)
+                {
+                    var rec = db.PayslipMaster_Temp.First();
+                    period = rec.Period;
+                    year = rec.Year;
+                    employerid = rec.EmployerId ?? -1;
+                }
+                else
+                {
+                    period = -1;
+                    year = -1;
+                    employerid = -1;
+                }
+                return cnt > 0;
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return false;
             }
         }
@@ -4097,7 +4437,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void UpdateTaxTracking(string Id, string Description)
@@ -4112,7 +4452,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public List<TaxTracking> ListTaxTracking()
@@ -4124,7 +4464,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -4139,7 +4479,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         #endregion  "Tax tracking"
@@ -4157,7 +4497,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void UpdatePayrollItemTypes(string id, string description)
@@ -4171,7 +4511,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void DeletePayrollItemTypes(string id, string description)
@@ -4185,7 +4525,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public List<PayrollItemType> PayrooItemTypeList()
@@ -4197,7 +4537,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -4225,7 +4565,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void UpdatePayrollItems(string id, string ItemType, string TaxTrackingId,
@@ -4246,7 +4586,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void UpdatePayrollItems(string id, string GLAccount)
@@ -4260,7 +4600,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void UpdatePayrollItems(PayrollItem payrollitem)
@@ -4281,7 +4621,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void DeletePayrollItems(string id)
@@ -4295,7 +4635,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void DeletePayrollItem(PayrollItem payrollitem)
@@ -4311,7 +4651,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public List<PayrollItem> GetActivePayrollItems()
@@ -4322,7 +4662,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -4334,7 +4674,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -4352,7 +4692,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -4376,7 +4716,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -4388,7 +4728,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -4400,7 +4740,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -4425,7 +4765,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public List<TransactionDef> TxnDefList()
@@ -4437,7 +4777,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -4452,7 +4792,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
 
         }
@@ -4475,7 +4815,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public TransactionDef GetTxnDef(string TxnCode)
@@ -4487,7 +4827,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -4509,7 +4849,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void CreatePackedTxn(DateTime packdate, string empno, string txncode, decimal amount)
@@ -4528,7 +4868,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void FlagAuthorize(int id, bool auth)
@@ -4542,7 +4882,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void ClearPackedTransactions()
@@ -4554,7 +4894,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public List<PackedTransaction> GetPackedTxnList()
@@ -4566,7 +4906,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -4576,8 +4916,9 @@ namespace DAL
         {
             try
             {
-                //Add PAYE, NSSF, NHIF
-                CreateEmpTxn(employeeid, DateTime.Today,
+                //Add PAYE, NSSF, NHIF, SHIF, AHL
+                CreateEmpTxn(employeeid,
+                    DateTime.Today,
                     EmpNo,
                     "PAYE",
                     0,
@@ -4589,9 +4930,31 @@ namespace DAL
                     "System",
                     DateTime.Today,
                     "System",
-                    DateTime.Today, true, 0, "");
+                    DateTime.Today,
+                    true,
+                    0,
+                    "");
 
-                CreateEmpTxn(employeeid, DateTime.Today,
+                CreateEmpTxn(employeeid,
+                    DateTime.Today,
+                    EmpNo,
+                    "BASIC",
+                    BasicPay,
+                    true,
+                    true,
+                    false,
+                    false,
+                    _User,
+                    "System",
+                    DateTime.Today,
+                    "System",
+                    DateTime.Today,
+                    true,
+                    0,
+                    "");
+
+                CreateEmpTxn(employeeid,
+                    DateTime.Today,
                     EmpNo,
                     "NSSF",
                     0,
@@ -4603,10 +4966,33 @@ namespace DAL
                     "System",
                     DateTime.Today,
                     "System",
-                    DateTime.Today, true, 0, "");
-                CreateEmpTxn(employeeid, DateTime.Today,
+                    DateTime.Today,
+                    true,
+                    0,
+                    "");
+
+                //CreateEmpTxn(employeeid,
+                //    DateTime.Today,
+                //    EmpNo,
+                //    "NHIF",
+                //    0,
+                //    true,
+                //    true,
+                //    false,
+                //    true,
+                //    _User,
+                //    "System",
+                //    DateTime.Today,
+                //    "System",
+                //    DateTime.Today,
+                //    true,
+                //    0,
+                //    "");
+
+                CreateEmpTxn(employeeid,
+                    DateTime.Today,
                     EmpNo,
-                    "NHIF",
+                    "SHIF",
                     0,
                     true,
                     true,
@@ -4616,47 +5002,60 @@ namespace DAL
                     "System",
                     DateTime.Today,
                     "System",
-                    DateTime.Today, true, 0, "");
-                CreateEmpTxn(employeeid, DateTime.Today, EmpNo,
-                    "BASIC",
-                    BasicPay,
+                    DateTime.Today,
+                    true,
+                    0,
+                    "");
+
+                CreateEmpTxn(employeeid,
+                    DateTime.Today,
+                    EmpNo,
+                    "AHL",
+                    0,
                     true,
                     true,
                     false,
-                    false,
+                    true,
                     _User,
                     "System",
                     DateTime.Today,
                     "System",
-                    DateTime.Today, true, 0, "");
+                    DateTime.Today,
+                    true,
+                    0,
+                    "");
+
                 //add pension if flag = 1 or 3
                 string pensionSchemeFlag = SettingLookup("DEFCONTRSCHEME");
                 //if ("1".Equals(pensionSchemeFlag) || "3".Equals(pensionSchemeFlag))
                 if (!string.IsNullOrEmpty(pensionSchemeFlag))
                 {
-                    CreateEmpTxn(employeeid, DateTime.Today, EmpNo,
-                    "PENSION",
-                    0,
-                    true,
-                    true,
-                    false,
-                    false,
-                    _User,
-                    "System",
-                    DateTime.Today,
-                    "System",
-                    DateTime.Today, true, 0, "");
+                    CreateEmpTxn(employeeid,
+                        DateTime.Today,
+                        EmpNo,
+                        "PENSION",
+                        0,
+                        true,
+                        true,
+                        false,
+                        false,
+                        _User,
+                        "System",
+                        DateTime.Today,
+                        "System",
+                        DateTime.Today,
+                        true,
+                        0,
+                        "");
                 }
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
-        public void CreateOrEditEmpTxn(int employeeid, DateTime pdate,
-            string empno, string payrollItemId, decimal amt, bool recur, bool enable,
-            bool processed, bool track, decimal ytdAmt, string user, string modifiedby, DateTime modifieddate,
-            string auth, DateTime authDate, bool show, string loantype)
+
+        public void CreateOrEditEmpTxn(int employeeid, DateTime pdate, string empno, string payrollItemId, decimal amt, bool recur, bool enable, bool processed, bool track, decimal ytdAmt, string user, string modifiedby, DateTime modifieddate, string auth, DateTime authDate, bool show, string loantype)
         {
             try
             {
@@ -4666,6 +5065,7 @@ namespace DAL
                          where t.EmpNo == empno
                          where t.ItemId == payrollItemId
                          select t;
+
                 if (et.Count() == 0)
                 {
                     CreateEmpTxn(employeeid, pdate,
@@ -4684,9 +5084,47 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
 
+        }
+        public void Create_Employee_Transaction(EmployeeTransaction emp_txn)
+        {
+            try
+            {
+                EmployeeTransaction et = new EmployeeTransaction();
+                et.Id = emp_txn.Id;
+                et.EmployeeId = emp_txn.EmployeeId;
+                et.EmpNo = emp_txn.EmpNo;
+                et.ItemId = emp_txn.ItemId;
+                et.Amount = emp_txn.Amount;
+                et.InitialAmount = emp_txn.InitialAmount;
+                et.Balance = emp_txn.Balance;
+                et.AccumulativePayment = emp_txn.AccumulativePayment;
+                et.PostDate = emp_txn.PostDate;
+                et.Recurrent = emp_txn.Recurrent;
+                et.Processed = emp_txn.Processed;
+                et.Enabled = emp_txn.Enabled;
+                et.TrackYTD = emp_txn.TrackYTD;
+                et.ShowYTDInPayslip = emp_txn.ShowYTDInPayslip;
+                et.CreatedBy = emp_txn.CreatedBy;
+                et.LastChangeDate = emp_txn.LastChangeDate;
+                et.LastChangedBy = emp_txn.LastChangedBy;
+                et.AuthorizedBy = emp_txn.AuthorizedBy;
+                et.AuthorizeDate = emp_txn.AuthorizeDate;
+                et.LoanType = emp_txn.LoanType;
+                et.IsLoanRepaymentInCash = emp_txn.IsLoanRepaymentInCash;
+                et.IsLoanRepaymentInFull = emp_txn.IsLoanRepaymentInFull;
+                et.LoanBeingRepayedId = emp_txn.LoanBeingRepayedId;
+                et.IsSharesRepaymentInCash = emp_txn.IsSharesRepaymentInCash;
+
+                db.EmployeeTransactions.AddObject(et);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+            }
         }
         public void CreateEmpTxn(int employeeid, DateTime pdate,
             string empno, string payrollItemId, decimal amt, bool recur, bool enable,
@@ -4718,7 +5156,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void AddEmployeeAdvance(DateTime pdate,
@@ -4749,9 +5187,10 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
+
         public void AddEmployeeLoan(DateTime pdate,
            string empno, string payrollItemId, decimal amt, bool recur, bool enable,
            bool processed, bool track, string user, string modifiedby, DateTime modifieddate,
@@ -4783,9 +5222,10 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
+
         public void UpdateEmpTxnAmount(int id, decimal amt, decimal ytdAmt)
         {
             try
@@ -4797,7 +5237,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void UpdateEmpTxn(int id, DateTime pdate,
@@ -4826,33 +5266,47 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void UpdateEmpTxn(EmployeeTransaction etxn)
         {
             try
             {
-                EmployeeTransaction et = db.EmployeeTransactions.Where(i => i.Id == etxn.Id).Single();
+                EmployeeTransaction et = db.EmployeeTransactions.Where(i => i.Id == etxn.Id && i.ItemId == etxn.ItemId).Single();
                 et.Amount = etxn.Amount;
-                et.PostDate = etxn.PostDate;
-                et.EmpNo = etxn.EmpNo;
-                et.ItemId = etxn.ItemId;
+                et.Balance = etxn.Balance;
                 et.Recurrent = etxn.Recurrent;
                 et.Enabled = etxn.Enabled;
                 et.TrackYTD = etxn.TrackYTD;
-                et.Balance = etxn.Balance;
-                et.CreatedBy = etxn.CreatedBy;
                 et.LastChangeDate = etxn.LastChangeDate;
                 et.LastChangedBy = etxn.LastChangedBy;
-                et.AuthorizedBy = etxn.AuthorizedBy;
-                et.AuthorizeDate = etxn.AuthorizeDate;
+                et.ShowYTDInPayslip = etxn.ShowYTDInPayslip;
+
+                db.SaveChanges(SaveOptions.AcceptAllChangesAfterSave);
+
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+            }
+        }
+        public void update_EmployeeTransaction_admin(EmployeeTransaction etxn)
+        {
+            try
+            {
+                EmployeeTransaction et = db.EmployeeTransactions.Where(i => i.Id == etxn.Id).Single();
+
+                et.Recurrent = etxn.Recurrent;
+                et.Enabled = etxn.Enabled;
+                et.LastChangeDate = etxn.LastChangeDate;
+                et.LastChangedBy = etxn.LastChangedBy;
 
                 db.SaveChanges(SaveOptions.AcceptAllChangesAfterSave);
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void UpdateEmpTxn(int id, DateTime pdate, string empno, string payrollItemId, decimal amt)
@@ -4869,7 +5323,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void UpdateEmpTxnBasicPay(int employeeid, DateTime pdate, string empno, string payrollItemId, decimal amt)
@@ -4887,10 +5341,9 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
-
         public List<PayslipMaster> GetEmpTaxRecord(string empNo, int Year)
         {
             try
@@ -4904,11 +5357,10 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
-
         public void DeleteEmpTxn(int id)
         {
             try
@@ -4919,7 +5371,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void DeleteNonCashBenefitsEmpTxn(EmployeeTransaction emptn)
@@ -4933,7 +5385,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public List<EmployeeTransaction> EmpTxnList(string empno)
@@ -4944,7 +5396,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -4956,7 +5408,19 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
+            }
+        }
+        public List<EmployeeTransaction> ActiveEmpTxnList(int EmployeeId)
+        {
+            try
+            {
+                return db.EmployeeTransactions.Where(e => e.EmployeeId == EmployeeId && e.Enabled == true).ToList();
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -4968,7 +5432,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -4981,22 +5445,22 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
+
         #endregion  "Employee Transactions"
         #region "Payroll"
         public List<Payroll> GetOpenPayrolls(bool openFlag)
         {
             try
             {
-
                 return db.Payrolls.Where(p => p.IsOpen == openFlag).OrderBy(i => i.Year).ThenBy(i => i.Period).ToList();
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -5004,12 +5468,11 @@ namespace DAL
         {
             try
             {
-
                 return db.Payrolls.Where(p => p.Processed == processedFlag).OrderBy(i => i.Year).ThenBy(i => i.Period).ToList();
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -5017,12 +5480,11 @@ namespace DAL
         {
             try
             {
-
-                return db.Payrolls.Where(p => p.IsOpen == openFlag).Where(p => p.Processed == processedFlag).OrderBy(i => i.Year).ThenBy(i => i.Period).ToList();
+                return db.Payrolls.Where(p => p.IsOpen == openFlag).Where(p => p.Processed == processedFlag).OrderByDescending(i => i.Year).ThenByDescending(i => i.Period).ThenBy(i => i.DateRun).ToList();
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -5030,12 +5492,11 @@ namespace DAL
         {
             try
             {
-
                 return db.Payrolls.ToList();
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -5043,52 +5504,49 @@ namespace DAL
         {
             try
             {
-
                 var py = (from p in db.Payrolls
                           select p.Year).Distinct();
                 return py.OrderBy(p => p).ToList();
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
         #endregion "Payroll"
         #region "Payslipdet"
-        public void ClearPayslipDet(int payPeriod, int Year)
+        public void ClearPayslipDet(int payPeriod, int Year, int EmployerId)
         {
             try
             {
-
-
-                db.ExecuteStoreCommand("DELETE FROM PayslipDet WHERE Period = {0} AND Year = {1}", payPeriod, Year);
+                db.ExecuteStoreCommand("DELETE FROM PayslipDet WHERE Period = {0} AND Year = {1} AND EmployerId = {2}", payPeriod, Year, EmployerId);
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
-        public void ClearPayslipDet_Temp()
+        public void ClearPayslipDet_Temp(int payPeriod, int Year, int EmployerId)
         {
             try
             {
-                db.ExecuteStoreCommand("TRUNCATE TABLE PayslipDet_Temp");
+                db.ExecuteStoreCommand("DELETE FROM PayslipDet_Temp WHERE Period = {0} AND Year = {1} AND EmployerId = {2}", payPeriod, Year, EmployerId);
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
-        public void ClearPayslipMaster_Temp()
+        public void ClearPayslipMaster_Temp(int payPeriod, int Year, int EmployerId)
         {
             try
             {
-                db.ExecuteStoreCommand("TRUNCATE TABLE PayslipMaster_Temp");
+                db.ExecuteStoreCommand("DELETE FROM PayslipMaster_Temp WHERE Period = {0} AND Year = {1} AND EmployerId = {2}", payPeriod, Year, EmployerId);
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         #endregion "Payslipdet"
@@ -5102,7 +5560,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -5125,7 +5583,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -5185,7 +5643,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -5231,7 +5689,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -5245,7 +5703,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -5259,7 +5717,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -5281,7 +5739,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -5334,7 +5792,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -5378,7 +5836,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -5392,7 +5850,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -5406,29 +5864,27 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
         #endregion "vwPayslipDet"
         #region "PayslipMaster"
-        public void ClearPayslipMaster(int payPeriod, int Year)
+        public void ClearPayslipMaster(int payPeriod, int Year, int EmployerId)
         {
             try
             {
-
-                db.ExecuteStoreCommand("DELETE FROM PayslipMaster WHERE Period = {0} AND Year = {1}", payPeriod, Year);
+                db.ExecuteStoreCommand("DELETE FROM PayslipMaster WHERE Period = {0} AND Year = {1} AND EmployerId = {2}", payPeriod, Year, EmployerId);
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public PayslipMaster GetPayslipMaster(int period, int Year, string EmpNo)
         {
             try
             {
-
                 var tr = from t in db.PayslipMasters
                          where t.EmpNo == EmpNo
                          where t.Period == period
@@ -5439,7 +5895,7 @@ namespace DAL
 
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -5499,7 +5955,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
 
@@ -5547,7 +6003,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -5606,7 +6062,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
 
@@ -5654,7 +6110,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
 
@@ -5676,7 +6132,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -5703,7 +6159,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -5730,7 +6186,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -5750,7 +6206,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -5778,7 +6234,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -5806,7 +6262,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -5839,7 +6295,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
         }
@@ -5861,7 +6317,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
         }
@@ -5883,7 +6339,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
         }
@@ -5917,7 +6373,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
         }
@@ -5940,7 +6396,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
         }
@@ -5963,7 +6419,7 @@ namespace DAL
         //    }
         //    catch (Exception ex)
         //    {
-        //        Log.WriteToErrorLogFile(ex);
+        //        Log.WriteToErrorLogFile_and_EventViewer(ex);
         //        return 0;
         //    }
         //}
@@ -5988,7 +6444,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
 
@@ -6006,7 +6462,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -6021,7 +6477,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -6036,7 +6492,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -6063,7 +6519,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
 
@@ -6088,7 +6544,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
 
@@ -6104,7 +6560,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -6123,7 +6579,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public List<PayeeRate> PayeeRatesTable()
@@ -6138,7 +6594,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -6154,7 +6610,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void UpdateHourlyPayment(HourlyPayment hour)
@@ -6172,7 +6628,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
 
         }
@@ -6189,7 +6645,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
 
         }
@@ -6201,7 +6657,19 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
+            }
+        }
+        public List<HourlyPayment> GetHourlyPaymentsList(int EmployeeId)
+        {
+            try
+            {
+                return db.HourlyPayments.Where(e => e.EmployeeId == EmployeeId).OrderBy(e => e.WorkDate).ToList();
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -6237,7 +6705,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0M;
             }
         }
@@ -6255,7 +6723,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return 0;
             }
         }
@@ -6278,7 +6746,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void UpdateEmployerBank(EmployerBanksModel _employerbank)
@@ -6297,7 +6765,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void DeleteEmployerBank(EmployerBanksModel _employerbank)
@@ -6311,7 +6779,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public List<EmployerBanksModel> GetAllEmployerBanks(int employerid)
@@ -6342,7 +6810,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -6367,7 +6835,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -6389,7 +6857,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void UpdateEmployeesBankTransfer(EmployeesBankTransfersModel _employerbank)
@@ -6407,7 +6875,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public void DeleteEmployeesBankTransfer(EmployeesBankTransfersModel _employerbank)
@@ -6421,7 +6889,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
             }
         }
         public List<EmployeesBankTransfersModel> GetAllEmployeesBankTransfers(int employerid)
@@ -6450,7 +6918,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
@@ -6474,11 +6942,295 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
                 return null;
             }
         }
         #endregion "EmployeesBankTransfers"
+        #region "Employer_Signatories"
+        public void Add_Employer_Signatory(Employer_Authorized_Signatories_Model _employer_signatory)
+        {
+            try
+            {
+                Employer_Authorized_Signatories employer_signatory = new Employer_Authorized_Signatories();
+                employer_signatory.EmployerId = _employer_signatory.EmployerId;
+                employer_signatory.Name = _employer_signatory.Name;
+                employer_signatory.Designation = _employer_signatory.Designation;
+
+                db.Employer_Authorized_Signatories.AddObject(employer_signatory);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+            }
+        }
+        public void Update_Employer_Signatory(Employer_Authorized_Signatories_Model _employer_signatory)
+        {
+            try
+            {
+                Employer_Authorized_Signatories employer_signatory = db.Employer_Authorized_Signatories.Where(p => p.Id == _employer_signatory.Id).Single();
+                employer_signatory.EmployerId = _employer_signatory.EmployerId;
+                employer_signatory.Name = _employer_signatory.Name;
+                employer_signatory.Designation = _employer_signatory.Designation;
+
+                db.SaveChanges(SaveOptions.AcceptAllChangesAfterSave);
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+            }
+        }
+        public void Delete_Employer_Signatory(Employer_Authorized_Signatories_Model _employer_signatory)
+        {
+            try
+            {
+                Employer_Authorized_Signatories employer_signatory = db.Employer_Authorized_Signatories.Where(p => p.Id == _employer_signatory.Id).Single();
+
+                db.Employer_Authorized_Signatories.DeleteObject(employer_signatory);
+                db.SaveChanges(SaveOptions.AcceptAllChangesAfterSave);
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+            }
+        }
+        public List<Employer_Authorized_Signatories_Model> Get_All_Employer_Signatories(int employerid)
+        {
+            try
+            {
+                List<Employer_Authorized_Signatories_Model> employer_signatories = new List<Employer_Authorized_Signatories_Model>();
+                var _employer_signatories_query = from br in db.Employer_Authorized_Signatories
+                                                  where br.EmployerId == employerid
+                                                  select br;
+                List<Employer_Authorized_Signatories> _employer_signatories = _employer_signatories_query.ToList();
+                foreach (var _employer_signatory in _employer_signatories)
+                {
+                    Employer_Authorized_Signatories_Model employer_signatory = new Employer_Authorized_Signatories_Model();
+                    employer_signatory.Id = _employer_signatory.Id;
+                    employer_signatory.EmployerId = _employer_signatory.EmployerId;
+                    employer_signatory.Name = _employer_signatory.Name;
+                    employer_signatory.Designation = _employer_signatory.Designation;
+
+                    employer_signatories.Add(employer_signatory);
+                }
+
+                return employer_signatories;
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
+            }
+        }
+        public List<Employer_Authorized_Signatories_Model> Get_All_Signatories()
+        {
+            try
+            {
+                List<Employer_Authorized_Signatories_Model> employer_signatories = new List<Employer_Authorized_Signatories_Model>();
+                var _employer_signatories_query = from br in db.Employer_Authorized_Signatories 
+                                                  select br;
+                List<Employer_Authorized_Signatories> _employer_signatories = _employer_signatories_query.ToList();
+                foreach (var _employer_signatory in _employer_signatories)
+                {
+                    Employer_Authorized_Signatories_Model employer_signatory = new Employer_Authorized_Signatories_Model();
+                    employer_signatory.Id = _employer_signatory.Id;
+                    employer_signatory.EmployerId = _employer_signatory.EmployerId;
+                    employer_signatory.Name = _employer_signatory.Name;
+                    employer_signatory.Designation = _employer_signatory.Designation;
+
+                    employer_signatories.Add(employer_signatory);
+                }
+
+                return employer_signatories;
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
+            }
+        }
+        public Employer_Authorized_Signatories_Model Get_Employer_Signatory(int id)
+        {
+            try
+            {
+                var _employer_signatory_query = (from eb in db.Employer_Authorized_Signatories
+                                                 where eb.Id == id
+                                                 select new Employer_Authorized_Signatories_Model
+                                                 {
+                                                     Id = eb.Id,
+                                                     EmployerId = eb.EmployerId,
+                                                     Name = eb.Name,
+                                                     Designation = eb.Designation,
+                                                 }).FirstOrDefault();
+                Employer_Authorized_Signatories_Model _employer_signatory = _employer_signatory_query;
+                return _employer_signatory;
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
+            }
+        }
+        #endregion "Employer_Signatories"
+        #region "Employer_Centers"
+        public void Add_Employer_Center(Employer_Centers_Model _employer_center)
+        {
+            try
+            {
+                Employer_Centers employer_center = new Employer_Centers();
+                employer_center.EmployerId = _employer_center.EmployerId;
+                employer_center.Description = _employer_center.Description;
+
+                db.Employer_Centers.AddObject(employer_center);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+            }
+        }
+        public void Update_Employer_Center(Employer_Centers_Model _employer_center)
+        {
+            try
+            {
+                Employer_Centers employer_center = db.Employer_Centers.Where(p => p.Id == _employer_center.Id).Single();
+                employer_center.EmployerId = _employer_center.EmployerId;
+                employer_center.Description = _employer_center.Description;
+
+                db.SaveChanges(SaveOptions.AcceptAllChangesAfterSave);
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+            }
+        }
+        public void Delete_Employer_Center(Employer_Centers_Model _employer_center)
+        {
+            try
+            {
+                Employer_Centers bank = db.Employer_Centers.Where(p => p.Id == _employer_center.Id).Single();
+
+                db.Employer_Centers.DeleteObject(bank);
+                db.SaveChanges(SaveOptions.AcceptAllChangesAfterSave);
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+            }
+        }
+        public List<Employer_Centers_Model> Get_All_Employer_Centers(int employer_id)
+        {
+            try
+            {
+                List<Employer_Centers_Model> employer_centers = new List<Employer_Centers_Model>();
+                var _employer_centers_query = from br in db.Employer_Centers
+                                              where br.EmployerId == employer_id
+                                              select br;
+                List<Employer_Centers> _employer_centers = _employer_centers_query.ToList();
+                foreach (var _employer_center in _employer_centers)
+                {
+                    Employer_Centers_Model employer_center = new Employer_Centers_Model();
+                    employer_center.Id = _employer_center.Id;
+                    employer_center.EmployerId = _employer_center.EmployerId;
+                    employer_center.Description = _employer_center.Description;
+
+                    employer_centers.Add(employer_center);
+                }
+
+                return employer_centers;
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
+            }
+        }
+        public List<Employer_Centers_Model> Get_All_Centers()
+        {
+            try
+            {
+                List<Employer_Centers_Model> employer_centers = new List<Employer_Centers_Model>();
+                var _employer_centers_query = from br in db.Employer_Centers 
+                                              select br;
+                List<Employer_Centers> _employer_centers = _employer_centers_query.ToList();
+                foreach (var _employer_center in _employer_centers)
+                {
+                    Employer_Centers_Model employer_center = new Employer_Centers_Model();
+                    employer_center.Id = _employer_center.Id;
+                    employer_center.EmployerId = _employer_center.EmployerId;
+                    employer_center.Description = _employer_center.Description;
+
+                    employer_centers.Add(employer_center);
+                }
+
+                return employer_centers;
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
+            }
+        }
+        public Employer_Centers_Model Get_Employer_Center(int id)
+        {
+            try
+            {
+                var _employer_center_query = (from eb in db.Employer_Centers
+                                              where eb.Id == id
+                                              select new Employer_Centers_Model
+                                              {
+                                                  Id = eb.Id,
+                                                  EmployerId = eb.EmployerId,
+                                                  Description = eb.Description
+                                              }).FirstOrDefault();
+                Employer_Centers_Model employer_center = _employer_center_query;
+                return employer_center;
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile_and_EventViewer(ex);
+                return null;
+            }
+        }
+        #endregion "Employer_Centers"
+
+        public int get_no_of_records_per_page()
+        {
+            try
+            {
+                var setting = db.Settings.FirstOrDefault(s => s.SSKey == "NO_OF_RECORDS_PER_PAGE");
+                if (setting != null)
+                    return int.Parse(setting.SSValue);
+                else
+                    return 10;
+
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile(ex);
+                return 10;
+            }
+        }
+
+        public int get_no_of_pages_to_display()
+        {
+            try
+            {
+                var setting = db.Settings.FirstOrDefault(s => s.SSKey == "NO_OF_PAGES_TO_DISPLAY");
+                if (setting != null)
+                    return int.Parse(setting.SSValue);
+                else
+                    return 10;
+
+            }
+            catch (Exception ex)
+            {
+                Log.WriteToErrorLogFile(ex);
+                return 10;
+            }
+        }
+
         #endregion "Public Methods"
 
 

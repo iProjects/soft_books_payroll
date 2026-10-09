@@ -34,7 +34,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtPayrollItemId = new System.Windows.Forms.TextBox();
-            this.cbItemType = new System.Windows.Forms.ComboBox();
+            this.cbo_item_types = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -42,8 +42,8 @@
             this.chkAddToPension = new System.Windows.Forms.CheckBox();
             this.chkActive = new System.Windows.Forms.CheckBox();
             this.txtPayableTo = new System.Windows.Forms.TextBox();
-            this.cbTaxTracking = new System.Windows.Forms.ComboBox();
-            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.cbo_tax_trackings = new System.Windows.Forms.ComboBox();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.bindingSourceItemType = new System.Windows.Forms.BindingSource(this.components);
             this.bindingSourceTaxTracking = new System.Windows.Forms.BindingSource(this.components);
             this.txtGlAccount = new System.Windows.Forms.TextBox();
@@ -52,7 +52,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.chkIsDefault = new System.Windows.Forms.CheckBox();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceItemType)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceTaxTracking)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -105,19 +105,19 @@
             this.txtPayrollItemId.Size = new System.Drawing.Size(264, 20);
             this.txtPayrollItemId.TabIndex = 0;
             // 
-            // cbItemType
+            // cbo_item_types
             // 
-            this.cbItemType.BackColor = System.Drawing.Color.White;
-            this.cbItemType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbItemType.DropDownWidth = 190;
-            this.cbItemType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbItemType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.cbItemType.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.cbItemType.FormattingEnabled = true;
-            this.cbItemType.Location = new System.Drawing.Point(106, 62);
-            this.cbItemType.Name = "cbItemType";
-            this.cbItemType.Size = new System.Drawing.Size(262, 21);
-            this.cbItemType.TabIndex = 1;
+            this.cbo_item_types.BackColor = System.Drawing.Color.White;
+            this.cbo_item_types.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbo_item_types.DropDownWidth = 190;
+            this.cbo_item_types.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbo_item_types.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.cbo_item_types.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.cbo_item_types.FormattingEnabled = true;
+            this.cbo_item_types.Location = new System.Drawing.Point(106, 62);
+            this.cbo_item_types.Name = "cbo_item_types";
+            this.cbo_item_types.Size = new System.Drawing.Size(262, 21);
+            this.cbo_item_types.TabIndex = 1;
             // 
             // label3
             // 
@@ -192,23 +192,23 @@
             this.txtPayableTo.Size = new System.Drawing.Size(264, 20);
             this.txtPayableTo.TabIndex = 3;
             // 
-            // cbTaxTracking
+            // cbo_tax_trackings
             // 
-            this.cbTaxTracking.BackColor = System.Drawing.Color.White;
-            this.cbTaxTracking.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbTaxTracking.DropDownWidth = 150;
-            this.cbTaxTracking.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbTaxTracking.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.cbTaxTracking.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.cbTaxTracking.FormattingEnabled = true;
-            this.cbTaxTracking.Location = new System.Drawing.Point(106, 98);
-            this.cbTaxTracking.Name = "cbTaxTracking";
-            this.cbTaxTracking.Size = new System.Drawing.Size(262, 21);
-            this.cbTaxTracking.TabIndex = 2;
+            this.cbo_tax_trackings.BackColor = System.Drawing.Color.White;
+            this.cbo_tax_trackings.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbo_tax_trackings.DropDownWidth = 150;
+            this.cbo_tax_trackings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbo_tax_trackings.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.cbo_tax_trackings.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.cbo_tax_trackings.FormattingEnabled = true;
+            this.cbo_tax_trackings.Location = new System.Drawing.Point(106, 98);
+            this.cbo_tax_trackings.Name = "cbo_tax_trackings";
+            this.cbo_tax_trackings.Size = new System.Drawing.Size(262, 21);
+            this.cbo_tax_trackings.TabIndex = 2;
             // 
-            // errorProvider1
+            // errorProvider
             // 
-            this.errorProvider1.ContainerControl = this;
+            this.errorProvider.ContainerControl = this;
             // 
             // txtGlAccount
             // 
@@ -259,10 +259,10 @@
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.txtPayrollItemId);
             this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.cbItemType);
+            this.groupBox2.Controls.Add(this.cbo_item_types);
             this.groupBox2.Controls.Add(this.txtGlAccount);
             this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.cbTaxTracking);
+            this.groupBox2.Controls.Add(this.cbo_tax_trackings);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.txtPayableTo);
             this.groupBox2.Controls.Add(this.label5);
@@ -303,7 +303,7 @@
             this.Name = "EditPayrollItem";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.EditPayrollItem_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceItemType)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceTaxTracking)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -319,7 +319,7 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtPayrollItemId;
-        private System.Windows.Forms.ComboBox cbItemType;
+        private System.Windows.Forms.ComboBox cbo_item_types;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
@@ -327,10 +327,10 @@
         private System.Windows.Forms.CheckBox chkAddToPension;
         private System.Windows.Forms.CheckBox chkActive;
         private System.Windows.Forms.TextBox txtPayableTo;
-        private System.Windows.Forms.ComboBox cbTaxTracking;
+        private System.Windows.Forms.ComboBox cbo_tax_trackings;
         private System.Windows.Forms.BindingSource bindingSourceItemType;
         private System.Windows.Forms.BindingSource bindingSourceTaxTracking;
-        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.TextBox txtGlAccount;
         private System.Windows.Forms.TextBox txtReference;
         private System.Windows.Forms.Label label2;

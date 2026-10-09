@@ -15,7 +15,6 @@ namespace winSBPayroll.Views
 {
     public class VikepayslipView3
     {
-
         VikePayslipViewModel _ViewModel;
         Document document;
         string Message;
@@ -35,8 +34,10 @@ namespace winSBPayroll.Views
         Font tableDataCellFont;
         Font signatureFont;
         #endregion "fonts"
+        public event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
-        public VikepayslipView3(VikePayslipViewModel PayslipModel, string FileName, string Conn)
+        public VikepayslipView3(VikePayslipViewModel PayslipModel, string FileName, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (PayslipModel == null)
                 throw new ArgumentNullException("VikePayslipViewModel is null");
@@ -50,9 +51,14 @@ namespace winSBPayroll.Views
             db = new SBPayrollDBEntities(connection);
             rep = new Repository(connection);
 
+            _notificationmessageEventname = notificationmessageEventname;
+
             sFilePDF = FileName;
 
             InitializeFonts();
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed VikepayslipView3", TAG));
+
         }
 
         #region "fonts"
@@ -124,32 +130,52 @@ namespace winSBPayroll.Views
 
                 payslipsTable.SetWidths(colWidthPercentages);
 
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating document header...", TAG));
+
                 //Add  Header 
                 AddHeader(payslipsTable);
+
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating payslip payments...", TAG));
 
                 //Add Payments 
                 AddPayments(payslipsTable);
 
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating payee details...", TAG));
+
                 //Add Payee Details 
                 AddPAYEDetails(payslipsTable);
+
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating deductions...", TAG));
 
                 //Add Deductions
                 AddDeductions(payslipsTable);
 
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating payslip summary...", TAG));
+
                 //Add Summary
                 AddSummary(payslipsTable);
+
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating other payments...", TAG));
 
                 //Add Other Payments
                 AddOtherPayments(payslipsTable);
 
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating non cash payments...", TAG));
+
                 //Add Non Cash Payments
                 AddNonCashPayments(payslipsTable);
+
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating other deductions...", TAG));
 
                 //Add Other Deductions
                 AddOtherDeductions(payslipsTable);
 
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating employee loans...", TAG));
+
                 //Add Employee Loans
                 AddEmployeeLoans(payslipsTable);
+
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating sacco contributions...", TAG));
 
                 //Add Sacco Contributions
                 AddSACCOContributions(payslipsTable);
@@ -164,15 +190,15 @@ namespace winSBPayroll.Views
             }
             catch (DocumentException de)
             {
-                this.Message = de.Message;
+                Log.WriteToErrorLogFile(de);
             }
             catch (IOException ioe)
             {
-                this.Message = ioe.Message;
+                Log.WriteToErrorLogFile(ioe);
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
         }
 
@@ -369,7 +395,7 @@ namespace winSBPayroll.Views
                         desopCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                         payslipTable1.AddCell(desopCell);
 
-                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.Amount), tableDataCellFont));
+                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.Amount), tableDataCellFont));
                         aopCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable1.AddCell(aopCell);
                     }
@@ -378,7 +404,7 @@ namespace winSBPayroll.Views
                     topCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(topCell);
 
-                    Cell topvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.TotalOtherPayments), tableDataCellFont));
+                    Cell topvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.TotalOtherPayments), tableDataCellFont));
                     topvCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(topvCell);
 
@@ -386,7 +412,7 @@ namespace winSBPayroll.Views
                     saCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(saCell);
 
-                    Cell tpCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.TotalPayments), tableHeaderCellFont));
+                    Cell tpCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.TotalPayments), tableHeaderCellFont));
                     tpCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(tpCell);
 
@@ -469,7 +495,7 @@ namespace winSBPayroll.Views
                     tCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(tCell);
 
-                    Cell t1Cell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.PayeDetail.TaxablePay), tableHeaderCellFont));
+                    Cell t1Cell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.PayeDetail.TaxablePay), tableHeaderCellFont));
                     t1Cell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(t1Cell);
 
@@ -477,7 +503,7 @@ namespace winSBPayroll.Views
                     tdCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(tdCell);
 
-                    Cell td1Cell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.PayeDetail.TaxDue), tableHeaderCellFont));
+                    Cell td1Cell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.PayeDetail.TaxDue), tableHeaderCellFont));
                     td1Cell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(td1Cell);
 
@@ -485,7 +511,7 @@ namespace winSBPayroll.Views
                     prCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(prCell);
 
-                    Cell pr1Cell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.PayeDetail.PersonalRelief), tableDataCellFont));
+                    Cell pr1Cell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.PayeDetail.PersonalRelief), tableDataCellFont));
                     pr1Cell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(pr1Cell);
 
@@ -493,7 +519,7 @@ namespace winSBPayroll.Views
                     insuranceCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(insuranceCell);
 
-                    Cell insuranceCell1 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.PayeDetail.InsuranceRelief), tableDataCellFont));
+                    Cell insuranceCell1 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.PayeDetail.InsuranceRelief), tableDataCellFont));
                     insuranceCell1.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(insuranceCell1);
 
@@ -576,7 +602,7 @@ namespace winSBPayroll.Views
                         desopCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                         payslipTable1.AddCell(desopCell);
 
-                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.Amount), tableDataCellFont));
+                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.Amount), tableDataCellFont));
                         aopCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable1.AddCell(aopCell);
                     }
@@ -585,7 +611,7 @@ namespace winSBPayroll.Views
                     ttlCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(ttlCell);
 
-                    Cell ttlvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.TotalAmountLoansAmount), tableDataCellFont));
+                    Cell ttlvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.TotalAmountLoansAmount), tableDataCellFont));
                     ttlvCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(ttlvCell);
 
@@ -593,7 +619,7 @@ namespace winSBPayroll.Views
                     tsaccoCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(tsaccoCell);
 
-                    Cell ttsaccoCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.TotalAmountSaccoAmount), tableDataCellFont));
+                    Cell ttsaccoCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.TotalAmountSaccoAmount), tableDataCellFont));
                     ttsaccoCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(ttsaccoCell);
 
@@ -601,7 +627,7 @@ namespace winSBPayroll.Views
                     todCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(todCell);
 
-                    Cell todvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.TotalOtherDeductions), tableDataCellFont));
+                    Cell todvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.TotalOtherDeductions), tableDataCellFont));
                     todvCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(todvCell);
 
@@ -609,7 +635,7 @@ namespace winSBPayroll.Views
                     tdCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(tdCell);
 
-                    Cell td1Cell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.TotalDeductions), tableHeaderCellFont));
+                    Cell td1Cell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.TotalDeductions), tableHeaderCellFont));
                     td1Cell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(td1Cell);
 
@@ -685,7 +711,7 @@ namespace winSBPayroll.Views
                     npCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(npCell);
 
-                    Cell npvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.NetPay), tableHeaderCellFont));
+                    Cell npvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.NetPay), tableHeaderCellFont));
                     npvCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(npvCell);
 
@@ -791,7 +817,7 @@ namespace winSBPayroll.Views
                         desopCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                         payslipTable1.AddCell(desopCell);
 
-                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.Amount), tableDataCellFont));
+                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.Amount), tableDataCellFont));
                         aopCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable1.AddCell(aopCell);
                     }
@@ -800,7 +826,7 @@ namespace winSBPayroll.Views
                     erCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(erCell);
 
-                    Cell mvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.TotalOtherPayments), tableDataCellFont));
+                    Cell mvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.TotalOtherPayments), tableDataCellFont));
                     mvCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(mvCell);
 
@@ -885,7 +911,7 @@ namespace winSBPayroll.Views
                         desopCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                         payslipTable1.AddCell(desopCell);
 
-                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.Amount), tableDataCellFont));
+                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.Amount), tableDataCellFont));
                         aopCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable1.AddCell(aopCell);
                     }
@@ -894,7 +920,7 @@ namespace winSBPayroll.Views
                     erCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(erCell);
 
-                    Cell mvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.TotalNonCashPayments), tableDataCellFont));
+                    Cell mvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.TotalNonCashPayments), tableDataCellFont));
                     mvCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(mvCell);
 
@@ -979,7 +1005,7 @@ namespace winSBPayroll.Views
                         desopCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                         payslipTable1.AddCell(desopCell);
 
-                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.Amount), tableDataCellFont));
+                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.Amount), tableDataCellFont));
                         aopCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable1.AddCell(aopCell);
                     }
@@ -988,7 +1014,7 @@ namespace winSBPayroll.Views
                     erCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(erCell);
 
-                    Cell mvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.TotalOtherDeductions), tableDataCellFont));
+                    Cell mvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.TotalOtherDeductions), tableDataCellFont));
                     mvCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(mvCell);
 
@@ -1113,7 +1139,7 @@ namespace winSBPayroll.Views
                         desopCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                         payslipTable1.AddCell(desopCell);
 
-                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.Amount), tableDataCellFont));
+                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.Amount), tableDataCellFont));
                         aopCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable1.AddCell(aopCell);
 
@@ -1122,7 +1148,7 @@ namespace winSBPayroll.Views
                         {
                             _tbalance = _tbalance * -1;
                         }
-                        Cell lbCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _tbalance), tableDataCellFont));
+                        Cell lbCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _tbalance), tableDataCellFont));
                         lbCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable1.AddCell(lbCell);
 
@@ -1132,7 +1158,7 @@ namespace winSBPayroll.Views
                     erCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(erCell);
 
-                    Cell mvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.TotalAmountLoansAmount), tableDataCellFont));
+                    Cell mvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.TotalAmountLoansAmount), tableDataCellFont));
                     mvCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(mvCell);
 
@@ -1141,7 +1167,7 @@ namespace winSBPayroll.Views
                     {
                         _balance = _balance * -1;
                     }
-                    Cell ltbCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _balance), tableDataCellFont));
+                    Cell ltbCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _balance), tableDataCellFont));
                     ltbCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(ltbCell);
 
@@ -1226,11 +1252,11 @@ namespace winSBPayroll.Views
                         desopCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                         payslipTable1.AddCell(desopCell);
 
-                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.Amount), tableDataCellFont));
+                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.Amount), tableDataCellFont));
                         aopCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable1.AddCell(aopCell);
 
-                        Cell scCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.YTD), tableDataCellFont));
+                        Cell scCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.YTD), tableDataCellFont));
                         scCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable1.AddCell(scCell);
                     }
@@ -1239,11 +1265,11 @@ namespace winSBPayroll.Views
                     erCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(erCell);
 
-                    Cell mvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.TotalAmountSaccoAmount), tableDataCellFont));
+                    Cell mvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.TotalAmountSaccoAmount), tableDataCellFont));
                     mvCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(mvCell);
 
-                    Cell ltbCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.TotalAmountSaccoBalance), tableDataCellFont));
+                    Cell ltbCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.TotalAmountSaccoBalance), tableDataCellFont));
                     ltbCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(ltbCell);
 

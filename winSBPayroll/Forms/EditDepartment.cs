@@ -57,7 +57,7 @@ namespace winSBPayroll.Forms
 
                     rep.UpdateDepartment(_department);
 
-                    Departments f = (Departments)this.Owner;
+                    DepartmentsForm f = (DepartmentsForm)this.Owner;
                     f.RefreshGrid();
                     this.Close();
                 }

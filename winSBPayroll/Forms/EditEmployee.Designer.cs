@@ -29,12 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditEmployee));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -49,8 +48,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditEmployee));
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.tabPage_employment_info = new System.Windows.Forms.TabPage();
             this.cboEmployeeGroup = new System.Windows.Forms.ComboBox();
             this.txtEmployeePaymentPoint = new System.Windows.Forms.TextBox();
             this.cboEmpPayroll = new System.Windows.Forms.ComboBox();
@@ -59,7 +59,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label41 = new System.Windows.Forms.Label();
             this.cbBasicComputation = new System.Windows.Forms.ComboBox();
@@ -70,11 +69,8 @@
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.cbEmployer = new System.Windows.Forms.ComboBox();
             this.txtNSSF = new System.Windows.Forms.TextBox();
             this.txtNHIF = new System.Windows.Forms.TextBox();
-            this.txtIDNo = new System.Windows.Forms.TextBox();
             this.txtPIN = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cbDepartment = new System.Windows.Forms.ComboBox();
@@ -82,7 +78,13 @@
             this.lblBasicPay = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.dtpDOE = new System.Windows.Forms.DateTimePicker();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage_employee_data = new System.Windows.Forms.TabPage();
+            this.txtIDNo = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.txtphone_no = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.cbo_employer = new System.Windows.Forms.ComboBox();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.lblNoofYears = new System.Windows.Forms.Label();
@@ -103,21 +105,17 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtEmpNo = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabControl_employees = new System.Windows.Forms.TabControl();
+            this.tabPage_previous_employment = new System.Windows.Forms.TabPage();
             this.label6 = new System.Windows.Forms.Label();
             this.dtpDateLeft = new System.Windows.Forms.DateTimePicker();
             this.txtPrevEmployer = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.tabPage_payslip_details = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.dataGridViewEmpTxn = new System.Windows.Forms.DataGridView();
-            this.ItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.YTDAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Recurrent = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Column1ShowYTDInPayslip = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ColumnLastChangedBy = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TrackYTD = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.chkEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -126,12 +124,11 @@
             this.btnEmpTxnAdd = new System.Windows.Forms.Button();
             this.btnEmpTxnEdit = new System.Windows.Forms.Button();
             this.btnEmpTxnDelete = new System.Windows.Forms.Button();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.tabPage_non_cash_benefits = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.dataGridViewNonCashBenefits = new System.Windows.Forms.DataGridView();
             this.cbBenefit = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.bindingSourceBenefits = new System.Windows.Forms.BindingSource(this.components);
-            this.Quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.btnDeleteBenefit = new System.Windows.Forms.Button();
             this.label27 = new System.Windows.Forms.Label();
@@ -139,14 +136,9 @@
             this.label26 = new System.Windows.Forms.Label();
             this.txtQty = new System.Windows.Forms.TextBox();
             this.comboBoxBenefit = new System.Windows.Forms.ComboBox();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.tabPage_custom_information = new System.Windows.Forms.TabPage();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.dataGridViewCustominfo = new System.Windows.Forms.DataGridView();
-            this.dataGridViewComboBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IntValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.datevalue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.decimalvalue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.btnAddCustomInfo = new System.Windows.Forms.Button();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
@@ -161,7 +153,7 @@
             this.txtFieldString = new System.Windows.Forms.TextBox();
             this.txtFieldInt = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
-            this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.tabPage_payment_details = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtChequeNo = new System.Windows.Forms.TextBox();
             this.gbBank = new System.Windows.Forms.GroupBox();
@@ -175,12 +167,9 @@
             this.cboModeofPayment = new System.Windows.Forms.ComboBox();
             this.lblpaymentmode = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
-            this.HourlyPaymentTabPage = new System.Windows.Forms.TabPage();
+            this.tabPage_hourly_payment = new System.Windows.Forms.TabPage();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.dataGridHourlyPayments = new System.Windows.Forms.DataGridView();
-            this.eWorkDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.eWorkHours = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.eRatePerHour = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.btnDeleteHourlyPayment = new System.Windows.Forms.Button();
             this.txtWorkHours = new System.Windows.Forms.TextBox();
@@ -195,9 +184,9 @@
             this.dtpWorkDate = new System.Windows.Forms.DateTimePicker();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
-            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.bindingSourceEmpBenefits = new System.Windows.Forms.BindingSource(this.components);
@@ -208,6 +197,7 @@
             this.bindingSourceHourlyPayments = new System.Windows.Forms.BindingSource(this.components);
             this.bindingSourceNonCashBenefits = new System.Windows.Forms.BindingSource(this.components);
             this.bindingSourcehrlypayments = new System.Windows.Forms.BindingSource(this.components);
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -220,32 +210,44 @@
             this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabPage3.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.ItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.YTDAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnLastChangedBy = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewComboBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IntValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.datevalue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.decimalvalue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.eWorkDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.eWorkHours = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.eRatePerHour = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage_employment_info.SuspendLayout();
+            this.tabPage_employee_data.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPhoto)).BeginInit();
-            this.tabControl1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.tabPage4.SuspendLayout();
+            this.tabControl_employees.SuspendLayout();
+            this.tabPage_previous_employment.SuspendLayout();
+            this.tabPage_payslip_details.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEmpTxn)).BeginInit();
             this.groupBox4.SuspendLayout();
-            this.tabPage5.SuspendLayout();
+            this.tabPage_non_cash_benefits.SuspendLayout();
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewNonCashBenefits)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceBenefits)).BeginInit();
             this.groupBox6.SuspendLayout();
-            this.tabPage6.SuspendLayout();
+            this.tabPage_custom_information.SuspendLayout();
             this.groupBox9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCustominfo)).BeginInit();
             this.groupBox8.SuspendLayout();
-            this.tabPage7.SuspendLayout();
+            this.tabPage_payment_details.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.gbBank.SuspendLayout();
-            this.HourlyPaymentTabPage.SuspendLayout();
+            this.tabPage_hourly_payment.SuspendLayout();
             this.groupBox11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridHourlyPayments)).BeginInit();
             this.groupBox10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEmpBenefits)).BeginInit();
@@ -258,45 +260,41 @@
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourcehrlypayments)).BeginInit();
             this.SuspendLayout();
             // 
-            // tabPage3
+            // tabPage_employment_info
             // 
-            this.tabPage3.BackColor = System.Drawing.Color.LimeGreen;
-            this.tabPage3.Controls.Add(this.cboEmployeeGroup);
-            this.tabPage3.Controls.Add(this.txtEmployeePaymentPoint);
-            this.tabPage3.Controls.Add(this.cboEmpPayroll);
-            this.tabPage3.Controls.Add(this.txtPayrollTypeRemarks);
-            this.tabPage3.Controls.Add(this.txtInsuranceRelief);
-            this.tabPage3.Controls.Add(this.label7);
-            this.tabPage3.Controls.Add(this.label18);
-            this.tabPage3.Controls.Add(this.label17);
-            this.tabPage3.Controls.Add(this.label16);
-            this.tabPage3.Controls.Add(this.label15);
-            this.tabPage3.Controls.Add(this.label41);
-            this.tabPage3.Controls.Add(this.cbBasicComputation);
-            this.tabPage3.Controls.Add(this.txtPersonalRelief);
-            this.tabPage3.Controls.Add(this.label25);
-            this.tabPage3.Controls.Add(this.txtMortgageRelief);
-            this.tabPage3.Controls.Add(this.label24);
-            this.tabPage3.Controls.Add(this.label21);
-            this.tabPage3.Controls.Add(this.label22);
-            this.tabPage3.Controls.Add(this.label23);
-            this.tabPage3.Controls.Add(this.label19);
-            this.tabPage3.Controls.Add(this.cbEmployer);
-            this.tabPage3.Controls.Add(this.txtNSSF);
-            this.tabPage3.Controls.Add(this.txtNHIF);
-            this.tabPage3.Controls.Add(this.txtIDNo);
-            this.tabPage3.Controls.Add(this.txtPIN);
-            this.tabPage3.Controls.Add(this.label3);
-            this.tabPage3.Controls.Add(this.cbDepartment);
-            this.tabPage3.Controls.Add(this.txtBasicPay);
-            this.tabPage3.Controls.Add(this.lblBasicPay);
-            this.tabPage3.Controls.Add(this.label11);
-            this.tabPage3.Controls.Add(this.dtpDOE);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(812, 377);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Employment Info";
+            this.tabPage_employment_info.BackColor = System.Drawing.Color.LimeGreen;
+            this.tabPage_employment_info.Controls.Add(this.cboEmployeeGroup);
+            this.tabPage_employment_info.Controls.Add(this.txtEmployeePaymentPoint);
+            this.tabPage_employment_info.Controls.Add(this.cboEmpPayroll);
+            this.tabPage_employment_info.Controls.Add(this.txtPayrollTypeRemarks);
+            this.tabPage_employment_info.Controls.Add(this.txtInsuranceRelief);
+            this.tabPage_employment_info.Controls.Add(this.label7);
+            this.tabPage_employment_info.Controls.Add(this.label18);
+            this.tabPage_employment_info.Controls.Add(this.label17);
+            this.tabPage_employment_info.Controls.Add(this.label15);
+            this.tabPage_employment_info.Controls.Add(this.label41);
+            this.tabPage_employment_info.Controls.Add(this.cbBasicComputation);
+            this.tabPage_employment_info.Controls.Add(this.txtPersonalRelief);
+            this.tabPage_employment_info.Controls.Add(this.label25);
+            this.tabPage_employment_info.Controls.Add(this.txtMortgageRelief);
+            this.tabPage_employment_info.Controls.Add(this.label24);
+            this.tabPage_employment_info.Controls.Add(this.label21);
+            this.tabPage_employment_info.Controls.Add(this.label22);
+            this.tabPage_employment_info.Controls.Add(this.label23);
+            this.tabPage_employment_info.Controls.Add(this.txtNSSF);
+            this.tabPage_employment_info.Controls.Add(this.txtNHIF);
+            this.tabPage_employment_info.Controls.Add(this.txtPIN);
+            this.tabPage_employment_info.Controls.Add(this.label3);
+            this.tabPage_employment_info.Controls.Add(this.cbDepartment);
+            this.tabPage_employment_info.Controls.Add(this.txtBasicPay);
+            this.tabPage_employment_info.Controls.Add(this.lblBasicPay);
+            this.tabPage_employment_info.Controls.Add(this.label11);
+            this.tabPage_employment_info.Controls.Add(this.dtpDOE);
+            this.tabPage_employment_info.Location = new System.Drawing.Point(4, 22);
+            this.tabPage_employment_info.Name = "tabPage_employment_info";
+            this.tabPage_employment_info.Size = new System.Drawing.Size(812, 377);
+            this.tabPage_employment_info.TabIndex = 2;
+            this.tabPage_employment_info.Text = "Employment Info";
             // 
             // cboEmployeeGroup
             // 
@@ -307,10 +305,10 @@
             this.cboEmployeeGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.cboEmployeeGroup.ForeColor = System.Drawing.SystemColors.WindowText;
             this.cboEmployeeGroup.FormattingEnabled = true;
-            this.cboEmployeeGroup.Location = new System.Drawing.Point(487, 134);
+            this.cboEmployeeGroup.Location = new System.Drawing.Point(487, 58);
             this.cboEmployeeGroup.Name = "cboEmployeeGroup";
             this.cboEmployeeGroup.Size = new System.Drawing.Size(252, 21);
-            this.cboEmployeeGroup.TabIndex = 13;
+            this.cboEmployeeGroup.TabIndex = 12;
             this.cboEmployeeGroup.ValueMember = "Code";
             this.cboEmployeeGroup.SelectedIndexChanged += new System.EventHandler(this.cboEmployeeGroup_SelectedIndexChanged);
             // 
@@ -319,11 +317,11 @@
             this.txtEmployeePaymentPoint.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtEmployeePaymentPoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txtEmployeePaymentPoint.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.txtEmployeePaymentPoint.Location = new System.Drawing.Point(487, 103);
+            this.txtEmployeePaymentPoint.Location = new System.Drawing.Point(487, 27);
             this.txtEmployeePaymentPoint.MaxLength = 50;
             this.txtEmployeePaymentPoint.Name = "txtEmployeePaymentPoint";
             this.txtEmployeePaymentPoint.Size = new System.Drawing.Size(252, 20);
-            this.txtEmployeePaymentPoint.TabIndex = 12;
+            this.txtEmployeePaymentPoint.TabIndex = 11;
             // 
             // cboEmpPayroll
             // 
@@ -334,10 +332,10 @@
             this.cboEmpPayroll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.cboEmpPayroll.ForeColor = System.Drawing.SystemColors.WindowText;
             this.cboEmpPayroll.FormattingEnabled = true;
-            this.cboEmpPayroll.Location = new System.Drawing.Point(487, 166);
+            this.cboEmpPayroll.Location = new System.Drawing.Point(487, 90);
             this.cboEmpPayroll.Name = "cboEmpPayroll";
             this.cboEmpPayroll.Size = new System.Drawing.Size(252, 21);
-            this.cboEmpPayroll.TabIndex = 14;
+            this.cboEmpPayroll.TabIndex = 13;
             this.cboEmpPayroll.ValueMember = "Code";
             this.cboEmpPayroll.SelectedIndexChanged += new System.EventHandler(this.cboEmpPayroll_SelectedIndexChanged);
             // 
@@ -346,12 +344,12 @@
             this.txtPayrollTypeRemarks.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPayrollTypeRemarks.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.txtPayrollTypeRemarks.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.txtPayrollTypeRemarks.Location = new System.Drawing.Point(487, 198);
+            this.txtPayrollTypeRemarks.Location = new System.Drawing.Point(487, 131);
             this.txtPayrollTypeRemarks.MaxLength = 1000;
             this.txtPayrollTypeRemarks.Multiline = true;
             this.txtPayrollTypeRemarks.Name = "txtPayrollTypeRemarks";
-            this.txtPayrollTypeRemarks.Size = new System.Drawing.Size(320, 172);
-            this.txtPayrollTypeRemarks.TabIndex = 15;
+            this.txtPayrollTypeRemarks.Size = new System.Drawing.Size(320, 239);
+            this.txtPayrollTypeRemarks.TabIndex = 14;
             this.txtPayrollTypeRemarks.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPayrollTypeRemarks_KeyPress);
             // 
             // txtInsuranceRelief
@@ -393,19 +391,10 @@
             this.label17.TabIndex = 107;
             this.label17.Text = "NHIF Number*";
             // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(67, 299);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(62, 13);
-            this.label16.TabIndex = 106;
-            this.label16.Text = "ID Number*";
-            // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(60, 332);
+            this.label15.Location = new System.Drawing.Point(60, 302);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(69, 13);
             this.label15.TabIndex = 105;
@@ -442,6 +431,7 @@
             this.txtPersonalRelief.Name = "txtPersonalRelief";
             this.txtPersonalRelief.Size = new System.Drawing.Size(214, 20);
             this.txtPersonalRelief.TabIndex = 3;
+            this.txtPersonalRelief.TextChanged += new System.EventHandler(this.txtPersonalRelief_TextChanged);
             this.txtPersonalRelief.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPersonalRelief_KeyDown);
             this.txtPersonalRelief.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPersonalRelief_KeyPress);
             // 
@@ -478,7 +468,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(399, 137);
+            this.label21.Location = new System.Drawing.Point(399, 61);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(85, 13);
             this.label21.TabIndex = 37;
@@ -487,7 +477,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(397, 169);
+            this.label22.Location = new System.Drawing.Point(397, 93);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(87, 13);
             this.label22.TabIndex = 34;
@@ -496,33 +486,11 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(433, 106);
+            this.label23.Location = new System.Drawing.Point(433, 30);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(52, 13);
             this.label23.TabIndex = 33;
             this.label23.Text = "Pay Point";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(430, 74);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(54, 13);
-            this.label19.TabIndex = 31;
-            this.label19.Text = "Employer*";
-            // 
-            // cbEmployer
-            // 
-            this.cbEmployer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbEmployer.DropDownWidth = 250;
-            this.cbEmployer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbEmployer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.cbEmployer.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.cbEmployer.FormattingEnabled = true;
-            this.cbEmployer.Location = new System.Drawing.Point(487, 71);
-            this.cbEmployer.Name = "cbEmployer";
-            this.cbEmployer.Size = new System.Drawing.Size(252, 21);
-            this.cbEmployer.TabIndex = 11;
             // 
             // txtNSSF
             // 
@@ -544,21 +512,11 @@
             this.txtNHIF.Size = new System.Drawing.Size(214, 20);
             this.txtNHIF.TabIndex = 7;
             // 
-            // txtIDNo
-            // 
-            this.txtIDNo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtIDNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txtIDNo.Location = new System.Drawing.Point(131, 296);
-            this.txtIDNo.MaxLength = 50;
-            this.txtIDNo.Name = "txtIDNo";
-            this.txtIDNo.Size = new System.Drawing.Size(214, 20);
-            this.txtIDNo.TabIndex = 8;
-            // 
             // txtPIN
             // 
             this.txtPIN.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPIN.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txtPIN.Location = new System.Drawing.Point(131, 329);
+            this.txtPIN.Location = new System.Drawing.Point(131, 299);
             this.txtPIN.MaxLength = 50;
             this.txtPIN.Name = "txtPIN";
             this.txtPIN.Size = new System.Drawing.Size(214, 20);
@@ -567,7 +525,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(418, 42);
+            this.label3.Location = new System.Drawing.Point(62, 339);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(66, 13);
             this.label3.TabIndex = 21;
@@ -581,9 +539,9 @@
             this.cbDepartment.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.cbDepartment.ForeColor = System.Drawing.SystemColors.WindowText;
             this.cbDepartment.FormattingEnabled = true;
-            this.cbDepartment.Location = new System.Drawing.Point(487, 39);
+            this.cbDepartment.Location = new System.Drawing.Point(131, 336);
             this.cbDepartment.Name = "cbDepartment";
-            this.cbDepartment.Size = new System.Drawing.Size(252, 21);
+            this.cbDepartment.Size = new System.Drawing.Size(214, 21);
             this.cbDepartment.TabIndex = 10;
             // 
             // txtBasicPay
@@ -624,51 +582,121 @@
             this.dtpDOE.Size = new System.Drawing.Size(214, 20);
             this.dtpDOE.TabIndex = 0;
             // 
-            // tabPage1
+            // tabPage_employee_data
             // 
-            this.tabPage1.BackColor = System.Drawing.Color.LimeGreen;
-            this.tabPage1.Controls.Add(this.txtEmail);
-            this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.lblNoofYears);
-            this.tabPage1.Controls.Add(this.lblEmployerWarning);
-            this.tabPage1.Controls.Add(this.pbPhoto);
-            this.tabPage1.Controls.Add(this.chkIsActive);
-            this.tabPage1.Controls.Add(this.btnUpload);
-            this.tabPage1.Controls.Add(this.btnNextSeries);
-            this.tabPage1.Controls.Add(this.label14);
-            this.tabPage1.Controls.Add(this.cbMaritalStatus);
-            this.tabPage1.Controls.Add(this.label13);
-            this.tabPage1.Controls.Add(this.cbGender);
-            this.tabPage1.Controls.Add(this.label10);
-            this.tabPage1.Controls.Add(this.dtpDOB);
-            this.tabPage1.Controls.Add(this.txtOtherNames);
-            this.tabPage1.Controls.Add(this.label9);
-            this.tabPage1.Controls.Add(this.txtSurname);
-            this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.txtEmpNo);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(812, 377);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Employee Data";
+            this.tabPage_employee_data.BackColor = System.Drawing.Color.LimeGreen;
+            this.tabPage_employee_data.Controls.Add(this.txtIDNo);
+            this.tabPage_employee_data.Controls.Add(this.label16);
+            this.tabPage_employee_data.Controls.Add(this.txtphone_no);
+            this.tabPage_employee_data.Controls.Add(this.label12);
+            this.tabPage_employee_data.Controls.Add(this.label19);
+            this.tabPage_employee_data.Controls.Add(this.cbo_employer);
+            this.tabPage_employee_data.Controls.Add(this.txtEmail);
+            this.tabPage_employee_data.Controls.Add(this.label4);
+            this.tabPage_employee_data.Controls.Add(this.lblNoofYears);
+            this.tabPage_employee_data.Controls.Add(this.lblEmployerWarning);
+            this.tabPage_employee_data.Controls.Add(this.pbPhoto);
+            this.tabPage_employee_data.Controls.Add(this.chkIsActive);
+            this.tabPage_employee_data.Controls.Add(this.btnUpload);
+            this.tabPage_employee_data.Controls.Add(this.btnNextSeries);
+            this.tabPage_employee_data.Controls.Add(this.label14);
+            this.tabPage_employee_data.Controls.Add(this.cbMaritalStatus);
+            this.tabPage_employee_data.Controls.Add(this.label13);
+            this.tabPage_employee_data.Controls.Add(this.cbGender);
+            this.tabPage_employee_data.Controls.Add(this.label10);
+            this.tabPage_employee_data.Controls.Add(this.dtpDOB);
+            this.tabPage_employee_data.Controls.Add(this.txtOtherNames);
+            this.tabPage_employee_data.Controls.Add(this.label9);
+            this.tabPage_employee_data.Controls.Add(this.txtSurname);
+            this.tabPage_employee_data.Controls.Add(this.label2);
+            this.tabPage_employee_data.Controls.Add(this.txtEmpNo);
+            this.tabPage_employee_data.Controls.Add(this.label1);
+            this.tabPage_employee_data.Location = new System.Drawing.Point(4, 22);
+            this.tabPage_employee_data.Name = "tabPage_employee_data";
+            this.tabPage_employee_data.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage_employee_data.Size = new System.Drawing.Size(812, 377);
+            this.tabPage_employee_data.TabIndex = 0;
+            this.tabPage_employee_data.Text = "Employee Data";
+            // 
+            // txtIDNo
+            // 
+            this.txtIDNo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtIDNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txtIDNo.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.txtIDNo.Location = new System.Drawing.Point(115, 316);
+            this.txtIDNo.MaxLength = 100;
+            this.txtIDNo.Name = "txtIDNo";
+            this.txtIDNo.Size = new System.Drawing.Size(229, 20);
+            this.txtIDNo.TabIndex = 10;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.label16.Location = new System.Drawing.Point(51, 319);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(62, 13);
+            this.label16.TabIndex = 41;
+            this.label16.Text = "ID Number*";
+            // 
+            // txtphone_no
+            // 
+            this.txtphone_no.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtphone_no.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.txtphone_no.Location = new System.Drawing.Point(115, 283);
+            this.txtphone_no.MaxLength = 100;
+            this.txtphone_no.Name = "txtphone_no";
+            this.txtphone_no.Size = new System.Drawing.Size(229, 20);
+            this.txtphone_no.TabIndex = 9;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.label12.Location = new System.Drawing.Point(71, 287);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(42, 13);
+            this.label12.TabIndex = 40;
+            this.label12.Text = "Phone*";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(58, 19);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(54, 13);
+            this.label19.TabIndex = 33;
+            this.label19.Text = "Employer*";
+            // 
+            // cbo_employer
+            // 
+            this.cbo_employer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbo_employer.DropDownWidth = 250;
+            this.cbo_employer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbo_employer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.cbo_employer.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.cbo_employer.FormattingEnabled = true;
+            this.cbo_employer.Location = new System.Drawing.Point(115, 16);
+            this.cbo_employer.Name = "cbo_employer";
+            this.cbo_employer.Size = new System.Drawing.Size(229, 21);
+            this.cbo_employer.TabIndex = 0;
+            this.cbo_employer.SelectedIndexChanged += new System.EventHandler(this.cbo_employer_SelectedIndexChanged);
             // 
             // txtEmail
             // 
             this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txtEmail.Location = new System.Drawing.Point(115, 224);
+            this.txtEmail.Location = new System.Drawing.Point(115, 250);
             this.txtEmail.MaxLength = 100;
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(229, 20);
-            this.txtEmail.TabIndex = 7;
+            this.txtEmail.TabIndex = 8;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.label4.Location = new System.Drawing.Point(77, 227);
+            this.label4.Location = new System.Drawing.Point(77, 254);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(36, 13);
             this.label4.TabIndex = 28;
@@ -677,7 +705,7 @@
             // lblNoofYears
             // 
             this.lblNoofYears.AutoSize = true;
-            this.lblNoofYears.Location = new System.Drawing.Point(273, 125);
+            this.lblNoofYears.Location = new System.Drawing.Point(273, 160);
             this.lblNoofYears.Name = "lblNoofYears";
             this.lblNoofYears.Size = new System.Drawing.Size(41, 13);
             this.lblNoofYears.TabIndex = 23;
@@ -696,9 +724,12 @@
             // pbPhoto
             // 
             this.pbPhoto.ErrorImage = global::winSBPayroll.Properties.Resources.defaultphoto;
+            this.pbPhoto.Image = global::winSBPayroll.Properties.Resources.defaultphoto;
+            this.pbPhoto.InitialImage = ((System.Drawing.Image)(resources.GetObject("pbPhoto.InitialImage")));
             this.pbPhoto.Location = new System.Drawing.Point(401, 16);
             this.pbPhoto.Name = "pbPhoto";
             this.pbPhoto.Size = new System.Drawing.Size(250, 209);
+            this.pbPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbPhoto.TabIndex = 22;
             this.pbPhoto.TabStop = false;
             this.pbPhoto.MouseLeave += new System.EventHandler(this.pbPhoto_MouseLeave);
@@ -709,10 +740,10 @@
             this.chkIsActive.AutoSize = true;
             this.chkIsActive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.chkIsActive.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.chkIsActive.Location = new System.Drawing.Point(118, 258);
+            this.chkIsActive.Location = new System.Drawing.Point(115, 346);
             this.chkIsActive.Name = "chkIsActive";
             this.chkIsActive.Size = new System.Drawing.Size(64, 17);
-            this.chkIsActive.TabIndex = 8;
+            this.chkIsActive.TabIndex = 11;
             this.chkIsActive.Text = "Is Active";
             this.chkIsActive.UseVisualStyleBackColor = true;
             // 
@@ -723,7 +754,7 @@
             this.btnUpload.Location = new System.Drawing.Point(689, 20);
             this.btnUpload.Name = "btnUpload";
             this.btnUpload.Size = new System.Drawing.Size(75, 23);
-            this.btnUpload.TabIndex = 9;
+            this.btnUpload.TabIndex = 12;
             this.btnUpload.Text = "Upload";
             this.btnUpload.UseVisualStyleBackColor = false;
             this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click);
@@ -732,10 +763,10 @@
             // 
             this.btnNextSeries.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.btnNextSeries.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNextSeries.Location = new System.Drawing.Point(250, 16);
+            this.btnNextSeries.Location = new System.Drawing.Point(250, 48);
             this.btnNextSeries.Name = "btnNextSeries";
             this.btnNextSeries.Size = new System.Drawing.Size(94, 23);
-            this.btnNextSeries.TabIndex = 1;
+            this.btnNextSeries.TabIndex = 2;
             this.btnNextSeries.Text = "Next ID Series";
             this.btnNextSeries.UseVisualStyleBackColor = false;
             this.btnNextSeries.Click += new System.EventHandler(this.btnNextSeries_Click);
@@ -743,7 +774,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(37, 158);
+            this.label14.Location = new System.Drawing.Point(37, 186);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(75, 13);
             this.label14.TabIndex = 19;
@@ -756,15 +787,15 @@
             this.cbMaritalStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.cbMaritalStatus.ForeColor = System.Drawing.SystemColors.WindowText;
             this.cbMaritalStatus.FormattingEnabled = true;
-            this.cbMaritalStatus.Location = new System.Drawing.Point(115, 154);
+            this.cbMaritalStatus.Location = new System.Drawing.Point(115, 182);
             this.cbMaritalStatus.Name = "cbMaritalStatus";
             this.cbMaritalStatus.Size = new System.Drawing.Size(229, 21);
-            this.cbMaritalStatus.TabIndex = 5;
+            this.cbMaritalStatus.TabIndex = 6;
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(66, 193);
+            this.label13.Location = new System.Drawing.Point(66, 220);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(46, 13);
             this.label13.TabIndex = 17;
@@ -777,15 +808,15 @@
             this.cbGender.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.cbGender.ForeColor = System.Drawing.SystemColors.WindowText;
             this.cbGender.FormattingEnabled = true;
-            this.cbGender.Location = new System.Drawing.Point(115, 189);
+            this.cbGender.Location = new System.Drawing.Point(115, 216);
             this.cbGender.Name = "cbGender";
             this.cbGender.Size = new System.Drawing.Size(229, 21);
-            this.cbGender.TabIndex = 6;
+            this.cbGender.TabIndex = 7;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(42, 125);
+            this.label10.Location = new System.Drawing.Point(42, 152);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(70, 13);
             this.label10.TabIndex = 15;
@@ -794,26 +825,26 @@
             // dtpDOB
             // 
             this.dtpDOB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.dtpDOB.Location = new System.Drawing.Point(115, 120);
+            this.dtpDOB.Location = new System.Drawing.Point(115, 149);
             this.dtpDOB.Name = "dtpDOB";
             this.dtpDOB.Size = new System.Drawing.Size(152, 20);
-            this.dtpDOB.TabIndex = 4;
+            this.dtpDOB.TabIndex = 5;
             this.dtpDOB.ValueChanged += new System.EventHandler(this.dtpDOB_ValueChanged);
             // 
             // txtOtherNames
             // 
             this.txtOtherNames.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtOtherNames.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txtOtherNames.Location = new System.Drawing.Point(115, 86);
+            this.txtOtherNames.Location = new System.Drawing.Point(115, 116);
             this.txtOtherNames.MaxLength = 50;
             this.txtOtherNames.Name = "txtOtherNames";
             this.txtOtherNames.Size = new System.Drawing.Size(229, 20);
-            this.txtOtherNames.TabIndex = 3;
+            this.txtOtherNames.TabIndex = 4;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(40, 89);
+            this.label9.Location = new System.Drawing.Point(40, 120);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(73, 13);
             this.label9.TabIndex = 10;
@@ -823,16 +854,16 @@
             // 
             this.txtSurname.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSurname.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txtSurname.Location = new System.Drawing.Point(115, 52);
+            this.txtSurname.Location = new System.Drawing.Point(115, 83);
             this.txtSurname.MaxLength = 50;
             this.txtSurname.Name = "txtSurname";
             this.txtSurname.Size = new System.Drawing.Size(229, 20);
-            this.txtSurname.TabIndex = 2;
+            this.txtSurname.TabIndex = 3;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(58, 56);
+            this.label2.Location = new System.Drawing.Point(58, 86);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(55, 13);
             this.label2.TabIndex = 2;
@@ -842,50 +873,50 @@
             // 
             this.txtEmpNo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtEmpNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.txtEmpNo.Location = new System.Drawing.Point(115, 18);
+            this.txtEmpNo.Location = new System.Drawing.Point(115, 50);
             this.txtEmpNo.MaxLength = 10;
             this.txtEmpNo.Name = "txtEmpNo";
             this.txtEmpNo.Size = new System.Drawing.Size(106, 20);
-            this.txtEmpNo.TabIndex = 0;
+            this.txtEmpNo.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(39, 21);
+            this.label1.Location = new System.Drawing.Point(39, 53);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(74, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Employee No*";
             // 
-            // tabControl1
+            // tabControl_employees
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Controls.Add(this.tabPage5);
-            this.tabControl1.Controls.Add(this.tabPage6);
-            this.tabControl1.Controls.Add(this.tabPage7);
-            this.tabControl1.Controls.Add(this.HourlyPaymentTabPage);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(3, 16);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(820, 403);
-            this.tabControl1.TabIndex = 0;
+            this.tabControl_employees.Controls.Add(this.tabPage_employee_data);
+            this.tabControl_employees.Controls.Add(this.tabPage_employment_info);
+            this.tabControl_employees.Controls.Add(this.tabPage_previous_employment);
+            this.tabControl_employees.Controls.Add(this.tabPage_payslip_details);
+            this.tabControl_employees.Controls.Add(this.tabPage_non_cash_benefits);
+            this.tabControl_employees.Controls.Add(this.tabPage_custom_information);
+            this.tabControl_employees.Controls.Add(this.tabPage_payment_details);
+            this.tabControl_employees.Controls.Add(this.tabPage_hourly_payment);
+            this.tabControl_employees.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl_employees.Location = new System.Drawing.Point(3, 16);
+            this.tabControl_employees.Name = "tabControl_employees";
+            this.tabControl_employees.SelectedIndex = 0;
+            this.tabControl_employees.Size = new System.Drawing.Size(820, 403);
+            this.tabControl_employees.TabIndex = 0;
             // 
-            // tabPage2
+            // tabPage_previous_employment
             // 
-            this.tabPage2.BackColor = System.Drawing.Color.LimeGreen;
-            this.tabPage2.Controls.Add(this.label6);
-            this.tabPage2.Controls.Add(this.dtpDateLeft);
-            this.tabPage2.Controls.Add(this.txtPrevEmployer);
-            this.tabPage2.Controls.Add(this.label20);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(812, 377);
-            this.tabPage2.TabIndex = 3;
-            this.tabPage2.Text = "Previous Employment";
+            this.tabPage_previous_employment.BackColor = System.Drawing.Color.LimeGreen;
+            this.tabPage_previous_employment.Controls.Add(this.label6);
+            this.tabPage_previous_employment.Controls.Add(this.dtpDateLeft);
+            this.tabPage_previous_employment.Controls.Add(this.txtPrevEmployer);
+            this.tabPage_previous_employment.Controls.Add(this.label20);
+            this.tabPage_previous_employment.Location = new System.Drawing.Point(4, 22);
+            this.tabPage_previous_employment.Name = "tabPage_previous_employment";
+            this.tabPage_previous_employment.Size = new System.Drawing.Size(812, 377);
+            this.tabPage_previous_employment.TabIndex = 3;
+            this.tabPage_previous_employment.Text = "Previous Employment";
             // 
             // label6
             // 
@@ -921,17 +952,17 @@
             this.label20.TabIndex = 24;
             this.label20.Text = "Previous Employer";
             // 
-            // tabPage4
+            // tabPage_payslip_details
             // 
-            this.tabPage4.BackColor = System.Drawing.Color.LimeGreen;
-            this.tabPage4.Controls.Add(this.groupBox5);
-            this.tabPage4.Controls.Add(this.groupBox4);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(812, 377);
-            this.tabPage4.TabIndex = 4;
-            this.tabPage4.Text = "Payslip Details";
+            this.tabPage_payslip_details.BackColor = System.Drawing.Color.LimeGreen;
+            this.tabPage_payslip_details.Controls.Add(this.groupBox5);
+            this.tabPage_payslip_details.Controls.Add(this.groupBox4);
+            this.tabPage_payslip_details.Location = new System.Drawing.Point(4, 22);
+            this.tabPage_payslip_details.Name = "tabPage_payslip_details";
+            this.tabPage_payslip_details.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage_payslip_details.Size = new System.Drawing.Size(812, 377);
+            this.tabPage_payslip_details.TabIndex = 4;
+            this.tabPage_payslip_details.Text = "Payslip Details";
             // 
             // groupBox5
             // 
@@ -995,39 +1026,7 @@
             this.dataGridViewEmpTxn.Size = new System.Drawing.Size(800, 297);
             this.dataGridViewEmpTxn.TabIndex = 0;
             this.dataGridViewEmpTxn.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewEmpTxn_CellContentDoubleClick);
-            // 
-            // ItemId
-            // 
-            this.ItemId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ItemId.DataPropertyName = "ItemId";
-            this.ItemId.HeaderText = "Item";
-            this.ItemId.Name = "ItemId";
-            this.ItemId.ReadOnly = true;
-            this.ItemId.Width = 150;
-            // 
-            // Amount
-            // 
-            this.Amount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Amount.DataPropertyName = "Amount";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.BottomRight;
-            dataGridViewCellStyle3.Format = "C2";
-            dataGridViewCellStyle3.NullValue = null;
-            this.Amount.DefaultCellStyle = dataGridViewCellStyle3;
-            this.Amount.HeaderText = "Amount";
-            this.Amount.Name = "Amount";
-            this.Amount.ReadOnly = true;
-            // 
-            // YTDAmount
-            // 
-            this.YTDAmount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.YTDAmount.DataPropertyName = "Balance";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.BottomRight;
-            dataGridViewCellStyle4.Format = "C2";
-            dataGridViewCellStyle4.NullValue = "-";
-            this.YTDAmount.DefaultCellStyle = dataGridViewCellStyle4;
-            this.YTDAmount.HeaderText = "YTD Amount";
-            this.YTDAmount.Name = "YTDAmount";
-            this.YTDAmount.ReadOnly = true;
+            this.dataGridViewEmpTxn.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewEmpTxn_DataError);
             // 
             // Recurrent
             // 
@@ -1050,16 +1049,6 @@
             this.Column1ShowYTDInPayslip.Name = "Column1ShowYTDInPayslip";
             this.Column1ShowYTDInPayslip.ReadOnly = true;
             this.Column1ShowYTDInPayslip.Width = 83;
-            // 
-            // ColumnLastChangedBy
-            // 
-            this.ColumnLastChangedBy.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ColumnLastChangedBy.DataPropertyName = "LastChangedBy";
-            this.ColumnLastChangedBy.HeaderText = "Last changed by";
-            this.ColumnLastChangedBy.Name = "ColumnLastChangedBy";
-            this.ColumnLastChangedBy.ReadOnly = true;
-            this.ColumnLastChangedBy.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColumnLastChangedBy.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // TrackYTD
             // 
@@ -1155,17 +1144,17 @@
             this.btnEmpTxnDelete.UseVisualStyleBackColor = false;
             this.btnEmpTxnDelete.Click += new System.EventHandler(this.btnEmpTxnDelete_Click);
             // 
-            // tabPage5
+            // tabPage_non_cash_benefits
             // 
-            this.tabPage5.BackColor = System.Drawing.Color.LimeGreen;
-            this.tabPage5.Controls.Add(this.groupBox7);
-            this.tabPage5.Controls.Add(this.groupBox6);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(812, 377);
-            this.tabPage5.TabIndex = 5;
-            this.tabPage5.Text = "Non Cash Benefits";
+            this.tabPage_non_cash_benefits.BackColor = System.Drawing.Color.LimeGreen;
+            this.tabPage_non_cash_benefits.Controls.Add(this.groupBox7);
+            this.tabPage_non_cash_benefits.Controls.Add(this.groupBox6);
+            this.tabPage_non_cash_benefits.Location = new System.Drawing.Point(4, 22);
+            this.tabPage_non_cash_benefits.Name = "tabPage_non_cash_benefits";
+            this.tabPage_non_cash_benefits.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage_non_cash_benefits.Size = new System.Drawing.Size(812, 377);
+            this.tabPage_non_cash_benefits.TabIndex = 5;
+            this.tabPage_non_cash_benefits.Text = "Non Cash Benefits";
             // 
             // groupBox7
             // 
@@ -1231,15 +1220,6 @@
             this.cbBenefit.HeaderText = "Benefit";
             this.cbBenefit.Name = "cbBenefit";
             this.cbBenefit.ReadOnly = true;
-            // 
-            // Quantity
-            // 
-            this.Quantity.DataPropertyName = "Quantity";
-            this.Quantity.HeaderText = "Quantity";
-            this.Quantity.Name = "Quantity";
-            this.Quantity.ReadOnly = true;
-            this.Quantity.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Quantity.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // groupBox6
             // 
@@ -1319,17 +1299,17 @@
             this.comboBoxBenefit.Size = new System.Drawing.Size(188, 21);
             this.comboBoxBenefit.TabIndex = 0;
             // 
-            // tabPage6
+            // tabPage_custom_information
             // 
-            this.tabPage6.BackColor = System.Drawing.Color.LimeGreen;
-            this.tabPage6.Controls.Add(this.groupBox9);
-            this.tabPage6.Controls.Add(this.groupBox8);
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(812, 377);
-            this.tabPage6.TabIndex = 6;
-            this.tabPage6.Text = "Custom Information";
+            this.tabPage_custom_information.BackColor = System.Drawing.Color.LimeGreen;
+            this.tabPage_custom_information.Controls.Add(this.groupBox9);
+            this.tabPage_custom_information.Controls.Add(this.groupBox8);
+            this.tabPage_custom_information.Location = new System.Drawing.Point(4, 22);
+            this.tabPage_custom_information.Name = "tabPage_custom_information";
+            this.tabPage_custom_information.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage_custom_information.Size = new System.Drawing.Size(812, 377);
+            this.tabPage_custom_information.TabIndex = 6;
+            this.tabPage_custom_information.Text = "Custom Information";
             // 
             // groupBox9
             // 
@@ -1389,47 +1369,6 @@
             this.dataGridViewCustominfo.Size = new System.Drawing.Size(510, 352);
             this.dataGridViewCustominfo.TabIndex = 0;
             this.dataGridViewCustominfo.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewCustominfo_DataError);
-            // 
-            // dataGridViewComboBoxColumn1
-            // 
-            this.dataGridViewComboBoxColumn1.DataPropertyName = "ExFieldName";
-            this.dataGridViewComboBoxColumn1.HeaderText = "Field Name";
-            this.dataGridViewComboBoxColumn1.Name = "dataGridViewComboBoxColumn1";
-            this.dataGridViewComboBoxColumn1.ReadOnly = true;
-            this.dataGridViewComboBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewComboBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "ExFieldStr";
-            this.dataGridViewTextBoxColumn1.HeaderText = "String Value";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.dataGridViewTextBoxColumn1.Width = 101;
-            // 
-            // IntValue
-            // 
-            this.IntValue.DataPropertyName = "ExFieldInt";
-            this.IntValue.HeaderText = "Integer Value";
-            this.IntValue.Name = "IntValue";
-            this.IntValue.ReadOnly = true;
-            // 
-            // datevalue
-            // 
-            this.datevalue.DataPropertyName = "ExFieldDate";
-            this.datevalue.HeaderText = "Date Value";
-            this.datevalue.Name = "datevalue";
-            this.datevalue.ReadOnly = true;
-            // 
-            // decimalvalue
-            // 
-            this.decimalvalue.DataPropertyName = "ExFieldDecimal";
-            this.decimalvalue.HeaderText = "Decimal Value";
-            this.decimalvalue.Name = "decimalvalue";
-            this.decimalvalue.ReadOnly = true;
             // 
             // groupBox8
             // 
@@ -1567,16 +1506,16 @@
             this.label31.TabIndex = 23;
             this.label31.Text = "Field String*";
             // 
-            // tabPage7
+            // tabPage_payment_details
             // 
-            this.tabPage7.BackColor = System.Drawing.Color.LimeGreen;
-            this.tabPage7.Controls.Add(this.groupBox2);
-            this.tabPage7.Location = new System.Drawing.Point(4, 22);
-            this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(812, 377);
-            this.tabPage7.TabIndex = 7;
-            this.tabPage7.Text = "Payment Details";
+            this.tabPage_payment_details.BackColor = System.Drawing.Color.LimeGreen;
+            this.tabPage_payment_details.Controls.Add(this.groupBox2);
+            this.tabPage_payment_details.Location = new System.Drawing.Point(4, 22);
+            this.tabPage_payment_details.Name = "tabPage_payment_details";
+            this.tabPage_payment_details.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage_payment_details.Size = new System.Drawing.Size(812, 377);
+            this.tabPage_payment_details.TabIndex = 7;
+            this.tabPage_payment_details.Text = "Payment Details";
             // 
             // groupBox2
             // 
@@ -1734,17 +1673,17 @@
             this.label36.TabIndex = 0;
             this.label36.Text = "Mode of Payment*";
             // 
-            // HourlyPaymentTabPage
+            // tabPage_hourly_payment
             // 
-            this.HourlyPaymentTabPage.BackColor = System.Drawing.Color.LimeGreen;
-            this.HourlyPaymentTabPage.Controls.Add(this.groupBox11);
-            this.HourlyPaymentTabPage.Controls.Add(this.groupBox10);
-            this.HourlyPaymentTabPage.Location = new System.Drawing.Point(4, 22);
-            this.HourlyPaymentTabPage.Name = "HourlyPaymentTabPage";
-            this.HourlyPaymentTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.HourlyPaymentTabPage.Size = new System.Drawing.Size(812, 377);
-            this.HourlyPaymentTabPage.TabIndex = 8;
-            this.HourlyPaymentTabPage.Text = "Hourly Payment";
+            this.tabPage_hourly_payment.BackColor = System.Drawing.Color.LimeGreen;
+            this.tabPage_hourly_payment.Controls.Add(this.groupBox11);
+            this.tabPage_hourly_payment.Controls.Add(this.groupBox10);
+            this.tabPage_hourly_payment.Location = new System.Drawing.Point(4, 22);
+            this.tabPage_hourly_payment.Name = "tabPage_hourly_payment";
+            this.tabPage_hourly_payment.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage_hourly_payment.Size = new System.Drawing.Size(812, 377);
+            this.tabPage_hourly_payment.TabIndex = 8;
+            this.tabPage_hourly_payment.Text = "Hourly Payment";
             // 
             // groupBox11
             // 
@@ -1801,27 +1740,6 @@
             this.dataGridHourlyPayments.RowHeadersDefaultCellStyle = dataGridViewCellStyle18;
             this.dataGridHourlyPayments.Size = new System.Drawing.Size(454, 352);
             this.dataGridHourlyPayments.TabIndex = 0;
-            // 
-            // eWorkDate
-            // 
-            this.eWorkDate.DataPropertyName = "WorkDate";
-            this.eWorkDate.HeaderText = "Work Date";
-            this.eWorkDate.Name = "eWorkDate";
-            this.eWorkDate.ReadOnly = true;
-            // 
-            // eWorkHours
-            // 
-            this.eWorkHours.DataPropertyName = "WorkHours";
-            this.eWorkHours.HeaderText = "Work Hours";
-            this.eWorkHours.Name = "eWorkHours";
-            this.eWorkHours.ReadOnly = true;
-            // 
-            // eRatePerHour
-            // 
-            this.eRatePerHour.DataPropertyName = "RatePerHour";
-            this.eRatePerHour.HeaderText = "Rate per Hour";
-            this.eRatePerHour.Name = "eRatePerHour";
-            this.eRatePerHour.ReadOnly = true;
             // 
             // groupBox10
             // 
@@ -1972,13 +1890,22 @@
             this.btnUpdate.UseVisualStyleBackColor = false;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
-            // errorProvider1
+            // errorProvider
             // 
-            this.errorProvider1.ContainerControl = this;
+            this.errorProvider.ContainerControl = this;
             // 
-            // openFileDialog1
+            // openFileDialog
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog.FileName = "openFileDialog";
+            this.openFileDialog.Filter = "Image File (*.jpg)|*.jpg|Image File (*.gif)|*.gif|Image File (*.png)|*.png|All fi" +
+    "les (*.*)|*.*";
+            // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.CheckFileExists = true;
+            this.saveFileDialog.FileName = "saveFileDialog";
+            this.saveFileDialog.Filter = "Image File (*.jpg)|*.jpg|Image File (*.gif)|*.gif|Image File (*.png)|*.png|All fi" +
+    "les (*.*)|*.*";
             // 
             // groupBox1
             // 
@@ -1993,7 +1920,7 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.tabControl1);
+            this.groupBox3.Controls.Add(this.tabControl_employees);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(0, 0);
             this.groupBox3.Name = "groupBox3";
@@ -2004,6 +1931,17 @@
             // bindingSourceEmpBenefits
             // 
             this.bindingSourceEmpBenefits.BindingComplete += new System.Windows.Forms.BindingCompleteEventHandler(this.bindingSourceEmpBenefits_BindingComplete);
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "ExFieldStr";
+            this.dataGridViewTextBoxColumn1.HeaderText = "String Value";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dataGridViewTextBoxColumn1.Width = 101;
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -2120,6 +2058,109 @@
             this.dataGridViewTextBoxColumn13.ReadOnly = true;
             this.dataGridViewTextBoxColumn13.Width = 138;
             // 
+            // ItemId
+            // 
+            this.ItemId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ItemId.DataPropertyName = "ItemId";
+            this.ItemId.HeaderText = "Item";
+            this.ItemId.Name = "ItemId";
+            this.ItemId.ReadOnly = true;
+            this.ItemId.Width = 150;
+            // 
+            // Amount
+            // 
+            this.Amount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Amount.DataPropertyName = "Amount";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.BottomRight;
+            dataGridViewCellStyle3.Format = "C2";
+            dataGridViewCellStyle3.NullValue = null;
+            this.Amount.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Amount.HeaderText = "Amount";
+            this.Amount.Name = "Amount";
+            this.Amount.ReadOnly = true;
+            // 
+            // YTDAmount
+            // 
+            this.YTDAmount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.YTDAmount.DataPropertyName = "Balance";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.BottomRight;
+            dataGridViewCellStyle4.Format = "C2";
+            dataGridViewCellStyle4.NullValue = "-";
+            this.YTDAmount.DefaultCellStyle = dataGridViewCellStyle4;
+            this.YTDAmount.HeaderText = "YTD Amount";
+            this.YTDAmount.Name = "YTDAmount";
+            this.YTDAmount.ReadOnly = true;
+            // 
+            // ColumnLastChangedBy
+            // 
+            this.ColumnLastChangedBy.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ColumnLastChangedBy.DataPropertyName = "LastChangedBy";
+            this.ColumnLastChangedBy.HeaderText = "Last changed by";
+            this.ColumnLastChangedBy.Name = "ColumnLastChangedBy";
+            this.ColumnLastChangedBy.ReadOnly = true;
+            this.ColumnLastChangedBy.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColumnLastChangedBy.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Quantity
+            // 
+            this.Quantity.DataPropertyName = "Quantity";
+            this.Quantity.HeaderText = "Quantity";
+            this.Quantity.Name = "Quantity";
+            this.Quantity.ReadOnly = true;
+            this.Quantity.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Quantity.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // dataGridViewComboBoxColumn1
+            // 
+            this.dataGridViewComboBoxColumn1.DataPropertyName = "ExFieldName";
+            this.dataGridViewComboBoxColumn1.HeaderText = "Field Name";
+            this.dataGridViewComboBoxColumn1.Name = "dataGridViewComboBoxColumn1";
+            this.dataGridViewComboBoxColumn1.ReadOnly = true;
+            this.dataGridViewComboBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewComboBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // IntValue
+            // 
+            this.IntValue.DataPropertyName = "ExFieldInt";
+            this.IntValue.HeaderText = "Integer Value";
+            this.IntValue.Name = "IntValue";
+            this.IntValue.ReadOnly = true;
+            // 
+            // datevalue
+            // 
+            this.datevalue.DataPropertyName = "ExFieldDate";
+            this.datevalue.HeaderText = "Date Value";
+            this.datevalue.Name = "datevalue";
+            this.datevalue.ReadOnly = true;
+            // 
+            // decimalvalue
+            // 
+            this.decimalvalue.DataPropertyName = "ExFieldDecimal";
+            this.decimalvalue.HeaderText = "Decimal Value";
+            this.decimalvalue.Name = "decimalvalue";
+            this.decimalvalue.ReadOnly = true;
+            // 
+            // eWorkDate
+            // 
+            this.eWorkDate.DataPropertyName = "WorkDate";
+            this.eWorkDate.HeaderText = "Work Date";
+            this.eWorkDate.Name = "eWorkDate";
+            this.eWorkDate.ReadOnly = true;
+            // 
+            // eWorkHours
+            // 
+            this.eWorkHours.DataPropertyName = "WorkHours";
+            this.eWorkHours.HeaderText = "Work Hours";
+            this.eWorkHours.Name = "eWorkHours";
+            this.eWorkHours.ReadOnly = true;
+            // 
+            // eRatePerHour
+            // 
+            this.eRatePerHour.DataPropertyName = "RatePerHour";
+            this.eRatePerHour.HeaderText = "Rate per Hour";
+            this.eRatePerHour.Name = "eRatePerHour";
+            this.eRatePerHour.ReadOnly = true;
+            // 
             // EditEmployee
             // 
             this.AcceptButton = this.btnUpdate;
@@ -2134,41 +2175,41 @@
             this.Name = "EditEmployee";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.EditEmployee_Load);
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            this.tabPage_employment_info.ResumeLayout(false);
+            this.tabPage_employment_info.PerformLayout();
+            this.tabPage_employee_data.ResumeLayout(false);
+            this.tabPage_employee_data.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPhoto)).EndInit();
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
-            this.tabPage4.ResumeLayout(false);
+            this.tabControl_employees.ResumeLayout(false);
+            this.tabPage_previous_employment.ResumeLayout(false);
+            this.tabPage_previous_employment.PerformLayout();
+            this.tabPage_payslip_details.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEmpTxn)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            this.tabPage5.ResumeLayout(false);
+            this.tabPage_non_cash_benefits.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewNonCashBenefits)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceBenefits)).EndInit();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
-            this.tabPage6.ResumeLayout(false);
+            this.tabPage_custom_information.ResumeLayout(false);
             this.groupBox9.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCustominfo)).EndInit();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
-            this.tabPage7.ResumeLayout(false);
+            this.tabPage_payment_details.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.gbBank.ResumeLayout(false);
             this.gbBank.PerformLayout();
-            this.HourlyPaymentTabPage.ResumeLayout(false);
+            this.tabPage_hourly_payment.ResumeLayout(false);
             this.groupBox11.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridHourlyPayments)).EndInit();
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEmpBenefits)).EndInit();
@@ -2185,18 +2226,18 @@
 
         #endregion
 
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage_employment_info;
+        private System.Windows.Forms.TabPage tabPage_employee_data;
         private System.Windows.Forms.TextBox txtSurname;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtEmpNo;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabControl_employees;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.BindingSource bindingSourceDept;
         private System.Windows.Forms.BindingSource bindingSourceBank;
-        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.TextBox txtBasicPay;
         private System.Windows.Forms.Label lblBasicPay;
         private System.Windows.Forms.Label label11;
@@ -2218,26 +2259,23 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.ComboBox cbEmployer;
         private System.Windows.Forms.TextBox txtNSSF;
         private System.Windows.Forms.TextBox txtNHIF;
-        private System.Windows.Forms.TextBox txtIDNo;
         private System.Windows.Forms.TextBox txtPIN;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage_previous_employment;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.DateTimePicker dtpDateLeft;
         private System.Windows.Forms.TextBox txtPrevEmployer;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Button btnNextSeries;
         private System.Windows.Forms.CheckBox chkIsActive;
-        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TabPage tabPage_payslip_details;
         private System.Windows.Forms.Button btnEmpTxnEdit;
         private System.Windows.Forms.Button btnEmpTxnDelete;
         private System.Windows.Forms.Button btnEmpTxnAdd;
         private System.Windows.Forms.DataGridView dataGridViewEmpTxn;
         private System.Windows.Forms.BindingSource bindingSourceEmpTxns;
-        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.TabPage tabPage_non_cash_benefits;
         private System.Windows.Forms.DataGridView dataGridViewNonCashBenefits;
         private System.Windows.Forms.BindingSource bindingSourceBenefits;
         private System.Windows.Forms.DataGridViewComboBoxColumn cbBenefit;
@@ -2250,7 +2288,7 @@
         private System.Windows.Forms.Button btnDeleteBenefit;
         private System.Windows.Forms.Button btnAddBenefit;
         private System.Windows.Forms.Label lblEmployerWarning;
-        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.TabPage tabPage_custom_information;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.ComboBox cboEmpNo;
@@ -2258,8 +2296,8 @@
         private System.Windows.Forms.Button btnAddCustomInfo;
         private System.Windows.Forms.DataGridView dataGridViewCustominfo;
         private System.Windows.Forms.Button btnUpload;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label label33;
@@ -2269,7 +2307,7 @@
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.TextBox txtFieldString;
         private System.Windows.Forms.BindingSource bindingSourceEmployeeCustomInfo;
-        private System.Windows.Forms.TabPage tabPage7;
+        private System.Windows.Forms.TabPage tabPage_payment_details;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox txtTelephoneNo;
         private System.Windows.Forms.ComboBox cboModeofPayment;
@@ -2285,7 +2323,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pbPhoto;
         private System.Windows.Forms.TextBox txtChequeNo;
-        private System.Windows.Forms.TabPage HourlyPaymentTabPage;
+        private System.Windows.Forms.TabPage tabPage_hourly_payment;
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.TextBox txtRatePerHour;
         private System.Windows.Forms.Label label38;
@@ -2330,7 +2368,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TextBox txtInsuranceRelief;
         private System.Windows.Forms.Label label8;
@@ -2355,5 +2392,11 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn chkEnabled;
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.ComboBox cbo_employer;
+        private System.Windows.Forms.TextBox txtIDNo;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox txtphone_no;
+        private System.Windows.Forms.Label label12;
     }
 }

@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{09DB31D1-FD0F-425F-8D3B-37B72C4FC7C8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>console_entities</RootNamespace>
+    <AssemblyName>console_entities</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Build\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Account.cs" />
+    <Compile Include="Bank.cs" />
+    <Compile Include="BankBranch.cs" />
+    <Compile Include="Benefit.cs" />
+    <Compile Include="Department.cs" />
+    <Compile Include="Employee.cs" />
+    <Compile Include="EmployeesBankTransfer.cs" />
+    <Compile Include="EmployeeTransaction.cs" />
+    <Compile Include="Employee_Ext.cs" />
+    <Compile Include="Employee_Ext_Field.cs" />
+    <Compile Include="Employer.cs" />
+    <Compile Include="EmployerBank.cs" />
+    <Compile Include="EmpNonCashBenefit.cs" />
+    <Compile Include="HourlyPayment.cs" />
+    <Compile Include="LeaveTransaction.cs" />
+    <Compile Include="MembershipModel.cs" />
+    <Compile Include="NHIFRate.cs" />
+    <Compile Include="OAuthMembershipModel.cs" />
+    <Compile Include="PackedTransaction.cs" />
+    <Compile Include="PayeeRate.cs" />
+    <Compile Include="Payroll.cs" />
+    <Compile Include="PayrollItem.cs" />
+    <Compile Include="PayrollItemType.cs" />
+    <Compile Include="PayrollType.cs" />
+    <Compile Include="PayslipDet.cs" />
+    <Compile Include="PayslipDet_Temp.cs" />
+    <Compile Include="PayslipMaster.cs" />
+    <Compile Include="PayslipMaster_Temp.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoleModel.cs" />
+    <Compile Include="Setting.cs" />
+    <Compile Include="SettingsGroup.cs" />
+    <Compile Include="spAllowedReportsRolesMenus.cs" />
+    <Compile Include="spAllowedRoleMenus.cs" />
+    <Compile Include="spAllowedRoleMenusweb.cs" />
+    <Compile Include="spMenuItem.cs" />
+    <Compile Include="spMenus.cs" />
+    <Compile Include="spReportsMenuItem.cs" />
+    <Compile Include="spRole.cs" />
+    <Compile Include="spUser.cs" />
+    <Compile Include="spUsersInRole.cs" />
+    <Compile Include="TaxTracking.cs" />
+    <Compile Include="TechParam.cs" />
+    <Compile Include="Transaction.cs" />
+    <Compile Include="TransactionDef.cs" />
+    <Compile Include="TxnType.cs" />
+    <Compile Include="UsersInRoleModel.cs" />
+    <Compile Include="webpages_Membership.cs" />
+    <Compile Include="webpages_OAuthMembership.cs" />
+    <Compile Include="webpages_Role.cs" />
+    <Compile Include="webpages_UsersInRole.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

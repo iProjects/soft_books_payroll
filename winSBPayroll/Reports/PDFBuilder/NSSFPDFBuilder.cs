@@ -1,48 +1,59 @@
-﻿using System; 
+﻿using System;
 using System.Collections.Generic;
-using System.Globalization; 
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using BLL.DataEntry;
-//Payroll
-using BLL.KRA; 
+using BLL.KRA;
 using CommonLib;
-using DAL;  
-//--- Add the following to make itext work
-using iTextSharp.text; 
+using DAL;
+// iTextSharp namespaces for PDF manipulation
+using iTextSharp.text;
 using iTextSharp.text.pdf;
 using VVX;
 using winSBPayroll.ViewModel;
 
 namespace winSBPayroll.Reports.PDF
 {
+    /// <summary>
+    /// Generates the NSSF PDF report using iTextSharp's PdfPTable and PdfPCell classes.
+    /// Compatible with .NET Framework 4.0.
+    /// </summary>
     public class NSSFPDFBuilder
     {
         public NSSFReportModel _ViewModel;
-        Document document;
-        string Message;
-        string sFilePDF;
-        SBPayrollDBEntities db;
-        Repository rep;
-        string connection;
-        Employer _employer;
+        private Document document;
+        private string Message;
+        private string sFilePDF;
+        private SBPayrollDBEntities db;
+        private Repository rep;
+        private string connection;
+        private Employer _employer;
 
-        //DEFINED fONTS
-        Font hFont1 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
-        Font hFont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
-        Font bFont1 = new Font(Font.TIMES_ROMAN, 10, Font.NORMAL);//body 
-        Font tHFont = new Font(Font.TIMES_ROMAN, 9, Font.BOLD); //table Header
-        Font tHfont1 = new Font(Font.TIMES_ROMAN, 9, Font.BOLD);//TABLE HEADER
-        Font helv8Font = new Font(Font.HELVETICA, 8, Font.NORMAL);//table cell
-        Font rms6Normal = new Font(Font.TIMES_ROMAN, 6, Font.NORMAL);
-        Font rms8Normal = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL);
-        Font rms6Bold = new Font(Font.TIMES_ROMAN, 6, Font.BOLD);
-        Font rms8Bold = new Font(Font.TIMES_ROMAN, 9, Font.BOLD);
-        Font rms10Normal = new Font(Font.HELVETICA, 10, Font.NORMAL);
+        // DEFINED FONTS - Using BaseColor for .NET 4.0 / iTextSharp 5 compatibility
+        private Font hFont1 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
+        private Font hfont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        private Font hFont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        private Font bfont1 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);
+        private Font bFont2 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD);
+        private Font bFont3 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
+        private Font tHFont = new Font(Font.TIMES_ROMAN, 9, Font.BOLD);
+        private Font tHfont1 = new Font(Font.TIMES_ROMAN, 11, Font.BOLD);
+        private Font tcFont = new Font(Font.HELVETICA, 8, Font.NORMAL);
+        private Font helv8Font = new Font(Font.HELVETICA, 8, Font.NORMAL);
+        private Font rms6Normal = new Font(Font.TIMES_ROMAN, 9, Font.NORMAL);
+        private Font rms10Bold = new Font(Font.HELVETICA, 10, Font.BOLD);
+        private Font rms6Bold = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        private Font rms8Bold = new Font(Font.HELVETICA, 8, Font.BOLD);
+        private Font rms9Bold = new Font(Font.HELVETICA, 9, Font.BOLD);
+        private Font rms10Normal = new Font(Font.HELVETICA, 10, Font.NORMAL);
 
-        //constructor
-        public NSSFPDFBuilder(Employer employer, NSSFReportModel nssfreportmodel, string FileName, string Conn)
+        private event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        private string TAG;
+
+        // Constructors
+        public NSSFPDFBuilder(Employer employer, NSSFReportModel nssfreportmodel, string FileName, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (nssfreportmodel == null)
                 throw new ArgumentNullException("NSSFReportModel is null");
@@ -55,11 +66,18 @@ namespace winSBPayroll.Reports.PDF
             db = new SBPayrollDBEntities(connection);
             rep = new Repository(connection);
 
+            TAG = this.GetType().Name;
+            _notificationmessageEventname = notificationmessageEventname;
             sFilePDF = FileName;
-
             _employer = employer;
+
+            if (_notificationmessageEventname != null)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed NSSFPDFBuilder", TAG));
+            }
         }
-        public NSSFPDFBuilder( NSSFReportModel nssfreportmodel, string FileName, string Conn)
+
+        public NSSFPDFBuilder(NSSFReportModel nssfreportmodel, string FileName, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (nssfreportmodel == null)
                 throw new ArgumentNullException("NSSFReportModel is null");
@@ -71,8 +89,9 @@ namespace winSBPayroll.Reports.PDF
 
             db = new SBPayrollDBEntities(connection);
             rep = new Repository(connection);
-
-            sFilePDF = FileName; 
+            sFilePDF = FileName;
+            TAG = this.GetType().Name;
+            _notificationmessageEventname = notificationmessageEventname;
         }
 
         public string GetPDF()
@@ -80,301 +99,261 @@ namespace winSBPayroll.Reports.PDF
             BuildPDF();
             return sFilePDF;
         }
-        /*Build the document **/
+
+        /// <summary>
+        /// Main orchestration method to build the PDF document.
+        /// </summary>
         private void BuildPDF()
         {
             try
             {
-                //step 1 creation of the document
-                document = new Document(PageSize.A4.Rotate());
+                // Step 1: Initialize document (A4 Landscape orientation)
+                document = new Document(PageSize.A4.Rotate(), 20, 20, 20, 20);
 
-                // step 2: we create a writer that listens to the document
+                // Step 2: Bind PdfWriter to file stream
                 PdfWriter.GetInstance(document, new FileStream(sFilePDF, FileMode.Create));
 
-                //open the document
+                // Step 3: Open the document
                 document.Open();
 
-                //add header
+                if (_notificationmessageEventname != null)
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating document header...", TAG));
+
+                // Add header content
                 AddDocHeader();
 
-                //add body
+                if (_notificationmessageEventname != null)
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating document body...", TAG));
+
+                // Add main table content
                 AddDocBody();
 
-                //add footer
+                if (_notificationmessageEventname != null)
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating document footer...", TAG));
+
+                // Add footer content
                 AddDocFooter();
 
-                //close the document
+                // Close document stream
                 document.Close();
             }
             catch (DocumentException de)
             {
-                this.Message = de.Message;
+                Log.WriteToErrorLogFile(de);
             }
             catch (IOException ioe)
             {
-                this.Message = ioe.Message;
+                Log.WriteToErrorLogFile(ioe);
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
         }
-        //document header
+
+        /// <summary>
+        /// Generates document header section using PdfPTable and PdfPCell[span_2](start_span)[span_2](end_span).
+        /// </summary>
         private void AddDocHeader()
         {
-            Table nssfTable = new Table(5);
+            // Create a 5-column table for header elements[span_3](start_span)[span_3](end_span)
+            PdfPTable nssfTable = new PdfPTable(5);
             nssfTable.WidthPercentage = 100;
-            nssfTable.Padding = 1;
-            nssfTable.Spacing = 1;
-            nssfTable.Border = Table.NO_BORDER;
 
-            Cell EmployerNameCell = new Cell(new Phrase(_ViewModel.EmployerName.ToUpper() + "\n", new Font(Font.TIMES_ROMAN, 15, Font.BOLD | Font.UNDERLINE, Color.BLACK)));
-            EmployerNameCell.HorizontalAlignment = Cell.ALIGN_CENTER;
+            // Employer Name Header
+            PdfPCell EmployerNameCell = new PdfPCell(new Phrase(_ViewModel.EmployerName.ToUpper() + "\n", new Font(Font.TIMES_ROMAN, 15, Font.BOLD | Font.UNDERLINE, Color.BLACK)));
+            EmployerNameCell.HorizontalAlignment = Element.ALIGN_CENTER;
             EmployerNameCell.Colspan = 5;
-            EmployerNameCell.Border = Cell.NO_BORDER;
+            EmployerNameCell.Border = Rectangle.NO_BORDER;
             nssfTable.AddCell(EmployerNameCell);
 
-            Cell employerAdressCell = new Cell(new Phrase(_ViewModel.EmpAddress, new Font(Font.TIMES_ROMAN, 9, Font.BOLD | Font.UNDERLINE, Color.BLACK)));
-            employerAdressCell.HorizontalAlignment = Cell.ALIGN_CENTER;
+            // Employer Address Header
+            PdfPCell employerAdressCell = new PdfPCell(new Phrase(_ViewModel.EmpAddress, new Font(Font.TIMES_ROMAN, 9, Font.BOLD | Font.UNDERLINE, Color.BLACK)));
+            employerAdressCell.HorizontalAlignment = Element.ALIGN_CENTER;
             employerAdressCell.Colspan = 5;
-            employerAdressCell.Border = Cell.NO_BORDER;
+            employerAdressCell.Border = Rectangle.NO_BORDER;
             nssfTable.AddCell(employerAdressCell);
 
-            Cell bCell = new Cell(new Phrase("NSSF", hFont1));
-            bCell.HorizontalAlignment = Cell.ALIGN_CENTER;
+            // Report Title Header
+            PdfPCell bCell = new PdfPCell(new Phrase("NSSF", hFont1));
+            bCell.HorizontalAlignment = Element.ALIGN_CENTER;
             bCell.Colspan = 5;
-            bCell.Border = Cell.NO_BORDER;
+            bCell.Border = Rectangle.NO_BORDER;
             nssfTable.AddCell(bCell);
 
-            Cell reportNameCell = new Cell(new Phrase(_ViewModel.ReportName, hFont2));
-            reportNameCell.HorizontalAlignment = Cell.ALIGN_CENTER;
+            // Report Subtitle
+            PdfPCell reportNameCell = new PdfPCell(new Phrase(_ViewModel.ReportName, hFont2));
+            reportNameCell.HorizontalAlignment = Element.ALIGN_CENTER;
             reportNameCell.Colspan = 5;
-            reportNameCell.Border = Cell.NO_BORDER;
+            reportNameCell.Border = Rectangle.NO_BORDER;
             nssfTable.AddCell(reportNameCell);
 
-            Cell employerNSSFCell = new Cell(new Phrase("NSSF No: " + _ViewModel.EmployerCode.Trim(), hFont2));
-            employerNSSFCell.HorizontalAlignment = Cell.ALIGN_CENTER;
-            employerNSSFCell.Border = Cell.NO_BORDER;
+            // NSSF Code
+            PdfPCell employerNSSFCell = new PdfPCell(new Phrase("NSSF No: " + _ViewModel.EmployerCode.Trim(), hFont2));
+            employerNSSFCell.HorizontalAlignment = Element.ALIGN_CENTER;
             employerNSSFCell.Colspan = 5;
+            employerNSSFCell.Border = Rectangle.NO_BORDER;
             nssfTable.AddCell(employerNSSFCell);
 
-            Cell PrintedonCell = new Cell(new Phrase("Printed on: " + _ViewModel.PrintedOn.ToString("dd-dddd-MMMM-yyyy"), hFont2));
-            PrintedonCell.HorizontalAlignment = Cell.ALIGN_LEFT;
+            // Printed Date Metadata
+            PdfPCell PrintedonCell = new PdfPCell(new Phrase("Printed on: " + _ViewModel.PrintedOn.ToString("dd-dddd-MMMM-yyyy"), hFont2));
+            PrintedonCell.HorizontalAlignment = Element.ALIGN_LEFT;
             PrintedonCell.Colspan = 4;
-            PrintedonCell.Border = Cell.NO_BORDER;
+            PrintedonCell.Border = Rectangle.NO_BORDER;
             nssfTable.AddCell(PrintedonCell);
 
-            //create the logo
-            PDFGen pdfgen = new PDFGen();
+            // Logo & Slogan Column
+            PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
             Image img0 = pdfgen.DoGetImageFile(_ViewModel.CompanyLogo);
-            img0.Alignment = Image.ALIGN_MIDDLE;
-            Cell logoCell = new Cell(img0);
-            logoCell.HorizontalAlignment = Cell.ALIGN_LEFT;
-            logoCell.Border = Cell.NO_BORDER;
-            logoCell.Add(new Phrase(_ViewModel.CompanySlogan, new Font(Font.HELVETICA, 8, Font.ITALIC, Color.BLACK)));
+
+            PdfPCell logoCell = new PdfPCell();
+            logoCell.Border = Rectangle.NO_BORDER;
+            logoCell.HorizontalAlignment = Element.ALIGN_LEFT;
+
+            if (img0 != null)
+            {
+                img0.Alignment = Image.ALIGN_MIDDLE;
+                logoCell.AddElement(img0);
+            }
+
+            logoCell.AddElement(new Phrase(_ViewModel.CompanySlogan, new Font(Font.HELVETICA, 8, Font.ITALIC, Color.BLACK)));
             nssfTable.AddCell(logoCell);
 
+            // Append header to document
             document.Add(nssfTable);
         }
-        //document body
+
+        /// <summary>
+        /// Builds main grid layout containing employee NSSF details[span_4](start_span)[span_4](end_span).
+        /// </summary>
         private void AddDocBody()
         {
-            Table nssfInfoTable = new Table(6);
-            nssfInfoTable.Border = Table.RECTANGLE;
-            nssfInfoTable.Border = Table.ALIGN_CENTER;
-            nssfInfoTable.Padding = 1;
-            nssfInfoTable.Spacing = 1;
+            // Initialize 6-column PdfPTable for dataset view[span_5](start_span)[span_5](end_span)
+            PdfPTable nssfInfoTable = new PdfPTable(6);
             nssfInfoTable.WidthPercentage = 100;
+            nssfInfoTable.SpacingBefore = 10f;
 
-            //add table header
+            // Define relative width ratios for columns
+            nssfInfoTable.SetWidths(new float[] { 10f, 20f, 20f, 15f, 15f, 20f });
+
+            // Add Header Row
             AddBodyTableHeaders(nssfInfoTable);
 
-            //addtable details
+            // Add Detail Rows
             foreach (var n in _ViewModel.PayList)
             {
                 AddBodyTableDetails(n, nssfInfoTable);
             }
 
-            //add table totals
+            // Add Footer Row
             AddBodyTableTotal(nssfInfoTable);
 
+            // Append main body to document
             document.Add(nssfInfoTable);
         }
-        //table headers
-        private void AddBodyTableHeaders(Table nssfTable)
+
+        /// <summary>
+        /// Adds structural headers to the dataset grid[span_6](start_span)[span_6](end_span).
+        /// </summary>
+        private void AddBodyTableHeaders(PdfPTable nssfTable)
         {
-            Cell employeenumberCell = new Cell(new Phrase("No", tHfont1));
-            employeenumberCell.Border = Cell.RECTANGLE;
-            employeenumberCell.HorizontalAlignment = Cell.ALIGN_CENTER;
-            nssfTable.AddCell(employeenumberCell);
+            string[] headers = new string[]
+            {
+                "No",
+                "Surname",
+                "Other Names",
+                "Id No",
+                "NSSF No",
+                "Amount\n Kshs"
+            };
 
-            Cell surNameCell = new Cell(new Phrase("Surname", tHfont1));
-            surNameCell.Border = Cell.RECTANGLE;
-            surNameCell.HorizontalAlignment = Cell.ALIGN_CENTER;
-            nssfTable.AddCell(surNameCell);
-
-            Cell otherNamesCell = new Cell(new Phrase("Other Names", tHfont1));
-            otherNamesCell.Border = Cell.RECTANGLE;
-            otherNamesCell.HorizontalAlignment = Cell.ALIGN_CENTER;
-            nssfTable.AddCell(otherNamesCell);
-
-            Cell idNoCell = new Cell(new Phrase("Id No", tHfont1));
-            idNoCell.Border = Cell.RECTANGLE;
-            idNoCell.HorizontalAlignment = Cell.ALIGN_CENTER;
-            nssfTable.AddCell(idNoCell);
-
-            Cell nssfNoCell = new Cell(new Phrase("NSSF No", tHfont1));
-            nssfNoCell.Border = Cell.RECTANGLE;
-            nssfNoCell.HorizontalAlignment = Cell.ALIGN_CENTER;
-            nssfTable.AddCell(nssfNoCell);
-
-            Cell amountCell = new Cell(new Phrase("Amount\n (Inclusive Employer's NSSF)\n Kshs", tHfont1));
-            amountCell.Border = Cell.RECTANGLE;
-            amountCell.HorizontalAlignment = Cell.ALIGN_CENTER;
-            nssfTable.AddCell(amountCell);
+            foreach (string header in headers)
+            {
+                PdfPCell cell = new PdfPCell(new Phrase(header, tHfont1));
+                cell.Border = Rectangle.BOX;
+                cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.Padding = 4f;
+                nssfTable.AddCell(cell);
+            }
         }
-        //table details
-        private void AddBodyTableDetails(DAL.psuedovwPayrollMaster nssfRec, Table nssfTable)
+
+        /// <summary>
+        /// Generates individual employee detail rows[span_7](start_span)[span_7](end_span).
+        /// </summary>
+        private void AddBodyTableDetails(DAL.psuedovwPayrollMaster nssfRec, PdfPTable nssfTable)
         {
-            Cell A = new Cell(new Phrase(nssfRec.EmpNo, helv8Font));
-            A.HorizontalAlignment = Cell.ALIGN_LEFT;
-            nssfTable.AddCell(A);//Col 1
+            // Col 1: Employee Number
+            PdfPCell cellA = new PdfPCell(new Phrase(nssfRec.EmpNo, helv8Font));
+            cellA.HorizontalAlignment = Element.ALIGN_LEFT;
+            cellA.Padding = 3f;
+            nssfTable.AddCell(cellA);
 
-            Cell B = new Cell(new Phrase(nssfRec.Surname, helv8Font));
-            B.HorizontalAlignment = Cell.ALIGN_LEFT;
-            nssfTable.AddCell(B);//Col 2
+            // Col 2: Surname
+            PdfPCell cellB = new PdfPCell(new Phrase(nssfRec.Surname, helv8Font));
+            cellB.HorizontalAlignment = Element.ALIGN_LEFT;
+            cellB.Padding = 3f;
+            nssfTable.AddCell(cellB);
 
-            Cell C = new Cell(new Phrase(nssfRec.OtherNames, helv8Font));
-            C.HorizontalAlignment = Cell.ALIGN_LEFT;
-            nssfTable.AddCell(C);//Col 3
+            // Col 3: Other Names
+            PdfPCell cellC = new PdfPCell(new Phrase(nssfRec.OtherNames, helv8Font));
+            cellC.HorizontalAlignment = Element.ALIGN_LEFT;
+            cellC.Padding = 3f;
+            nssfTable.AddCell(cellC);
 
-            Cell D = new Cell(new Phrase(nssfRec.IDNo, helv8Font));
-            D.HorizontalAlignment = Cell.ALIGN_LEFT;
-            nssfTable.AddCell(D);//Col 4
+            // Col 4: National ID
+            PdfPCell cellD = new PdfPCell(new Phrase(nssfRec.IDNo, helv8Font));
+            cellD.HorizontalAlignment = Element.ALIGN_LEFT;
+            cellD.Padding = 3f;
+            nssfTable.AddCell(cellD);
 
-            Cell E1 = new Cell(new Phrase(nssfRec.NSSFNo, helv8Font));
-            E1.HorizontalAlignment = Cell.ALIGN_LEFT;
-            nssfTable.AddCell(E1);//Col 5
+            // Col 5: NSSF Number
+            PdfPCell cellE1 = new PdfPCell(new Phrase(nssfRec.NSSFNo, helv8Font));
+            cellE1.HorizontalAlignment = Element.ALIGN_LEFT;
+            cellE1.Padding = 3f;
+            nssfTable.AddCell(cellE1);
 
-            Cell E2 = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", nssfRec.NSSF), helv8Font));
-            E2.HorizontalAlignment = Cell.ALIGN_RIGHT;
-            nssfTable.AddCell(E2);//Col 6
-
-            //switch (rep.SettingLookup("NSSFCOMPUTATIONMETHOD").ToUpper())
-            //{
-            //    case "OLD":
-            //        Cell E2 = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", nssfRec.NSSF + nssfRec.EmployerNSSF), helv8Font));
-            //        E2.HorizontalAlignment = Cell.ALIGN_RIGHT;
-            //        nssfTable.AddCell(E2);//Col 6
-            //        break;
-            //    case "NEW":
-            //        int lowerearninglimit = int.Parse(rep.SettingLookup("NSSFMINLOWEREARNINGLIMIT"));
-            //        int upperearninglimit = int.Parse(rep.SettingLookup("NSSFMAXUPPEREARNINGLIMIT"));
-            //        decimal _employeecontributionamount = nssfRec.NSSF;
-            //        decimal _employercontributionamount = nssfRec.EmployerNSSF;
-            //        decimal _employeecontributionpecentage = int.Parse(rep.SettingLookup("NSSFEMPLOYEECONTRIBUTIONPERCENTAGE"));
-            //        decimal _employercontributionpercentage = int.Parse(rep.SettingLookup("NSSFEMPLOYERCONTRIBUTIONPERCENTAGE"));
-            //        NssfContributionsDTO _NssfContributionsDTO = rep.ComputeNssfContributions(nssfRec.EmpNo);
-            //        Cell E3 = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _NssfContributionsDTO.TotalPensionContribution), helv8Font));
-            //        E3.HorizontalAlignment = Cell.ALIGN_RIGHT;
-            //        nssfTable.AddCell(E3);//Col 6
-            //        break;
-            //}
+            // Col 6: Formatted Amount
+            PdfPCell cellE2 = new PdfPCell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", nssfRec.NSSF), helv8Font));
+            cellE2.HorizontalAlignment = Element.ALIGN_RIGHT;
+            cellE2.Padding = 3f;
+            nssfTable.AddCell(cellE2);
         }
-        //table totals
-        private void AddBodyTableTotal(Table nssfTable)
+
+        /// <summary>
+        /// Renders aggregate totals at the bottom of the dataset grid[span_8](start_span)[span_8](end_span).
+        /// </summary>
+        private void AddBodyTableTotal(PdfPTable nssfTable)
         {
-            Cell E1 = new Cell(new Phrase("TOTAL(Inclusive Employer's NSSF)", rms8Bold));
-            E1.Colspan = 5;
-            E1.HorizontalAlignment = Cell.ALIGN_LEFT;
-            nssfTable.AddCell(E1);
+            // Span overall description across first 5 columns
+            PdfPCell totalLabelCell = new PdfPCell(new Phrase("TOTAL(Inclusive Employer's NSSF)", rms8Bold));
+            totalLabelCell.Colspan = 5;
+            totalLabelCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            totalLabelCell.Padding = 4f;
+            nssfTable.AddCell(totalLabelCell);
 
-            Cell E2 = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.Total), rms8Bold));
-            E2.HorizontalAlignment = Cell.ALIGN_RIGHT;
-            nssfTable.AddCell(E2);//Col 6 
-
-            //switch (rep.SettingLookup("NSSFCOMPUTATIONMETHOD").ToUpper())
-            //{
-            //    case "OLD":
-            //        Cell E1 = new Cell(new Phrase("TOTAL(Inclusive Employer's NSSF)", rms8Bold));
-            //        E1.Colspan = 5;
-            //        E1.HorizontalAlignment = Cell.ALIGN_LEFT;
-            //        nssfTable.AddCell(E1);
-
-            //        Cell E2 = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.Total), rms8Bold));
-            //        E2.HorizontalAlignment = Cell.ALIGN_RIGHT;
-            //        nssfTable.AddCell(E2);//Col 6 
-            //        break;
-            //    case "NEW":
-            //        List<NssfContributionsDTO> _nssfContributions = new List<NssfContributionsDTO>();
-            //        var _employeesquery = from ep in rep.GetAllActiveEmployees()
-            //                              where ep.IsActive == true
-            //                              where ep.IsDeleted == false
-            //                              where ep.EmployerId == _employer.Id
-            //                              select ep;
-            //        List<Employee> _employees = _employeesquery.ToList();
-            //        foreach (var emp in _employees)
-            //        {
-            //            NssfContributionsDTO _nssfcontribution = new NssfContributionsDTO();
-            //            _nssfcontribution = rep.ComputeNssfContributions(emp.EmpNo);
-
-            //            if (!_nssfContributions.Any(i => i.EmpNo == _nssfcontribution.EmpNo))
-            //            {
-            //                _nssfContributions.Add(_nssfcontribution);
-            //            }
-            //        }
-            //        decimal NewNssfTotal = _nssfContributions.Sum(t => t.TotalPensionContribution);
-
-            //        Cell E4 = new Cell(new Phrase("TOTAL(Inclusive Employer's NSSF)", rms8Bold));
-            //        E4.Colspan = 5;
-            //        E4.HorizontalAlignment = Cell.ALIGN_LEFT;
-            //        nssfTable.AddCell(E4);
-
-            //        Cell E3 = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", NewNssfTotal), helv8Font));
-            //        E3.HorizontalAlignment = Cell.ALIGN_RIGHT;
-            //        nssfTable.AddCell(E3);//Col 6
-            //        break;
-            //}
+            // Render sum total in the final column
+            PdfPCell totalValueCell = new PdfPCell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.Total), rms8Bold));
+            totalValueCell.HorizontalAlignment = Element.ALIGN_RIGHT;
+            totalValueCell.Padding = 4f;
+            nssfTable.AddCell(totalValueCell);
         }
-        //document footer
+
+        /// <summary>
+        /// Appends standard document footer/signatures[span_9](start_span)[span_9](end_span).
+        /// </summary>
         private void AddDocFooter()
         {
-            Table nssfTable = new Table(1);
-            nssfTable.WidthPercentage = 100;
-            nssfTable.Border = Table.NO_BORDER;
+            PdfPTable footerTable = new PdfPTable(1);
+            footerTable.WidthPercentage = 100;
+            footerTable.SpacingBefore = 20f;
 
-            Cell sgCell = new Cell(new Phrase("Signature.....................................................................................................", rms10Normal));
-            sgCell.HorizontalAlignment = Cell.ALIGN_LEFT;
-            sgCell.Border = Cell.NO_BORDER;
-            nssfTable.AddCell(sgCell);
+            PdfPCell sgCell = new PdfPCell(new Phrase("Signature.....................................................................................................", rms10Normal));
+            sgCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            sgCell.Border = Rectangle.NO_BORDER;
+            footerTable.AddCell(sgCell);
 
-            document.Add(nssfTable);
+            document.Add(footerTable);
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

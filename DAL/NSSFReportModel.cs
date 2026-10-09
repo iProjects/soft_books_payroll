@@ -40,7 +40,7 @@ namespace DAL
         {
             get
             {
-                return "For  The  Period  " + PeriodDate.ToString("MMM-yyyy");
+                return "For The Period  " + PeriodDate.ToString("MMM-yyyy");
             }
         }
         public string MonthofContribution
@@ -51,21 +51,34 @@ namespace DAL
             }
         }
         public List<DAL.psuedovwPayrollMaster> PayList { get; set; }
+        public List<DAL.NssfContributionsDTO> _NssfContributions { get; set; }
+
         public decimal Total
         {
             get
             {
-                decimal TotalNSSF = 0;
-                switch (rep.SettingLookup("NSSFCOMPUTATIONMETHOD").ToUpper())
-                {
-                    case "OLD":
-                        TotalNSSF = PayList.Sum(t => t.NSSF + t.EmployerNSSF);
-                        break;
-                    case "NEW":
-                        TotalNSSF = PayList.Sum(t => t.NSSF);
-                        break;
-                }
-                return TotalNSSF;
+                return PayList.Sum(t => t.NSSF);
+            }
+        }
+        public decimal TotalPensionContribution
+        {
+            get
+            {
+                return _NssfContributions.Sum(t => t.TotalPensionContribution);
+            }
+        }
+        public decimal Total_Employee_contribution
+        {
+            get
+            {
+                return _NssfContributions.Sum(t => t.TotalEmployeeContribution);
+            }
+        }
+        public decimal Total_Employer_contribution
+        {
+            get
+            {
+                return _NssfContributions.Sum(t => t.TotalEmployerContribution);
             }
         }
         public decimal NewNssfTotal { get; set; }

@@ -15,7 +15,6 @@ namespace winSBPayroll.Reports.PDF
 {
     public class MakePayslipPDF2
     {
-
         Payslip _ViewModel1;
         Payslip _ViewModel2;
         Document document;
@@ -37,10 +36,10 @@ namespace winSBPayroll.Reports.PDF
         Font tcFont3 = new Font(Font.HELVETICA, 6, Font.BOLD);//table cell
         Font tcFont4 = new Font(Font.TIMES_ROMAN, 6, Font.NORMAL);//table cell
         Font rms10Normal = new Font(Font.HELVETICA, 7, Font.NORMAL);
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
 
-
-
-        public MakePayslipPDF2(Payslip PayslipModel1, Payslip PayslipModel2, Document doc, string Conn)
+        public MakePayslipPDF2(Payslip PayslipModel1, Payslip PayslipModel2, Document doc, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             //if (PayslipModel1 == null)
             //    throw new ArgumentNullException("PayslipViewModel is null");
@@ -58,9 +57,16 @@ namespace winSBPayroll.Reports.PDF
             db = new SBPayrollDBEntities(connection);
             rep = new Repository(connection);
 
+            TAG = this.GetType().Name;
+
             document = doc;
+
+            _notificationmessageEventname = notificationmessageEventname;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed MakePayslipPDF2", TAG));
+
         }
-         
+
         public void BuildPDF()
         {
             try
@@ -75,12 +81,12 @@ namespace winSBPayroll.Reports.PDF
                 payslipsTable.BorderWidthBottom = 0;
                 payslipsTable.BorderWidthTop = 0;
                 payslipsTable.BorderWidthLeft = 0;
-                payslipsTable.BorderWidthRight = 0; 
+                payslipsTable.BorderWidthRight = 0;
 
-                int[] colWidthPercentages = new int[Cols]; 
+                int[] colWidthPercentages = new int[Cols];
                 colWidthPercentages[0] = 45;
                 colWidthPercentages[1] = 5;
-                colWidthPercentages[2] = 45;  
+                colWidthPercentages[2] = 45;
 
                 payslipsTable.SetWidths(colWidthPercentages);
 
@@ -118,15 +124,15 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (DocumentException de)
             {
-                this.Message = de.Message;
+                Log.WriteToErrorLogFile(de);
             }
             catch (IOException ioe)
             {
-                this.Message = ioe.Message;
+                Log.WriteToErrorLogFile(ioe);
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
+                Log.WriteToErrorLogFile(ex);
             }
         }
 
@@ -145,15 +151,15 @@ namespace winSBPayroll.Reports.PDF
                     _payslipTable.InsertTable(payslipTable11);
                 }
                 if (_ViewModel1 != null)
-                {                    
+                {
                     Table payslipTable11 = new Table(2);
                     payslipTable11.WidthPercentage = 100;
                     payslipTable11.Padding = 1;
-                    payslipTable11.Border = Rectangle.BOX; 
+                    payslipTable11.Border = Rectangle.BOX;
 
                     Cell aCell = new Cell(new Phrase(_ViewModel1.EmployerName.ToUpper().Trim() + "\n", hFont1));
                     aCell.HorizontalAlignment = Cell.ALIGN_CENTER;
-                    aCell.Colspan = 2;                    
+                    aCell.Colspan = 2;
                     payslipTable11.AddCell(aCell);
 
                     Cell emailCell = new Cell(new Phrase(_ViewModel1.EmployerAddress.Trim() + "\n", hFont1));
@@ -262,12 +268,12 @@ namespace winSBPayroll.Reports.PDF
                 }
                 #endregion "payslip1"
 
-                #region "middle column" 
-                    Table middleTable = new Table(2);
-                    middleTable.WidthPercentage = 100;
-                    middleTable.Padding = 1;
+                #region "middle column"
+                Table middleTable = new Table(2);
+                middleTable.WidthPercentage = 100;
+                middleTable.Padding = 1;
 
-                    _payslipTable.InsertTable(middleTable); 
+                _payslipTable.InsertTable(middleTable);
                 #endregion "middle column"
 
                 #region "payslip2"
@@ -282,7 +288,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel2 != null)
                 {
-                    
+
                     Table payslipTable2 = new Table(2);
                     payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
@@ -300,7 +306,7 @@ namespace winSBPayroll.Reports.PDF
 
                     Cell titleCell = new Cell(new Phrase("PAYSLIP", new Font(Font.TIMES_ROMAN, 10, Font.BOLD, Color.BLACK)));
                     titleCell.HorizontalAlignment = Cell.ALIGN_CENTER;
-                    titleCell.Colspan = 2;   
+                    titleCell.Colspan = 2;
                     //titleCell.Border = Cell.NO_BORDER;
                     payslipTable2.AddCell(titleCell);
 
@@ -424,7 +430,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel1 != null)
                 {
-                   
+
                     Table payslipTable1 = new Table(2);
                     payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
@@ -442,7 +448,7 @@ namespace winSBPayroll.Reports.PDF
                         desopCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                         payslipTable1.AddCell(desopCell);
 
-                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.Amount), tcFont4));
+                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.Amount), tcFont4));
                         aopCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable1.AddCell(aopCell);
                     }
@@ -451,7 +457,7 @@ namespace winSBPayroll.Reports.PDF
                     saCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(saCell);
 
-                    Cell tpCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel1.TotalPayments), tcFont3));
+                    Cell tpCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel1.TotalPayments), tcFont3));
                     tpCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(tpCell);
 
@@ -480,7 +486,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel2 != null)
                 {
-                   
+
                     Table payslipTable2 = new Table(2);
                     payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
@@ -498,7 +504,7 @@ namespace winSBPayroll.Reports.PDF
                         paymentsCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                         payslipTable2.AddCell(paymentsCell);
 
-                        Cell amountCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.Amount), tcFont4));
+                        Cell amountCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.Amount), tcFont4));
                         amountCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable2.AddCell(amountCell);
                     }
@@ -507,7 +513,7 @@ namespace winSBPayroll.Reports.PDF
                     totalCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable2.AddCell(totalCell);
 
-                    Cell totalCell1 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel2.TotalPayments), tcFont3));
+                    Cell totalCell1 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel2.TotalPayments), tcFont3));
                     totalCell1.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable2.AddCell(totalCell1);
 
@@ -541,7 +547,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel1 != null)
                 {
-                    
+
                     Table payslipTable1 = new Table(2);
                     payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
@@ -557,7 +563,7 @@ namespace winSBPayroll.Reports.PDF
                     tCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(tCell);
 
-                    Cell t1Cell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel1.PayeDetail.TaxablePay), tcFont3));
+                    Cell t1Cell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel1.PayeDetail.TaxablePay), tcFont3));
                     t1Cell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(t1Cell);
 
@@ -565,7 +571,7 @@ namespace winSBPayroll.Reports.PDF
                     tdCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(tdCell);
 
-                    Cell td1Cell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel1.PayeDetail.TaxDue), tcFont3));
+                    Cell td1Cell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel1.PayeDetail.TaxDue), tcFont3));
                     td1Cell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(td1Cell);
 
@@ -573,7 +579,7 @@ namespace winSBPayroll.Reports.PDF
                     prCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(prCell);
 
-                    Cell pr1Cell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel1.PayeDetail.PersonalRelief), tcFont4));
+                    Cell pr1Cell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel1.PayeDetail.PersonalRelief), tcFont4));
                     pr1Cell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(pr1Cell);
 
@@ -581,7 +587,7 @@ namespace winSBPayroll.Reports.PDF
                     insuranceCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(insuranceCell);
 
-                    Cell insuranceCell1 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel1.PayeDetail.InsuranceRelief), tcFont4));
+                    Cell insuranceCell1 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel1.PayeDetail.InsuranceRelief), tcFont4));
                     insuranceCell1.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(insuranceCell1);
 
@@ -610,7 +616,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel2 != null)
                 {
-                    
+
                     Table payslipTable2 = new Table(2);
                     payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
@@ -626,7 +632,7 @@ namespace winSBPayroll.Reports.PDF
                     taxCell1.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable2.AddCell(taxCell1);
 
-                    Cell taxCell2 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel2.PayeDetail.TaxablePay), tcFont3));
+                    Cell taxCell2 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel2.PayeDetail.TaxablePay), tcFont3));
                     taxCell2.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable2.AddCell(taxCell2);
 
@@ -634,7 +640,7 @@ namespace winSBPayroll.Reports.PDF
                     taxCell3.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable2.AddCell(taxCell3);
 
-                    Cell payeedetCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel2.PayeDetail.TaxDue), tcFont3));
+                    Cell payeedetCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel2.PayeDetail.TaxDue), tcFont3));
                     payeedetCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable2.AddCell(payeedetCell);
 
@@ -642,7 +648,7 @@ namespace winSBPayroll.Reports.PDF
                     personalCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable2.AddCell(personalCell);
 
-                    Cell personalCell1 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel2.PayeDetail.PersonalRelief), tcFont4));
+                    Cell personalCell1 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel2.PayeDetail.PersonalRelief), tcFont4));
                     personalCell1.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable2.AddCell(personalCell1);
 
@@ -650,7 +656,7 @@ namespace winSBPayroll.Reports.PDF
                     insuranceCell2.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable2.AddCell(insuranceCell2);
 
-                    Cell insuranceCell3 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel2.PayeDetail.InsuranceRelief), tcFont4));
+                    Cell insuranceCell3 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel2.PayeDetail.InsuranceRelief), tcFont4));
                     insuranceCell3.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable2.AddCell(insuranceCell3);
 
@@ -683,7 +689,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel1 != null)
                 {
-                   
+
                     Table payslipTable1 = new Table(2);
                     payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
@@ -701,7 +707,7 @@ namespace winSBPayroll.Reports.PDF
                         desopCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                         payslipTable1.AddCell(desopCell);
 
-                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.Amount), tcFont4));
+                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.Amount), tcFont4));
                         aopCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable1.AddCell(aopCell);
                     }
@@ -710,7 +716,7 @@ namespace winSBPayroll.Reports.PDF
                     tdCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(tdCell);
 
-                    Cell td1Cell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel1.TotalDeductions), tcFont3));
+                    Cell td1Cell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel1.TotalDeductions), tcFont3));
                     td1Cell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(td1Cell);
 
@@ -739,7 +745,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel2 != null)
                 {
-                    
+
                     Table payslipTable2 = new Table(2);
                     payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
@@ -757,7 +763,7 @@ namespace winSBPayroll.Reports.PDF
                         descriptionCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                         payslipTable2.AddCell(descriptionCell);
 
-                        Cell amountCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.Amount), tcFont4));
+                        Cell amountCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.Amount), tcFont4));
                         amountCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable2.AddCell(amountCell);
                     }
@@ -766,7 +772,7 @@ namespace winSBPayroll.Reports.PDF
                     totalCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable2.AddCell(totalCell);
 
-                    Cell totalCell1 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel2.TotalDeductions), tcFont3));
+                    Cell totalCell1 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel2.TotalDeductions), tcFont3));
                     totalCell1.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable2.AddCell(totalCell1);
 
@@ -799,7 +805,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel1 != null)
                 {
-                   
+
                     Table payslipTable1 = new Table(2);
                     payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
@@ -809,7 +815,7 @@ namespace winSBPayroll.Reports.PDF
                     npCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(npCell);
 
-                    Cell npvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel1.NetPay), tcFont3));
+                    Cell npvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel1.NetPay), tcFont3));
                     npvCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(npvCell);
 
@@ -838,7 +844,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel2 != null)
                 {
-                    
+
                     Table payslipTable2 = new Table(2);
                     payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
@@ -848,7 +854,7 @@ namespace winSBPayroll.Reports.PDF
                     netpayCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable2.AddCell(netpayCell);
 
-                    Cell netpayCell1 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel2.NetPay), tcFont3));
+                    Cell netpayCell1 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel2.NetPay), tcFont3));
                     netpayCell1.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable2.AddCell(netpayCell1);
 
@@ -902,7 +908,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel1 != null)
                 {
-                   
+
                     Table payslipTable1 = new Table(2);
                     payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
@@ -922,7 +928,7 @@ namespace winSBPayroll.Reports.PDF
                         desopCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                         payslipTable1.AddCell(desopCell);
 
-                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.Amount), tcFont4));
+                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.Amount), tcFont4));
                         aopCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable1.AddCell(aopCell);
                     }
@@ -931,7 +937,7 @@ namespace winSBPayroll.Reports.PDF
                     erCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(erCell);
 
-                    Cell mvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel1.TotalOtherPayments), tcFont4));
+                    Cell mvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel1.TotalOtherPayments), tcFont4));
                     mvCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(mvCell);
 
@@ -960,7 +966,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel2 != null)
                 {
-                    
+
                     Table payslipTable2 = new Table(2);
                     payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
@@ -980,7 +986,7 @@ namespace winSBPayroll.Reports.PDF
                         paymentsCell1.HorizontalAlignment = Cell.ALIGN_LEFT;
                         payslipTable2.AddCell(paymentsCell1);
 
-                        Cell paymentsCell2 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.Amount), tcFont4));
+                        Cell paymentsCell2 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.Amount), tcFont4));
                         paymentsCell2.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable2.AddCell(paymentsCell2);
                     }
@@ -989,7 +995,7 @@ namespace winSBPayroll.Reports.PDF
                     totalCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable2.AddCell(totalCell);
 
-                    Cell totalCell1 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel2.TotalOtherPayments), tcFont4));
+                    Cell totalCell1 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel2.TotalOtherPayments), tcFont4));
                     totalCell1.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable2.AddCell(totalCell1);
 
@@ -1022,7 +1028,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel1 != null)
                 {
-                    
+
                     Table payslipTable1 = new Table(2);
                     payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
@@ -1042,7 +1048,7 @@ namespace winSBPayroll.Reports.PDF
                         desopCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                         payslipTable1.AddCell(desopCell);
 
-                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.Amount), tcFont4));
+                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.Amount), tcFont4));
                         aopCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable1.AddCell(aopCell);
                     }
@@ -1051,7 +1057,7 @@ namespace winSBPayroll.Reports.PDF
                     erCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(erCell);
 
-                    Cell mvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel1.TotalOtherDeductions), tcFont4));
+                    Cell mvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel1.TotalOtherDeductions), tcFont4));
                     mvCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(mvCell);
 
@@ -1080,7 +1086,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel2 != null)
                 {
-                   
+
                     Table payslipTable2 = new Table(2);
                     payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
@@ -1100,7 +1106,7 @@ namespace winSBPayroll.Reports.PDF
                         deductionsCell1.HorizontalAlignment = Cell.ALIGN_LEFT;
                         payslipTable2.AddCell(deductionsCell1);
 
-                        Cell deductionsCell2 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.Amount), tcFont4));
+                        Cell deductionsCell2 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.Amount), tcFont4));
                         deductionsCell2.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable2.AddCell(deductionsCell2);
                     }
@@ -1109,7 +1115,7 @@ namespace winSBPayroll.Reports.PDF
                     totalsCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable2.AddCell(totalsCell);
 
-                    Cell totalsCell1 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel2.TotalOtherDeductions), tcFont4));
+                    Cell totalsCell1 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel2.TotalOtherDeductions), tcFont4));
                     totalsCell1.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable2.AddCell(totalsCell1);
 
@@ -1184,14 +1190,14 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel1 != null)
                 {
-                    
+
                     Table payslipTable1 = new Table(3);
                     payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
                     payslipTable1.Padding = 1;
 
                     Cell aCell = new Cell(new Phrase("Employee LOANS\n", hFont2));
-                    aCell.HorizontalAlignment = Cell.ALIGN_CENTER;                    
+                    aCell.HorizontalAlignment = Cell.ALIGN_CENTER;
                     aCell.Colspan = 3;
                     //aCell.Border = Cell.NO_BORDER;
                     payslipTable1.AddCell(aCell);
@@ -1204,11 +1210,11 @@ namespace winSBPayroll.Reports.PDF
                         desopCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                         payslipTable1.AddCell(desopCell);
 
-                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.Amount), tcFont4));
+                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.Amount), tcFont4));
                         aopCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable1.AddCell(aopCell);
 
-                        Cell lbCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.Amount), tcFont4));
+                        Cell lbCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.Amount), tcFont4));
                         lbCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable1.AddCell(lbCell);
 
@@ -1218,11 +1224,11 @@ namespace winSBPayroll.Reports.PDF
                     erCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(erCell);
 
-                    Cell mvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel1.TotalAmountLoansAmount), tcFont4));
+                    Cell mvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel1.Total_Loans_Repayment_Amount), tcFont4));
                     mvCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(mvCell);
 
-                    Cell ltbCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel1.TotalAmountLoansBalance), tcFont4));
+                    Cell ltbCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel1.Total_Loans_Balance), tcFont4));
                     ltbCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(ltbCell);
 
@@ -1251,14 +1257,14 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel2 != null)
                 {
-                   
+
                     Table payslipTable2 = new Table(3);
                     payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
                     payslipTable2.Padding = 1;
 
                     Cell loansCell = new Cell(new Phrase("Employee LOANS\n", hFont2));
-                    loansCell.HorizontalAlignment = Cell.ALIGN_CENTER;                 
+                    loansCell.HorizontalAlignment = Cell.ALIGN_CENTER;
                     //loansCell.Border = Cell.NO_BORDER;
                     loansCell.Colspan = 3;
                     payslipTable2.AddCell(loansCell);
@@ -1271,11 +1277,11 @@ namespace winSBPayroll.Reports.PDF
                         loansCell1.HorizontalAlignment = Cell.ALIGN_LEFT;
                         payslipTable2.AddCell(loansCell1);
 
-                        Cell loansCell2 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.Amount), tcFont4));
+                        Cell loansCell2 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.Amount), tcFont4));
                         loansCell2.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable2.AddCell(loansCell2);
 
-                        Cell loansCell3 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.Amount), tcFont4));
+                        Cell loansCell3 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.Amount), tcFont4));
                         loansCell3.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable2.AddCell(loansCell3);
 
@@ -1285,11 +1291,11 @@ namespace winSBPayroll.Reports.PDF
                     totalsCell1.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable2.AddCell(totalsCell1);
 
-                    Cell totalsCell2 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel2.TotalAmountLoansAmount), tcFont4));
+                    Cell totalsCell2 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel2.Total_Loans_Repayment_Amount), tcFont4));
                     totalsCell2.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable2.AddCell(totalsCell2);
 
-                    Cell totalsCell3 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel2.TotalAmountLoansBalance), tcFont4));
+                    Cell totalsCell3 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel2.Total_Loans_Balance), tcFont4));
                     totalsCell3.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable2.AddCell(totalsCell3);
 
@@ -1322,7 +1328,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel1 != null)
                 {
-                   
+
                     Table payslipTable1 = new Table(3);
                     payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Rectangle.BOX;
@@ -1342,11 +1348,11 @@ namespace winSBPayroll.Reports.PDF
                         desopCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                         payslipTable1.AddCell(desopCell);
 
-                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.Amount), tcFont4));
+                        Cell aopCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.Amount), tcFont4));
                         aopCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable1.AddCell(aopCell);
 
-                        Cell scCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.YTD), tcFont4));
+                        Cell scCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.YTD), tcFont4));
                         scCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable1.AddCell(scCell);
                     }
@@ -1355,11 +1361,11 @@ namespace winSBPayroll.Reports.PDF
                     erCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable1.AddCell(erCell);
 
-                    Cell mvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel1.TotalAmountSaccoAmount), tcFont4));
+                    Cell mvCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel1.Total_Sacco_Contribution_Amount), tcFont4));
                     mvCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(mvCell);
 
-                    Cell ltbCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel1.TotalAmountSaccoBalance), tcFont4));
+                    Cell ltbCell = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel1.Total_Sacco_Shares_Balance), tcFont4));
                     ltbCell.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable1.AddCell(ltbCell);
 
@@ -1388,7 +1394,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel2 != null)
                 {
-                  
+
                     Table payslipTable2 = new Table(3);
                     payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Rectangle.BOX;
@@ -1408,11 +1414,11 @@ namespace winSBPayroll.Reports.PDF
                         saccoCell1.HorizontalAlignment = Cell.ALIGN_LEFT;
                         payslipTable2.AddCell(saccoCell1);
 
-                        Cell saccoCell2 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.Amount), tcFont4));
+                        Cell saccoCell2 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.Amount), tcFont4));
                         saccoCell2.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable2.AddCell(saccoCell2);
 
-                        Cell saccoCell3 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", op.YTD), tcFont4));
+                        Cell saccoCell3 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", op.YTD), tcFont4));
                         saccoCell3.HorizontalAlignment = Cell.ALIGN_RIGHT;
                         payslipTable2.AddCell(saccoCell3);
                     }
@@ -1421,11 +1427,11 @@ namespace winSBPayroll.Reports.PDF
                     totalsCell.HorizontalAlignment = Cell.ALIGN_LEFT;
                     payslipTable2.AddCell(totalsCell);
 
-                    Cell totalsCell1 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel2.TotalAmountSaccoAmount), tcFont4));
+                    Cell totalsCell1 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel2.Total_Sacco_Contribution_Amount), tcFont4));
                     totalsCell1.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable2.AddCell(totalsCell1);
 
-                    Cell totalsCell2 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N0}", _ViewModel2.TotalAmountSaccoBalance), tcFont4));
+                    Cell totalsCell2 = new Cell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel2.Total_Sacco_Shares_Balance), tcFont4));
                     totalsCell2.HorizontalAlignment = Cell.ALIGN_RIGHT;
                     payslipTable2.AddCell(totalsCell2);
 
@@ -1441,7 +1447,7 @@ namespace winSBPayroll.Reports.PDF
                 return;
             }
         }
-         
+
         private void AddDocFooter(Table _payslipTable)
         {
             try
@@ -1450,14 +1456,14 @@ namespace winSBPayroll.Reports.PDF
                 if (_ViewModel1 == null)
                 {
                     Table payslipTable11 = new Table(2);
-                    payslipTable11.WidthPercentage = 100; 
+                    payslipTable11.WidthPercentage = 100;
                     payslipTable11.Padding = 1;
 
                     _payslipTable.InsertTable(payslipTable11);
                 }
                 if (_ViewModel1 != null)
                 {
-                   
+
                     Table payslipTable1 = new Table(1);
                     payslipTable1.WidthPercentage = 100;
                     payslipTable1.Border = Table.NO_BORDER;
@@ -1491,7 +1497,7 @@ namespace winSBPayroll.Reports.PDF
                 }
                 if (_ViewModel2 != null)
                 {
-                    
+
                     Table payslipTable2 = new Table(1);
                     payslipTable2.WidthPercentage = 100;
                     payslipTable2.Border = Table.NO_BORDER;

@@ -21,8 +21,12 @@ namespace winSBPayroll.Forms
         string _User;
         // Boolean flag used to determine when a character other than a number is entered.
         private bool nonNumberEntered = false;
+        public string TAG;
+        //Event declaration:
+        //event for publishing messages to output
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
 
-        public AddEmployee(string user, string Conn)
+        public AddEmployee(string user, string Conn, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             InitializeComponent();
 
@@ -35,187 +39,45 @@ namespace winSBPayroll.Forms
             rep = new Repository(connection);
 
             _User = user;
+
+            TAG = this.GetType().Name;
+
+            //Subscribing to the event: 
+            //Dynamically:
+            //EventName += HandlerName;
+            _notificationmessageEventname = notificationmessageEventname;
+
+            _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("finished AddEmployee initialization", TAG));
+
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            errorProvider1.Clear();
-            if (IsEmployeeValid())
-            {
-                try
-                {
-                    DAL.Employee employee = new DAL.Employee();
-                    if (!string.IsNullOrEmpty(txtEmpNo.Text))
-                    {
-                        employee.EmpNo = txtEmpNo.Text.Trim();
-                    }
-                    if (!string.IsNullOrEmpty(txtEmail.Text))
-                    {
-                        employee.Email = txtEmail.Text.Trim();
-                    }
-                    if (!string.IsNullOrEmpty(txtSurname.Text))
-                    {
-                        employee.Surname = Utils.ConvertFirstLetterToUpper(txtSurname.Text.Trim());
-                    }
-                    if (!string.IsNullOrEmpty(txtOtherNames.Text))
-                    {
-                        employee.OtherNames = Utils.ConvertFirstLetterToUpper(txtOtherNames.Text.Trim());
-                    }
-                    employee.DoB = dtpDOB.Value;
-                    if (cbMaritalStatus.SelectedIndex != -1)
-                    {
-                        employee.MaritalStatus = cbMaritalStatus.SelectedValue.ToString();
-                    }
-                    if (cbGender.SelectedIndex != -1)
-                    {
-                        employee.Gender = cbGender.SelectedValue.ToString();
-                    }
-                    if (pbPhoto.ImageLocation != null)
-                    {
-                        employee.Photo = pbPhoto.ImageLocation.ToString().Trim();
-                    }
-                    employee.DoE = dtpDOE.Value;
-                    if (cbBasicComputation.SelectedIndex != -1)
-                    {
-                        employee.BasicComputation = cbBasicComputation.SelectedValue.ToString();
-                    }
-                    decimal basicpay;
-                    if (!string.IsNullOrEmpty(txtBasicPay.Text) && decimal.TryParse(txtBasicPay.Text, out basicpay))
-                    {
-                        employee.BasicPay = decimal.Parse(txtBasicPay.Text.Trim());
-                    }
-                    decimal personalrelief;
-                    if (!string.IsNullOrEmpty(txtPersonalRelief.Text) && decimal.TryParse(txtPersonalRelief.Text, out personalrelief))
-                    {
-                        employee.PersonalRelief = decimal.Parse(txtPersonalRelief.Text.Trim());
-                    }
-                    decimal morgagerelief;
-                    if (!string.IsNullOrEmpty(txtMortgageRelief.Text) && decimal.TryParse(txtMortgageRelief.Text, out morgagerelief))
-                    {
-                        employee.MortgageRelief = decimal.Parse(txtMortgageRelief.Text.Trim());
-                    }
-                    decimal insurancerelief;
-                    if (!string.IsNullOrEmpty(txtInsuranceRelief.Text) && decimal.TryParse(txtInsuranceRelief.Text, out insurancerelief))
-                    {
-                        employee.InsuranceRelief = decimal.Parse(txtInsuranceRelief.Text.Trim());
-                    }
-                    if (!string.IsNullOrEmpty(txtNSSF.Text))
-                    {
-                        employee.NSSFNo = txtNSSF.Text.Trim();
-                    }
-                    if (!string.IsNullOrEmpty(txtNHIF.Text))
-                    {
-                        employee.NHIFNo = txtNHIF.Text.Trim();
-                    }
-                    if (!string.IsNullOrEmpty(txtIDNo.Text))
-                    {
-                        employee.IDNo = txtIDNo.Text.Trim();
-                    }
-                    if (!string.IsNullOrEmpty(txtPIN.Text))
-                    {
-                        employee.PINNo = txtPIN.Text.Trim();
-                    }
-                    if (cbDepartment.SelectedIndex != -1)
-                    {
-                        employee.DepartmentId = int.Parse(cbDepartment.SelectedValue.ToString());
-                    }
-                    if (cbEmployer.SelectedIndex != -1)
-                    {
-                        employee.EmployerId = int.Parse(cbEmployer.SelectedValue.ToString());
-                    }
-                    if (!string.IsNullOrEmpty(txtEmployeePaymentPoint.Text))
-                    {
-                        employee.PayPoint = txtEmployeePaymentPoint.Text.Trim();
-                    }
-                    if (cboEmployeeGroup.SelectedIndex != -1)
-                    {
-                        employee.EmpGroup = cboEmployeeGroup.SelectedValue.ToString();
-                    }
-                    if (cboEmpPayroll.SelectedIndex != -1)
-                    {
-                        employee.EmpPayroll = cboEmpPayroll.SelectedValue.ToString();
-                    }
-                    if (!string.IsNullOrEmpty(txtPrevEmployer.Text))
-                    {
-                        employee.PrevEmployer = txtPrevEmployer.Text.Trim();
-                    }
-                    employee.DateLeft = dtpDateLeft.Value;
-                    if (cboModeofPayment.SelectedIndex != -1)
-                    {
-                        employee.PaymentMode = cboModeofPayment.SelectedValue.ToString();
-                    }
-                    switch (cboModeofPayment.SelectedValue.ToString())
-                    {
-                        case "M":
-                            if (string.IsNullOrEmpty(txtTelephoneNo.Text))
-                            {
-                                txtTelephoneNo.Text = "0";
-                                employee.TelephoneNo = txtTelephoneNo.Text.Trim();
-                            }
-                            else
-                            {
-                                employee.TelephoneNo = txtTelephoneNo.Text.Trim();
-                            }
-                            break;
-                        case "B":
-                            if (string.IsNullOrEmpty(txtAccount.Text))
-                            {
-                                txtAccount.Text = "0";
-                                employee.BankAccount = txtAccount.Text.Trim();
-                                employee.BankCode = txtBankSortCode.Text.ToString();
-                            }
-                            else
-                            {
-                                employee.BankAccount = txtAccount.Text.Trim();
-                                employee.BankCode = txtBankSortCode.Text.ToString();
-                            }
-                            break;
-                    }
-                    employee.IsActive = true; //on entry, all employees will be active. a System Administrator can change this
-                    employee.IsDeleted = false;
-                    employee.CreatedBy = _User;
-                    employee.CreatedOn = DateTime.Now;
-                    employee.SystemId = "ws";
-
-                    DAL.Employee returnedEmployee = rep.CreateEmployee(employee);
-
-                    if (returnedEmployee != null)
-                    {
-                        //add defualt employee transactions
-                        de.AddDefaultEmpTransactions(returnedEmployee.Id, returnedEmployee.EmpNo, returnedEmployee.BasicPay ?? 0, _User);
-                        Employees f = (Employees)this.Owner;
-                        f.RefreshGrid();
-                        this.Close();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Utils.ShowError(ex);
-                }
-            }
-        }
         private void AddEmployee_Load(object sender, EventArgs e)
         {
             try
             {
+                //Put default figures
+                txtMortgageRelief.Text = "0";
+                txtPersonalRelief.Text = "0";
+                txtInsuranceRelief.Text = "0";
+
                 //Gender Combox
                 var gender = new BindingList<KeyValuePair<string, string>>();
                 gender.Add(new KeyValuePair<string, string>("M", "Male"));
                 gender.Add(new KeyValuePair<string, string>("F", "Female"));
-                cbGender.DataSource = gender;
-                cbGender.ValueMember = "Key";
-                cbGender.DisplayMember = "Value";
-                cbGender.SelectedIndex = -1;
+                cbo_gender.DataSource = gender;
+                cbo_gender.ValueMember = "Key";
+                cbo_gender.DisplayMember = "Value";
+                cbo_gender.SelectedIndex = -1;
 
                 //Marital Combox
                 var marital = new BindingList<KeyValuePair<string, string>>();
                 marital.Add(new KeyValuePair<string, string>("M", "Married"));
                 marital.Add(new KeyValuePair<string, string>("S", "Single"));
                 marital.Add(new KeyValuePair<string, string>("D", "Divorced"));
-                cbMaritalStatus.DataSource = marital;
-                cbMaritalStatus.ValueMember = "Key";
-                cbMaritalStatus.DisplayMember = "Value";
-                cbMaritalStatus.SelectedIndex = -1;
+                cbo_marital_status.DataSource = marital;
+                cbo_marital_status.ValueMember = "Key";
+                cbo_marital_status.DisplayMember = "Value";
+                cbo_marital_status.SelectedIndex = -1;
 
                 //Employee Groups
                 var _empgroups = new BindingList<KeyValuePair<string, string>>();
@@ -223,13 +85,14 @@ namespace winSBPayroll.Forms
                 _empgroups.Add(new KeyValuePair<string, string>("FTT", "Full Time - Temporary"));
                 _empgroups.Add(new KeyValuePair<string, string>("PTR", "Part Time - Regular"));
                 _empgroups.Add(new KeyValuePair<string, string>("PTT", "Part Time - Temporary"));
-                cboEmployeeGroup.DataSource = _empgroups;
-                cboEmployeeGroup.ValueMember = "Key";
-                cboEmployeeGroup.DisplayMember = "Value";
-                cboEmployeeGroup.SelectedIndex = -1;
+                cbo_employee_group.DataSource = _empgroups;
+                cbo_employee_group.ValueMember = "Key";
+                cbo_employee_group.DisplayMember = "Value";
+                cbo_employee_group.SelectedIndex = -1;
 
                 //defaults
                 txtEmpNo.Text = Utils.NextSeries(de.LastEmployeeNo());
+
                 decimal relief;
                 if (!decimal.TryParse(de.SettingLookup("PRELIEF"), out relief))
                 {
@@ -243,47 +106,42 @@ namespace winSBPayroll.Forms
                 paymentmodes.Add(new KeyValuePair<string, string>("M", "MPESA"));
                 paymentmodes.Add(new KeyValuePair<string, string>("B", "BANKACCOUNT"));
                 paymentmodes.Add(new KeyValuePair<string, string>("C", "CASH"));
-                cboModeofPayment.DataSource = paymentmodes;
-                cboModeofPayment.ValueMember = "Key";
-                cboModeofPayment.DisplayMember = "Value";
-                cboModeofPayment.SelectedIndex = -1;
+                cbo_mode_of_payment.DataSource = paymentmodes;
+                cbo_mode_of_payment.ValueMember = "Key";
+                cbo_mode_of_payment.DisplayMember = "Value";
+                cbo_mode_of_payment.SelectedIndex = -1;
 
                 //Basic Pay comutation lookup
                 var bpay = new BindingList<KeyValuePair<string, string>>();
                 bpay.Add(new KeyValuePair<string, string>("M", "Monthly"));
                 bpay.Add(new KeyValuePair<string, string>("H", "Hourly"));
                 bpay.Add(new KeyValuePair<string, string>("X", "Mixed(Monthly + Hourly)"));
-                cbBasicComputation.DataSource = bpay;
-                cbBasicComputation.ValueMember = "Key";
-                cbBasicComputation.DisplayMember = "Value";
-                cbBasicComputation.SelectedIndex = -1;
+                cbo_basic_computation.DataSource = bpay;
+                cbo_basic_computation.ValueMember = "Key";
+                cbo_basic_computation.DisplayMember = "Value";
+                cbo_basic_computation.SelectedIndex = -1;
 
                 var _payrolltypesquery = from pt in db.PayrollTypes
                                          select pt;
                 List<PayrollType> _payrolltypes = _payrolltypesquery.ToList();
-                cboEmpPayroll.DataSource = _payrolltypes;
-                cboEmpPayroll.DisplayMember = "Description";
-                cboEmpPayroll.ValueMember = "Description";
-                cboEmpPayroll.SelectedIndex = -1;
+                cbo_emp_payroll.DataSource = _payrolltypes;
+                cbo_emp_payroll.DisplayMember = "Description";
+                cbo_emp_payroll.ValueMember = "Description";
+                cbo_emp_payroll.SelectedIndex = -1;
 
                 pbPhoto.SizeMode = PictureBoxSizeMode.StretchImage;
 
                 var _departmentsquery = from dp in rep.GetNonDeletedDepartments()
                                         select dp;
                 List<Department> _Departments = _departmentsquery.ToList();
-                cbDepartment.DataSource = _Departments;
-                cbDepartment.DisplayMember = "Description";
-                cbDepartment.ValueMember = "Id";
-                cbDepartment.SelectedIndex = -1;
+                cbo_department.DataSource = _Departments;
+                cbo_department.DisplayMember = "Description";
+                cbo_department.ValueMember = "Id";
+                cbo_department.SelectedIndex = -1;
 
-                cbEmployer.DataSource = rep.GetAllActiveEmployers();
-                cbEmployer.DisplayMember = "Name";
-                cbEmployer.ValueMember = "Id";
-
-                //Put default figures
-                txtMortgageRelief.Text = "0";
-                txtPersonalRelief.Text = "0";
-                txtInsuranceRelief.Text = "0";
+                cbo_employer.DataSource = rep.GetAllActiveEmployers();
+                cbo_employer.DisplayMember = "Name";
+                cbo_employer.ValueMember = "Id";
 
                 pbPhoto.Visible = true;
 
@@ -385,12 +243,21 @@ namespace winSBPayroll.Forms
 
                 int minage = int.Parse(rep.SettingLookup("MINAGE"));
                 dtpDOB.Value = DateTime.Today.AddYears(minage * -1);
+
+                string _current_emp_no = get_next_employee_no();
+                string _next_emp_no = Utils.NextSeries(_current_emp_no);
+                txtEmpNo.Text = _next_emp_no;
+
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("finished AddEmployee load", TAG));
+
             }
             catch (Exception ex)
             {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
                 Utils.ShowError(ex);
             }
         }
+
         private string[] AutoComplete_BankSortCodes()
         {
             try
@@ -609,135 +476,308 @@ namespace winSBPayroll.Forms
                 return null;
             }
         }
+
+        string get_next_employee_no()
+        {
+            try
+            {
+                Employer _emp = (Employer)cbo_employer.SelectedItem;
+
+                var _EmpNo = (from bk in rep.GetAllActiveEmployees()
+                              where bk.IsActive == true
+                              where bk.EmployerId.Equals(_emp.Id)
+                              where bk.IsDeleted == false
+                              orderby bk.Id descending
+                              select bk.EmpNo).FirstOrDefault();
+                return _EmpNo;
+            }
+            catch (Exception ex)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                return null;
+            }
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            errorProvider.Clear();
+            if (IsEmployeeValid())
+            {
+                try
+                {
+                    DAL.Employee employee = new DAL.Employee();
+                    if (!string.IsNullOrEmpty(txtEmpNo.Text))
+                    {
+                        employee.EmpNo = txtEmpNo.Text.Trim();
+                    }
+                    if (!string.IsNullOrEmpty(txtEmail.Text))
+                    {
+                        employee.Email = txtEmail.Text.Trim();
+                    }
+                    if (!string.IsNullOrEmpty(txtSurname.Text))
+                    {
+                        employee.Surname = Utils.ConvertFirstLetterToUpper(txtSurname.Text.Trim());
+                    }
+                    if (!string.IsNullOrEmpty(txtOtherNames.Text))
+                    {
+                        employee.OtherNames = Utils.ConvertFirstLetterToUpper(txtOtherNames.Text.Trim());
+                    }
+                    employee.DoB = dtpDOB.Value;
+                    if (cbo_marital_status.SelectedIndex != -1)
+                    {
+                        employee.MaritalStatus = cbo_marital_status.SelectedValue.ToString();
+                    }
+                    if (cbo_gender.SelectedIndex != -1)
+                    {
+                        employee.Gender = cbo_gender.SelectedValue.ToString();
+                    }
+                    if (pbPhoto.ImageLocation != null)
+                    {
+                        employee.Photo = pbPhoto.ImageLocation.ToString().Trim();
+                    }
+                    employee.DoE = dtpDOE.Value;
+                    if (cbo_basic_computation.SelectedIndex != -1)
+                    {
+                        employee.BasicComputation = cbo_basic_computation.SelectedValue.ToString();
+                    }
+                    decimal basicpay;
+                    if (!string.IsNullOrEmpty(txtBasicPay.Text) && decimal.TryParse(txtBasicPay.Text, out basicpay))
+                    {
+                        employee.BasicPay = decimal.Parse(txtBasicPay.Text.Trim());
+                    }
+                    decimal personalrelief;
+                    if (!string.IsNullOrEmpty(txtPersonalRelief.Text) && decimal.TryParse(txtPersonalRelief.Text, out personalrelief))
+                    {
+                        employee.PersonalRelief = decimal.Parse(txtPersonalRelief.Text.Trim());
+                    }
+                    decimal morgagerelief;
+                    if (!string.IsNullOrEmpty(txtMortgageRelief.Text) && decimal.TryParse(txtMortgageRelief.Text, out morgagerelief))
+                    {
+                        employee.MortgageRelief = decimal.Parse(txtMortgageRelief.Text.Trim());
+                    }
+                    decimal insurancerelief;
+                    if (!string.IsNullOrEmpty(txtInsuranceRelief.Text) && decimal.TryParse(txtInsuranceRelief.Text, out insurancerelief))
+                    {
+                        employee.InsuranceRelief = decimal.Parse(txtInsuranceRelief.Text.Trim());
+                    }
+                    if (!string.IsNullOrEmpty(txtNSSF.Text))
+                    {
+                        employee.NSSFNo = txtNSSF.Text.Trim();
+                    }
+                    if (!string.IsNullOrEmpty(txtNHIF.Text))
+                    {
+                        employee.NHIFNo = txtNHIF.Text.Trim();
+                    }
+                    if (!string.IsNullOrEmpty(txtIDNo.Text))
+                    {
+                        employee.IDNo = txtIDNo.Text.Trim();
+                    }
+                    if (!string.IsNullOrEmpty(txtPIN.Text))
+                    {
+                        employee.PINNo = txtPIN.Text.Trim();
+                    }
+                    if (cbo_department.SelectedIndex != -1)
+                    {
+                        employee.DepartmentId = int.Parse(cbo_department.SelectedValue.ToString());
+                    }
+                    if (cbo_employer.SelectedIndex != -1)
+                    {
+                        employee.EmployerId = int.Parse(cbo_employer.SelectedValue.ToString());
+                    }
+                    if (!string.IsNullOrEmpty(txtEmployeePaymentPoint.Text))
+                    {
+                        employee.PayPoint = txtEmployeePaymentPoint.Text.Trim();
+                    }
+                    if (cbo_employee_group.SelectedIndex != -1)
+                    {
+                        employee.EmpGroup = cbo_employee_group.SelectedValue.ToString();
+                    }
+                    if (cbo_emp_payroll.SelectedIndex != -1)
+                    {
+                        employee.EmpPayroll = cbo_emp_payroll.SelectedValue.ToString();
+                    }
+                    if (!string.IsNullOrEmpty(txtPrevEmployer.Text))
+                    {
+                        employee.PrevEmployer = txtPrevEmployer.Text.Trim();
+                    }
+                    employee.DateLeft = dtpDateLeft.Value;
+                    if (cbo_mode_of_payment.SelectedIndex != -1)
+                    {
+                        employee.PaymentMode = cbo_mode_of_payment.SelectedValue.ToString();
+                    }
+                    switch (cbo_mode_of_payment.SelectedValue.ToString())
+                    {
+                        case "M":
+                            if (string.IsNullOrEmpty(txtTelephoneNo.Text))
+                            {
+                                txtTelephoneNo.Text = "0";
+                                employee.TelephoneNo = txtTelephoneNo.Text.Trim();
+                            }
+                            else
+                            {
+                                employee.TelephoneNo = txtTelephoneNo.Text.Trim();
+                            }
+                            break;
+                        case "B":
+                            if (string.IsNullOrEmpty(txtAccount.Text))
+                            {
+                                txtAccount.Text = "0";
+                                employee.BankAccount = txtAccount.Text.Trim();
+                                employee.BankCode = txtBankSortCode.Text.ToString();
+                            }
+                            else
+                            {
+                                employee.BankAccount = txtAccount.Text.Trim();
+                                employee.BankCode = txtBankSortCode.Text.ToString();
+                            }
+                            break;
+                    }
+                    employee.IsActive = true; //on entry, all employees will be active. a System Administrator can change this
+                    employee.IsDeleted = false;
+                    employee.CreatedBy = _User;
+                    employee.CreatedOn = DateTime.Now;
+                    employee.SystemId = "ws";
+
+                    DAL.Employee returnedEmployee = rep.CreateEmployee(employee);
+
+                    if (returnedEmployee != null)
+                    {
+                        //add defualt employee transactions
+                        de.AddDefaultEmpTransactions(returnedEmployee.Id, returnedEmployee.EmpNo, returnedEmployee.BasicPay ?? 0, _User);
+
+                        EmployeesForm f = (EmployeesForm)this.Owner;
+                        f.RefreshGrid(1);
+                        this.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                    Utils.ShowError(ex);
+                }
+            }
+            else
+            {
+                MessageBox.Show("There are errors in the Form. \nCheck all tabs for missing data.", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
         private bool IsEmployeeValid()
         {
             bool no_error = true;
 
             if (string.IsNullOrEmpty(txtEmpNo.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtEmpNo, "Employee Number cannot be null!");
-                return false;
+                errorProvider.SetError(txtEmpNo, "Employee Number cannot be null!");
+                no_error = false;
             }
             if (string.IsNullOrEmpty(txtSurname.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtSurname, "Surname cannot be null!");
-                return false;
+                errorProvider.SetError(txtSurname, "Surname cannot be null!");
+                no_error = false;
             }
             if (string.IsNullOrEmpty(txtOtherNames.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtOtherNames, "Other Names cannot be null!");
-                return false;
+                errorProvider.SetError(txtOtherNames, "Other Names cannot be null!");
+                no_error = false;
             }
             int minAge = int.Parse(de.SettingLookup("MINAGE"));
             DateTime minDoB = DateTime.Today.AddYears(-minAge);
 
             if (dtpDOB.Value > minDoB)
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(dtpDOB, "Employee Must be 18 Years and Above!");
-                return false;
+                errorProvider.SetError(dtpDOB, "Employee Must be 18 Years and Above!");
+                no_error = false;
             }
-            if (cbMaritalStatus.SelectedIndex == -1)
+            if (cbo_marital_status.SelectedIndex == -1)
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(cbMaritalStatus, "Select Marital Status!");
-                return false;
+                errorProvider.SetError(cbo_marital_status, "Select Marital Status!");
+                no_error = false;
             }
-            if (cbGender.SelectedIndex == -1)
+            if (cbo_gender.SelectedIndex == -1)
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(cbGender, "Select Gender!");
-                return false;
+                errorProvider.SetError(cbo_gender, "Select Gender!");
+                no_error = false;
             }
             if (string.IsNullOrEmpty(txtEmail.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtEmail, "Email cannot be null!");
-                return false;
+                errorProvider.SetError(txtEmail, "Email cannot be null!");
+                no_error = false;
             }
             string emailregex = de.SettingLookup("EMAILREGEX");
             System.Text.RegularExpressions.Regex rEMail = new System.Text.RegularExpressions.Regex(emailregex, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
             if (!rEMail.IsMatch(txtEmail.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtEmail, "Please provide a valid Email e.g username@domain.com");
-                return false;
+                errorProvider.SetError(txtEmail, "Please provide a valid Email e.g username@domain.com");
+                no_error = false;
             }
-            if (cbBasicComputation.SelectedIndex == -1)
+            if (string.IsNullOrEmpty(txtphone_no.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(cbBasicComputation, "Select Basic Computation!");
-                return false;
+                errorProvider.SetError(txtphone_no, "Phone No cannot be null!");
+                no_error = false;
+            }
+            if (string.IsNullOrEmpty(txtIDNo.Text))
+            {
+                errorProvider.SetError(txtIDNo, "ID No cannot be null!");
+                no_error = false;
+            }
+            if (cbo_basic_computation.SelectedIndex == -1)
+            {
+                errorProvider.SetError(cbo_basic_computation, "Select Basic Computation!");
+                no_error = false;
             }
             if (string.IsNullOrEmpty(txtBasicPay.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtBasicPay, "Basic Pay cannot be null!");
-                return false;
+                errorProvider.SetError(txtBasicPay, "Basic Pay cannot be null!");
+                no_error = false;
             }
             decimal basic;
             if (!decimal.TryParse(txtBasicPay.Text, out basic))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtBasicPay, "Basic Pay must be a decimal");
-                return false;
+                errorProvider.SetError(txtBasicPay, "Basic Pay must be a decimal");
+                no_error = false;
             }
             if (string.IsNullOrEmpty(txtNSSF.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtNSSF, "NSSF No cannot be null!");
-                return false;
+                errorProvider.SetError(txtNSSF, "NSSF No cannot be null!");
+                no_error = false;
             }
             if (string.IsNullOrEmpty(txtNHIF.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtNHIF, "NHIF No cannot be null!");
-                return false;
-            }
-            if (string.IsNullOrEmpty(txtIDNo.Text))
-            {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtIDNo, "ID No cannot be null!");
-                return false;
-            }
+                errorProvider.SetError(txtNHIF, "NHIF No cannot be null!");
+                no_error = false;
+            }            
             if (string.IsNullOrEmpty(txtPIN.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtPIN, "PIN No cannot be null!");
-                return false;
+                errorProvider.SetError(txtPIN, "PIN No cannot be null!");
+                no_error = false;
             }
-            if (cbDepartment.SelectedIndex == -1)
+            if (cbo_department.SelectedIndex == -1)
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(cbDepartment, "Select Department!");
-                return false;
+                errorProvider.SetError(cbo_department, "Select Department!");
+                no_error = false;
             }
-            if (cbEmployer.SelectedIndex == -1)
+            if (cbo_employer.SelectedIndex == -1)
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(cbEmployer, "Select Employer!");
-                return false;
+                errorProvider.SetError(cbo_employer, "Select Employer!");
+                no_error = false;
             }
-            if (cboModeofPayment.SelectedIndex == -1)
+            if (cbo_mode_of_payment.SelectedIndex == -1)
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(cboModeofPayment, "Select Mode of Payment!");
-                return false;
+                errorProvider.SetError(cbo_mode_of_payment, "Select Mode of Payment!");
+                no_error = false;
             }
-            if ("B".Equals(cboModeofPayment.SelectedValue) && string.IsNullOrEmpty(txtBankSortCode.Text))
+            if ("B".Equals(cbo_mode_of_payment.SelectedValue) && string.IsNullOrEmpty(txtBankSortCode.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtBankSortCode, "Bank Sort Code cannot be null!");
-                return false;
+                errorProvider.SetError(txtBankSortCode, "Bank Sort Code cannot be null!");
+                no_error = false;
             }
-            if ("B".Equals(cboModeofPayment.SelectedValue) && !string.IsNullOrEmpty(txtBankSortCode.Text))
+            if ("B".Equals(cbo_mode_of_payment.SelectedValue) && !string.IsNullOrEmpty(txtBankSortCode.Text))
             {
                 string _banksortcode = txtBankSortCode.Text.Trim();
                 var _branchquery = (from bb in rep.GetAllBranches()
@@ -746,25 +786,23 @@ namespace winSBPayroll.Forms
                 BankBranch _branch = _branchquery;
                 if (_branch == null)
                 {
-                    errorProvider1.Clear();
-                    errorProvider1.SetError(txtBankSortCode, "Bank Sort Code does not exist!");
-                    return false;
+                    errorProvider.SetError(txtBankSortCode, "Bank Sort Code does not exist!");
+                    no_error = false;
                 }
             }
-            if ("B".Equals(cboModeofPayment.SelectedValue) && string.IsNullOrEmpty(txtAccount.Text))
+            if ("B".Equals(cbo_mode_of_payment.SelectedValue) && string.IsNullOrEmpty(txtAccount.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtAccount, "Bank Account cannot be null!");
-                return false;
+                errorProvider.SetError(txtAccount, "Bank Account cannot be null!");
+                no_error = false;
             }
-            if ("M".Equals(cboModeofPayment.SelectedValue) && string.IsNullOrEmpty(txtTelephoneNo.Text))
+            if ("M".Equals(cbo_mode_of_payment.SelectedValue) && string.IsNullOrEmpty(txtTelephoneNo.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtTelephoneNo, "Phone Number cannot be null!");
-                return false;
+                errorProvider.SetError(txtTelephoneNo, "Phone Number cannot be null!");
+                no_error = false;
             }
             return no_error;
         }
+
         private void btnNextSeries_Click(object sender, EventArgs e)
         {
             txtEmpNo.Text = Utils.NextSeries(txtEmpNo.Text.Trim());
@@ -773,20 +811,21 @@ namespace winSBPayroll.Forms
         private void btnUploadEmployeePhoto_Click(object sender, EventArgs e)
         {
 
-            openFileDialog1.Title = "select an Image File";
-            openFileDialog1.Filter = "Image File (*.jpg)|*.jpg|Image File (*.gif)|*.gif|Image File (*.png)|*.png|All files (*.*)|*.*";
-            openFileDialog1.ShowDialog();
-            string strFileName = openFileDialog1.FileName;
+            openFileDialog.Title = "select an Image File";
+            openFileDialog.Filter = "Image File (*.jpg)|*.jpg|Image File (*.gif)|*.gif|Image File (*.png)|*.png|All files (*.*)|*.*";
+            openFileDialog.ShowDialog();
+            string strFileName = openFileDialog.FileName;
             try
             {
                 UploadEmployeePhoto(strFileName, _User);
-                MessageBox.Show("Upload completed successfully", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Upload completed successfully", TAG));
+                MessageBox.Show("Upload completed successfully", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("There was an error during upload. Error details are  " + ex.Message, "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                MessageBox.Show("Upload incomplete", "SB Payroll", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG));
+                MessageBox.Show("There was an error during upload. Error details are  " + ex.Message, Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Upload incomplete", Utils.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
         }
@@ -815,13 +854,14 @@ namespace winSBPayroll.Forms
                 pbPhoto.ImageLocation = strFileName;
             }
         }
+
         private void cboModeofPayment_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cboModeofPayment.SelectedIndex != -1)
+            if (cbo_mode_of_payment.SelectedIndex != -1)
             {
                 try
                 {
-                    switch (cboModeofPayment.SelectedValue.ToString())
+                    switch (cbo_mode_of_payment.SelectedValue.ToString())
                     {
                         case "M":
                             txtChequeNo.Visible = false;
@@ -860,13 +900,14 @@ namespace winSBPayroll.Forms
                 }
             }
         }
+
         private void cbBasicComputation_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbBasicComputation.SelectedIndex != -1)
+            if (cbo_basic_computation.SelectedIndex != -1)
             {
                 try
                 {
-                    switch (cbBasicComputation.SelectedValue.ToString())
+                    switch (cbo_basic_computation.SelectedValue.ToString())
                     {
                         case "H":
                             txtBasicPay.Text = "0";
@@ -884,19 +925,19 @@ namespace winSBPayroll.Forms
                     }
 
                     //select employee payroll group and payroll category according to computation type
-                    switch (cbBasicComputation.SelectedValue.ToString())
+                    switch (cbo_basic_computation.SelectedValue.ToString())
                     {
                         case "H":
-                            cboEmployeeGroup.SelectedValue = "PTR";
-                            cboEmpPayroll.SelectedValue = "Temporary";
+                            cbo_employee_group.SelectedValue = "PTR";
+                            cbo_emp_payroll.SelectedValue = "Temporary";
                             break;
                         case "M":
-                            cboEmployeeGroup.SelectedValue = "FTR";
-                            cboEmpPayroll.SelectedValue = "End-Month";
+                            cbo_employee_group.SelectedValue = "FTR";
+                            cbo_emp_payroll.SelectedValue = "End-Month";
                             break;
                         case "X":
-                            cboEmployeeGroup.SelectedValue = "FTT";
-                            cboEmpPayroll.SelectedValue = "End-Month";
+                            cbo_employee_group.SelectedValue = "FTT";
+                            cbo_emp_payroll.SelectedValue = "End-Month";
                             break;
                     }
                 }
@@ -908,23 +949,23 @@ namespace winSBPayroll.Forms
         }
         private void cboEmployeeGroup_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cboEmployeeGroup.SelectedIndex != -1)
+            if (cbo_employee_group.SelectedIndex != -1)
             {
                 try
                 {
-                    switch (cboEmployeeGroup.SelectedValue.ToString())
+                    switch (cbo_employee_group.SelectedValue.ToString())
                     {
                         case "PTR":
-                            cboEmpPayroll.SelectedValue = "Temporary";
+                            cbo_emp_payroll.SelectedValue = "Temporary";
                             break;
                         case "PTT":
-                            cboEmpPayroll.SelectedValue = "Temporary";
+                            cbo_emp_payroll.SelectedValue = "Temporary";
                             break;
                         case "FTR":
-                            cboEmpPayroll.SelectedValue = "End-Month";
+                            cbo_emp_payroll.SelectedValue = "End-Month";
                             break;
                         case "FTT":
-                            cboEmpPayroll.SelectedValue = "End-Month";
+                            cbo_emp_payroll.SelectedValue = "End-Month";
                             break;
                     }
                 }
@@ -1085,14 +1126,14 @@ namespace winSBPayroll.Forms
         {
             try
             {
-                if (cboEmpPayroll.SelectedIndex == -1)
+                if (cbo_emp_payroll.SelectedIndex == -1)
                 {
                     txtPayrollTypeRemarks.Visible = false;
                     txtPayrollTypeRemarks.Text = string.Empty;
                 }
-                if (cboEmpPayroll.SelectedIndex != -1)
+                if (cbo_emp_payroll.SelectedIndex != -1)
                 {
-                    PayrollType _payrolltype = (PayrollType)cboEmpPayroll.SelectedItem;
+                    PayrollType _payrolltype = (PayrollType)cbo_emp_payroll.SelectedItem;
 
                     if (_payrolltype != null)
                     {
@@ -1127,6 +1168,7 @@ namespace winSBPayroll.Forms
                 Utils.ShowError(ex);
             }
         }
+
         private void txtBankSortCode_Leave(object sender, EventArgs e)
         {
             try
@@ -1147,7 +1189,79 @@ namespace winSBPayroll.Forms
             }
         }
 
+        private void cbo_employer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                get_last_saved_employee_code_from_db();
+            }
+            catch (Exception ex)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG)); 
+            }
+        }
 
+        void get_last_saved_employee_code_from_db()
+        {
+            try
+            {
+                if (cbo_employer.SelectedItem != null)
+                {
+                    Employer _emp = (Employer)cbo_employer.SelectedItem;
+                    string _empcode = string.Empty;
+
+                    if (!string.IsNullOrEmpty(_emp.Code))
+                    {
+                        var _last_saved_employee_code_for_employer = (from emp in rep.GetAllActiveEmployees()
+                                                                      where emp.EmployerId.Equals(_emp.Id)
+                                                                      orderby emp.Id descending
+                                                                      select emp.EmpNo).FirstOrDefault();
+
+                        if (_last_saved_employee_code_for_employer != null)
+                        {
+                            _empcode = _last_saved_employee_code_for_employer;
+                        }
+                        else
+                        {
+                            _empcode = _emp.Code;
+                        }
+
+                        string _next_code = Utils.NextSeries(_empcode);
+
+                        txtEmpNo.Text = _next_code;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs(ex.ToString(), TAG)); 
+            }
+        }
+
+        private void pbPhoto_MouseHover(object sender, EventArgs e)
+        {
+            try
+            {
+                //setting a border when it is moused over
+                ((PictureBox)sender).BorderStyle = BorderStyle.Fixed3D;
+            }
+            catch (Exception ex)
+            {
+                Utils.ShowError(ex);
+            }
+        }
+        private void pbPhoto_MouseLeave(object sender, EventArgs e)
+        {
+            try
+            {
+                //removing the border when the mouse leaves it
+                ((PictureBox)sender).BorderStyle = BorderStyle.None;
+            }
+            catch (Exception ex)
+            {
+                Utils.ShowError(ex);
+            }
+        }
 
 
 

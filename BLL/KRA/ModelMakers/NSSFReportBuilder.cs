@@ -167,13 +167,15 @@ namespace BLL.KRA
                 _ViewModel.Period = _period;
                 _ViewModel.Year = _year;
                 _ViewModel.PrintedOn = DateTime.Today;
-                _ViewModel.PayList = this.GetNewNssfPayList();
+                _ViewModel.PayList = this.GetNssfPayList();
+                _ViewModel._NssfContributions = this.GetNewNssfPayList();
             }
             catch (Exception ex)
             {
                 Utils.ShowError(ex);
             }
         }
+
         private List<DAL.psuedovwPayrollMaster> GetNssfPayList()
         {
             try
@@ -205,23 +207,40 @@ namespace BLL.KRA
                 return null;
             }
         }
-        private List<DAL.psuedovwPayrollMaster> GetNewNssfPayList()
+
+        private List<NssfContributionsDTO> GetNewNssfPayList()
         {
             try
             {
-                List<DAL.psuedovwPayrollMaster> _NssfPayList = new List<psuedovwPayrollMaster>(); 
+                List<NssfContributionsDTO> _nssfContributions = new List<NssfContributionsDTO>();
 
-                var paylistquery = from p in rep.GetPayrollMaster(_current, _period, _year) 
-                                   select p;
-                List<DAL.psuedovwPayrollMaster> nssfpaylist = paylistquery.ToList();
-                foreach (var pay in nssfpaylist)
+                var _employeesquery = from ep in rep.GetAllActiveEmployees()
+                                      where ep.IsActive == true
+                                      where ep.IsDeleted == false
+                                      select ep;
+
+                List<Employee> _employees = _employeesquery.ToList();
+
+                foreach (var emp in _employees)
                 {
-                    if (!_NssfPayList.Any(i => i.EmpNo == pay.EmpNo))
+                    NssfContributionsDTO _nssfcontribution = new NssfContributionsDTO();
+
+                    _nssfcontribution = rep.ComputeNssfContributions(emp.Id);
+
+                    if (!_nssfContributions.Any(i => i.EmployeeId == _nssfcontribution.EmployeeId))
                     {
-                        _NssfPayList.Add(pay);
+                        _nssfContributions.Add(_nssfcontribution);
                     }
                 }
-                return _NssfPayList;
+
+                int counter = 1;
+                foreach (var nssf in _nssfContributions)
+                {
+                    nssf.Id = counter;
+                    counter++;
+                }
+                 
+                return _nssfContributions;
             }
             catch (Exception ex)
             {

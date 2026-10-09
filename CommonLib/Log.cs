@@ -21,11 +21,11 @@ namespace CommonLib
 
             logFileName = GetSetting("LOGFILENAME");
             errorLogFileName = GetSetting("ERRORLOGFILENAME");
-            
-            if (logFileName == null) logFileName = "C:\\SBlog.txt";
-            if (errorLogFileName == null) logFileName = "C:\\SBerrlog.txt";
 
-            IsDirectoryPresent(StripDirectoryName( logFileName), true);
+            if (logFileName == null) logFileName = "C:\\SBlog.log";
+            if (errorLogFileName == null) logFileName = "C:\\SBerrlog.log";
+
+            IsDirectoryPresent(StripDirectoryName(logFileName), true);
             IsDirectoryPresent(StripDirectoryName(errorLogFileName), true);
         }
 
@@ -119,7 +119,7 @@ namespace CommonLib
         public static string GetSetting(string val)
         {
             try
-            { 
+            {
                 return System.Configuration.ConfigurationManager.AppSettings[val];
             }
             catch (Exception ex)
@@ -144,12 +144,12 @@ namespace CommonLib
             if (IsDirectoryPresent(StripDirectoryName(log), true))
             {
                 FileStream fs = null;
-                StreamWriter sw = null; 
-                string fileName; 
+                StreamWriter sw = null;
+                string fileName;
 
                 try
-                { 
-                    fileName = log; 
+                {
+                    fileName = log;
                     message = DateTime.Now.ToString() + " - " + message;
                     fs = new FileStream(fileName, FileMode.Append, FileAccess.Write);
                     sw = new StreamWriter(fs);
@@ -178,17 +178,17 @@ namespace CommonLib
         /// Writes the message to the FileSystem Watcher Log File
         /// </summary>
         public static void WriteToLogFile(string message)
-        {  
+        {
             if (IsDirectoryPresent(StripDirectoryName(logFileName), true))
             {
                 FileStream fs = null;
-                StreamWriter sw = null; 
-                string fileName; 
+                StreamWriter sw = null;
+                string fileName;
 
                 try
-                { 
-                    fileName = logFileName;  
-                    message = DateTime.Now.ToString() + " - " + message; 
+                {
+                    fileName = logFileName;
+                    message = DateTime.Now.ToString() + " - " + message;
                     fs = new FileStream(fileName, FileMode.Append, FileAccess.Write);
                     sw = new StreamWriter(fs);
                     sw.WriteLine(message);
@@ -211,53 +211,15 @@ namespace CommonLib
                 }
             }
         }
-
+         
         /// <summary>
         /// Writes the Exception to the Error Log File
         /// </summary>
-        public static void WriteToErrorLogFile(Exception sourceException)
+        public static bool WriteToErrorLogFile(Exception sourceException)
         {
             if (Utils.LogEventViewer(sourceException)) { }
+            if (Write_To_Log_File_temp_dir(sourceException)) { }
 
-            if (IsDirectoryPresent(StripDirectoryName(errorLogFileName), true))
-            {
-                FileStream fs = null;
-                StreamWriter sw = null;
-                try
-                {
-                    fs = new FileStream(errorLogFileName, FileMode.Append, FileAccess.Write);
-                    sw = new StreamWriter(fs);
-                    sw.WriteLine("==================================================================");
-                    sw.WriteLine("ERROR OCCOURED AT :" + DateTime.Now.ToString());
-                    sw.WriteLine("SOURCE:" + sourceException.Source);
-                    sw.WriteLine("MESSAGE:" + sourceException.Message);  
-                    sw.WriteLine("Whole Exception:" + sourceException.ToString());
-                    sw.WriteLine("==================================================================");
-                    sw.WriteLine("");
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-                finally
-                {
-                    if (sw != null)
-                    {
-                        sw.Close();
-                    }
-
-                    if (fs != null)
-                    {
-                        fs.Close();
-                    }
-                }
-            }
-
-
-        }
-
-        public static void Write_To_Log_File(Exception sourceException)
-        {
             if (IsDirectoryPresent(StripDirectoryName(errorLogFileName), true))
             {
                 FileStream fs = null;
@@ -273,6 +235,7 @@ namespace CommonLib
                     sw.WriteLine("Whole Exception:" + sourceException.ToString());
                     sw.WriteLine("==================================================================");
                     sw.WriteLine("");
+                    return true;
                 }
                 catch (Exception ex)
                 {
@@ -291,7 +254,188 @@ namespace CommonLib
                     }
                 }
             }
+            return false;
         }
+
+        /// <summary>
+        /// Writes the Exception to the Error Log File
+        /// </summary>
+        public static bool WriteToErrorLogFile_and_EventViewer(Exception sourceException)
+        {
+            if (Utils.LogEventViewer(sourceException)) { }
+            if (Write_To_Log_File_temp_dir(sourceException)) { }
+
+            if (IsDirectoryPresent(StripDirectoryName(errorLogFileName), true))
+            {
+                FileStream fs = null;
+                StreamWriter sw = null;
+                try
+                {
+                    fs = new FileStream(errorLogFileName, FileMode.Append, FileAccess.Write);
+                    sw = new StreamWriter(fs);
+                    sw.WriteLine("==================================================================");
+                    sw.WriteLine("ERROR OCCOURED AT :" + DateTime.Now.ToString());
+                    sw.WriteLine("SOURCE:" + sourceException.Source);
+                    sw.WriteLine("MESSAGE:" + sourceException.Message);
+                    sw.WriteLine("Whole Exception:" + sourceException.ToString());
+                    sw.WriteLine("==================================================================");
+                    sw.WriteLine("");
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    if (sw != null)
+                    {
+                        sw.Close();
+                    }
+
+                    if (fs != null)
+                    {
+                        fs.Close();
+                    }
+                }
+            }
+            return false;
+        }
+
+        public static bool Write_To_Log_File(Exception sourceException)
+        {
+            if (Utils.LogEventViewer(sourceException)) { }
+            if (Write_To_Log_File_temp_dir(sourceException)) { }
+
+            if (IsDirectoryPresent(StripDirectoryName(errorLogFileName), true))
+            {
+                FileStream fs = null;
+                StreamWriter sw = null;
+                try
+                {
+                    fs = new FileStream(errorLogFileName, FileMode.Append, FileAccess.Write);
+                    sw = new StreamWriter(fs);
+                    sw.WriteLine("==================================================================");
+                    sw.WriteLine("ERROR OCCOURED AT :" + DateTime.Now.ToString());
+                    sw.WriteLine("SOURCE:" + sourceException.Source);
+                    sw.WriteLine("MESSAGE:" + sourceException.Message);
+                    sw.WriteLine("Whole Exception:" + sourceException.ToString());
+                    sw.WriteLine("==================================================================");
+                    sw.WriteLine("");
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    if (sw != null)
+                    {
+                        sw.Close();
+                    }
+
+                    if (fs != null)
+                    {
+                        fs.Close();
+                    }
+                }
+            }
+            return false;
+        }
+
+        //write to user temporaly folder
+        public static bool Write_To_Log_File_temp_dir(Exception sourceException)
+        {
+            string temp_path = Path.GetTempPath();
+            string app_name = System.Configuration.ConfigurationManager.AppSettings["APP_NAME"];
+            string log_file_name = app_name + ".log";
+            var _temp_file = Path.Combine(temp_path, log_file_name);
+
+            FileStream fs = null;
+            StreamWriter sw = null;
+            try
+            {
+                fs = new FileStream(_temp_file, FileMode.Append, FileAccess.Write);
+                sw = new StreamWriter(fs);
+                sw.WriteLine("==================================================================");
+                sw.WriteLine("ERROR OCCOURED AT :" + DateTime.Now.ToString());
+                sw.WriteLine("SOURCE:" + sourceException.Source);
+                sw.WriteLine("MESSAGE:" + sourceException.Message);
+                sw.WriteLine("Whole Exception:" + sourceException.ToString());
+                sw.WriteLine("==================================================================");
+                sw.WriteLine("");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (sw != null)
+                {
+                    sw.Close();
+                }
+
+                if (fs != null)
+                {
+                    fs.Close();
+                }
+            }
+        }
+
+        public static bool Write_To_Log_File_web(Exception sourceException)
+        {
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log", "log.txt");
+
+            Console.WriteLine(filePath);
+
+            var directory = Path.GetDirectoryName(filePath);
+
+            if (!Directory.Exists(filePath))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            if (!System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Create(filePath);
+            }
+
+            FileStream fs = null;
+            StreamWriter sw = null;
+            try
+            {
+                fs = new FileStream(filePath, FileMode.Append, FileAccess.Write);
+                sw = new StreamWriter(fs);
+                sw.WriteLine("==================================================================");
+                sw.WriteLine("ERROR OCCOURED AT :" + DateTime.Now.ToString());
+                sw.WriteLine("SOURCE:" + sourceException.Source);
+                sw.WriteLine("MESSAGE:" + sourceException.Message);
+                sw.WriteLine("Whole Exception:" + sourceException.ToString());
+                sw.WriteLine("==================================================================");
+                sw.WriteLine("");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (sw != null)
+                {
+                    sw.Close();
+                }
+
+                if (fs != null)
+                {
+                    fs.Close();
+                }
+            }
+        }
+
 
 
 

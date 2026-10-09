@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using BLL.DataEntry;
 using BLL.KRA;
@@ -11,7 +12,7 @@ using VVX;
 namespace winSBPayroll.Reports.PDF
 {
     public class NetSalaryPDFBuilder
-    { 
+    {
         public NetSalaryReportModel _ViewModel;
         Document document;
         string sFilePDF;
@@ -19,28 +20,42 @@ namespace winSBPayroll.Reports.PDF
         public bool error = false;
         string Message;
 
-        //DEFINED FONTS
+        // DEFINED FONTS - Using standard Font constructors without BaseColor or FontFamily
         Font hFont1 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD);
-        Font hFont2 = new Font(Font.HELVETICA, 10, Font.BOLD);
-        Font bFont1 = new Font(Font.HELVETICA, 10, Font.BOLD);//body 
-        Font bFont2 = new Font(Font.HELVETICA, 9, Font.NORMAL);//body 
-        Font tHFont = new Font(Font.TIMES_ROMAN, 10, Font.BOLD); //table Header
-        Font tcFont = new Font(Font.TIMES_ROMAN, 9, Font.NORMAL);//table cell
-        Font rms6Normal = new Font(Font.TIMES_ROMAN, 6, Font.NORMAL);
+        Font hfont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font hFont2 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font bfont1 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD); // body
+        Font bFont2 = new Font(Font.TIMES_ROMAN, 8, Font.BOLD); // body
+        Font bFont3 = new Font(Font.TIMES_ROMAN, 12, Font.BOLD); // body
+        Font tHFont = new Font(Font.TIMES_ROMAN, 9, Font.BOLD); // table Header
+        Font tHfont1 = new Font(Font.TIMES_ROMAN, 11, Font.BOLD); // table Header
+        Font tcFont = new Font(Font.HELVETICA, 8, Font.NORMAL); // table cell
+        Font rms6Normal = new Font(Font.TIMES_ROMAN, 9, Font.NORMAL);
+        Font rms10Bold = new Font(Font.HELVETICA, 10, Font.BOLD);
+        Font rms6Bold = new Font(Font.TIMES_ROMAN, 10, Font.BOLD);
+        Font rms8Bold = new Font(Font.HELVETICA, 8, Font.BOLD);
+        Font rms9Bold = new Font(Font.HELVETICA, 9, Font.BOLD);
         Font rms10Normal = new Font(Font.HELVETICA, 10, Font.NORMAL);
-        Font rms6Bold = new Font(Font.TIMES_ROMAN, 9, Font.BOLD);
-        Font rms11Bold = new Font(Font.HELVETICA, 11, Font.BOLD);
 
-        //constructor
-        public NetSalaryPDFBuilder(NetSalaryReportModel netsalarymodel, string filename)
+        event EventHandler<notificationmessageEventArgs> _notificationmessageEventname;
+        string TAG;
+
+        // Constructor
+        public NetSalaryPDFBuilder(NetSalaryReportModel netsalarymodel, string filename, EventHandler<notificationmessageEventArgs> notificationmessageEventname)
         {
             if (netsalarymodel == null)
                 throw new ArgumentNullException("NetSalaryReportModel is null");
             _ViewModel = netsalarymodel;
 
+            TAG = this.GetType().Name;
+            _notificationmessageEventname = notificationmessageEventname;
             sFilePDF = filename;
-        }
 
+            if (_notificationmessageEventname != null)
+            {
+                _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("Constructed NetSalaryPDFBuilder", TAG));
+            }
+        }
 
         public string GetNetSalaryPDF()
         {
@@ -51,230 +66,211 @@ namespace winSBPayroll.Reports.PDF
             }
             catch (Exception ex)
             {
-               Utils.ShowError(ex); 
+                Utils.ShowError(ex);
                 return null;
             }
         }
 
-        /*Build the document **/
+        /* Build the document */
         private void BuildNetSalaryPDF()
         {
             try
             {
-                // step 1: creation of a document-object
-                document = new Document(PageSize.A4);
+                // Step 1: Initialize document in A4 Landscape orientation
+                document = new Document(PageSize.A4.Rotate(), 20, 20, 20, 20);
 
-                // step 2: create a writer that listens to the document
-                PdfWriter.GetInstance(document, new FileStream(sFilePDF, FileMode.Create));
-                
-                //open document
+                // Step 2: Bind PdfWriter to file stream
+                writer = PdfWriter.GetInstance(document, new FileStream(sFilePDF, FileMode.Create));
+
+                // Step 3: Open document
                 document.Open();
 
-                //Add Header 
+                if (_notificationmessageEventname != null)
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating document header...", TAG));
+
+                // Add header
                 AddDocHeader();
 
-                //Add Body
+                if (_notificationmessageEventname != null)
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating document body...", TAG));
+
+                // Add body
                 AddDocBody();
 
-                //add Footer
+                if (_notificationmessageEventname != null)
+                    _notificationmessageEventname.Invoke(this, new notificationmessageEventArgs("creating document footer...", TAG));
+
+                // Add footer
                 AddDocFooter();
 
-
-                //close document
+                // Close document
                 document.Close();
-
             }
             catch (DocumentException de)
             {
-                this.Message = de.Message;
+                Log.WriteToErrorLogFile(de);
             }
             catch (IOException ioe)
             {
-                this.Message = ioe.Message;
+                Log.WriteToErrorLogFile(ioe);
             }
             catch (Exception ex)
             {
-               Log.WriteToErrorLogFile(ex);
-            } 
+                Log.WriteToErrorLogFile(ex);
+            }
         }
 
-        //document header
+        // Document header using PdfPTable and PdfPCell
         private void AddDocHeader()
         {
-            Table netSalaryTable = new Table(5);
+            PdfPTable netSalaryTable = new PdfPTable(5);
             netSalaryTable.WidthPercentage = 100;
-            netSalaryTable.Padding = 1;
-            netSalaryTable.Spacing = 1;
-            netSalaryTable.Border = Table.NO_BORDER;
 
-            Cell employernameCell = new Cell(new Phrase(_ViewModel.employername.ToUpper(), new Font(Font.TIMES_ROMAN, 12, Font.BOLD | Font.UNDERLINE, Color.BLACK)));
-            employernameCell.HorizontalAlignment = Cell.ALIGN_CENTER;
+            // Employer Name Header
+            PdfPCell employernameCell = new PdfPCell(new Phrase(_ViewModel.employername.ToUpper(), new Font(Font.TIMES_ROMAN, 12, Font.BOLD | Font.UNDERLINE, Color.BLACK)));
+            employernameCell.HorizontalAlignment = Element.ALIGN_CENTER;
             employernameCell.Colspan = 5;
-            employernameCell.Border = Cell.NO_BORDER;
+            employernameCell.Border = Rectangle.NO_BORDER;
             netSalaryTable.AddCell(employernameCell);
 
-            Cell employeraddressCell = new Cell(new Phrase(_ViewModel.employeraddress, new Font(Font.TIMES_ROMAN, 10, Font.BOLD | Font.UNDERLINE, Color.BLACK)));
-            employeraddressCell.HorizontalAlignment = Cell.ALIGN_CENTER;
+            // Employer Address Header
+            PdfPCell employeraddressCell = new PdfPCell(new Phrase(_ViewModel.employeraddress, new Font(Font.TIMES_ROMAN, 10, Font.BOLD | Font.UNDERLINE, Color.BLACK)));
+            employeraddressCell.HorizontalAlignment = Element.ALIGN_CENTER;
             employeraddressCell.Colspan = 5;
-            employeraddressCell.Border = Cell.NO_BORDER;
+            employeraddressCell.Border = Rectangle.NO_BORDER;
             netSalaryTable.AddCell(employeraddressCell);
- 
 
-            Cell bCell = new Cell(new Phrase("NET SALARIES", hFont1));
-            bCell.HorizontalAlignment = Cell.ALIGN_CENTER;
+            // Report Title Header
+            PdfPCell bCell = new PdfPCell(new Phrase("NET SALARIES", hFont1));
+            bCell.HorizontalAlignment = Element.ALIGN_CENTER;
             bCell.Colspan = 5;
-            bCell.Border = Cell.NO_BORDER;
+            bCell.Border = Rectangle.NO_BORDER;
             netSalaryTable.AddCell(bCell);
 
-            Cell reportNameCell = new Cell(new Phrase(_ViewModel.ReportName, hFont2));
-            reportNameCell.HorizontalAlignment = Cell.ALIGN_CENTER;
+            // Report Subtitle Header
+            PdfPCell reportNameCell = new PdfPCell(new Phrase(_ViewModel.ReportName, hFont2));
+            reportNameCell.HorizontalAlignment = Element.ALIGN_CENTER;
             reportNameCell.Colspan = 5;
-            reportNameCell.Border = Cell.NO_BORDER;
+            reportNameCell.Border = Rectangle.NO_BORDER;
             netSalaryTable.AddCell(reportNameCell);
 
-            Cell PrintedonCell = new Cell(new Phrase("Printed on: " + _ViewModel.PrintedOn.ToString("dd-dddd-MMMM-yyyy"), hFont2));
-            PrintedonCell.HorizontalAlignment = Cell.ALIGN_LEFT;
+            // Printed Date
+            PdfPCell PrintedonCell = new PdfPCell(new Phrase("Printed on: " + _ViewModel.PrintedOn.ToString("dd-dddd-MMMM-yyyy"), hFont2));
+            PrintedonCell.HorizontalAlignment = Element.ALIGN_LEFT;
             PrintedonCell.Colspan = 4;
-            PrintedonCell.Border = Cell.NO_BORDER;
+            PrintedonCell.Border = Rectangle.NO_BORDER;
             netSalaryTable.AddCell(PrintedonCell);
 
-            //create the logo
-            PDFGen pdfgen = new PDFGen();
+            // Create Logo & Slogan Column
+            PDFGen pdfgen = new PDFGen(_notificationmessageEventname);
             Image img0 = pdfgen.DoGetImageFile(_ViewModel.CompanyLogo);
-            img0.Alignment = Image.ALIGN_MIDDLE;
-            Cell logoCell = new Cell(img0);
-            logoCell.HorizontalAlignment = Cell.ALIGN_LEFT;
-            logoCell.Border = Cell.NO_BORDER;
-            logoCell.Add(new Phrase(_ViewModel.CompanySlogan, new Font(Font.HELVETICA, 8, Font.ITALIC, Color.BLACK)));
-            netSalaryTable.AddCell(logoCell);
 
-            document.Add(netSalaryTable); 
+            PdfPCell logoCell = new PdfPCell();
+            logoCell.Border = Rectangle.NO_BORDER;
+            logoCell.HorizontalAlignment = Element.ALIGN_LEFT;
 
-        }
-
-        //document body
-        private void AddDocBody()
-        {
-
-            //Add table headers
-            AddTableHeaders();
-
-            //Add table details  
-            foreach (var d in _ViewModel.salarylist)
+            if (img0 != null)
             {
-                AddTableDetails(d);
+                img0.Alignment = Image.ALIGN_MIDDLE;
+                logoCell.AddElement(img0);
             }
 
-            //Add table totals
-            AddTableTotals();
-
-        }
-
-        //table headers
-        private void AddTableHeaders()
-        {
-            Table netSalaryTable = new Table(4);
-            netSalaryTable.WidthPercentage = 100;
-            netSalaryTable.Padding = 1;
-            netSalaryTable.Spacing = 1;
-
-            Chunk employeenumber = new Chunk("No", tHFont);
-            Cell netsalaryemployeenumber = new Cell(employeenumber);
-            netsalaryemployeenumber.Border = Cell.RECTANGLE;
-            netsalaryemployeenumber.HorizontalAlignment = Cell.ALIGN_CENTER;
-            netsalaryemployeenumber.VerticalAlignment = Cell.ALIGN_CENTER;
-            netSalaryTable.AddCell(netsalaryemployeenumber, new System.Drawing.Point(0, 0));
-
-            Chunk employeename = new Chunk("Name", tHFont);
-            Cell netsalaryemployeename = new Cell(employeename);
-            netsalaryemployeename.Border = Cell.RECTANGLE;
-            netsalaryemployeename.HorizontalAlignment = Cell.ALIGN_CENTER;
-            netsalaryemployeename.VerticalAlignment = Cell.ALIGN_CENTER;
-            netSalaryTable.AddCell(netsalaryemployeename, new System.Drawing.Point(0, 1));
-
-            Chunk reference = new Chunk("Pin", tHFont);
-            Cell netsalaryreference = new Cell(reference);
-            netsalaryreference.Border = Cell.RECTANGLE;
-            netsalaryreference.HorizontalAlignment = Cell.ALIGN_CENTER;
-            netsalaryreference.VerticalAlignment = Cell.ALIGN_CENTER;
-            netSalaryTable.AddCell(netsalaryreference, new System.Drawing.Point(0, 2));
-
-            Chunk amount = new Chunk("Net Salary\nKshs", tHFont);
-            Cell netsalaryamount = new Cell(amount);
-            netsalaryamount.Border = Cell.RECTANGLE;
-            netsalaryamount.HorizontalAlignment = Cell.ALIGN_CENTER;
-            netsalaryamount.VerticalAlignment = Cell.ALIGN_CENTER;
-            netSalaryTable.AddCell(netsalaryamount, new System.Drawing.Point(0, 3));
+            logoCell.AddElement(new Phrase(_ViewModel.CompanySlogan, new Font(Font.HELVETICA, 8, Font.ITALIC, Color.BLACK)));
+            netSalaryTable.AddCell(logoCell);
 
             document.Add(netSalaryTable);
-           
         }
 
-        //table details 
-        private void AddTableDetails(SalaryList  pay)
+        // Document body constructed as a single PdfPTable to support repeating headers on each page
+        private void AddDocBody()
         {
-            Table netSalaryTable = new Table(4);
+            PdfPTable netSalaryTable = new PdfPTable(4);
             netSalaryTable.WidthPercentage = 100;
-            netSalaryTable.Spacing = 1;
-            netSalaryTable.Padding = 1;
+            netSalaryTable.SpacingBefore = 10f;
 
-            Cell empno = new Cell(new Phrase(pay.employeeno, tcFont));
-            empno.HorizontalAlignment = Cell.ALIGN_LEFT;
-            netSalaryTable.AddCell(empno, new System.Drawing.Point(0, 0));
+            // Explicit column width ratios (No, Name, Pin, Net Salary)
+            netSalaryTable.SetWidths(new float[] { 15f, 45f, 20f, 20f });
 
-            Cell surname = new Cell(new Phrase(pay.employeename.Trim() , tcFont));
-            surname.HorizontalAlignment = Cell.ALIGN_LEFT;
-            netSalaryTable.AddCell(surname, new System.Drawing.Point(0, 1));
+            // Table Headers
+            PdfPCell cellNo = new PdfPCell(new Phrase("No", tHFont));
+            cellNo.HorizontalAlignment = Element.ALIGN_CENTER;
+            cellNo.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cellNo.Padding = 3f;
+            netSalaryTable.AddCell(cellNo);
 
-            Cell pinno = new Cell(new Phrase(pay.employeepin, tcFont));
-            pinno.HorizontalAlignment = Cell.ALIGN_LEFT;
-            netSalaryTable.AddCell(pinno, new System.Drawing.Point(0, 2));
+            PdfPCell cellName = new PdfPCell(new Phrase("Name", tHFont));
+            cellName.HorizontalAlignment = Element.ALIGN_CENTER;
+            cellName.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cellName.Padding = 3f;
+            netSalaryTable.AddCell(cellName);
 
-            Cell netpay = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", pay.totalamount), tcFont));
-            netSalaryTable.DefaultHorizontalAlignment = Cell.ALIGN_RIGHT;
-            netSalaryTable.AddCell(netpay, new System.Drawing.Point(0, 3));
+            PdfPCell cellPin = new PdfPCell(new Phrase("Pin", tHFont));
+            cellPin.HorizontalAlignment = Element.ALIGN_CENTER;
+            cellPin.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cellPin.Padding = 3f;
+            netSalaryTable.AddCell(cellPin);
 
-            document.Add(netSalaryTable);
-            
-        }
+            PdfPCell cellAmount = new PdfPCell(new Phrase("Net Salary\nKshs", tHFont));
+            cellAmount.HorizontalAlignment = Element.ALIGN_CENTER;
+            cellAmount.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cellAmount.Padding = 3f;
+            netSalaryTable.AddCell(cellAmount);
 
-        //table totals
-        private void AddTableTotals()
-        {
-            Table netSalaryTable = new Table(4);
-            netSalaryTable.WidthPercentage = 100;
-            netSalaryTable.Spacing = 1;
-            netSalaryTable.Padding = 1; 
+            // Configure header row to repeat on top of every page
+            netSalaryTable.HeaderRows = 1;
 
-            Cell total = new Cell(new Phrase("TOTAL", rms6Bold));
-            total.HorizontalAlignment = Cell.ALIGN_LEFT;
+            // Table Details
+            foreach (var pay in _ViewModel.salarylist)
+            {
+                PdfPCell empno = new PdfPCell(new Phrase(pay.employeeno, tcFont));
+                empno.HorizontalAlignment = Element.ALIGN_LEFT;
+                empno.Padding = 2f;
+                netSalaryTable.AddCell(empno);
+
+                PdfPCell surname = new PdfPCell(new Phrase(pay.employeename.Trim(), tcFont));
+                surname.HorizontalAlignment = Element.ALIGN_LEFT;
+                surname.Padding = 2f;
+                netSalaryTable.AddCell(surname);
+
+                PdfPCell pinno = new PdfPCell(new Phrase(pay.employeepin, tcFont));
+                pinno.HorizontalAlignment = Element.ALIGN_LEFT;
+                pinno.Padding = 2f;
+                netSalaryTable.AddCell(pinno);
+
+                PdfPCell netpay = new PdfPCell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", pay.totalamount), tcFont));
+                netpay.HorizontalAlignment = Element.ALIGN_RIGHT;
+                netpay.Padding = 2f;
+                netSalaryTable.AddCell(netpay);
+            }
+
+            // Table Totals
+            PdfPCell total = new PdfPCell(new Phrase("TOTAL", rms6Bold));
+            total.HorizontalAlignment = Element.ALIGN_LEFT;
             total.Colspan = 3;
-            netSalaryTable.AddCell(total, new System.Drawing.Point(0, 0));
+            total.Padding = 3f;
+            netSalaryTable.AddCell(total);
 
-            Cell totalamount = new Cell(new Phrase(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:N0}", _ViewModel.totalamount), rms6Bold));
-            totalamount.HorizontalAlignment = Cell.ALIGN_RIGHT;
-            netSalaryTable.AddCell(totalamount, new System.Drawing.Point(0, 3)); 
-            
+            PdfPCell totalamount = new PdfPCell(new Phrase(string.Format(CultureInfo.InvariantCulture, "{0:N2}", _ViewModel.totalamount), rms6Bold));
+            totalamount.HorizontalAlignment = Element.ALIGN_RIGHT;
+            totalamount.Padding = 3f;
+            netSalaryTable.AddCell(totalamount);
+
             document.Add(netSalaryTable);
         }
 
-        //document footer
+        // Document footer
         private void AddDocFooter()
         {
-
-            Table netSalaryTable = new Table(1);
+            PdfPTable netSalaryTable = new PdfPTable(1);
             netSalaryTable.WidthPercentage = 100;
-            netSalaryTable.Border = Table.NO_BORDER;  
+            netSalaryTable.SpacingBefore = 20f;
 
-            Cell sgCell = new Cell(new Phrase("Signature.....................................................................................................", rms10Normal));
-            sgCell.HorizontalAlignment = Cell.ALIGN_LEFT;
-            sgCell.Border = Cell.NO_BORDER;
-            netSalaryTable.AddCell(sgCell); 
-            
+            PdfPCell sgCell = new PdfPCell(new Phrase("Signature.....................................................................................................", rms10Normal));
+            sgCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            sgCell.Border = Rectangle.NO_BORDER;
+            netSalaryTable.AddCell(sgCell);
+
             document.Add(netSalaryTable);
-
         }
-
-
     }
 }

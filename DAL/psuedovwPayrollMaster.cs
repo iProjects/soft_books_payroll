@@ -23,17 +23,22 @@ namespace DAL
         public decimal GrossTaxableEarnings { get; set; }
         public decimal BasicPay { get; set; }
         public decimal NHIF { get; set; }
+        public decimal AHL { get; set; }
+        public decimal SHIF { get; set; }
         public decimal NSSF { get; set; }
         public decimal EmployerNSSF { get; set; }
         public string EmployerName { get; set; }
         public decimal PayeTax { get; set; }
         public decimal PensionEmployee { get; set; }
+        public string PaymentMode { get; set; }
         public int Period { get; set; }
         public int Year { get; set; }
         public string IDNo { get; set; }
         public string ItemId { get; set; }
-        public string PINNo { get; set; }
+        public string PINNo { get; set; } 
         public string NHIFNo { get; set; }
+        public string SHIFNo { get; set; }
+        public string AHLNo { get; set; }
         public string NSSFNo { get; set; }
         public decimal Benefits { get; set; }
         public decimal Balance { get; set; }

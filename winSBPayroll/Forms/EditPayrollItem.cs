@@ -23,7 +23,6 @@ namespace winSBPayroll.Forms
 
         public EditPayrollItem(DAL.PayrollItem pitem, string Conn)
         {
-
             InitializeComponent();
 
             if (string.IsNullOrEmpty(Conn))
@@ -45,19 +44,31 @@ namespace winSBPayroll.Forms
 
             try
             {
-                var itemtypequery = from it in db.PayrollItemTypes
-                                    select it;
-                cbItemType.DataSource = itemtypequery.ToList();
-                cbItemType.ValueMember = "Id";
-                cbItemType.DisplayMember = "Description";
-                cbItemType.SelectedIndex = -1;
+                var itemtype_query = from it in db.PayrollItemTypes
+                                     select it;
+                List<DAL.PayrollItemType> _lst_itemtypes = itemtype_query.ToList();
+                _lst_itemtypes.Insert(0, new DAL.PayrollItemType { Id = "", Description = "---Select---" });
+                cbo_item_types.DataSource = _lst_itemtypes.ToList();
+                cbo_item_types.ValueMember = "Id";
+                cbo_item_types.DisplayMember = "Description";
+                cbo_item_types.SelectedIndex = 0;
 
-                var taxtrackingquery = from tt in db.TaxTrackings
-                                       select tt;
-                cbTaxTracking.DataSource = taxtrackingquery.ToList();
-                cbTaxTracking.ValueMember = "Id";
-                cbTaxTracking.DisplayMember = "Description";
-                cbTaxTracking.SelectedIndex = -1;
+                var taxtracking_query = from tt in db.TaxTrackings
+                                        select tt;
+                List<DAL.TaxTracking> _lst_taxtrackings = taxtracking_query.ToList();
+                _lst_taxtrackings.Insert(0, new DAL.TaxTracking { Id = "", Description = "---Select---" });
+                cbo_tax_trackings.DataSource = _lst_taxtrackings.ToList();
+                cbo_tax_trackings.ValueMember = "Id";
+                cbo_tax_trackings.DisplayMember = "Description";
+                cbo_tax_trackings.SelectedIndex = 0;
+
+                AutoCompleteStringCollection acsccls = new AutoCompleteStringCollection();
+                acsccls.AddRange(this.AutoComplete_Description());
+                txtPayrollItemId.AutoCompleteCustomSource = acsccls;
+                txtPayrollItemId.AutoCompleteMode =
+                    AutoCompleteMode.SuggestAppend;
+                txtPayrollItemId.AutoCompleteSource =
+                     AutoCompleteSource.CustomSource;
 
                 InitializeControls();
             }
@@ -66,6 +77,24 @@ namespace winSBPayroll.Forms
                 Utils.ShowError(ex);
             }
         }
+
+        private string[] AutoComplete_Description()
+        {
+            try
+            {
+                var descriptionquery = from cs in db.PayrollItems
+                                       where cs.IsDeleted == false
+                                       where cs.Active == true
+                                       select cs.Description;
+                return descriptionquery.ToArray();
+            }
+            catch (Exception ex)
+            {
+                Utils.ShowError(ex);
+                return null;
+            }
+        }
+
         private void InitializeControls()
         {
             try
@@ -76,11 +105,11 @@ namespace winSBPayroll.Forms
                 }
                 if (pi.ItemTypeId != null)
                 {
-                    cbItemType.SelectedValue = pi.ItemTypeId;
+                    cbo_item_types.SelectedValue = pi.ItemTypeId;
                 }
-                if (pi.TaxTracking != null)
+                if (pi.TaxTrackingId != null)
                 {
-                    cbTaxTracking.SelectedValue = pi.TaxTrackingId.Trim();
+                    cbo_tax_trackings.SelectedValue = pi.TaxTrackingId.Trim();
                 }
                 if (pi.PayableTo != null)
                 {
@@ -123,13 +152,13 @@ namespace winSBPayroll.Forms
             {
                 try
                 {
-                    if (cbItemType.SelectedIndex != -1)
+                    if (cbo_item_types.SelectedIndex != -1)
                     {
-                        pi.ItemTypeId = cbItemType.SelectedValue.ToString();
+                        pi.ItemTypeId = cbo_item_types.SelectedValue.ToString();
                     }
-                    if (cbTaxTracking.SelectedIndex != -1)
+                    if (cbo_tax_trackings.SelectedIndex != -1)
                     {
-                        pi.TaxTrackingId = cbTaxTracking.SelectedValue.ToString();
+                        pi.TaxTrackingId = cbo_tax_trackings.SelectedValue.ToString();
                     }
                     if (!string.IsNullOrEmpty(txtPayableTo.Text))
                     {
@@ -149,8 +178,8 @@ namespace winSBPayroll.Forms
 
                     rep.UpdatePayrollItems(pi);
 
-                    PayrollItems f = (PayrollItems)this.Owner;
-                    f.RefreshGrid();
+                    PayrollItemsForm f = (PayrollItemsForm)this.Owner;
+                    f.RefreshGrid(1);
                     this.Close();
                 }
                 catch (Exception ex)
@@ -164,20 +193,38 @@ namespace winSBPayroll.Forms
             bool no_error = true;
             if (string.IsNullOrEmpty(txtPayrollItemId.Text))
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(txtPayrollItemId, "Description cannot be null");
+                errorProvider.Clear();
+                errorProvider.SetError(txtPayrollItemId, "Description cannot be null");
                 return false;
             }
-            if (cbItemType.SelectedIndex == -1)
+            if (cbo_item_types.SelectedIndex == 0)
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(cbItemType, "Select Item Type");
+                errorProvider.Clear();
+                errorProvider.SetError(cbo_item_types, "Select Item Type");
                 return false;
             }
-            if (cbTaxTracking.SelectedIndex == -1)
+            if (cbo_tax_trackings.SelectedIndex == 0)
             {
-                errorProvider1.Clear();
-                errorProvider1.SetError(cbTaxTracking, "Select  Tax Tracking");
+                errorProvider.Clear();
+                errorProvider.SetError(cbo_tax_trackings, "Select  Tax Tracking");
+                return false;
+            }
+            if (string.IsNullOrEmpty(txtPayableTo.Text))
+            {
+                errorProvider.Clear();
+                errorProvider.SetError(txtPayableTo, "Payable To cannot be null");
+                return false;
+            }
+            if (string.IsNullOrEmpty(txtGlAccount.Text))
+            {
+                errorProvider.Clear();
+                errorProvider.SetError(txtGlAccount, "General Ledger cannot be null");
+                return false;
+            }
+            if (string.IsNullOrEmpty(txtReference.Text))
+            {
+                errorProvider.Clear();
+                errorProvider.SetError(txtReference, "Reference cannot be null");
                 return false;
             }
             return no_error;
@@ -185,8 +232,8 @@ namespace winSBPayroll.Forms
         public void DisableControls()
         {
             txtPayrollItemId.Enabled = false;
-            cbItemType.Enabled = false;
-            cbTaxTracking.Enabled = false;
+            cbo_item_types.Enabled = false;
+            cbo_tax_trackings.Enabled = false;
             txtPayableTo.Enabled = false;
             txtGlAccount.Enabled = false;
             btnUpdate.Enabled = false;

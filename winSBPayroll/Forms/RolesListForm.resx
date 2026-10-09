@@ -129,4 +129,27 @@
   <metadata name="columnRoleDescription.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAIAICAQAAAAAADoAgAAJgAAABAQEAAAAAAAKAEAAA4DAAAoAAAAIAAAAEAAAAABAAQAAAAAAIAC
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAgAAAAICAAIAAAACAAIAAgIAAAICAgADAwMAAAAD/AAD/
+        AAAA//8A/wAAAP8A/wD//wAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAADMzMzMAAAAAAAAAAAAAAzM
+        zMzMyqzAAAAAAAAAAAzMzMzMzKqszMAAAAAAAADMzMzMzMyqrMzMAAAAAAAMzMzMzMzMqqrMzMAAAAAA
+        zMzMzMzMqqqqrMzMAAAADMzMzMzMzKqqqqzMzMAAAAzMzMzMzKqqqqqqrMzAAADMzMzMzMyqqqqqqqzM
+        zAAAzMzMzMzMqqqqqqqszMwAAMzMzMzMzKqqqqqqzMzMAAzMzMzMzMyqyqrMzMzMzMAMzMzMzMyqrMzM
+        zMzMzMzADMzMzMzMqqzMzMzMzMzMoAzMzMzMqszMzMzMzMzMzKAMzMzMqqzMzMzMzMzMzMqgDMzMyqqs
+        zMzMrMzMzMyqoAzMzMqqzMzMyqzMzMzKqqAMzMyqqqrKrKrMzMzMyqqgAMzKqqqqyqqqzMzMzMqqAADM
+        yqqqqqqqqszMzMzMqgAAzMqqqqqqqqrMzMzMzMoAAAzKqqqqqqqqrMzMzKzAAAAMyqqqqqqqqqzMzMqq
+        oAAAAKqqqqqqqqqszMzKqgAAAAAKqqqqrKyqqszMqqAAAAAAAKqqqszMqsrMzKoAAAAAAAAKqqrMzKrK
+        zMygAAAAAAAAAAqqrMzMqszAAAAAAAAAAAAAAMyszMwAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//AP//+A
+        Af/+AAB//AAAP/gAAB/wAAAP4AAAB8AAAAPAAAADgAAAAYAAAAGAAAABAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAACAAAABgAAAAYAAAAHAAAADwAAAA+AAAAfwAAAP+AAAH/wAAD/+AAB//4AB///w
+        D/8oAAAAEAAAACAAAAABAAQAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAgAAAAICAAIAA
+        AACAAIAAgIAAAICAgADAwMAAAAD/AAD/AAAA//8A/wAAAP8A/wD//wAA////AAAAAAAAAAAAAAAMzMrA
+        AAAADMzMyqzAAADMzMyqrMwAAMzMyqqqzAAMzMzKqqrMwAzMzKqszMzADMzKrMzMzMAMzKrMyszMoAzK
+        qqqqzMqgDMqqqqzMyqAAyqqqqszKAACqqqqqzKoAAAqqrKzMoAAAAAqsysAAAAAAAAAAAAAA+B8AAOAH
+        AADAAwAAgAEAAIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAQAAgAEAAMADAADgBwAA+B8AAA==
+</value>
+  </data>
 </root>

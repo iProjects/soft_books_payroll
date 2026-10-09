@@ -159,6 +159,20 @@ namespace DAL
                 return paymaster.Sum(d => d.TotalLoansDeductions);
             }
         }
+        public decimal SHIF
+        {
+            get
+            {
+                return paymaster.Sum(d => d.SHIF);
+            }
+        }
+        public decimal AHL
+        {
+            get
+            {
+                return paymaster.Sum(d => d.AHL);
+            }
+        }
 
 
 

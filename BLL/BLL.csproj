@@ -12,10 +12,14 @@
     <AssemblyName>BLL</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,6 +43,7 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,8 +59,13 @@
     <Compile Include="KRA\ModelMakers\BankTransferMaker.cs" />
     <Compile Include="KRA\ModelMakers\BankTransferMaker2.cs" />
     <Compile Include="KRA\ModelMakers\BankTransferMaker1.cs" />
-    <Compile Include="KRA\ModelMakers\DepartmentsReportModelBuilder.cs" />
+    <Compile Include="KRA\ModelMakers\CashEmployeesModelBuilder.cs" />
+    <Compile Include="KRA\ModelMakers\AHLReportBuilder.cs" />
+    <Compile Include="KRA\ModelMakers\SHIFReportBuilder.cs" />
     <Compile Include="KRA\ModelMakers\EmployeesModelBuilder.cs" />
+    <Compile Include="KRA\ModelMakers\MpesaEmployeesModelBuilder.cs" />
+    <Compile Include="KRA\ModelMakers\DepartmentsReportModelBuilder.cs" />
+    <Compile Include="KRA\ModelMakers\BankEmployeesModelBuilder.cs" />
     <Compile Include="KRA\ModelMakers\LoanRepaymentScheduleModelBuilder.cs" />
     <Compile Include="KRA\ModelMakers\P10ReportMaker.cs" />
     <Compile Include="KRA\ModelMakers\PAYEModelBuilder.cs" />
@@ -68,8 +78,14 @@
     <Compile Include="KRA\Models\BankTransferReportModel.cs" />
     <Compile Include="KRA\Models\BankTransferReportModel2.cs" />
     <Compile Include="KRA\ModelMakers\NetSalaryReportMaker.cs" />
-    <Compile Include="KRA\Models\DepartmentsReportModel.cs" />
+    <Compile Include="KRA\Models\CashEmployeesModelReport.cs" />
+    <Compile Include="KRA\Models\AHLReportModel.cs" />
+    <Compile Include="KRA\Models\NewNSSFReportModel.cs" />
+    <Compile Include="KRA\Models\SHIFReportModel.cs" />
     <Compile Include="KRA\Models\EmployeesModelReport.cs" />
+    <Compile Include="KRA\Models\MpesaEmployeesModelReport.cs" />
+    <Compile Include="KRA\Models\DepartmentsReportModel.cs" />
+    <Compile Include="KRA\Models\BankEmployeesModelReport.cs" />
     <Compile Include="KRA\Models\LoanRepaymentScheduleModel.cs" />
     <Compile Include="KRA\Models\NetSalaryReportModel.cs" />
     <Compile Include="KRA\ModelMakers\NHIFReportBuilder.cs" />
@@ -94,6 +110,7 @@
     <Compile Include="KRA\Models\SheduleReportModel.cs" />
     <Compile Include="KRA\Models\StatementModel.cs" />
     <Compile Include="Payroll\Accounting.cs" />
+    <Compile Include="Payroll\CPayroll2.cs" />
     <Compile Include="Payroll\CPayroll.cs" />
     <Compile Include="Payroll\EmployeeReportMaker.cs" />
     <Compile Include="Payroll\EmployeeReportModel.cs" />

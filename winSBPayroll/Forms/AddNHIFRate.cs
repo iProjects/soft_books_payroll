@@ -47,7 +47,7 @@ namespace winSBPayroll.Forms
                         decimal.Parse(txtToAmount.Text.Trim()),
                         decimal.Parse(txtRate.Text.Trim()));
 
-                    NHIFRates f = (NHIFRates)this.Owner;
+                    NHIFRatesForm f = (NHIFRatesForm)this.Owner;
                     f.RefreshGrid();
                     this.Close();
                 }
